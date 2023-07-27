@@ -1,46 +1,73 @@
 using System.Net;
 using System.Net.Sockets;
+using System.Runtime.CompilerServices;
 
 namespace VXMusic;
 
 public class XSOverlay
 {
-    public static void XSNotification(string Title, string Content, int Timeout, string Image = "")
+    public static bool IsReady;
+    public static bool IsInitialising;
+
+    public XSOverlay()
     {
-        bool UseBase64Icon;
-        string Icon;
-        if (string.IsNullOrEmpty(Image))
+        IsInitialising = true;
+        IsReady = IsXsOverlayNotificationEndpointReady();
+        IsInitialising = false;
+    }
+
+    public void XSNotification(string Title, string Content, int Timeout, string Image = "")
+    {
+        if (IsReady || IsInitialising)
         {
-            UseBase64Icon = true;
-            
-            // Implies that the file is copied to the binary output folder
-            Icon = File.ReadAllText(
-                Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Img", "VXLogo", "VXLogoBase64.txt")); 
+            bool UseBase64Icon;
+            string Icon;
+            if (string.IsNullOrEmpty(Image))
+            {
+                UseBase64Icon = true;
+
+                // Implies that the file is copied to the binary output folder
+                Icon = File.ReadAllText(
+                    Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Img", "VXLogo", "VXLogoSmallBase64.txt"));
+            }
+            else
+            {
+                UseBase64Icon = false;
+                Icon = Image;
+            }
+
+            var broadcastIP = IPAddress.Loopback;
+            var broadcastSocket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
+            var endPoint = new IPEndPoint(broadcastIP, 42069);
+
+            var msg = new XSOMessage();
+            msg.messageType = 1;
+            msg.title = Title;
+            msg.content = Content;
+            msg.height = 110f;
+            msg.sourceApp = "VRCX";
+            msg.timeout = Timeout;
+            msg.audioPath = string.Empty;
+            msg.useBase64Icon = UseBase64Icon;
+            msg.icon = Icon;
+
+            var byteBuffer = System.Text.Json.JsonSerializer.SerializeToUtf8Bytes(msg);
+            broadcastSocket.SendTo(byteBuffer, endPoint);
+            broadcastSocket.Close();
         }
-        else
+    }
+
+    private bool IsXsOverlayNotificationEndpointReady()
+    {
+        try
         {
-            UseBase64Icon = false;
-            Icon = Image;
+            using (var client = new UdpClient(IPAddress.Loopback.ToString(), 42069))
+                return true;
         }
-
-        var broadcastIP = IPAddress.Loopback;
-        var broadcastSocket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
-        var endPoint = new IPEndPoint(broadcastIP, 42069);
-
-        var msg = new XSOMessage();
-        msg.messageType = 1;
-        msg.title = Title;
-        msg.content = Content;
-        msg.height = 110f;
-        msg.sourceApp = "VRCX";
-        msg.timeout = Timeout;
-        msg.audioPath = string.Empty;
-        msg.useBase64Icon = UseBase64Icon;
-        msg.icon = Icon;
-
-        var byteBuffer = System.Text.Json.JsonSerializer.SerializeToUtf8Bytes(msg);
-        broadcastSocket.SendTo(byteBuffer, endPoint);
-        broadcastSocket.Close();
+        catch (SocketException se)
+        {
+            return false;
+        }
     }
 
     private struct XSOMessage

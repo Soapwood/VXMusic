@@ -17,6 +17,9 @@
 
     <ItemGroup>
       <None Update="Img\VXLogo\VXLogoBase64.txt">
+        <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      </None>
+      <None Update="Img\VXLogo\VXLogoSmallBase64.txt">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
     </ItemGroup>
