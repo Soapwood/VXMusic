@@ -1,5 +1,6 @@
 ﻿using VXMusic;
 using VXMusic.Recognition.AudD;
+using VXMusic.Recognition.Shazam;
 
 WindowsAudioDeviceListener recorder = new WindowsAudioDeviceListener();
 
@@ -7,7 +8,7 @@ recorder.StartRecording();
 
 XSOverlay xsOverlay = new XSOverlay();
 
-xsOverlay.XSNotification("VXMusic is Listening...", "", 10);
+xsOverlay.XSNotification("VXMusic is Listening...", "", recorder.RecordingTimeSeconds);
 Console.WriteLine("Recording started.");
 
 // Wait for the capture to complete by monitoring the capture state
@@ -21,8 +22,11 @@ recorder.StopRecording();
 Console.WriteLine("Recording stopped. Audio saved.");
 xsOverlay.XSNotification("Sounds great! Give me one sec..", "", 1);
 
-var audDClient = new AudDClient();
-var result = await audDClient.RunRecognition();
+var shazamClient = new ShazamClient(); // 3-5 seconds
+var result = await shazamClient.RunRecognition();
+
+//var audDClient = new AudDClient();
+//var result = await audDClient.RunRecognition();
 
 if (result.status == "error")
 {

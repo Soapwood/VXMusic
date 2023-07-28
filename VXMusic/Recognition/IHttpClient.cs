@@ -5,17 +5,11 @@ namespace VXMusic;
 
 public interface IHttpClient
 {
-    public Task<IApiClientResponse> GetArtistFromByteArray(byte[] audioBytes);
+    public Task<IApiClientResponse> GetArtist(byte[] audioBytes);
     
 }
 
 public interface IApiClientResponse
-{
-    public string status { get; set; }
-    public Result result { get; set; }
-}
-
-public class ShazamResponse : IApiClientResponse
 {
     public string status { get; set; }
     public Result result { get; set; }

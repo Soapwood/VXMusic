@@ -1,0 +1,248 @@
+{
+  "matches": [
+    {
+      "id": "214863849",
+      "offset": 269.5095,
+      "timeskew": 0.00027811527,
+      "frequencyskew": -0.00044292212
+    }
+  ],
+  "timestamp": 1690496721476,
+  "timezone": "America/Chicago",
+  "tagid": "950f799d-0f53-4079-a207-8a51699085a4",
+  "track": {
+    "layout": "5",
+    "type": "MUSIC",
+    "key": "54422237",
+    "title": "He Films the Clouds Pt. 2",
+    "subtitle": "Maybeshewill",
+    "images": {
+      "background": "https://is4-ssl.mzstatic.com/image/thumb/Music115/v4/53/03/3a/53033a79-8a31-300a-5c39-88d22a3ad578/pr_source.png/800x800cc.jpg",
+      "coverart": "https://is3-ssl.mzstatic.com/image/thumb/Music71/v4/16/2a/2b/162a2bda-ac69-e800-9f4c-6dba40f5bd88/mzm.pzdkanvb.png/400x400cc.jpg",
+      "coverarthq": "https://is3-ssl.mzstatic.com/image/thumb/Music71/v4/16/2a/2b/162a2bda-ac69-e800-9f4c-6dba40f5bd88/mzm.pzdkanvb.png/400x400cc.jpg",
+      "joecolor": "b:fdfdfdp:0e0807s:4f0409t:3e3938q:72353a"
+    },
+    "share": {
+      "subject": "He Films the Clouds Pt. 2 - Maybeshewill",
+      "text": "He Films the Clouds Pt. 2 by Maybeshewill",
+      "href": "https://www.shazam.com/track/54422237/he-films-the-clouds-pt-2",
+      "image": "https://is3-ssl.mzstatic.com/image/thumb/Music71/v4/16/2a/2b/162a2bda-ac69-e800-9f4c-6dba40f5bd88/mzm.pzdkanvb.png/400x400cc.jpg",
+      "twitter": "I used @Shazam to discover He Films the Clouds Pt. 2 by Maybeshewill.",
+      "html": "https://www.shazam.com/snippets/email-share/54422237?lang\u003den-US\u0026country\u003dUS",
+      "avatar": "https://is4-ssl.mzstatic.com/image/thumb/Music115/v4/53/03/3a/53033a79-8a31-300a-5c39-88d22a3ad578/pr_source.png/800x800cc.jpg",
+      "snapchat": "https://www.shazam.com/partner/sc/track/54422237"
+    },
+    "hub": {
+      "type": "APPLEMUSIC",
+      "image": "https://images.shazam.com/static/icons/hub/ios/v5/applemusic_{scalefactor}.png",
+      "actions": [
+        {
+          "name": "apple",
+          "type": "applemusicplay",
+          "id": "1058725451"
+        },
+        {
+          "name": "apple",
+          "type": "uri",
+          "uri": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview125/v4/25/e9/6b/25e96b1e-6bd9-4c96-c8f1-853e7cd69f28/mzaf_7160836635456560974.plus.aac.ep.m4a"
+        }
+      ],
+      "options": [
+        {
+          "caption": "OPEN",
+          "actions": [
+            {
+              "name": "hub:applemusic:deeplink",
+              "type": "applemusicopen",
+              "uri": "https://music.apple.com/us/album/he-films-the-clouds-pt-2/1058724891?i\u003d1058725451\u0026mttnagencyid\u003ds2n\u0026mttnsiteid\u003d125115\u0026mttn3pid\u003dApple-Shazam\u0026mttnsub1\u003dShazam_ios\u0026mttnsub2\u003d5348615A-616D-3235-3830-44754D6D5973\u0026itscg\u003d30201\u0026app\u003dmusic\u0026itsct\u003dShazam_ios"
+            },
+            {
+              "name": "hub:applemusic:deeplink",
+              "type": "uri",
+              "uri": "https://music.apple.com/us/album/he-films-the-clouds-pt-2/1058724891?i\u003d1058725451\u0026mttnagencyid\u003ds2n\u0026mttnsiteid\u003d125115\u0026mttn3pid\u003dApple-Shazam\u0026mttnsub1\u003dShazam_ios\u0026mttnsub2\u003d5348615A-616D-3235-3830-44754D6D5973\u0026itscg\u003d30201\u0026app\u003dmusic\u0026itsct\u003dShazam_ios"
+            }
+          ],
+          "beacondata": {
+            "type": "open",
+            "providername": "applemusic"
+          },
+          "image": "https://images.shazam.com/static/icons/hub/ios/v5/overflow-open-option_{scalefactor}.png",
+          "type": "open",
+          "listcaption": "Open in Apple Music",
+          "overflowimage": "https://images.shazam.com/static/icons/hub/ios/v5/applemusic-overflow_{scalefactor}.png",
+          "colouroverflowimage": false,
+          "providername": "applemusic"
+        },
+        {
+          "caption": "BUY",
+          "actions": [
+            {
+              "type": "uri",
+              "uri": "https://itunes.apple.com/us/album/he-films-the-clouds-pt-2/1058724891?i\u003d1058725451\u0026mttnagencyid\u003ds2n\u0026mttnsiteid\u003d125115\u0026mttn3pid\u003dApple-Shazam\u0026mttnsub1\u003dShazam_ios\u0026mttnsub2\u003d5348615A-616D-3235-3830-44754D6D5973\u0026itscg\u003d30201\u0026app\u003ditunes\u0026itsct\u003dShazam_ios"
+            }
+          ],
+          "beacondata": {
+            "type": "buy",
+            "providername": "itunes"
+          },
+          "image": "https://images.shazam.com/static/icons/hub/ios/v5/itunes-overflow-buy_{scalefactor}.png",
+          "type": "buy",
+          "listcaption": "Buy on iTunes",
+          "overflowimage": "https://images.shazam.com/static/icons/hub/ios/v5/itunes-overflow-buy_{scalefactor}.png",
+          "colouroverflowimage": false,
+          "providername": "itunes"
+        }
+      ],
+      "providers": [
+        {
+          "caption": "Open in Spotify",
+          "images": {
+            "overflow": "https://images.shazam.com/static/icons/hub/ios/v5/spotify-overflow_{scalefactor}.png",
+            "default": "https://images.shazam.com/static/icons/hub/ios/v5/spotify_{scalefactor}.png"
+          },
+          "actions": [
+            {
+              "name": "hub:spotify:searchdeeplink",
+              "type": "uri",
+              "uri": "spotify:search:He%20Films%20the%20Clouds%20Pt.%202%20Maybeshewill"
+            }
+          ],
+          "type": "SPOTIFY"
+        },
+        {
+          "caption": "Open in Deezer",
+          "images": {
+            "overflow": "https://images.shazam.com/static/icons/hub/ios/v5/deezer-overflow_{scalefactor}.png",
+            "default": "https://images.shazam.com/static/icons/hub/ios/v5/deezer_{scalefactor}.png"
+          },
+          "actions": [
+            {
+              "name": "hub:deezer:searchdeeplink",
+              "type": "uri",
+              "uri": "deezer-query://www.deezer.com/play?query\u003d%7Btrack%3A%27He+Films+the+Clouds+Pt.+2%27%20artist%3A%27Maybeshewill%27%7D"
+            }
+          ],
+          "type": "DEEZER"
+        }
+      ],
+      "explicit": false,
+      "displayname": "APPLE MUSIC"
+    },
+    "url": "https://www.shazam.com/track/54422237/he-films-the-clouds-pt-2",
+    "artists": [
+      {
+        "id": "42",
+        "adamid": "205268797"
+      }
+    ],
+    "isrc": "GBPDA0810008",
+    "genres": {
+      "primary": "Rock"
+    },
+    "urlparams": {
+      "{tracktitle}": "He+Films+the+Clouds+Pt.+2",
+      "{trackartist}": "Maybeshewill"
+    },
+    "myshazam": {
+      "apple": {
+        "actions": [
+          {
+            "name": "myshazam:apple",
+            "type": "uri",
+            "uri": "https://music.apple.com/us/album/he-films-the-clouds-pt-2/1058724891?i\u003d1058725451\u0026mttnagencyid\u003ds2n\u0026mttnsiteid\u003d125115\u0026mttn3pid\u003dApple-Shazam\u0026mttnsub1\u003dShazam_ios\u0026mttnsub2\u003d5348615A-616D-3235-3830-44754D6D5973\u0026itscg\u003d30201\u0026app\u003dmusic\u0026itsct\u003dShazam_ios"
+          }
+        ]
+      }
+    },
+    "albumadamid": "1058724891",
+    "sections": [
+      {
+        "type": "SONG",
+        "metapages": [
+          {
+            "image": "https://is4-ssl.mzstatic.com/image/thumb/Music115/v4/53/03/3a/53033a79-8a31-300a-5c39-88d22a3ad578/pr_source.png/800x800cc.jpg",
+            "caption": "Maybeshewill"
+          },
+          {
+            "image": "https://is3-ssl.mzstatic.com/image/thumb/Music71/v4/16/2a/2b/162a2bda-ac69-e800-9f4c-6dba40f5bd88/mzm.pzdkanvb.png/400x400cc.jpg",
+            "caption": "He Films the Clouds Pt. 2"
+          }
+        ],
+        "tabname": "Song",
+        "metadata": [
+          {
+            "title": "Album",
+            "text": "Not for Want of Trying"
+          },
+          {
+            "title": "Label",
+            "text": "Robot Needs Home"
+          },
+          {
+            "title": "Released",
+            "text": "2008"
+          }
+        ]
+      },
+      {
+        "type": "LYRICS",
+        "text": [
+          "Now we\u0027re apart",
+          "Though not through choice",
+          "Do we stay mute?",
+          "Or raise our voice?",
+          "Now we\u0027re apart",
+          "Though not through choice",
+          "Do we stay mute?",
+          "Or raise our voice?",
+          "Now we\u0027re apart",
+          "Though not through choice",
+          "Do we stay mute?",
+          "Or raise our voice?"
+        ],
+        "footer": "Writer(s): Robin Philip Southby, James Michael Collins, John William Helps\nLyrics powered by www.musixmatch.com",
+        "tabname": "Lyrics",
+        "beacondata": {
+          "lyricsid": "25388831",
+          "providername": "musixmatch",
+          "commontrackid": "17370111"
+        }
+      },
+      {
+        "type": "VIDEO",
+        "tabname": "Video",
+        "youtubeurl": {
+          "caption": "He Films The Clouds Pt. 2",
+          "image": {
+            "dimensions": {
+              "width": 1280,
+              "height": 720
+            },
+            "url": "https://i.ytimg.com/vi/B82df-UkJrU/maxresdefault.jpg"
+          },
+          "actions": [
+            {
+              "name": "video:youtube",
+              "type": "webview",
+              "share": {
+                "subject": "He Films the Clouds Pt. 2 - Maybeshewill",
+                "text": "He Films the Clouds Pt. 2 by Maybeshewill",
+                "href": "https://www.shazam.com/track/54422237/he-films-the-clouds-pt-2",
+                "image": "https://is3-ssl.mzstatic.com/image/thumb/Music71/v4/16/2a/2b/162a2bda-ac69-e800-9f4c-6dba40f5bd88/mzm.pzdkanvb.png/400x400cc.jpg",
+                "twitter": "I used @Shazam to discover He Films the Clouds Pt. 2 by Maybeshewill.",
+                "html": "https://www.shazam.com/snippets/email-share/54422237?lang\u003d-\u0026country\u003dUS",
+                "avatar": "https://is4-ssl.mzstatic.com/image/thumb/Music115/v4/53/03/3a/53033a79-8a31-300a-5c39-88d22a3ad578/pr_source.png/800x800cc.jpg",
+                "snapchat": "https://www.shazam.com/partner/sc/track/54422237"
+              },
+              "uri": "https://youtu.be/B82df-UkJrU?autoplay\u003d1"
+            }
+          ]
+        }
+      },
+      {
+        "type": "RELATED",
+        "tabname": "Related"
+      }
+    ]
+  }
+}

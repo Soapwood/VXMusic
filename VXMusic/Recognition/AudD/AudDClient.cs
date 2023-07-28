@@ -2,7 +2,7 @@ using VXMusic.Conversion;
 
 namespace VXMusic.Recognition.AudD;
 
-public class AudDClient
+public class AudDClient : IRecognitionClient
 {
     private AudDHttpClient _audDHttpClient;
     
@@ -14,6 +14,6 @@ public class AudDClient
     public async Task<IApiClientResponse> RunRecognition()
     {
         var audDAudioData = await AudioDataConverter.ConvertWavToMp3Async();
-        return await _audDHttpClient.GetArtistFromByteArray(audDAudioData);
+        return await _audDHttpClient.GetArtist(audDAudioData);
     }
 }

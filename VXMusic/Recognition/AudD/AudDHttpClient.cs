@@ -27,7 +27,7 @@ public class AudDHttpClient : IHttpClient
         ApiToken = config["AudD:ApiToken"];
     }
 
-    public async Task<IApiClientResponse> GetArtistFromByteArray(byte[] audioBytes)
+    public async Task<IApiClientResponse> GetArtist(byte[] audioBytes)
     {
         using (var requestContent = new MultipartFormDataContent())
         {

@@ -9,6 +9,8 @@ public class WindowsAudioDeviceListener
     private WasapiLoopbackCapture Capture;
     private WaveFileWriter Writer;
     private readonly String BufferFile = "output.wav";
+    
+    public int RecordingTimeSeconds;
 
     public CaptureState CurrentCaptureState => Capture.CaptureState;
 
@@ -18,7 +20,8 @@ public class WindowsAudioDeviceListener
         // https://github.com/naudio/NAudio/blob/master/Docs/WasapiLoopbackCapture.md
         Capture = new WasapiLoopbackCapture();
         Capture.ShareMode = AudioClientShareMode.Shared; // Set the share mode
-        Capture.WaveFormat = new WaveFormat(44100, 16, 2);
+        Capture.WaveFormat = new WaveFormat(44100, 16, 1); // Shazam needs 1 channel
+        RecordingTimeSeconds = 5;
     }
 
     public void StartRecording()
@@ -59,7 +62,7 @@ public class WindowsAudioDeviceListener
             Writer?.Write(e.Buffer, 0, e.BytesRecorded);
             
             // Limits to 10 second of recording. TODO Inject this time limit 
-            if (Writer.Position > Capture.WaveFormat.AverageBytesPerSecond * 10)
+            if (Writer.Position > Capture.WaveFormat.AverageBytesPerSecond * RecordingTimeSeconds)
                 Capture.StopRecording();
         }
         catch (Exception ex)

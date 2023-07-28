@@ -18,4 +18,10 @@ public class AudioDataConverter
             return retMs.ToArray();
         }
     }
+    
+    public static async Task<string> ConvertWavToBase64EncodedString() 
+    {
+        byte[] audioData = File.ReadAllBytes("output.wav"); // TODO Really need to fucking use just bytes.
+        return Convert.ToBase64String(audioData);
+    }
 }
