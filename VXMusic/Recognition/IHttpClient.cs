@@ -31,9 +31,9 @@ public class Result
 
 public class HttpClientFactory
 {
-    private static readonly Lazy<HttpClient> httpClient = new Lazy<HttpClient>(() => CreateHttpClient());
+    private static readonly Lazy<HttpClient> _httpClient = new Lazy<HttpClient>(() => CreateHttpClient());
 
-    public static HttpClient Instance => httpClient.Value;
+    public static HttpClient Instance => _httpClient.Value;
 
     private HttpClientFactory()
     {

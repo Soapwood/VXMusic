@@ -5,6 +5,8 @@
         <TargetFramework>net7.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <Version>0.0.1</Version>
+        <Title>Soapwood</Title>
     </PropertyGroup>
 
     <ItemGroup>
@@ -13,6 +15,8 @@
         <PackageReference Include="NAudio" Version="2.1.0" />
         <PackageReference Include="NAudio.Lame" Version="2.1.0" />
         <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+        <PackageReference Include="SpotifyAPI.Web" Version="7.0.0" />
+        <PackageReference Include="SpotifyAPI.Web.Auth" Version="7.0.0" />
     </ItemGroup>
 
     <ItemGroup>

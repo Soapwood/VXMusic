@@ -1,4 +1,5 @@
 using System.Net.Http.Headers;
+using NAudio.Wasapi.CoreAudioApi.Interfaces;
 using Newtonsoft.Json;
 
 namespace VXMusic.Recognition.Shazam;
@@ -18,7 +19,7 @@ public class ShazamHttpClient
         var request = new HttpRequestMessage
         {
             Method = HttpMethod.Post,
-            RequestUri = new Uri("https://shazam.p.rapidapi.com/songs/detect"),
+            RequestUri = new Uri("https://shazam.p.rapidapi.com/songs/detect"), // TODO Add origin. Does this latency of response?
             Headers =
             {
                 { "X-RapidAPI-Key", "bb058b1a1cmsh9026752692f380bp1ffca1jsnc94e79c37484" },
@@ -39,6 +40,19 @@ public class ShazamHttpClient
 
             ShazamHttpResponse shazamResponse = JsonConvert.DeserializeObject<ShazamHttpResponse>(body);
 
+            // get spotify link
+            string spotifyLink = "";
+            foreach(var provider in shazamResponse.track.hub.providers)
+            {
+                if(provider.type == "SPOTIFY")
+                {
+                    foreach (var action in provider.actions)
+                    {
+                        if (action.type == "uri")
+                            spotifyLink = action.uri;
+                    }
+                }
+            } 
             
             return new ShazamResponse()
             {
@@ -51,7 +65,7 @@ public class ShazamHttpClient
                     release_date = "release_date",
                     label = "label",
                     timecode = "timecode",
-                    song_link = "song_link"
+                    song_link = spotifyLink
                 }
             };
         }
