@@ -1,0 +1,96 @@
+﻿<Window x:Class="VXMusicDesktop.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:VXMusicDesktop"
+        xmlns:viewModel="clr-namespace:VXMusicDesktop.MVVM.ViewModel"
+        mc:Ignorable="d"
+        Height="600" Width="920"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen"
+        Background="Transparent"
+        AllowsTransparency="True">
+
+    <Window.DataContext>
+        <viewModel:MainViewModel/>
+    </Window.DataContext>
+    
+    <Border Background="#D2CAC5"
+            CornerRadius="10">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="75"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Text="VXMusic"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Left"
+                       Foreground="Black"
+                       FontSize="32"
+                       Margin="20,0,0,0"
+                       FontFamily="/Fonts/#Brushstrike"/>
+
+            <StackPanel Grid.Row="1">
+                <RadioButton Content="Home"
+                             Height="50"
+                             Foreground="Black"
+                             FontSize="14"
+                             Style="{StaticResource MenuButtonTheme}"
+                             IsChecked="True"
+                             Command="{Binding HomeViewCommand}"/>
+                <RadioButton Content="Recognition"
+                             Height="50"
+                             Foreground="Black"
+                             FontSize="14"
+                             Style="{StaticResource MenuButtonTheme}"
+                             Command="{Binding RecognitionViewCommand}"/>
+                <RadioButton Content="Notifications"
+                             Height="50"
+                             Foreground="Black"
+                             FontSize="14"
+                             Style="{StaticResource MenuButtonTheme}"
+                             Command="{Binding NotificationsViewCommand}"/>
+                <RadioButton Content="Spotify"
+                             Height="50"
+                             Foreground="Black"
+                             FontSize="14"
+                             Style="{StaticResource MenuButtonTheme}"
+                             Command="{Binding SpotifyViewCommand}"/>
+                <RadioButton Content="Bindings"
+                             Height="50"
+                             Foreground="Black"
+                             FontSize="14"
+                             Style="{StaticResource MenuButtonTheme}"
+                             Command="{Binding BindingsViewCommand}"/>
+                <RadioButton Content="About"
+                             Height="50"
+                             Foreground="Black"
+                             FontSize="14"
+                             Style="{StaticResource MenuButtonTheme}"
+                             Command="{Binding AboutViewCommand}"/>
+            </StackPanel>
+
+            <TextBox Width="250"
+                     Height="40"
+                     VerticalContentAlignment="Center"
+                     HorizontalAlignment="Left"
+                     Margin="5"
+                     Grid.Column="1"
+                     Style="{StaticResource ModernTextBox}"/>
+
+            <ContentControl Grid.Row="1"
+                            Grid.Column="1"
+                            Margin="10"
+                            Content="{Binding CurrentView}"/>
+
+        </Grid>
+    </Border>
+</Window>
