@@ -92,7 +92,7 @@
             </StackPanel.Resources>
             
             <TextBlock Text="Integrations"
-                   Foreground="White"
+                   Foreground="Black"
                    FontSize="20"
                    HorizontalAlignment="Left"
                    Margin="0,0,0,10"/>

@@ -8,12 +8,18 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Images\" />
+    <None Remove="Images\VXLogo.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="MVVM\Model\" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Include="Fonts\Brushstrike trial.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\VXLogo.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

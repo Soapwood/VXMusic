@@ -30,13 +30,21 @@
                 <RowDefinition/>
             </Grid.RowDefinitions>
 
-            <TextBlock Text="VXMusic"
-                       VerticalAlignment="Center"
+            <StackPanel>
+                <Image Width="50"
+                       Height="50"
+                       Source="/Images/VXLogo.png"
                        HorizontalAlignment="Left"
+                       VerticalAlignment="Center" Margin="10,0,0,-75" RenderTransformOrigin="0.5,0.5"/>
+
+                <TextBlock Text="VXMusic"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Center"
                        Foreground="Black"
                        FontSize="32"
-                       Margin="20,0,0,0"
+                       Margin="50,16,0,0"
                        FontFamily="/Fonts/#Brushstrike"/>
+            </StackPanel>
 
             <StackPanel Grid.Row="1">
                 <RadioButton Content="Home"
