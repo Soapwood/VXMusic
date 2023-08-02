@@ -40,6 +40,15 @@ public class ShazamHttpClient
 
             ShazamHttpResponse shazamResponse = JsonConvert.DeserializeObject<ShazamHttpResponse>(body);
 
+            if(shazamResponse.matches.Count == 0)
+            {
+                return new ShazamResponse()
+                {
+                    status = "success",
+                    result = null
+                };
+            }
+
             // get spotify link
             string spotifyLink = "";
             foreach(var provider in shazamResponse.track.hub.providers)

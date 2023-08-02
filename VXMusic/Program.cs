@@ -34,10 +34,12 @@ if (result.status == "error")
 {
     xsOverlay.XSNotification("Recognition failed! Oh jaysus", "", 5);
     Console.WriteLine("Recognition failed! Oh jaysus");
+    Environment.Exit(0);
 } else if (result.result == null)
 {
     xsOverlay.XSNotification("Oops, couldn't get that.", "Tech Tip: Have you tried turning up your World Volume?", 5);
     Console.WriteLine("Oops, couldn't get that. Tech Tip: Have you tried turning up your World Volume?");
+    Environment.Exit(0);
 } else
 {
     xsOverlay.XSNotification(result.result.artist, result.result.title, 8);
