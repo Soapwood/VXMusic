@@ -24,5 +24,6 @@ namespace VXMusicDesktop.MVVM.View
         {
             InitializeComponent();
         }
+
     }
 }

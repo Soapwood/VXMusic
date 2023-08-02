@@ -3,11 +3,76 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:VXMusicDesktop.MVVM.View"
+             xmlns:local="clr-namespace:VXMusicDesktop.MVVM.Model"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
-             Background="#1B1B1B">
+             Background="FloralWhite">
     <Grid>
-            
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="300"/>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="300"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="85"/>
+            <RowDefinition/>
+            <RowDefinition Height="85"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Grid.Column="0">
+            <Image Width="50"
+                   Height="50"
+                   Source="/Images/ShazamLogo.png"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center" Margin="0,0,0,-75"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="0" Grid.Column="1">
+            <RadioButton Content="Use Shazam API"
+                             Height="50"
+                             Foreground="Black"
+                             FontSize="14"
+                             Style="{StaticResource RegularButtonTheme}"
+                             IsChecked="True"
+                             Command="{Binding ShazamButtonClick}"/>
+
+        </StackPanel>
+
+        <StackPanel Grid.Row="1" Grid.Column="0">
+            <Image Width="50"
+                   Height="50"
+                   Source="/Images/AudD.jpg"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center" Margin="0,0,0,-75"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="1" Grid.Column="1">
+            <RadioButton Content="Use AudD API"
+                             Height="50"
+                             Foreground="Black"
+                             FontSize="14"
+                             Style="{StaticResource RegularButtonTheme}"
+                             IsChecked="False"
+                             Command="{Binding AudDButtonClick}"/>
+        </StackPanel>
+
+        <StackPanel Grid.Column="2" Grid.Row="3">
+            <Button>
+                <Button 
+                Content="Run Recognition" 
+                Command="{Binding ListenButtonClick}"
+                IsEnabled="True"
+                Padding="30"
+                Margin="25"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"/>
+            </Button>
+        </StackPanel>
+
+
+
     </Grid>
 </UserControl>

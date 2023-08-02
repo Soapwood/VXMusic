@@ -24,5 +24,11 @@ namespace VXMusicDesktop
         {
             InitializeComponent();
         }
+
+
+        private void ShazamButtonClick(object sender, EventArgs e)
+        {
+
+        }
     }
 }
