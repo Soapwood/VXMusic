@@ -23,12 +23,18 @@ namespace VXMusicDesktop
         public MainWindow()
         {
             InitializeComponent();
+            MouseDown += Window_MouseDown;
         }
 
-
-        private void ShazamButtonClick(object sender, EventArgs e)
+        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
-
+            if (e.ChangedButton == MouseButton.Left)
+                DragMove();
         }
+
+        //private void ShazamButtonClick(object sender, EventArgs e)
+        //{
+
+        //}
     }
 }

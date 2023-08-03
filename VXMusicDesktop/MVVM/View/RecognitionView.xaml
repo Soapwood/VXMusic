@@ -7,7 +7,127 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
              Background="FloralWhite">
-    <Grid>
+
+    <StackPanel>
+        <TextBlock Text="Choose Recognition API"
+                   Foreground="Black"
+                   FontSize="28"
+                   HorizontalAlignment="Left"
+                   Margin="10,0,0,20"/>
+        <StackPanel Orientation="Horizontal"
+                    Margin="0,0,0,10">
+            
+            <Border Width="200"
+                    Height="200"
+                    CornerRadius="10"
+                    Margin="50,0,0,0">
+
+                <Border.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,2">
+                        <GradientStop Color="#C5BEBE" Offset="0.0"/>
+                        <GradientStop Color="#FFFCEB" Offset="1"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+
+
+                <Grid>
+                    <StackPanel>
+                        <Image Width="134"
+                       Height="80"
+                       Source="/Images/ShazamLogo.png"
+                       RenderTransformOrigin="0.5,0.5"
+                       Margin="0,10,0,0"/>
+                        
+                        <TextBlock Text="Shazam"
+                            Foreground="Black"
+                            FontSize="18"
+                            Margin="0,0,0,0"
+                            HorizontalAlignment="Center"/>
+
+                        <RadioButton Content="Use Shazam API"
+                             Height="80"
+                             Foreground="Black"
+                             FontSize="14"
+                             Style="{StaticResource RegularButtonTheme}"
+                             HorizontalAlignment="Center"
+                             IsChecked="True"
+                             Command="{Binding ShazamButtonClick}"/>
+                    </StackPanel>
+                    
+                </Grid>
+                
+                
+            </Border>
+
+            <Border Width="200"
+                    Height="200"
+                    CornerRadius="10"
+                    Margin="200,0,0,0">
+                
+                <Border.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,2">
+                        <GradientStop Color="#C5BEBE" Offset="0.0"/>
+                        <GradientStop Color="#FFFCEB" Offset="1"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+
+                <Grid>
+                    <StackPanel>
+                        <Image Width="80"
+                       Height="80"
+                       Source="/Images/AudD.jpg"
+                       RenderTransformOrigin="0,0"
+                       Margin="0,10,0,0"
+                               HorizontalAlignment="Center"/>
+                        <TextBlock Text="AudD.io"
+                            Foreground="Black"
+                            FontSize="18"
+                            Margin="0,0,0,0"
+                            HorizontalAlignment="Center"/>
+
+                        <RadioButton Content="Use AudD API"
+                             Height="80"
+                             Foreground="Black"
+                             FontSize="14"
+                             Style="{StaticResource RegularButtonTheme}"
+                             HorizontalAlignment="Center"
+                             IsChecked="False"
+                             Command="{Binding AudDButtonClick}"/>
+                    </StackPanel>
+                </Grid>
+
+
+                <!--<StackPanel>
+                    <TextBlock Text="Version: 0.1"
+                            Foreground="Black"
+                            FontSize="18"
+                            Margin="20,10,10,0"
+                            HorizontalAlignment="Center"/>
+                    <TextBlock Text="- Added Shazam API Support&#x0a;- Added Spotify Integration&#x0a;- Added WIP Desktop Client"
+                                   Foreground="Black"
+                                   FontSize="12"
+                                   Margin="10,20,0,0"
+                                   HorizontalAlignment="Left"/>
+                </StackPanel>-->
+            </Border>
+        </StackPanel>
+
+        <StackPanel>
+            <Button 
+                Content="Run Recognition" 
+                Command="{Binding ListenButtonClick}"
+                IsEnabled="True"
+                Padding="0"
+                Margin="40"
+                HorizontalAlignment="Center" Width="600" Height="100"/>
+        </StackPanel>
+    </StackPanel>
+
+
+
+
+
+    <!--<Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="300"/>
             <ColumnDefinition/>
@@ -21,6 +141,166 @@
             <RowDefinition Height="85"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
+
+
+        <StackPanel Orientation="Horizontal"
+                    Margin="0,0,0,10">
+            <Border Width="400"
+                    Height="200">
+                <Border.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,2">
+                        <GradientStop Color="#FFFCEB" Offset="0.0"/>
+                        <GradientStop Color="#C5BEBE" Offset="1"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+
+                <Border.Clip>
+                    <RectangleGeometry RadiusX="10"
+                                       RadiusY="10"
+                                       Rect="0,0,400,200"/>
+                </Border.Clip>
+
+                <Grid>
+                    <StackPanel>
+                        <TextBlock Text="Virtual Xtension Music"
+                                   Foreground="Black"
+                                   FontSize="28"
+                                   Margin="20,10,10,0"/>
+
+                        <TextBlock Text="Music Companion for Social VR."
+                                   Foreground="Black"
+                                   FontSize="18"
+                                   Margin="20,10,10,0"/>
+
+                        <Image Width="222"
+                       Height="215"
+                       Source="/Images/gaben.jpg"
+                       HorizontalAlignment="Right"
+                       VerticalAlignment="Bottom" Margin="0,0,-90,-75" RenderTransformOrigin="0.5,0.5">
+                            <Image.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform/>
+                                    <SkewTransform/>
+                                    <RotateTransform Angle="-12.179"/>
+                                    <TranslateTransform/>
+                                </TransformGroup>
+                            </Image.RenderTransform>
+                        </Image>
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+            <Border Width="200"
+                    Height="200"
+                    CornerRadius="10"
+                    Margin="45,0,0,0">
+                <Border.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,2">
+                        <GradientStop Color="#C5BEBE" Offset="0.0"/>
+                        <GradientStop Color="#FFFCEB" Offset="1"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+                <StackPanel>
+                    <TextBlock Text="Version: 0.1"
+                            Foreground="Black"
+                            FontSize="18"
+                            Margin="20,10,10,0"
+                            HorizontalAlignment="Center"/>
+                    <TextBlock Text="- Added Shazam API Support&#x0a;- Added Spotify Integration&#x0a;- Added WIP Desktop Client"
+                                   Foreground="Black"
+                                   FontSize="12"
+                                   Margin="10,20,0,0"
+                                   HorizontalAlignment="Left"/>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal">
+                <Border Width="150"
+                        Height="150"
+                        Background="#F4EEE0"
+                        CornerRadius="10">
+                    <StackPanel>
+                        <TextBlock Text="Recognition API"
+                                   Foreground="Black"
+                                   FontSize="12"
+                                   Margin="0,5,0,0"
+                                   HorizontalAlignment="Center"/>
+                        <TextBlock Text="AudD"
+                                   Foreground="Black"
+                                   FontSize="12"
+                                   Margin="10,20,0,0"
+                                   HorizontalAlignment="Left"/>
+                        <TextBlock Text="Shazam"
+                                   Foreground="Black"
+                                   FontSize="12"
+                                   Margin="10,20,0,0"
+                                   HorizontalAlignment="Left"/>
+                    </StackPanel>
+                </Border>
+
+                <Border Width="150"
+                        Height="150"
+                        Background="#F4EEE0"
+                        CornerRadius="10">
+                    <StackPanel>
+                        <TextBlock Text="Notification Service"
+                                   Foreground="Black"
+                                   FontSize="12"
+                                   Margin="0,5,0,0"
+                                   HorizontalAlignment="Center"/>
+                        <TextBlock Text="SteamVR"
+                                   Foreground="Black"
+                                   FontSize="12"
+                                   Margin="10,20,0,0"
+                                   HorizontalAlignment="Left"/>
+                        <TextBlock Text="XSOverlay"
+                                   Foreground="Black"
+                                   FontSize="12"
+                                   Margin="10,20,0,0"
+                                   HorizontalAlignment="Left"/>
+                    </StackPanel>
+
+                </Border>
+
+                <Border Width="150"
+                        Height="150"
+                        Background="#F4EEE0"
+                        CornerRadius="10">
+                    <StackPanel>
+                        <TextBlock Text="Spotify Integration"
+                                   Foreground="Black"
+                                   FontSize="12"
+                                   Margin="0,5,0,0"
+                                   HorizontalAlignment="Center"/>
+                        <TextBlock Text="Not Connected"
+                                   Foreground="Black"
+                                   FontSize="12"
+                                   Margin="0,50,0,0"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Border>
+
+                <Border Width="150"
+                        Height="150"
+                        Background="#F4EEE0"
+                        CornerRadius="10">
+                    <StackPanel>
+                        <TextBlock Text="Connected Game Clients"
+                                   Foreground="Black"
+                                   FontSize="12"
+                                   Margin="0,5,0,0"
+                                   HorizontalAlignment="Center"/>
+                        <TextBlock Text="VRChat"
+                                   Foreground="Black"
+                                   FontSize="12"
+                                   Margin="10,20,0,0"
+                                   HorizontalAlignment="Left"/>
+                    </StackPanel>
+                </Border>
+
+            </StackPanel>
 
         <StackPanel Grid.Row="0" Grid.Column="0">
             <Image Width="50"
@@ -74,5 +354,5 @@
 
 
 
-    </Grid>
+    </Grid>-->
 </UserControl>

@@ -21,6 +21,9 @@ namespace VXMusicDesktop.MVVM.ViewModel
         public ICommand AudDButtonClick => audDButtonClick ??= new RelayCommand(PerformAudDButtonClick);
         public ICommand ListenButtonClick => listenButtonClick ??= new RelayCommand(PerformListenButtonClick);
 
+        // Concurrency fields
+
+
         private void PerformShazamButtonClick(object commandParameter)
         {
             Console.WriteLine("Poggers");
@@ -33,24 +36,7 @@ namespace VXMusicDesktop.MVVM.ViewModel
 
         private void PerformListenButtonClick(object commandParameter)
         {
-            WindowsAudioDeviceListener recorder = new WindowsAudioDeviceListener();
-
-            recorder.StartRecording();
-
-            XSOverlay xsOverlay = new XSOverlay();
-
-            xsOverlay.XSNotification("VXMusic is Listening...", "", recorder.RecordingTimeSeconds);
-            Console.WriteLine("Recording started.");
-
-            while (recorder.CurrentCaptureState != NAudio.CoreAudioApi.CaptureState.Stopped)
-            {
-                Thread.Sleep(500);
-            }
-
-            recorder.StopRecording();
-
-            Console.WriteLine("Recording stopped. Audio saved.");
-            xsOverlay.XSNotification("Sounds great! Just a moment..", "", 2);
+            VXMusicAPI.RunRecording();
         }
     }
 
