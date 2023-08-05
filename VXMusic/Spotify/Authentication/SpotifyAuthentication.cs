@@ -1,13 +1,14 @@
 using Newtonsoft.Json;
 using SpotifyAPI.Web;
 using SpotifyAPI.Web.Auth;
+using System.Diagnostics;
 
 namespace VXMusic.Spotify.Authentication;
 
 public class SpotifyAuthentication
 {
     private const string CredentialsPath = "credentials.json";
-    private static readonly string _clientId = "";
+    private static readonly string _clientId = "52e2f3931eab490c99039b3217b697d7";
 
     private static readonly EmbedIOAuthServer _server = new(new Uri("http://localhost:5543/callback"), 5543);
 
@@ -24,7 +25,7 @@ public class SpotifyAuthentication
         AppDomain.CurrentDomain.ProcessExit += (sender, e) => Exiting();
 
         if (string.IsNullOrEmpty(_clientId))
-        {
+         {
             throw new NullReferenceException( // TODO Change this
                 "Please set SPOTIFY_CLIENT_ID via environment variables before starting the program"
             );
@@ -39,7 +40,7 @@ public class SpotifyAuthentication
             await StartAuthentication();
         }
 
-        _ = Console.ReadKey();
+        //_ = Console.ReadKey();
         return 0;
     }
 
@@ -107,7 +108,7 @@ public class SpotifyAuthentication
         }
         catch (Exception)
         {
-            Console.WriteLine("Unable to open URL, manually open: {0}", uri);
+            Trace.WriteLine($"Unable to open URL, manually open: {uri}");
         }
     }
 }

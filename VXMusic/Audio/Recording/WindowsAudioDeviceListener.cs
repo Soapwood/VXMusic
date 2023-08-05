@@ -1,6 +1,7 @@
 using NAudio.Lame;
 using NAudio.Wave;
 using NAudio.CoreAudioApi;
+using System.Diagnostics;
 
 namespace VXMusic;
 
@@ -37,7 +38,7 @@ public class WindowsAudioDeviceListener
         }
         catch (Exception ex)
         {
-            Console.WriteLine("Error starting recording: " + ex.Message);
+            Trace.WriteLine("Error starting recording: " + ex.Message);
         }
     }
 
@@ -51,7 +52,7 @@ public class WindowsAudioDeviceListener
         }
         catch (Exception ex)
         {
-            Console.WriteLine("Error stopping recording: " + ex.Message);
+            Trace.WriteLine("Error stopping recording: " + ex.Message);
         }
     }
 
@@ -67,7 +68,7 @@ public class WindowsAudioDeviceListener
         }
         catch (Exception ex)
         {
-            Console.WriteLine("Error writing to file: " + ex.Message);
+            Trace.WriteLine("Error writing to file: " + ex.Message);
         }
     }
 

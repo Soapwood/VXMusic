@@ -3,6 +3,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using Microsoft.Extensions.Configuration;
 using VXMusic.AudD;
+using System.Diagnostics;
 
 namespace VXMusic;
 
@@ -52,7 +53,7 @@ public class AudDHttpClient : IHttpClient
 
             if (response.IsSuccessStatusCode)
             {
-                Console.WriteLine("Success");
+                Trace.WriteLine("Success");
             }
 
             response.EnsureSuccessStatusCode();
@@ -108,7 +109,7 @@ public class AudDHttpClient : IHttpClient
                 var response = await httpClient.PostAsync(ApiEndpoint, requestContent);
                 if (response.IsSuccessStatusCode)
                 {
-                    Console.WriteLine("Success");
+                    Trace.WriteLine("Success");
                 }
 
                 response.EnsureSuccessStatusCode();

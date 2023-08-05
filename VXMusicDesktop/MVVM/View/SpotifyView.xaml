@@ -6,8 +6,67 @@
              xmlns:local="clr-namespace:VXMusicDesktop.MVVM.View"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
-             Background="#1B1B1B">
-    <Grid>
-            
-    </Grid>
+             Background="FloralWhite">
+    <StackPanel>
+        <TextBlock Text=""
+                   Foreground="Black"
+                   FontSize="28"
+                   HorizontalAlignment="Left"
+                   Margin="10,0,0,20"/>
+        <StackPanel Orientation="Horizontal"
+                    Margin="0,0,0,10">
+
+
+            <Border Width="300"
+                    Height="200"
+                    CornerRadius="10"
+                    Margin="50,0,0,0">
+                <Grid>
+                    <StackPanel>
+                        <Image Height="80"
+                       Source="/Images/Spotify_Logo_RGB_Green.png"
+                       RenderTransformOrigin="0,0"
+                       Margin="0,0,0,0"
+                               HorizontalAlignment="Center"/>
+                        <TextBlock Text="Link VXMusic to Spotify"
+                            Foreground="Black"
+                            FontSize="18"
+                            Margin="0,0,0,0"
+                            HorizontalAlignment="Center"/>
+
+                        <TextBlock Text="Automatically track recognised songs in playlists!"
+                            Foreground="Black"
+                            FontSize="12"
+                            Margin="0,0,0,0"
+                            HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </Grid>
+
+
+                <!--<StackPanel>
+                    <TextBlock Text="Version: 0.1"
+                            Foreground="Black"
+                            FontSize="18"
+                            Margin="20,10,10,0"
+                            HorizontalAlignment="Center"/>
+                    <TextBlock Text="- Added Shazam API Support&#x0a;- Added Spotify Integration&#x0a;- Added WIP Desktop Client"
+                                   Foreground="Black"
+                                   FontSize="12"
+                                   Margin="10,20,0,0"
+                                   HorizontalAlignment="Left"/>
+                </StackPanel>-->
+            </Border>
+        </StackPanel>
+
+        <StackPanel>
+            <Button 
+                Content="Link Spotify" 
+                Command="{Binding LinkSpotifyButtonClick}"
+                IsEnabled="True"
+                Padding="0"
+                Margin="40"
+                HorizontalAlignment="Center" Width="600" Height="100" Click="Button_Click"/>
+        </StackPanel>
+    </StackPanel>
+
 </UserControl>

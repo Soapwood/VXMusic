@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -26,17 +27,19 @@ namespace VXMusicDesktop.MVVM.ViewModel
 
         private void PerformShazamButtonClick(object commandParameter)
         {
-            Console.WriteLine("Poggers");
+            Trace.WriteLine("Poggers");
         }
 
         private void PerformAudDButtonClick(object commandParameter)
         {
-            Console.WriteLine("Poggers");
+            Trace.WriteLine("Poggers");
         }
 
-        private void PerformListenButtonClick(object commandParameter)
+        private async void PerformListenButtonClick(object commandParameter)
         {
             VXMusicAPI.RunRecording();
+            var result = await VXMusicAPI.RunRecognition();
+            VXMusicAPI.ReportTrackToSpotifyPlaylist(result);
         }
     }
 

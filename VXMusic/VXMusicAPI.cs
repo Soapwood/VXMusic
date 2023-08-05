@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,7 +27,7 @@ namespace VXMusic
             recorder.StartRecording();
             
             _xsOverlay.XSNotification("VXMusic is Listening...", "", recorder.RecordingTimeSeconds);
-            Console.WriteLine("Recording started.");
+            Trace.WriteLine("Recording started.");
 
             // Wait for the capture to complete by monitoring the capture state
             while (recorder.CurrentCaptureState != NAudio.CoreAudioApi.CaptureState.Stopped)
@@ -36,7 +37,7 @@ namespace VXMusic
 
             recorder.StopRecording();
 
-            Console.WriteLine("Recording stopped. Audio saved.");
+            Trace.WriteLine("Recording stopped. Audio saved.");
             _xsOverlay.XSNotification("Sounds great! Just a moment..", "", 2);
         }
 
@@ -51,17 +52,17 @@ namespace VXMusic
             if (result.status == "error")
             {
                 _xsOverlay.XSNotification("Recognition failed! Oh jaysus", "", 5);
-                Console.WriteLine("Recognition failed! Oh jaysus");
+                Trace.WriteLine("Recognition failed! Oh jaysus");
                 Environment.Exit(0);
             } else if (result.result == null)
             {
                 _xsOverlay.XSNotification("Oops, couldn't get that.", "Tech Tip: Have you tried turning up your World Volume?", 5);
-                Console.WriteLine("Oops, couldn't get that. Tech Tip: Have you tried turning up your World Volume?");
+                Trace.WriteLine("Oops, couldn't get that. Tech Tip: Have you tried turning up your World Volume?");
                 Environment.Exit(0);
             } else
             {
                 _xsOverlay.XSNotification(result.result.artist, result.result.title, 8);
-                Console.WriteLine($"{result.result.artist}: {result.result.title}");
+                Trace.WriteLine($"{result.result.artist}: {result.result.title}");
 
                 return result;
             }
@@ -69,15 +70,21 @@ namespace VXMusic
             return null;
         }
 
+        public async static Task<PrivateUser> LinkSpotify()
+        {
+            var spotify = await SpotifyClientBuilder.Instance;
+            return await spotify.UserProfile.Current();
+        }        
+        
         public async static void ReportTrackToSpotifyPlaylist(IApiClientResponse result)
         {
             var spotify = await SpotifyClientBuilder.Instance;
 
             var me = await spotify.UserProfile.Current();
-            Console.WriteLine($"Welcome {me.DisplayName} ({me.Id}), you're authenticated!");
+            Trace.WriteLine($"Welcome {me.DisplayName} ({me.Id}), you're authenticated!");
 
             var playlists = await spotify.PaginateAll(await spotify.Playlists.CurrentUsers().ConfigureAwait(false));
-            Console.WriteLine($"Total Playlists in your Account: {playlists.Count}");
+            Trace.WriteLine($"Total Playlists in your Account: {playlists.Count}");
 
             var newPlaylist = new PlaylistCreateRequest("VXMusic");
 //newPlaylist.Public = false;
