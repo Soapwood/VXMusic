@@ -1,0 +1,15 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="VXMusicDesktop.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="RecognitionAPI" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Shazam</Value>
+    </Setting>
+    <Setting Name="NotificationService" Type="System.String" Scope="User">
+      <Value Profile="(Default)">XSOverlay</Value>
+    </Setting>
+    <Setting Name="SpotifyEnabled" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

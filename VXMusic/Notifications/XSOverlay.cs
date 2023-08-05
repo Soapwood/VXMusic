@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 
 namespace VXMusic;
 
-public class XSOverlay
+public class XSOverlay : INotificationClient
 {
     public static bool IsReady;
     public static bool IsInitialising;
@@ -16,7 +16,7 @@ public class XSOverlay
         IsInitialising = false;
     }
 
-    public void XSNotification(string Title, string Content, int Timeout, string Image = "")
+    public void SendNotification(string Title, string Content, int Timeout, string Image = "")
     {
         if (IsReady || IsInitialising)
         {

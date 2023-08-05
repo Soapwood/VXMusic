@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:VXMusicDesktop.MVVM.Model"
+             xmlns:local="clr-namespace:VXMusicDesktop.MVVM.View"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
              Background="FloralWhite">
@@ -44,14 +44,27 @@
                             Margin="0,0,0,0"
                             HorizontalAlignment="Center"/>
 
-                        <RadioButton Content="Use Shazam API"
-                             Height="80"
+                        <Button 
+                             Height="76"
+                             Width="178"
                              Foreground="Black"
                              FontSize="14"
-                             Style="{StaticResource RegularButtonTheme}"
                              HorizontalAlignment="Center"
-                             IsChecked="True"
-                             Command="{Binding ShazamButtonClick}"/>
+                             Command="{Binding ShazamButtonClick}"
+                             Content="{Binding RecognitionViewModel.ShazamApi}">
+                            <Button.Style>
+                                <Style TargetType="Button">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding ShazamApi}" Value="true">
+                                            <Setter Property="Content" Value="Active"/>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding ShazamApi}" Value="false">
+                                            <Setter Property="Content" Value="Inactive"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+                        </Button>
                     </StackPanel>
                     
                 </Grid>
@@ -85,14 +98,27 @@
                             Margin="0,0,0,0"
                             HorizontalAlignment="Center"/>
 
-                        <RadioButton Content="Use AudD API"
-                             Height="80"
+                        <Button 
+                             Height="76"
+                             Width="178"
                              Foreground="Black"
                              FontSize="14"
-                             Style="{StaticResource RegularButtonTheme}"
                              HorizontalAlignment="Center"
-                             IsChecked="False"
-                             Command="{Binding AudDButtonClick}"/>
+                             Command="{Binding AudDButtonClick}"
+                             Content="{Binding RecognitionViewModel.ShazamApi}">
+                            <Button.Style>
+                                <Style TargetType="Button">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding ShazamApi}" Value="true">
+                                            <Setter Property="Content" Value="Active"/>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding ShazamApi}" Value="false">
+                                            <Setter Property="Content" Value="Inactive"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+                        </Button>
                     </StackPanel>
                 </Grid>
 

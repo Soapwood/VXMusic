@@ -5,28 +5,38 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SpotifyAPI.Web;
+using VXMusic.Recognition.AudD;
 using VXMusic.Recognition.Shazam;
 using VXMusic.Spotify;
 
 namespace VXMusic
 {
+    
     public enum RecognitionApi {
         Shazam,
         AudD
     }
-    
+
+    public enum NotificationService
+    {
+        XSOverlay,
+        SteamVR
+    }
+
+
     
     public class VXMusicAPI
     {
-        private static XSOverlay _xsOverlay = new XSOverlay();        
-        
+        private static XSOverlay _xsOverlay = new XSOverlay();
+        //VXMusicSession
+
         public static void RunRecording()
         { 
             WindowsAudioDeviceListener recorder = new WindowsAudioDeviceListener();
 
             recorder.StartRecording();
             
-            _xsOverlay.XSNotification("VXMusic is Listening...", "", recorder.RecordingTimeSeconds);
+            _xsOverlay.SendNotification("VXMusic is Listening...", "", recorder.RecordingTimeSeconds);
             Trace.WriteLine("Recording started.");
 
             // Wait for the capture to complete by monitoring the capture state
@@ -38,34 +48,60 @@ namespace VXMusic
             recorder.StopRecording();
 
             Trace.WriteLine("Recording stopped. Audio saved.");
-            _xsOverlay.XSNotification("Sounds great! Just a moment..", "", 2);
+            _xsOverlay.SendNotification("Sounds great! Just a moment..", "", 2);
         }
 
+        public static IRecognitionClient SetRecognitionApi(RecognitionApi recognitionApi)
+        {
+            switch (recognitionApi)
+            {
+                case RecognitionApi.Shazam:
+                    return new ShazamClient(); // 3-5 seconds
+                case RecognitionApi.AudD:
+                    return new AudDClient(); // 10 seconds
+                default:
+                    throw new ArgumentException("Invalid Recognition API Specified.");
+            }
+        }
+
+        public static INotificationClient SetNotificationClient(NotificationService notificationService)
+        {
+            switch (notificationService)
+            {
+                case NotificationService.XSOverlay:
+                    return new XSOverlay();
+                case NotificationService.SteamVR:
+                    throw new NotImplementedException("SteamVR Notification system not Implemented yet.");
+                default:
+                    throw new ArgumentException("Invalid Notification Service specified.");
+            }
+        }
+        
         public async static Task<IApiClientResponse> RunRecognition()
         {
-            var shazamClient = new ShazamClient(); // 3-5 seconds
-            var result = await shazamClient.RunRecognition();
+            //var shazamClient = new ShazamClient(); // 3-5 seconds
+            //var result = await shazamClient.RunRecognition();
 
             //var audDClient = new AudDClient();
             //var result = await audDClient.RunRecognition();
 
-            if (result.status == "error")
-            {
-                _xsOverlay.XSNotification("Recognition failed! Oh jaysus", "", 5);
-                Trace.WriteLine("Recognition failed! Oh jaysus");
-                Environment.Exit(0);
-            } else if (result.result == null)
-            {
-                _xsOverlay.XSNotification("Oops, couldn't get that.", "Tech Tip: Have you tried turning up your World Volume?", 5);
-                Trace.WriteLine("Oops, couldn't get that. Tech Tip: Have you tried turning up your World Volume?");
-                Environment.Exit(0);
-            } else
-            {
-                _xsOverlay.XSNotification(result.result.artist, result.result.title, 8);
-                Trace.WriteLine($"{result.result.artist}: {result.result.title}");
+            //if (result.status == "error")
+            //{
+            //    _xsOverlay.XSNotification("Recognition failed! Oh jaysus", "", 5);
+            //    Trace.WriteLine("Recognition failed! Oh jaysus");
+            //    Environment.Exit(0);
+            //} else if (result.result == null)
+            //{
+            //    _xsOverlay.XSNotification("Oops, couldn't get that.", "Tech Tip: Have you tried turning up your World Volume?", 5);
+            //    Trace.WriteLine("Oops, couldn't get that. Tech Tip: Have you tried turning up your World Volume?");
+            //    Environment.Exit(0);
+            //} else
+            //{
+            //    _xsOverlay.XSNotification(result.result.artist, result.result.title, 8);
+            //    Trace.WriteLine($"{result.result.artist}: {result.result.title}");
 
-                return result;
-            }
+            //    return result;
+            //}
 
             return null;
         }
