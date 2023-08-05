@@ -15,13 +15,13 @@ namespace VXMusicDesktop
     /// </summary>
     public partial class App : Application
     {
-        public static VXMusicSession Session;
+        public static VXMusicSession VXMusicSession;
 
         public App()
         {
             Trace.WriteLine("Booting VXMusic");
-            Session = new VXMusicSession();
-            Session.InitialiseVXMusicSession();
+            VXMusicSession = new VXMusicSession();
+            VXMusicSession.InitialiseVXMusicSession();
 
             //Properties.Settings.Default.Save();
         }

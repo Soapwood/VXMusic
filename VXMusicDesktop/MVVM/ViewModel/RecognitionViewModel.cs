@@ -42,23 +42,23 @@ namespace VXMusicDesktop.MVVM.ViewModel
         {
             VXMusicAPI.RunRecording();
             //var result = //await VXMusicAPI.RunRecognition();
-            var result = await App.Session.RecognitionClient.RunRecognition();
+            var result = await App.VXMusicSession.RecognitionClient.RunRecognition();
 
             if (result.status == "error")
             {
-                App.Session.NotificationClient.SendNotification("Recognition failed! Oh jaysus", "", 5);
+                App.VXMusicSession.NotificationClient.SendNotification("Recognition failed! Oh jaysus", "", 5);
                 Trace.WriteLine("Recognition failed! Oh jaysus");
                 //Environment.Exit(0);
             }
             else if (result.result == null)
             {
-                App.Session.NotificationClient.SendNotification("Oops, couldn't get that.", "Tech Tip: Have you tried turning up your World Volume?", 5);
+                App.VXMusicSession.NotificationClient.SendNotification("Oops, couldn't get that.", "Tech Tip: Have you tried turning up your World Volume?", 5);
                 Trace.WriteLine("Oops, couldn't get that. Tech Tip: Have you tried turning up your World Volume?");
                 //Environment.Exit(0);
             }
             else
             {
-                App.Session.NotificationClient.SendNotification(result.result.artist, result.result.title, 8);
+                App.VXMusicSession.NotificationClient.SendNotification(result.result.artist, result.result.title, 8);
                 Trace.WriteLine($"{result.result.artist}: {result.result.title}");
 
                 //return result;

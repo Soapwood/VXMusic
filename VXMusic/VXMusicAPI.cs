@@ -77,8 +77,8 @@ namespace VXMusic
             }
         }
         
-        public async static Task<IApiClientResponse> RunRecognition()
-        {
+        //public async static Task<IApiClientResponse> RunRecognition()
+        //{
             //var shazamClient = new ShazamClient(); // 3-5 seconds
             //var result = await shazamClient.RunRecognition();
 
@@ -103,8 +103,8 @@ namespace VXMusic
             //    return result;
             //}
 
-            return null;
-        }
+         //   return null;
+        //}
 
         public async static Task<PrivateUser> LinkSpotify()
         {
