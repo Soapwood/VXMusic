@@ -12,21 +12,21 @@ public class VXMusicSession
     // Spotify Connected
     // Notification Options
 
-    public RecognitionSettings? recognitionSettings;
-    public NotificationSettings? notificationSettings;
-    public SpotifySettings? spotifySettings;
+    public RecognitionSettings? RecognitionSettings;
+    public NotificationSettings? NotificationSettings;
+    public SpotifySettings? SpotifySettings;
 
     public IRecognitionClient? RecognitionClient;
     public INotificationClient? NotificationClient;
 
     public void InitialiseVXMusicSession()
     {
-        recognitionSettings = new RecognitionSettings();
-        notificationSettings = new NotificationSettings();
-        spotifySettings = new SpotifySettings();
+        RecognitionSettings = new RecognitionSettings();
+        NotificationSettings = new NotificationSettings();
+        SpotifySettings = new SpotifySettings();
 
-        RecognitionClient = VXMusicAPI.SetRecognitionApi(recognitionSettings.CurrentRecognitionApi);
-        NotificationClient = VXMusicAPI.SetNotificationClient(notificationSettings.CurrentNotificationService);
+        RecognitionClient = null; //VXMusicAPI.SetRecognitionApi(recognitionSettings.CurrentRecognitionApi);
+        NotificationClient = new XSOverlay(); //VXMusicAPI.SetNotificationClient(notificationSettings.CurrentNotificationService);
     }
 }
 

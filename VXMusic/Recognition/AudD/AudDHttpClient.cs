@@ -9,8 +9,8 @@ namespace VXMusic;
 
 public class AudDResponse : IApiClientResponse
 {
-    public string? status { get; set; }
-    public Result? result { get; set; }
+    public Status Status { get; set; }
+    public Result? Result { get; set; }
 }
 
 public class AudDHttpClient : IHttpClient
@@ -67,7 +67,7 @@ public class AudDHttpClient : IHttpClient
 
                 var parsedResult = JsonConvert.DeserializeObject<AudDResponse>(result);
 
-                if (parsedResult.status == "error")
+                if (parsedResult.Status == Status.Error) // This is probably broken after refactorign the status to an enum
                 {
                     AudDErrorResponseHandler.HandleAudDErrorResponse(responseContent);
                 }

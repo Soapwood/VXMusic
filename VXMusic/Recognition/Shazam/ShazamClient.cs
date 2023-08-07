@@ -8,7 +8,7 @@ public class ShazamClient : IRecognitionClient
     
     public ShazamClient()
     {
-        _shazamHttpClient = new ShazamHttpClient();
+        _shazamHttpClient = new ShazamHttpClient(); // TODO Make factgory for ShazamAPI client
     }
 
     public async Task<IApiClientResponse> RunRecognition()

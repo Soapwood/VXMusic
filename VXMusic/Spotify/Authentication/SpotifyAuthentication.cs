@@ -40,7 +40,10 @@ public class SpotifyAuthentication
             await StartAuthentication();
         }
 
+
+        await Task.Delay(1000);
         //_ = Console.ReadKey();
+
         return 0;
     }
 

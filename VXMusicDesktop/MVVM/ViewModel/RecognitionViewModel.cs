@@ -7,6 +7,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using VXMusic;
+using VXMusic.Recognition.AudD;
+using VXMusic.Recognition.Shazam;
 using VXMusicDesktop.Core;
 using VXMusicDesktop;
 
@@ -30,41 +32,44 @@ namespace VXMusicDesktop.MVVM.ViewModel
 
         private void PerformShazamButtonClick(object commandParameter)
         {
+            App.VXMusicSession.RecognitionSettings.CurrentRecognitionApi = RecognitionApi.Shazam;
+            App.VXMusicSession.RecognitionClient = new ShazamClient();
             Trace.WriteLine("Poggers");
         }
 
         private void PerformAudDButtonClick(object commandParameter)
         {
+            App.VXMusicSession.RecognitionSettings.CurrentRecognitionApi = RecognitionApi.AudD;
+            App.VXMusicSession.RecognitionClient = new AudDClient();
             Trace.WriteLine("Poggers");
         }
 
         private async void PerformListenButtonClick(object commandParameter)
         {
+            // TODO Two recognitions can run at the same time, add check to disable button if it's already running
             VXMusicAPI.RunRecording();
             //var result = //await VXMusicAPI.RunRecognition();
             var result = await App.VXMusicSession.RecognitionClient.RunRecognition();
 
-            if (result.status == "error")
+            if (result.Status == Status.Error)
             {
                 App.VXMusicSession.NotificationClient.SendNotification("Recognition failed! Oh jaysus", "", 5);
                 Trace.WriteLine("Recognition failed! Oh jaysus");
                 //Environment.Exit(0);
             }
-            else if (result.result == null)
+            else if (result.Status == Status.NoMatches || result.Result == null)
             {
                 App.VXMusicSession.NotificationClient.SendNotification("Oops, couldn't get that.", "Tech Tip: Have you tried turning up your World Volume?", 5);
                 Trace.WriteLine("Oops, couldn't get that. Tech Tip: Have you tried turning up your World Volume?");
-                //Environment.Exit(0);
             }
             else
             {
-                App.VXMusicSession.NotificationClient.SendNotification(result.result.artist, result.result.title, 8);
-                Trace.WriteLine($"{result.result.artist}: {result.result.title}");
-
-                //return result;
+                App.VXMusicSession.NotificationClient.SendNotification($"{result.Result.Artist} - {result.Result.Title}", $"{result.Result.Album} ({result.Result.ReleaseDate})", 8);
+                Trace.WriteLine($"{result.Result.Artist} - {result.Result.Title} {result.Result.Album} ({result.Result.ReleaseDate})");
             }
 
-            VXMusicAPI.ReportTrackToSpotifyPlaylist(result);
+            if(App.VXMusicSession.SpotifySettings.IsSpotifyConnected)
+                VXMusicAPI.ReportTrackToSpotifyPlaylist(result);
         }
     }
 

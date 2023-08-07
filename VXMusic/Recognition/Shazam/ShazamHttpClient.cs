@@ -1,13 +1,12 @@
 using System.Net.Http.Headers;
-using NAudio.Wasapi.CoreAudioApi.Interfaces;
 using Newtonsoft.Json;
 
 namespace VXMusic.Recognition.Shazam;
 
 public class ShazamResponse : IApiClientResponse 
 {
-    public string status { get; set; }
-    public Result result { get; set; }
+    public Status Status { get; set; }
+    public Result Result { get; set; }
 }
 
 public class ShazamHttpClient
@@ -38,45 +37,12 @@ public class ShazamHttpClient
             response.EnsureSuccessStatusCode();
             var body = await response.Content.ReadAsStringAsync();
 
-            ShazamHttpResponse shazamResponse = JsonConvert.DeserializeObject<ShazamHttpResponse>(body);
+            ShazamHttpResponse shazamHttpResponse = JsonConvert.DeserializeObject<ShazamHttpResponse>(body);
 
-            if(shazamResponse.matches.Count == 0)
-            {
-                return new ShazamResponse()
-                {
-                    status = "success",
-                    result = null
-                };
-            }
+            if(shazamHttpResponse.matches.Count == 0)
+                return new ShazamResponse() { Status = Status.NoMatches };
 
-            // get spotify link
-            string spotifyLink = "";
-            foreach(var provider in shazamResponse.track.hub.providers)
-            {
-                if(provider.type == "SPOTIFY")
-                {
-                    foreach (var action in provider.actions)
-                    {
-                        if (action.type == "uri")
-                            spotifyLink = action.uri;
-                    }
-                }
-            } 
-            
-            return new ShazamResponse()
-            {
-                status = "success",
-                result = new Result()
-                {
-                    artist = shazamResponse.track.subtitle,
-                    title = shazamResponse.track.title,
-                    album = "album",
-                    release_date = "release_date",
-                    label = "label",
-                    timecode = "timecode",
-                    song_link = spotifyLink
-                }
-            };
+            return ShazamUtils.ParseShazamResponse(shazamHttpResponse);
         }
     }
     

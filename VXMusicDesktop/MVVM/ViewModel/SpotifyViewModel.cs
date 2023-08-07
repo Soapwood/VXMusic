@@ -18,8 +18,11 @@ namespace VXMusicDesktop.MVVM.ViewModel
 
         private void PerformLinkSpotifyButtonClick(object commandParameter)
         {
-            VXMusicAPI.LinkSpotify();
-
+            var response = VXMusicAPI.LinkSpotify();
+            if(response != null)
+            {
+                App.VXMusicSession.SpotifySettings.IsSpotifyConnected = true;
+            }
         }
     }
 }

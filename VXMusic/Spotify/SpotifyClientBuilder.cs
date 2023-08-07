@@ -18,13 +18,14 @@ public class SpotifyClientBuilder
     
     private string _spotifyAccountEndpoint = "https://accounts.spotify.com/api/token";
     
-    private string _clientId = "";
+    private string _clientId = "52e2f3931eab490c99039b3217b697d7";
     
     private static async Task<SpotifyClient> CreateSpotifyClient()
     {
         //var spotifyClient = new SpotifyClientBuilder();
         //ClientCredentialsTokenResponse clientCredentials = await spotifyClient.GetAccessToken();
         await SpotifyAuthentication.GetSpotifyUserAuthentication();
+
         
         return new SpotifyClient(SpotifyAuthentication.SpotifyClientConfig);
     }

@@ -130,7 +130,7 @@ namespace VXMusic
 
 // get track name from shazam output
 
-            var searchRequest = new SearchRequest(SearchRequest.Types.Track, $"{result.result.artist} {result.result.title}");
+            var searchRequest = new SearchRequest(SearchRequest.Types.Track, $"{result.Result.Artist} {result.Result.Title}");
             var searchResult = spotify.Search.Item(searchRequest);
             var uri = searchResult.Result.Tracks.Items[0].Uri;
 
