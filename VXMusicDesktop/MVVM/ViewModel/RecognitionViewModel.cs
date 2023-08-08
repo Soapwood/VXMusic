@@ -11,37 +11,104 @@ using VXMusic.Recognition.AudD;
 using VXMusic.Recognition.Shazam;
 using VXMusicDesktop.Core;
 using VXMusicDesktop;
+using System.ComponentModel;
 
 namespace VXMusicDesktop.MVVM.ViewModel
 {
 
-    internal class RecognitionViewModel
+    internal class RecognitionViewModel : INotifyPropertyChanged
     {
         private RelayCommand shazamButtonClick;
         private RelayCommand audDButtonClick;
         private RelayCommand listenButtonClick;
 
+        private RelayCommand recognitionViewLoaded;
+
         public ICommand ShazamButtonClick => shazamButtonClick ??= new RelayCommand(PerformShazamButtonClick);
         public ICommand AudDButtonClick => audDButtonClick ??= new RelayCommand(PerformAudDButtonClick);
         public ICommand ListenButtonClick => listenButtonClick ??= new RelayCommand(PerformListenButtonClick);
+        public ICommand RecognitionViewLoaded => recognitionViewLoaded ??= new RelayCommand(OnRecognitionViewLoaded);
 
         // Concurrency fields
         public static String CurrentRecognitionApi = RecognitionSettings.GetRecognitionApiString();
         public static bool ShazamApi = true;
 
+        public static String AudDButtonText = "Donkey fungus";
+
+        // // //
+        public event PropertyChangedEventHandler? PropertyChanged;
+        
+        private bool _isShazamApiEnabled = true;
+        private bool _isAudDApiEnabled = false;
+
+        private bool _isRecognitionReady;
+
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public bool IsShazamApiEnabled
+        {
+            get { return _isShazamApiEnabled; }
+            set
+            {
+                _isShazamApiEnabled = value;
+                OnPropertyChanged(nameof(IsShazamApiEnabled)); // Implement INotifyPropertyChanged
+            }
+        }
+
+        public bool IsAudDApiEnabled
+        {
+            get { return _isAudDApiEnabled; }
+            set
+            {
+                _isAudDApiEnabled = value;
+                OnPropertyChanged(nameof(IsAudDApiEnabled)); // Implement INotifyPropertyChanged
+            }
+        }
+
+        private void OnRecognitionViewLoaded(object commandParameter)
+        {
+            ProcessRecognitionApiState();
+        }
+
+        private void ProcessRecognitionApiState()
+        {
+            switch (App.VXMusicSession.RecognitionSettings.CurrentRecognitionApi)
+            {
+                case RecognitionApi.Shazam:
+                    IsShazamApiEnabled = true;
+                    IsAudDApiEnabled = false;
+                    break;
+                case RecognitionApi.AudD:
+                    IsAudDApiEnabled = true;
+                    IsShazamApiEnabled = false;
+                    break;
+                default:
+                    IsShazamApiEnabled = false;
+                    IsAudDApiEnabled = false;
+                    break;
+            }
+
+            _isRecognitionReady = IsShazamApiEnabled || IsAudDApiEnabled;
+        }
 
         private void PerformShazamButtonClick(object commandParameter)
         {
+            
             App.VXMusicSession.RecognitionSettings.CurrentRecognitionApi = RecognitionApi.Shazam;
             App.VXMusicSession.RecognitionClient = new ShazamClient();
-            Trace.WriteLine("Poggers");
+
+            ProcessRecognitionApiState();
         }
 
         private void PerformAudDButtonClick(object commandParameter)
         {
             App.VXMusicSession.RecognitionSettings.CurrentRecognitionApi = RecognitionApi.AudD;
             App.VXMusicSession.RecognitionClient = new AudDClient();
-            Trace.WriteLine("Poggers");
+
+            ProcessRecognitionApiState();
         }
 
         private async void PerformListenButtonClick(object commandParameter)

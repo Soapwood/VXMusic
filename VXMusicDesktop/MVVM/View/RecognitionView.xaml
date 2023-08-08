@@ -45,13 +45,14 @@
                             HorizontalAlignment="Center"/>
 
                         <Button 
-                             Height="76"
+                             Height="40"
                              Width="178"
                              Foreground="Black"
                              FontSize="14"
                              HorizontalAlignment="Center"
                              Command="{Binding ShazamButtonClick}"
-                             Content="{Binding RecognitionViewModel.ShazamApi}">
+                             Content="Enable Shazam"
+                             IsEnabled="{Binding IsAudDApiEnabled}">
                             <Button.Style>
                                 <Style TargetType="Button">
                                     <Style.Triggers>
@@ -99,13 +100,15 @@
                             HorizontalAlignment="Center"/>
 
                         <Button 
-                             Height="76"
+                             Height="40"
                              Width="178"
                              Foreground="Black"
                              FontSize="14"
                              HorizontalAlignment="Center"
                              Command="{Binding AudDButtonClick}"
-                             Content="{Binding RecognitionViewModel.ShazamApi}">
+                             Content="Enable AudD"
+                             IsEnabled="{Binding IsShazamApiEnabled}">
+                            
                             <Button.Style>
                                 <Style TargetType="Button">
                                     <Style.Triggers>

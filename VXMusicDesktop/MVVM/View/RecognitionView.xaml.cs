@@ -44,5 +44,10 @@ namespace VXMusicDesktop.MVVM.View
         {
 
         }
+
+        private void UseShazamApi_Click(object sender, RoutedEventArgs e)
+        {
+            
+        }
     }
 }
