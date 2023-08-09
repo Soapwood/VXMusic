@@ -25,7 +25,7 @@ namespace VXMusicDesktop.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Shazam")]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string RecognitionAPI {
             get {
                 return ((string)(this["RecognitionAPI"]));

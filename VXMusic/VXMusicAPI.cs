@@ -14,7 +14,8 @@ namespace VXMusic
     
     public enum RecognitionApi {
         Shazam,
-        AudD
+        AudD,
+        Unknown
     }
 
     public enum NotificationService

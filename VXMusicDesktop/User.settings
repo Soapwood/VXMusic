@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="RecognitionAPI" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">Shazam</Value>
+      <Value Profile="(Default)" />
     </Setting>
     <Setting Name="NotificationService" Type="System.String" Scope="Application">
       <Value Profile="(Default)">XSOverlay</Value>

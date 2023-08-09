@@ -30,7 +30,7 @@ namespace VXMusicDesktop.MVVM.ViewModel
         public ICommand RecognitionViewLoaded => recognitionViewLoaded ??= new RelayCommand(OnRecognitionViewLoaded);
 
         // Concurrency fields
-        public static String CurrentRecognitionApi = RecognitionSettings.GetRecognitionApiString();
+        public static String CurrentRecognitionApi;
         public static bool ShazamApi = true;
 
         public static String AudDButtonText = "Donkey fungus";
@@ -38,8 +38,8 @@ namespace VXMusicDesktop.MVVM.ViewModel
         // // //
         public event PropertyChangedEventHandler? PropertyChanged;
         
-        private bool _isShazamApiEnabled = true;
-        private bool _isAudDApiEnabled = false;
+        private bool _isShazamApiEnabled;
+        private bool _isAudDApiEnabled;
 
         private bool _isRecognitionReady;
 
@@ -54,7 +54,7 @@ namespace VXMusicDesktop.MVVM.ViewModel
             set
             {
                 _isShazamApiEnabled = value;
-                OnPropertyChanged(nameof(IsShazamApiEnabled)); // Implement INotifyPropertyChanged
+                OnPropertyChanged(nameof(IsShazamApiEnabled));
             }
         }
 
@@ -64,7 +64,17 @@ namespace VXMusicDesktop.MVVM.ViewModel
             set
             {
                 _isAudDApiEnabled = value;
-                OnPropertyChanged(nameof(IsAudDApiEnabled)); // Implement INotifyPropertyChanged
+                OnPropertyChanged(nameof(IsAudDApiEnabled)); 
+            }
+        }
+
+        public bool IsRecognitionReady
+        {
+            get { return _isRecognitionReady; }
+            set
+            {
+                _isRecognitionReady = value;
+                OnPropertyChanged(nameof(_isRecognitionReady)); 
             }
         }
 

@@ -34,10 +34,10 @@ public class RecognitionSettings
 {
     public RecognitionApi CurrentRecognitionApi; // Get from User/Application Settings?
 
-    //public RecognitionSettings()
-    //{
-    //    Enum.TryParse<RecognitionApi>(VXMusicDesktop.Properties.Settings.Default.RecognitionAPI, out CurrentRecognitionApi);
-    //}
+    public RecognitionSettings()
+    {
+        CurrentRecognitionApi = GetRecognitionApi();
+    }
 
     public static RecognitionApi GetRecognitionApi()
     {
