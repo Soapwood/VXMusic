@@ -1,6 +1,8 @@
 using System;
 using System.ComponentModel;
 using VXMusic;
+using VXMusic.Recognition.AudD;
+using VXMusic.Recognition.Shazam;
 
 //using System.Windows.Forms.PropertyGridInternal;
 
@@ -25,7 +27,7 @@ public class VXMusicSession
         NotificationSettings = new NotificationSettings();
         SpotifySettings = new SpotifySettings();
 
-        RecognitionClient = null; //VXMusicAPI.SetRecognitionApi(recognitionSettings.CurrentRecognitionApi);
+        RecognitionClient = RecognitionSettings.GetClientFromSetRecognitionApi(); //VXMusicAPI.SetRecognitionApi(recognitionSettings.CurrentRecognitionApi);
         NotificationClient = new XSOverlay(); //VXMusicAPI.SetNotificationClient(notificationSettings.CurrentNotificationService);
     }
 }
@@ -53,6 +55,19 @@ public class RecognitionSettings
     public static void SetRecognitionApi(RecognitionApi api)
     {
         VXMusicDesktop.Properties.Settings.Default.RecognitionAPI = api.ToString();
+    }
+
+    public static IRecognitionClient GetClientFromSetRecognitionApi()
+    {
+        switch (GetRecognitionApi())
+        {
+            case RecognitionApi.Shazam:
+                return new ShazamClient();
+            case RecognitionApi.AudD:
+                return new AudDClient();
+            default:
+                return null;
+        }
     }
 }
 

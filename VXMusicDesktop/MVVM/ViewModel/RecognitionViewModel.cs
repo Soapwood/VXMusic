@@ -74,7 +74,7 @@ namespace VXMusicDesktop.MVVM.ViewModel
             set
             {
                 _isRecognitionReady = value;
-                OnPropertyChanged(nameof(_isRecognitionReady)); 
+                OnPropertyChanged(nameof(IsRecognitionReady)); 
             }
         }
 
@@ -145,7 +145,7 @@ namespace VXMusicDesktop.MVVM.ViewModel
                 Trace.WriteLine($"{result.Result.Artist} - {result.Result.Title} {result.Result.Album} ({result.Result.ReleaseDate})");
             }
 
-            if(App.VXMusicSession.SpotifySettings.IsSpotifyConnected)
+            if(result.Result != null && App.VXMusicSession.SpotifySettings.IsSpotifyConnected)
                 VXMusicAPI.ReportTrackToSpotifyPlaylist(result);
         }
     }
