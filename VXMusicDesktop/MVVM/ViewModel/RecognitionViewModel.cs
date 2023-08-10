@@ -41,7 +41,7 @@ namespace VXMusicDesktop.MVVM.ViewModel
         private bool _isShazamApiEnabled;
         private bool _isAudDApiEnabled;
 
-        private bool _isRecognitionReady;
+        private bool _isRecognitionReady = true;
 
         protected virtual void OnPropertyChanged(string propertyName)
         {
