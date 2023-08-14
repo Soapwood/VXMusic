@@ -150,8 +150,6 @@ namespace VXMusic
             {
                 await SpotifyPlaylistManager.AddTrackToPlaylist(existingPlaylist, playlistAddItemsRequest);
             }
-
-
         }
     }
 }

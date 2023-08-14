@@ -1,6 +1,11 @@
-﻿using SharpDX;
+﻿using IF.Lastfm.Core.Api;
+using IF.Lastfm.Core.Objects;
+using SharpDX;
 using SpotifyAPI.Web;
+using SpotifyAPI.Web.Http;
+using System.Diagnostics;
 using VXMusic;
+using VXMusic.Last.fm;
 using VXMusic.LogParser.Helpers;
 using VXMusic.LogParser.VRChat;
 using VXMusic.Recognition.AudD;
@@ -14,7 +19,15 @@ namespace VXMusic
     {
         public static void Main()
         {
-            VRChatLogParser.Run();
+            //VRChatLogParser.Run();
+
+            var response = DoThing();
+            Trace.WriteLine($"Grimes has {response.Result.PlayCount} listeners!");
+        }
+
+        public async static Task<LastAlbum> DoThing()
+        {
+            return await LastFmClient.InitialiseLastFmClient();
         }
     }
 }
