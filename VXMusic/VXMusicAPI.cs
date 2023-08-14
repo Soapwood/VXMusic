@@ -123,11 +123,13 @@ namespace VXMusic
             var playlists = await spotify.PaginateAll(await spotify.Playlists.CurrentUsers().ConfigureAwait(false));
             Trace.WriteLine($"Total Playlists in your Account: {playlists.Count}");
 
-            var newPlaylist = new PlaylistCreateRequest("VXMusic");
-//newPlaylist.Public = false;
+            var currentDate = DateTime.Now.ToString("dd/MM");
+            var playListName = $"{currentDate} - {VXMusic.LogParser.VRChat.VRChatLogParser.LastKnownLocationName}";
+            var newPlaylist = new PlaylistCreateRequest($"{currentDate} - {VXMusic.LogParser.VRChat.VRChatLogParser.LastKnownLocationName}");
+            //newPlaylist.Public = false;
             newPlaylist.Description = "This playlist was created with VXMusic.";
 
-            FullPlaylist fullPlaylist = await spotify.Playlists.Create(me.Id, new PlaylistCreateRequest("VXMusic"));
+            FullPlaylist fullPlaylist = await spotify.Playlists.Create(me.Id, new PlaylistCreateRequest(playListName));
 
 // get track name from shazam output
 
