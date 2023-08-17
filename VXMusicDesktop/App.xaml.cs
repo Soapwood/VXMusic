@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Diagnostics;
+using System.IO;
 using System.Windows;
-using VXMusic;
+using Microsoft.Extensions.Configuration;
 
 namespace VXMusicDesktop
 {
@@ -21,9 +16,43 @@ namespace VXMusicDesktop
         {
             Trace.WriteLine("Booting VXMusic");
             VXMusicSession = new VXMusicSession();
-            VXMusicSession.InitialiseVXMusicSession();
 
-            //Properties.Settings.Default.Save();
+            IConfiguration configuration = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                .Build();
+
+            var recognitionSettings = new RecognitionSettings()
+            {
+                ShazamSettings = new ShazamSettings()
+                {
+                    ClientId = configuration["Recognition:Shazam:ClientId"],
+                    ClientSecret = configuration["Recognition:Shazam:ClientSecret"],
+                    X_RapidAPI_Key = configuration["Recognition:Shazam:X-RapidAPI-Key"],
+                    X_RapidAPI_Host = configuration["Recognition:Shazam:X-RapidAPI-Host"]
+                },
+
+                AudDSettings = new AudDSettings()
+                {
+                    ClientId = configuration["Recognition:Shazam:ClientId"],
+                }
+            };
+
+            var connectionsSettings = new ConnectionsSettings()
+            {
+                SpotifySettings = new SpotifySettings()
+                {
+                    ClientId = configuration["Recognition:Shazam:ClientId"]
+                },
+
+                LastfmSettings = new LastfmSettings()
+                {
+                    ClientId = configuration["Recognition:Shazam:ClientId"],
+                    ClientSecret = configuration["Recognition:Shazam:ClientSecret"]
+                }
+            };
+
+            VXMusicSession.InitialiseVXMusicSession();
         }
     }
 }

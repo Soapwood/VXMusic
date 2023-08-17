@@ -10,12 +10,12 @@ namespace VXMusic.Lastfm
         public static HttpClient _httpClient;
         public static Task<LastfmClient> Instance => _lastfmClient.Value;
 
-        private static readonly string _apiKey = "";
-        private static readonly string _apiSecret = "";
+        private static readonly string _clientId = "";
+        private static readonly string _clientSecret = "";
 
         public async static Task<LastfmClient> CreateLastfmClient()
         {
-            return new LastfmClient(_apiKey, _apiSecret);
+            return new LastfmClient(_clientId, _clientSecret);
         }
         
         public static async Task<bool> Login(string username, string password)

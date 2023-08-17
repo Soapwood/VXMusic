@@ -34,7 +34,12 @@ public class VXMusicSession
 
 public class RecognitionSettings
 {
-    public RecognitionApi CurrentRecognitionApi; // Get from User/Application Settings?
+    // App Settings
+    public ShazamSettings ShazamSettings { get; set; }
+    public AudDSettings AudDSettings { get; set; }
+
+    // User Settings
+    public RecognitionApi CurrentRecognitionApi;
 
     public RecognitionSettings()
     {
@@ -73,8 +78,13 @@ public class RecognitionSettings
 
 public class ConnectionsSettings
 {
-    public bool IsSpotifyConnected;
-    public bool IsLastfmConnected;
+    // App Settings
+    public SpotifySettings SpotifySettings { get; set; }
+    public LastfmSettings LastfmSettings { get; set; }
+
+    // User Settings
+    public bool IsSpotifyConnected { get; set; }
+    public bool IsLastfmConnected { get; set; }
 
     public ConnectionsSettings()
     {
@@ -92,4 +102,40 @@ public class NotificationSettings
         Enum.TryParse<NotificationService>(VXMusicDesktop.Properties.Settings.Default.NotificationService, out CurrentNotificationService);
 
     }
+}
+
+public class ShazamSettings
+{
+    public required string ClientId { get; set; }
+    public required string ClientSecret { get; set; }
+    public required string X_RapidAPI_Key { get; set; }
+    public required string X_RapidAPI_Host { get; set; }
+}
+
+public class AudDSettings
+{
+    public required string ClientId { get; set; }
+}
+
+public class SpotifySettings
+{
+    public required string ClientId { get; set; }
+}
+
+public class LastfmSettings
+{
+    public required string ClientId { get; set; }
+    public required string ClientSecret { get; set; }
+}
+
+public class LoggingSettings
+{
+    public LogLevelSettings? LogLevel { get; set; }
+}
+
+public class LogLevelSettings
+{
+    public string? Default { get; set; }
+    public string? Microsoft { get; set; }
+    public string? Microsoft_Hosting_Lifetime { get; set; }
 }
