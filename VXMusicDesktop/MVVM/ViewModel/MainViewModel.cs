@@ -13,7 +13,7 @@ namespace VXMusicDesktop.MVVM.ViewModel
         public RelayCommand HomeViewCommand { get; set; }
         public RelayCommand NotificationsViewCommand { get; set; }
         public RelayCommand RecognitionViewCommand { get; set; }
-        public RelayCommand SpotifyViewCommand { get; set; }
+        public RelayCommand ConnectionsViewCommand { get; set; }
         public RelayCommand BindingsViewCommand { get; set; }
         public RelayCommand AboutViewCommand { get; set; }
 
@@ -21,7 +21,7 @@ namespace VXMusicDesktop.MVVM.ViewModel
         public NotificationsViewModel NotificationsVM { get; set; }
         public RecognitionViewModel RecognitionVM { get; set; }
 
-        public SpotifyViewModel SpotifyVM { get; set; }
+        public ConnectionsViewModel ConnectionsVM { get; set; }
         public BindingsViewModel BindingsVM { get; set; }
         public AboutViewModel AboutVM { get; set; }
 
@@ -43,7 +43,7 @@ namespace VXMusicDesktop.MVVM.ViewModel
             HomeVM = new HomeViewModel();
             NotificationsVM = new NotificationsViewModel();
             RecognitionVM = new RecognitionViewModel();
-            SpotifyVM = new SpotifyViewModel();
+            ConnectionsVM = new ConnectionsViewModel();
             BindingsVM = new BindingsViewModel();
             AboutVM = new AboutViewModel();
             CurrentView = HomeVM;
@@ -63,9 +63,9 @@ namespace VXMusicDesktop.MVVM.ViewModel
                 CurrentView = RecognitionVM;
             });
 
-            SpotifyViewCommand = new RelayCommand(o =>
+            ConnectionsViewCommand = new RelayCommand(o =>
             {
-                CurrentView = SpotifyVM;
+                CurrentView = ConnectionsVM;
             });
 
             BindingsViewCommand = new RelayCommand(o =>

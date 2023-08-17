@@ -145,8 +145,13 @@ namespace VXMusicDesktop.MVVM.ViewModel
                 Trace.WriteLine($"{result.Result.Artist} - {result.Result.Title} {result.Result.Album} ({result.Result.ReleaseDate})");
             }
 
-            if(result.Result != null && App.VXMusicSession.SpotifySettings.IsSpotifyConnected)
+            if(result.Result != null && App.VXMusicSession.ConnectionsSettings.IsSpotifyConnected)
                 VXMusicAPI.ReportTrackToSpotifyPlaylist(result);
+
+            if (result.Result != null)
+            {
+                VXMusicAPI.Scrobble(result.Result.Artist, result.Result.Album, result.Result.Title);
+            }
         }
     }
 

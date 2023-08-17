@@ -156,7 +156,7 @@
                 IsEnabled="{Binding IsRecognitionReady}"
                 Padding="0"
                 Margin="40"
-                HorizontalAlignment="Center" Width="600" Height="100"/>
+                HorizontalAlignment="Center" Width="600" Height="100" Click="Button_Click_4"/>
         </StackPanel>
     </StackPanel>
 

@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <None Remove="Images\AudD.jpg" />
+    <None Remove="Images\LastfmLogo.png" />
     <None Remove="Images\ShazamLogo.png" />
     <None Remove="Images\Spotify_Logo_RGB_Green.png" />
     <None Remove="Images\VXLogo.png" />
@@ -20,6 +21,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Images\AudD.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\LastfmLogo.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Images\ShazamLogo.png">
@@ -34,6 +38,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Inflatable.Lastfm.SQLite" Version="1.1.0.351" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="7.0.0" />
     <PackageReference Include="System.Windows.Interactivity.WPF" Version="2.0.20525" />
   </ItemGroup>

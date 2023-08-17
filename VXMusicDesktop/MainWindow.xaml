@@ -71,7 +71,7 @@
                              Foreground="Black"
                              FontSize="14"
                              Style="{StaticResource MenuButtonTheme}"
-                             Command="{Binding SpotifyViewCommand}"/>
+                             Command="{Binding ConnectionsViewCommand}"/>
                 <RadioButton Content="Bindings"
                              Height="80"
                              Foreground="Black"

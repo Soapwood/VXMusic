@@ -10,18 +10,29 @@ using VXMusicDesktop.Core;
 
 namespace VXMusicDesktop.MVVM.ViewModel
 {
-    internal class SpotifyViewModel
+    internal class ConnectionsViewModel
     {
         private RelayCommand linkSpotifyButtonClick;
+        private RelayCommand linkLastfmButtonClick;
 
         public ICommand LinkSpotifyButtonClick => linkSpotifyButtonClick ??= new RelayCommand(PerformLinkSpotifyButtonClick);
+        public ICommand LinkLastfmButtonClick => linkLastfmButtonClick ??= new RelayCommand(PerformLinkLastfmButtonClick);
 
         private void PerformLinkSpotifyButtonClick(object commandParameter)
         {
             var response = VXMusicAPI.LinkSpotify();
             if(response != null)
             {
-                App.VXMusicSession.SpotifySettings.IsSpotifyConnected = true;
+                App.VXMusicSession.ConnectionsSettings.IsSpotifyConnected = true;
+            }
+        }
+
+        private void PerformLinkLastfmButtonClick(object commandParameter)
+        {
+            var response = VXMusicAPI.LinkLastfm();
+            if (response != null)
+            {
+                App.VXMusicSession.ConnectionsSettings.IsLastfmConnected = true;
             }
         }
     }

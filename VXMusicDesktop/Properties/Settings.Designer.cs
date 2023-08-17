@@ -58,5 +58,17 @@ namespace VXMusicDesktop.Properties {
                 this["SpotifyEnabled"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool LastfmEnabled {
+            get {
+                return ((bool)(this["LastfmEnabled"]));
+            }
+            set {
+                this["LastfmEnabled"] = value;
+            }
+        }
     }
 }

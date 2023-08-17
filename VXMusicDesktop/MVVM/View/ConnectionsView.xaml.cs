@@ -16,23 +16,13 @@ using System.Windows.Shapes;
 namespace VXMusicDesktop.MVVM.View
 {
     /// <summary>
-    /// Interaction logic for SpotifyView.xaml
+    /// Interaction logic for ConnectionsView.xaml
     /// </summary>
-    public partial class SpotifyView : UserControl
+    public partial class ConnectionsView : UserControl
     {
-        public SpotifyView()
+        public ConnectionsView()
         {
             InitializeComponent();
-        }
-
-        private void RadioButton_Checked(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-
         }
     }
 }

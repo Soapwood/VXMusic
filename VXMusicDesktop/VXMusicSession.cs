@@ -16,7 +16,7 @@ public class VXMusicSession
 
     public RecognitionSettings? RecognitionSettings;
     public NotificationSettings? NotificationSettings;
-    public SpotifySettings? SpotifySettings;
+    public ConnectionsSettings? ConnectionsSettings;
 
     public IRecognitionClient? RecognitionClient;
     public INotificationClient? NotificationClient;
@@ -25,7 +25,7 @@ public class VXMusicSession
     {
         RecognitionSettings = new RecognitionSettings();
         NotificationSettings = new NotificationSettings();
-        SpotifySettings = new SpotifySettings();
+        ConnectionsSettings = new ConnectionsSettings();
 
         RecognitionClient = RecognitionSettings.GetClientFromSetRecognitionApi(); //VXMusicAPI.SetRecognitionApi(recognitionSettings.CurrentRecognitionApi);
         NotificationClient = new XSOverlay(); //VXMusicAPI.SetNotificationClient(notificationSettings.CurrentNotificationService);
@@ -71,13 +71,15 @@ public class RecognitionSettings
     }
 }
 
-public class SpotifySettings
+public class ConnectionsSettings
 {
     public bool IsSpotifyConnected;
+    public bool IsLastfmConnected;
 
-    public SpotifySettings()
+    public ConnectionsSettings()
     {
         IsSpotifyConnected = VXMusicDesktop.Properties.Settings.Default.SpotifyEnabled;
+        IsLastfmConnected = VXMusicDesktop.Properties.Settings.Default.LastfmEnabled;
     }
 }
 

@@ -25,8 +25,8 @@
                 <view:NotificationsView/>
             </DataTemplate>
 
-            <DataTemplate DataType="{x:Type viewModel:SpotifyViewModel}">
-                <view:SpotifyView/>
+            <DataTemplate DataType="{x:Type viewModel:ConnectionsViewModel}">
+                <view:ConnectionsView/>
             </DataTemplate>
 
             <DataTemplate DataType="{x:Type viewModel:BindingsViewModel}">

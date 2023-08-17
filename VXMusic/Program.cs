@@ -5,7 +5,9 @@ using SpotifyAPI.Web;
 using SpotifyAPI.Web.Http;
 using System.Diagnostics;
 using VXMusic;
-using VXMusic.Last.fm;
+using VXMusic.Lastfm;
+using VXMusic.Lastfm.Authentication;
+using VXMusic.Lastfm.Scrobbling;
 using VXMusic.LogParser.Helpers;
 using VXMusic.LogParser.VRChat;
 using VXMusic.Recognition.AudD;
@@ -17,17 +19,17 @@ namespace VXMusic
 {
     class Program
     {
-        public static void Main()
+        public async static Task Main()
         {
-            //VRChatLogParser.Run();
+            //var last = new Lastfm.LastfmScrobbler();
+            //var responseTask = await last.Login("", "");
 
-            var response = DoThing();
-            Trace.WriteLine($"Grimes has {response.Result.PlayCount} listeners!");
-        }
+            //var response = await last.Scrobble("Alcest", "Kodama", "Kodama");
+            //response.Success
+            //Trace.WriteLine("And now back in the main method");
 
-        public async static Task<LastAlbum> DoThing()
-        {
-            return await LastFmClient.InitialiseLastFmClient();
+            //Trace.WriteLine("And now back in the main method");
+            //Trace.WriteLine($"Grimes has {response.Result.PlayCount} listeners!");
         }
     }
 }

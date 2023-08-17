@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Diagnostics;
+using IF.Lastfm.Core.Scrobblers;
 using SpotifyAPI.Web;
+using VXMusic.Lastfm;
+using VXMusic.Lastfm.Scrobbling;
 using VXMusic.Recognition.AudD;
 using VXMusic.Recognition.Shazam;
 using VXMusic.Spotify;
@@ -25,18 +23,18 @@ namespace VXMusic
     }
 
 
-    
+
     public class VXMusicAPI
     {
         private static XSOverlay _xsOverlay = new XSOverlay();
         //VXMusicSession
 
         public static void RunRecording()
-        { 
+        {
             WindowsAudioDeviceListener recorder = new WindowsAudioDeviceListener();
 
             recorder.StartRecording();
-            
+
             _xsOverlay.SendNotification("VXMusic is Listening...", "", recorder.RecordingTimeSeconds);
             Trace.WriteLine("Recording started.");
 
@@ -77,41 +75,61 @@ namespace VXMusic
                     throw new ArgumentException("Invalid Notification Service specified.");
             }
         }
-        
+
         //public async static Task<IApiClientResponse> RunRecognition()
         //{
-            //var shazamClient = new ShazamClient(); // 3-5 seconds
-            //var result = await shazamClient.RunRecognition();
+        //var shazamClient = new ShazamClient(); // 3-5 seconds
+        //var result = await shazamClient.RunRecognition();
 
-            //var audDClient = new AudDClient();
-            //var result = await audDClient.RunRecognition();
+        //var audDClient = new AudDClient();
+        //var result = await audDClient.RunRecognition();
 
-            //if (result.status == "error")
-            //{
-            //    _xsOverlay.XSNotification("Recognition failed! Oh jaysus", "", 5);
-            //    Trace.WriteLine("Recognition failed! Oh jaysus");
-            //    Environment.Exit(0);
-            //} else if (result.result == null)
-            //{
-            //    _xsOverlay.XSNotification("Oops, couldn't get that.", "Tech Tip: Have you tried turning up your World Volume?", 5);
-            //    Trace.WriteLine("Oops, couldn't get that. Tech Tip: Have you tried turning up your World Volume?");
-            //    Environment.Exit(0);
-            //} else
-            //{
-            //    _xsOverlay.XSNotification(result.result.artist, result.result.title, 8);
-            //    Trace.WriteLine($"{result.result.artist}: {result.result.title}");
+        //if (result.status == "error")
+        //{
+        //    _xsOverlay.XSNotification("Recognition failed! Oh jaysus", "", 5);
+        //    Trace.WriteLine("Recognition failed! Oh jaysus");
+        //    Environment.Exit(0);
+        //} else if (result.result == null)
+        //{
+        //    _xsOverlay.XSNotification("Oops, couldn't get that.", "Tech Tip: Have you tried turning up your World Volume?", 5);
+        //    Trace.WriteLine("Oops, couldn't get that. Tech Tip: Have you tried turning up your World Volume?");
+        //    Environment.Exit(0);
+        //} else
+        //{
+        //    _xsOverlay.XSNotification(result.result.artist, result.result.title, 8);
+        //    Trace.WriteLine($"{result.result.artist}: {result.result.title}");
 
-            //    return result;
-            //}
+        //    return result;
+        //}
 
-         //   return null;
+        //   return null;
         //}
 
         public async static Task<PrivateUser> LinkSpotify()
         {
             var spotify = await SpotifyClientBuilder.Instance;
             return await spotify.UserProfile.Current();
-        }        
+        }
+
+        public async static Task<bool> LinkLastfm()
+        {
+            var last = await LastfmClientBuilder.Instance;
+            return await LastfmClientBuilder.Login("", "gGzMvn#=EV!%ii6bWLvU41YT");
+        }
+
+        public async static Task<ScrobbleResponse> Scrobble(string artist, string album, string trackName)
+        {
+            var scrobbler = new LastfmScrobbler();
+
+            var response = await scrobbler.Scrobble(artist, album, trackName);
+
+            if (response.Success)
+            {
+                Trace.WriteLine("Successfully Scrobbled!");
+            }
+
+            return response;
+        }
         
         public async static void ReportTrackToSpotifyPlaylist(IApiClientResponse result)
         {
