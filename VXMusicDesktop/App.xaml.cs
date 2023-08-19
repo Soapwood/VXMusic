@@ -42,17 +42,20 @@ namespace VXMusicDesktop
             {
                 SpotifySettings = new SpotifySettings()
                 {
-                    ClientId = configuration["Recognition:Shazam:ClientId"]
+                    ClientId = configuration["Connections:Spotify:ClientId"]
                 },
 
                 LastfmSettings = new LastfmSettings()
                 {
-                    ClientId = configuration["Recognition:Shazam:ClientId"],
-                    ClientSecret = configuration["Recognition:Shazam:ClientSecret"]
+                    ClientId = configuration["Connections:Lastfm:ClientId"],
+                    ClientSecret = configuration["Connections:Lastfm:ClientSecret"],
+                    Username = configuration["Connections:Lastfm:Username"],
+                    Password = configuration["Connections:Lastfm:Password"]
                 }
             };
 
-            VXMusicSession.InitialiseVXMusicSession();
+            VXMusicSession.InitialiseVXMusicSession(recognitionSettings, connectionsSettings);
+
         }
     }
 }

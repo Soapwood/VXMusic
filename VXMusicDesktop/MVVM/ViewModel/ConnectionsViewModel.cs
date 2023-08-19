@@ -23,16 +23,19 @@ namespace VXMusicDesktop.MVVM.ViewModel
             var response = VXMusicAPI.LinkSpotify();
             if(response != null)
             {
-                App.VXMusicSession.ConnectionsSettings.IsSpotifyConnected = true;
+                VXMusicSession.ConnectionsSettings.IsSpotifyConnected = true;
             }
         }
 
         private void PerformLinkLastfmButtonClick(object commandParameter)
         {
-            var response = VXMusicAPI.LinkLastfm();
+            var response = VXMusicAPI.LinkLastfm(VXMusicSession.ConnectionsSettings.LastfmSettings.ClientId,
+                                                    VXMusicSession.ConnectionsSettings.LastfmSettings.ClientSecret,
+                                                    VXMusicSession.ConnectionsSettings.LastfmSettings.Username,
+                                                    VXMusicSession.ConnectionsSettings.LastfmSettings.Password);
             if (response != null)
             {
-                App.VXMusicSession.ConnectionsSettings.IsLastfmConnected = true;
+                VXMusicSession.ConnectionsSettings.IsLastfmConnected = true;
             }
         }
     }

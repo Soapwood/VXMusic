@@ -4,23 +4,21 @@ namespace VXMusic.Lastfm
 {
     internal class LastfmClientBuilder
     {
-        private static readonly Lazy<Task<LastfmClient>> _lastfmClient = 
-            new Lazy<Task<LastfmClient>>(() => CreateLastfmClient());
+        //private static readonly Lazy<Task<LastfmClient>> _lastfmClient = 
+        //    new Lazy<Task<LastfmClient>>(() => CreateLastfmClient());
 
         public static HttpClient _httpClient;
-        public static Task<LastfmClient> Instance => _lastfmClient.Value;
+        public static LastfmClient Instance;
 
-        private static readonly string _clientId = "";
-        private static readonly string _clientSecret = "";
-
-        public async static Task<LastfmClient> CreateLastfmClient()
+        public async static Task<LastfmClient> CreateLastfmClient(string clientId, string clientSecret)
         {
-            return new LastfmClient(_clientId, _clientSecret);
+            Instance = new LastfmClient(clientId, clientSecret);
+            return Instance;
         }
         
         public static async Task<bool> Login(string username, string password)
         {
-            var lastfm = await LastfmClientBuilder.Instance;
+            var lastfm = LastfmClientBuilder.Instance;
             
             var lastResponse = await lastfm.Auth.GetSessionTokenAsync(username, password);
             return lastfm.Auth.Authenticated;

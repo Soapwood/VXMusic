@@ -111,10 +111,11 @@ namespace VXMusic
             return await spotify.UserProfile.Current();
         }
 
-        public async static Task<bool> LinkLastfm()
+        public async static Task<bool> LinkLastfm(string clientId, string clientSecret, 
+                                                        string username, string password)
         {
-            var last = await LastfmClientBuilder.Instance;
-            return await LastfmClientBuilder.Login("", "gGzMvn#=EV!%ii6bWLvU41YT");
+            var last = await LastfmClientBuilder.CreateLastfmClient(clientId, clientSecret);
+            return await LastfmClientBuilder.Login(username, password);
         }
 
         public async static Task<ScrobbleResponse> Scrobble(string artist, string album, string trackName)

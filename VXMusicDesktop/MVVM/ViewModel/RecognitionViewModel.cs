@@ -85,7 +85,7 @@ namespace VXMusicDesktop.MVVM.ViewModel
 
         private void ProcessRecognitionApiState()
         {
-            switch (App.VXMusicSession.RecognitionSettings.CurrentRecognitionApi)
+            switch (VXMusicSession.RecognitionSettings.CurrentRecognitionApi)
             {
                 case RecognitionApi.Shazam:
                     IsShazamApiEnabled = true;
@@ -107,16 +107,16 @@ namespace VXMusicDesktop.MVVM.ViewModel
         private void PerformShazamButtonClick(object commandParameter)
         {
             
-            App.VXMusicSession.RecognitionSettings.CurrentRecognitionApi = RecognitionApi.Shazam;
-            App.VXMusicSession.RecognitionClient = new ShazamClient();
+            VXMusicSession.RecognitionSettings.CurrentRecognitionApi = RecognitionApi.Shazam;
+            VXMusicSession.RecognitionClient = new ShazamClient();
 
             ProcessRecognitionApiState();
         }
 
         private void PerformAudDButtonClick(object commandParameter)
         {
-            App.VXMusicSession.RecognitionSettings.CurrentRecognitionApi = RecognitionApi.AudD;
-            App.VXMusicSession.RecognitionClient = new AudDClient();
+            VXMusicSession.RecognitionSettings.CurrentRecognitionApi = RecognitionApi.AudD;
+            VXMusicSession.RecognitionClient = new AudDClient();
 
             ProcessRecognitionApiState();
         }
@@ -126,26 +126,26 @@ namespace VXMusicDesktop.MVVM.ViewModel
             // TODO Two recognitions can run at the same time, add check to disable button if it's already running
             VXMusicAPI.RunRecording();
             //var result = //await VXMusicAPI.RunRecognition();
-            var result = await App.VXMusicSession.RecognitionClient.RunRecognition();
+            var result = await VXMusicSession.RecognitionClient.RunRecognition();
 
             if (result.Status == Status.Error)
             {
-                App.VXMusicSession.NotificationClient.SendNotification("Recognition failed! Oh jaysus", "", 5);
+                VXMusicSession.NotificationClient.SendNotification("Recognition failed! Oh jaysus", "", 5);
                 Trace.WriteLine("Recognition failed! Oh jaysus");
                 //Environment.Exit(0);
             }
             else if (result.Status == Status.NoMatches || result.Result == null)
             {
-                App.VXMusicSession.NotificationClient.SendNotification("Oops, couldn't get that.", "Tech Tip: Have you tried turning up your World Volume?", 5);
+                VXMusicSession.NotificationClient.SendNotification("Oops, couldn't get that.", "Tech Tip: Have you tried turning up your World Volume?", 5);
                 Trace.WriteLine("Oops, couldn't get that. Tech Tip: Have you tried turning up your World Volume?");
             }
             else
             {
-                App.VXMusicSession.NotificationClient.SendNotification($"{result.Result.Artist} - {result.Result.Title}", $"{result.Result.Album} ({result.Result.ReleaseDate})", 8);
+                VXMusicSession.NotificationClient.SendNotification($"{result.Result.Artist} - {result.Result.Title}", $"{result.Result.Album} ({result.Result.ReleaseDate})", 8);
                 Trace.WriteLine($"{result.Result.Artist} - {result.Result.Title} {result.Result.Album} ({result.Result.ReleaseDate})");
             }
 
-            if(result.Result != null && App.VXMusicSession.ConnectionsSettings.IsSpotifyConnected)
+            if(result.Result != null && VXMusicSession.ConnectionsSettings.IsSpotifyConnected)
                 VXMusicAPI.ReportTrackToSpotifyPlaylist(result);
 
             if (result.Result != null)

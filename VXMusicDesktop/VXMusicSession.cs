@@ -14,18 +14,18 @@ public class VXMusicSession
     // Spotify Connected
     // Notification Options
 
-    public RecognitionSettings? RecognitionSettings;
-    public NotificationSettings? NotificationSettings;
-    public ConnectionsSettings? ConnectionsSettings;
+    public static RecognitionSettings? RecognitionSettings;
+    public static NotificationSettings? NotificationSettings;
+    public static ConnectionsSettings? ConnectionsSettings;
 
-    public IRecognitionClient? RecognitionClient;
-    public INotificationClient? NotificationClient;
+    public static IRecognitionClient? RecognitionClient;
+    public static INotificationClient? NotificationClient;
 
-    public void InitialiseVXMusicSession()
+    public void InitialiseVXMusicSession(RecognitionSettings recognitionSettings, ConnectionsSettings connectionsSettings)
     {
-        RecognitionSettings = new RecognitionSettings();
+        RecognitionSettings = recognitionSettings;
         NotificationSettings = new NotificationSettings();
-        ConnectionsSettings = new ConnectionsSettings();
+        ConnectionsSettings = connectionsSettings;
 
         RecognitionClient = RecognitionSettings.GetClientFromSetRecognitionApi(); //VXMusicAPI.SetRecognitionApi(recognitionSettings.CurrentRecognitionApi);
         NotificationClient = new XSOverlay(); //VXMusicAPI.SetNotificationClient(notificationSettings.CurrentNotificationService);
@@ -126,6 +126,8 @@ public class LastfmSettings
 {
     public required string ClientId { get; set; }
     public required string ClientSecret { get; set; }
+    public required string Username { get; set; }
+    public required string Password { get; set; }
 }
 
 public class LoggingSettings
