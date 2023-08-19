@@ -2,6 +2,7 @@
 using IF.Lastfm.Core.Scrobblers;
 using SpotifyAPI.Web;
 using VXMusic.Lastfm;
+using VXMusic.Lastfm.Authentication;
 using VXMusic.Lastfm.Scrobbling;
 using VXMusic.Recognition.AudD;
 using VXMusic.Recognition.Shazam;
@@ -117,7 +118,12 @@ namespace VXMusic
         public async static Task<bool> LinkLastfm(string clientId, string clientSecret, 
                                                         string username, string password)
         {
-            var last = await LastfmClientBuilder.CreateLastfmClient(clientId, clientSecret);
+            LastfmAuthentication.ClientId = clientId;
+            LastfmAuthentication.ClientSecret = clientSecret;
+            
+            // TODO Only do this if it hasn't already been set up
+            
+            var last = await LastfmClientBuilder.CreateLastfmClient();
             return await LastfmClientBuilder.Login(username, password);
         }
 

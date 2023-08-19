@@ -8,5 +8,6 @@ namespace VXMusic.Lastfm.Authentication;
 
 public class LastfmAuthentication
 {
-
+    public static string? ClientId { get; set; } 
+    public static string? ClientSecret { get; set; }
 }

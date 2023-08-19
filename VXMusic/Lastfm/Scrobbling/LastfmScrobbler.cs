@@ -13,7 +13,7 @@ public class LastfmScrobbler
     {
         try
         {
-            var lastfm = LastfmClientBuilder.Instance;
+            var lastfm = await LastfmClientBuilder.Instance;
 
             if (!lastfm.Auth.Authenticated)
             {

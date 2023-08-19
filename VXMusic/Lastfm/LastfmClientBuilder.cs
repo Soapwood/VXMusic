@@ -1,24 +1,23 @@
 ﻿using IF.Lastfm.Core.Api;
+using VXMusic.Lastfm.Authentication;
 
 namespace VXMusic.Lastfm
 {
     internal class LastfmClientBuilder
     {
-        //private static readonly Lazy<Task<LastfmClient>> _lastfmClient = 
-        //    new Lazy<Task<LastfmClient>>(() => CreateLastfmClient());
+        private static readonly Lazy<Task<LastfmClient>> _lastfmClient = 
+            new Lazy<Task<LastfmClient>>(() => CreateLastfmClient());
 
         public static HttpClient _httpClient;
-        public static LastfmClient Instance;
-
-        public async static Task<LastfmClient> CreateLastfmClient(string clientId, string clientSecret)
+        public static Task<LastfmClient> Instance = _lastfmClient.Value;
+        public async static Task<LastfmClient> CreateLastfmClient()
         {
-            Instance = new LastfmClient(clientId, clientSecret);
-            return Instance;
+            return new LastfmClient(LastfmAuthentication.ClientId, LastfmAuthentication.ClientSecret);
         }
         
         public static async Task<bool> Login(string username, string password)
         {
-            var lastfm = LastfmClientBuilder.Instance;
+            var lastfm = await LastfmClientBuilder.Instance;
             
             var lastResponse = await lastfm.Auth.GetSessionTokenAsync(username, password);
             return lastfm.Auth.Authenticated;
