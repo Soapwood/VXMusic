@@ -6,6 +6,7 @@ using VXMusic.Lastfm.Scrobbling;
 using VXMusic.Recognition.AudD;
 using VXMusic.Recognition.Shazam;
 using VXMusic.Spotify;
+using VXMusic.Spotify.Authentication;
 
 namespace VXMusic
 {
@@ -105,9 +106,11 @@ namespace VXMusic
         //   return null;
         //}
 
-        public async static Task<PrivateUser> LinkSpotify()
+        public async static Task<PrivateUser> LinkSpotify(string clientId)
         {
-            var spotify = await SpotifyClientBuilder.Instance;
+            SpotifyAuthentication.ClientId = clientId;
+            
+            var spotify = await SpotifyClientBuilder.CreateSpotifyClient();
             return await spotify.UserProfile.Current();
         }
 

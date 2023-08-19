@@ -2,18 +2,19 @@ using Newtonsoft.Json;
 using SpotifyAPI.Web;
 using SpotifyAPI.Web.Auth;
 using System.Diagnostics;
+using System.Security.Authentication;
 
 namespace VXMusic.Spotify.Authentication;
 
 public class SpotifyAuthentication
 {
     private const string CredentialsPath = "credentials.json";
-    private static readonly string _clientId = "52e2f3931eab490c99039b3217b697d7";
+    public static string? ClientId { get; set; } 
 
     private static readonly EmbedIOAuthServer _server = new(new Uri("http://localhost:5543/callback"), 5543);
 
     public static SpotifyClientConfig SpotifyClientConfig;
-    
+
     private static void Exiting()
     {
         Console.CursorVisible = true;
@@ -24,11 +25,10 @@ public class SpotifyAuthentication
         // This is a bug in the SWAN Logging library, need this hack to bring back the cursor
         AppDomain.CurrentDomain.ProcessExit += (sender, e) => Exiting();
 
-        if (string.IsNullOrEmpty(_clientId))
-         {
-            throw new NullReferenceException( // TODO Change this
-                "Please set SPOTIFY_CLIENT_ID via environment variables before starting the program"
-            );
+        if (string.IsNullOrEmpty(ClientId))
+        {
+            throw new AuthenticationException("Spotify ClientId has not been set." +
+                                              "You can set it statically via SpotifyClientBuilder.ClientId");
         }
 
         if (File.Exists(CredentialsPath))
@@ -52,7 +52,7 @@ public class SpotifyAuthentication
         var json = await File.ReadAllTextAsync(CredentialsPath);
         var token = JsonConvert.DeserializeObject<PKCETokenResponse>(json);
 
-        var authenticator = new PKCEAuthenticator(_clientId!, token!);
+        var authenticator = new PKCEAuthenticator(SpotifyAuthentication.ClientId!, token!);
         authenticator.TokenRefreshed += (sender, token) =>
             File.WriteAllText(CredentialsPath, JsonConvert.SerializeObject(token));
 
@@ -82,14 +82,14 @@ public class SpotifyAuthentication
         {
             await _server.Stop();
             var token = await new OAuthClient().RequestToken(
-                new PKCETokenRequest(_clientId!, response.Code, _server.BaseUri, verifier)
+                new PKCETokenRequest(SpotifyAuthentication.ClientId!, response.Code, _server.BaseUri, verifier)
             );
 
             await File.WriteAllTextAsync(CredentialsPath, JsonConvert.SerializeObject(token));
             await Start();
         };
 
-        var request = new LoginRequest(_server.BaseUri, _clientId!, LoginRequest.ResponseType.Code)
+        var request = new LoginRequest(_server.BaseUri, SpotifyAuthentication.ClientId!, LoginRequest.ResponseType.Code)
         {
             CodeChallenge = challenge,
             CodeChallengeMethod = "S256",

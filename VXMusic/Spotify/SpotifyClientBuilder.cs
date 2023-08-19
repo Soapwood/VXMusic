@@ -1,3 +1,4 @@
+using System.Security.Authentication;
 using SpotifyAPI.Web;
 using SpotifyAPI.Web.Auth;
 using VXMusic.Spotify.Authentication;
@@ -15,18 +16,12 @@ public class SpotifyClientBuilder
         new Lazy<Task<SpotifyClient>>(() => CreateSpotifyClient());
 
     public static Task<SpotifyClient> Instance => _spotifyClient.Value;
-    
-    private string _spotifyAccountEndpoint = "https://accounts.spotify.com/api/token";
-    
-    private string _clientId = "52e2f3931eab490c99039b3217b697d7";
-    
-    private static async Task<SpotifyClient> CreateSpotifyClient()
-    {
-        //var spotifyClient = new SpotifyClientBuilder();
-        //ClientCredentialsTokenResponse clientCredentials = await spotifyClient.GetAccessToken();
-        await SpotifyAuthentication.GetSpotifyUserAuthentication();
 
-        
+    private readonly string _spotifyAccountEndpoint = "https://accounts.spotify.com/api/token";
+
+    public static async Task<SpotifyClient> CreateSpotifyClient()
+    {
+        await SpotifyAuthentication.GetSpotifyUserAuthentication();
         return new SpotifyClient(SpotifyAuthentication.SpotifyClientConfig);
     }
 
