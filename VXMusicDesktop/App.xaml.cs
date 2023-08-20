@@ -1,7 +1,9 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Windows;
 using Microsoft.Extensions.Configuration;
+using NLog;
 
 namespace VXMusicDesktop
 {
@@ -10,11 +12,29 @@ namespace VXMusicDesktop
     /// </summary>
     public partial class App : Application
     {
+        private readonly ILogger _logger = LogManager.GetCurrentClassLogger();
         public static VXMusicSession VXMusicSession;
-
+        
+        private static readonly string VxMusicLogo = """                                                                                          
+                              --:                                                         
+                           .=*#+                    .::                                   
+               :=:       .+%%%=                     +#*       :--=.     #%:               
+    -*.      -%@#:     -#@@%+@@%      .=*@@= *@*   -@@#  :+#@@@%*=:    %@@:  -+#@@@@@=    
+    #@#    -%@@#@%-  =@@@%-.@@@@:  :*@@@@@%:%@@-   %@@==@@@*-.        #@@+.*@@#-.         
+    %@%  -%@@@= .#@#@@@#- .@@@@@=+@@@@@@@@-@@@:   *@@@+@@@#%%@@@%*   #@@#=@@@-            
+    @@# *@@@%.  .*@@@@:  .@@@+@@@@@@+*@@%.%@@:   +@@@=.---::::@@@@. #@@#-@@@=             
+    %@%@@@@=   *@@@+#@*  %@%. *@@#= #@@* =@@#  :#@@@+      -*@@@%: #@@* *@@@-     .::.    
+    +@@@@#.  .@@#-   -@@-%%    ..  *@@=  =@@@%@@@@*:   :=#@@@@#-  #@@+  =@@@@%#%%%%*-     
+     =@#-     .        *@*         +*.    =#%##+-   :=*%@@%+-    +@@-    .=*****=-        
+                        .*+        .             .:*#%*+-        +*.                      
+                          :                       ..             .                        
+""";
+        // TODO https://blog.elmah.io/logging-and-global-error-handling-in-net-7-wpf-applications/
         public App()
         {
-            Trace.WriteLine("Booting VXMusic");
+            _logger.Info(VxMusicLogo);
+            _logger.Trace($"Booting VXMusic {DateTime.Now}");
+
             VXMusicSession = new VXMusicSession();
 
             IConfiguration configuration = new ConfigurationBuilder()
