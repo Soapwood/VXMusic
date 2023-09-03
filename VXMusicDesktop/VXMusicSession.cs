@@ -1,6 +1,9 @@
+using NLog;
 using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using VXMusic;
+using VXMusic.API;
 using VXMusic.Recognition.AudD;
 using VXMusic.Recognition.Shazam;
 
@@ -14,14 +17,16 @@ public class VXMusicSession
     // Spotify Connected
     // Notification Options
 
-    public static RecognitionSettings? RecognitionSettings;
+    public static readonly ILogger Logger = LogManager.GetCurrentClassLogger();
+
+    public RecognitionSettings? RecognitionSettings;
     public static NotificationSettings? NotificationSettings;
     public static ConnectionsSettings? ConnectionsSettings;
 
     public static IRecognitionClient? RecognitionClient;
     public static INotificationClient? NotificationClient;
 
-    public void InitialiseVXMusicSession(RecognitionSettings recognitionSettings, ConnectionsSettings connectionsSettings)
+    public VXMusicSession(RecognitionSettings recognitionSettings, ConnectionsSettings connectionsSettings)
     {
         RecognitionSettings = recognitionSettings;
         NotificationSettings = new NotificationSettings();
@@ -29,6 +34,24 @@ public class VXMusicSession
 
         RecognitionClient = RecognitionSettings.GetClientFromSetRecognitionApi(); //VXMusicAPI.SetRecognitionApi(recognitionSettings.CurrentRecognitionApi);
         NotificationClient = new XSOverlay(); //VXMusicAPI.SetNotificationClient(notificationSettings.CurrentNotificationService);
+    }
+
+    public void SetRecognitionClient(RecognitionApi recognitionApi)
+    {
+        RecognitionSettings.CurrentRecognitionApi = recognitionApi;
+
+        switch (recognitionApi)
+        {
+            case RecognitionApi.Shazam:
+                RecognitionClient = new ShazamClient(Logger);
+                return;
+            case RecognitionApi.AudD:
+                RecognitionClient = new AudDClient(Logger);
+                return;
+            default:
+                Trace.WriteLine("Recognition type not found!");
+                return;
+        }
     }
 }
 
@@ -43,10 +66,10 @@ public class RecognitionSettings
 
     public RecognitionSettings()
     {
-        CurrentRecognitionApi = GetRecognitionApi();
+        CurrentRecognitionApi = GetCurrentRecognitionApiFromSettings();
     }
 
-    public static RecognitionApi GetRecognitionApi()
+    public static RecognitionApi GetCurrentRecognitionApiFromSettings()
     {
         Enum.TryParse<RecognitionApi>(VXMusicDesktop.Properties.Settings.Default.RecognitionAPI, out var currentRecognitionApi);
         return currentRecognitionApi;
@@ -57,19 +80,19 @@ public class RecognitionSettings
         return VXMusicDesktop.Properties.Settings.Default.RecognitionAPI;
     }
 
-    public static void SetRecognitionApi(RecognitionApi api)
+    public static void SetRecognitionApiInSettings(RecognitionApi api)
     {
         VXMusicDesktop.Properties.Settings.Default.RecognitionAPI = api.ToString();
     }
 
     public static IRecognitionClient GetClientFromSetRecognitionApi()
     {
-        switch (GetRecognitionApi())
+        switch (GetCurrentRecognitionApiFromSettings())
         {
             case RecognitionApi.Shazam:
-                return new ShazamClient();
+                return new ShazamClient(VXMusicSession.Logger);
             case RecognitionApi.AudD:
-                return new AudDClient();
+                return new AudDClient(VXMusicSession.Logger);
             default:
                 return null;
         }

@@ -35,8 +35,6 @@ namespace VXMusicDesktop
             _logger.Info(VxMusicLogo);
             _logger.Trace($"Booting VXMusic {DateTime.Now}");
 
-            VXMusicSession = new VXMusicSession();
-
             IConfiguration configuration = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
@@ -74,8 +72,7 @@ namespace VXMusicDesktop
                 }
             };
 
-            VXMusicSession.InitialiseVXMusicSession(recognitionSettings, connectionsSettings);
-
+            VXMusicSession = new VXMusicSession(recognitionSettings, connectionsSettings);
         }
     }
 }

@@ -1,27 +1,59 @@
 using NAudio.Lame;
 using NAudio.Wave;
+using NLog;
 
 namespace VXMusic.Conversion;
 
 public class AudioDataConverter
 {
-    public static async Task<byte[]> ConvertWavToMp3Async() // TODO Inject bytes not file 
+    private ILogger _logger;
+
+    public AudioDataConverter(ILogger logger) 
     {
+        _logger = logger;
+    }
+
+    public byte[]? ConvertWavToMp3Async() // TODO Inject bytes not file 
+    {
+        _logger.Info("Converting WAV to MP3.");
+
         byte[] audioData = File.ReadAllBytes("output.wav"); // TODO Really need to fucking use just bytes.
-        
-        using(var retMs = new MemoryStream())
-        using (var memoryStream = new MemoryStream(audioData))
-        using(var waveFileReader = new WaveFileReader(memoryStream))
-        using (var mp3FileWriter = new LameMP3FileWriter(retMs, waveFileReader.WaveFormat, 128))
+
+        if (audioData == null)
         {
-            waveFileReader.CopyTo(mp3FileWriter);
-            return retMs.ToArray();
+            _logger.Info("Could not read any bytes from output.wav, skipping conversion.");
+            return null;
+        }
+        else
+        {
+            _logger.Info("Audio recording read succeeded. Converting to MP3");
+
+            using (var retMs = new MemoryStream())
+            using (var memoryStream = new MemoryStream(audioData))
+            using (var waveFileReader = new WaveFileReader(memoryStream))
+            using (var mp3FileWriter = new LameMP3FileWriter(retMs, waveFileReader.WaveFormat, 128))
+            {
+                waveFileReader.CopyTo(mp3FileWriter);
+                return retMs.ToArray();
+            }
         }
     }
     
-    public static async Task<string> ConvertWavToBase64EncodedString() 
+    public string? ConvertWavToBase64EncodedString() 
     {
+        _logger.Info("Converting WAV to Base64 encoded string.");
+
         byte[] audioData = File.ReadAllBytes("output.wav"); // TODO Really need to fucking use just bytes.
-        return Convert.ToBase64String(audioData);
+        
+        if(audioData == null)
+        {
+            _logger.Info("Could not read any bytes from output.wav, skipping conversion.");
+            return null;
+        }
+        else
+        {
+            _logger.Info("Audio recording read succeeded. Converting to Base64 String.");
+            return Convert.ToBase64String(audioData);
+        }
     }
 }

@@ -9,10 +9,11 @@ using VXMusic.Recognition.Shazam;
 using VXMusic.Spotify;
 using VXMusic.Spotify.Authentication;
 
-namespace VXMusic
+namespace VXMusic.API
 {
-    
-    public enum RecognitionApi {
+
+    public enum RecognitionApi
+    {
         Shazam,
         AudD,
         Unknown
@@ -52,18 +53,18 @@ namespace VXMusic
             _xsOverlay.SendNotification("Sounds great! Just a moment..", "", 2);
         }
 
-        public static IRecognitionClient SetRecognitionApi(RecognitionApi recognitionApi)
-        {
-            switch (recognitionApi)
-            {
-                case RecognitionApi.Shazam:
-                    return new ShazamClient(); // 3-5 seconds
-                case RecognitionApi.AudD:
-                    return new AudDClient(); // 10 seconds
-                default:
-                    throw new ArgumentException("Invalid Recognition API Specified.");
-            }
-        }
+        //public static IRecognitionClient SetRecognitionApi(RecognitionApi recognitionApi)
+        //{
+        //    switch (recognitionApi)
+        //    {
+        //        case RecognitionApi.Shazam:
+        //            return new ShazamClient(); // 3-5 seconds
+        //        case RecognitionApi.AudD:
+        //            return new AudDClient(); // 10 seconds
+        //        default:
+        //            throw new ArgumentException("Invalid Recognition API Specified.");
+        //    }
+        //}
 
         public static INotificationClient SetNotificationClient(NotificationService notificationService)
         {
@@ -110,19 +111,19 @@ namespace VXMusic
         public async static Task<PrivateUser> LinkSpotify(string clientId)
         {
             SpotifyAuthentication.ClientId = clientId;
-            
+
             var spotify = await SpotifyClientBuilder.CreateSpotifyClient();
             return await spotify.UserProfile.Current();
         }
 
-        public async static Task<bool> LinkLastfm(string clientId, string clientSecret, 
+        public async static Task<bool> LinkLastfm(string clientId, string clientSecret,
                                                         string username, string password)
         {
             LastfmAuthentication.ClientId = clientId;
             LastfmAuthentication.ClientSecret = clientSecret;
-            
+
             // TODO Only do this if it hasn't already been set up
-            
+
             var last = await LastfmClientBuilder.CreateLastfmClient();
             return await LastfmClientBuilder.Login(username, password);
         }
@@ -140,8 +141,8 @@ namespace VXMusic
 
             return response;
         }
-        
-        public async static void ReportTrackToSpotifyPlaylist(IApiClientResponse result)
+
+        public async static void ReportTrackToSpotifyPlaylist(IRecognitionApiClientResponse result)
         {
             var spotify = await SpotifyClientBuilder.Instance;
 
@@ -169,11 +170,12 @@ namespace VXMusic
 
             var existingPlaylist = SpotifyPlaylistManager.GetPlaylistIdByNameIfExists(playlistName, playlists);
 
-            if ( existingPlaylist == null ){
+            if (existingPlaylist == null)
+            {
                 var response = await SpotifyPlaylistManager.CreatePlaylist(me.Id, playlistName, false); // TODO config isPublic above
                 // TODO check if null
                 await SpotifyPlaylistManager.AddTrackToPlaylist(response.Id, playlistAddItemsRequest);
-            } 
+            }
             else
             {
                 await SpotifyPlaylistManager.AddTrackToPlaylist(existingPlaylist, playlistAddItemsRequest);

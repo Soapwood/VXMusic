@@ -7,7 +7,7 @@ using System.Diagnostics;
 
 namespace VXMusic;
 
-public class AudDResponse : IApiClientResponse
+public class AudDResponse : IRecognitionApiClientResponse
 {
     public Status Status { get; set; }
     public Result? Result { get; set; }
@@ -28,7 +28,7 @@ public class AudDHttpClient : IHttpClient
         ApiToken = config["AudD:ApiToken"];
     }
 
-    public async Task<IApiClientResponse> GetArtist(byte[] audioBytes)
+    public async Task<IRecognitionApiClientResponse> GetArtist(byte[] audioBytes)
     {
         using (var requestContent = new MultipartFormDataContent())
         {

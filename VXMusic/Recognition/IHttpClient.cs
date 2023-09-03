@@ -5,7 +5,7 @@ namespace VXMusic;
 
 public interface IHttpClient
 {
-    public Task<IApiClientResponse> GetArtist(byte[] audioBytes);
+    public Task<IRecognitionApiClientResponse> GetArtist(byte[] audioBytes);
     
 }
 

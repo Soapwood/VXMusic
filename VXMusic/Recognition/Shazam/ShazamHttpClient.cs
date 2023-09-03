@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace VXMusic.Recognition.Shazam;
 
-public class ShazamResponse : IApiClientResponse 
+public class ShazamResponse : IRecognitionApiClientResponse 
 {
     public Status Status { get; set; }
     public Result Result { get; set; }
@@ -11,7 +11,7 @@ public class ShazamResponse : IApiClientResponse
 
 public class ShazamHttpClient
 {
-    public async Task<IApiClientResponse> GetArtist(string audioDataBase64)
+    public async Task<IRecognitionApiClientResponse> GetArtist(string audioDataBase64)
     {
         var client = new HttpClient();
 
@@ -36,7 +36,7 @@ public class ShazamHttpClient
         {
             response.EnsureSuccessStatusCode();
             var body = await response.Content.ReadAsStringAsync();
-
+            // Log response message!
             ShazamHttpResponse shazamHttpResponse = JsonConvert.DeserializeObject<ShazamHttpResponse>(body);
 
             if(shazamHttpResponse.matches.Count == 0)

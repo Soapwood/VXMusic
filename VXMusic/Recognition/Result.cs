@@ -17,10 +17,11 @@ public enum Status
 {
     Success,
     Error,
-    NoMatches
+    NoMatches,
+    RecordingError
 }
 
-public interface IApiClientResponse
+public interface IRecognitionApiClientResponse
 {
     public Status Status { get; }
     public Result Result { get; }

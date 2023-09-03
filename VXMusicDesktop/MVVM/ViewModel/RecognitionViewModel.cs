@@ -12,6 +12,7 @@ using VXMusic.Recognition.Shazam;
 using VXMusicDesktop.Core;
 using VXMusicDesktop;
 using System.ComponentModel;
+using VXMusic.API;
 
 namespace VXMusicDesktop.MVVM.ViewModel
 {
@@ -85,7 +86,7 @@ namespace VXMusicDesktop.MVVM.ViewModel
 
         private void ProcessRecognitionApiState()
         {
-            switch (VXMusicSession.RecognitionSettings.CurrentRecognitionApi)
+            switch (App.VXMusicSession.RecognitionSettings.CurrentRecognitionApi)
             {
                 case RecognitionApi.Shazam:
                     IsShazamApiEnabled = true;
@@ -106,18 +107,13 @@ namespace VXMusicDesktop.MVVM.ViewModel
 
         private void PerformShazamButtonClick(object commandParameter)
         {
-            
-            VXMusicSession.RecognitionSettings.CurrentRecognitionApi = RecognitionApi.Shazam;
-            VXMusicSession.RecognitionClient = new ShazamClient();
-
+            App.VXMusicSession.SetRecognitionClient(RecognitionApi.Shazam);
             ProcessRecognitionApiState();
         }
 
         private void PerformAudDButtonClick(object commandParameter)
         {
-            VXMusicSession.RecognitionSettings.CurrentRecognitionApi = RecognitionApi.AudD;
-            VXMusicSession.RecognitionClient = new AudDClient();
-
+            App.VXMusicSession.SetRecognitionClient(RecognitionApi.AudD);
             ProcessRecognitionApiState();
         }
 
@@ -138,6 +134,11 @@ namespace VXMusicDesktop.MVVM.ViewModel
             {
                 VXMusicSession.NotificationClient.SendNotification("Oops, couldn't get that.", "Tech Tip: Have you tried turning up your World Volume?", 5);
                 Trace.WriteLine("Oops, couldn't get that. Tech Tip: Have you tried turning up your World Volume?");
+            }
+            else if (result.Status == Status.RecordingError)
+            {
+                VXMusicSession.NotificationClient.SendNotification("I couldn't hear anything!", "Something messed up when recording audio. Check your audio device.", 10);
+                Trace.WriteLine("I couldn't hear anything! Something messed up when recording audio. Check your audio device.");
             }
             else
             {
