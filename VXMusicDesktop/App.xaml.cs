@@ -4,6 +4,8 @@ using System.IO;
 using System.Windows;
 using Microsoft.Extensions.Configuration;
 using NLog;
+using VXMusicDesktop.Branding;
+using VXMusicDesktop.Console;
 
 namespace VXMusicDesktop
 {
@@ -15,25 +17,15 @@ namespace VXMusicDesktop
         private readonly ILogger _logger = LogManager.GetCurrentClassLogger();
         public static VXMusicSession VXMusicSession;
         
-        private static readonly string VxMusicLogo = """                                                                                          
-                              --:                                                         
-                           .=*#+                    .::                                   
-               :=:       .+%%%=                     +#*       :--=.     #%:               
-    -*.      -%@#:     -#@@%+@@%      .=*@@= *@*   -@@#  :+#@@@%*=:    %@@:  -+#@@@@@=    
-    #@#    -%@@#@%-  =@@@%-.@@@@:  :*@@@@@%:%@@-   %@@==@@@*-.        #@@+.*@@#-.         
-    %@%  -%@@@= .#@#@@@#- .@@@@@=+@@@@@@@@-@@@:   *@@@+@@@#%%@@@%*   #@@#=@@@-            
-    @@# *@@@%.  .*@@@@:  .@@@+@@@@@@+*@@%.%@@:   +@@@=.---::::@@@@. #@@#-@@@=             
-    %@%@@@@=   *@@@+#@*  %@%. *@@#= #@@* =@@#  :#@@@+      -*@@@%: #@@* *@@@-     .::.    
-    +@@@@#.  .@@#-   -@@-%%    ..  *@@=  =@@@%@@@@*:   :=#@@@@#-  #@@+  =@@@@%#%%%%*-     
-     =@#-     .        *@*         +*.    =#%##+-   :=*%@@%+-    +@@-    .=*****=-        
-                        .*+        .             .:*#%*+-        +*.                      
-                          :                       ..             .                        
-""";
         // TODO https://blog.elmah.io/logging-and-global-error-handling-in-net-7-wpf-applications/
         public App()
         {
-            _logger.Info(VxMusicLogo);
-            _logger.Trace($"Booting VXMusic {DateTime.Now}");
+#if DEBUG
+            ConsoleHelper.AllocConsole();
+#endif
+
+            _logger.Info(ConsoleOutputBranding.VxMusicLogo + Environment.NewLine + ConsoleOutputBranding.CreatorInfo);
+            _logger.Trace($"Booting VXMusic...");
 
             IConfiguration configuration = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())

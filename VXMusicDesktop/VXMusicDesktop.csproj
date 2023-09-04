@@ -15,7 +15,7 @@
     <None Remove="Images\Spotify_Logo_RGB_Green.png" />
     <None Remove="Images\VXLogo.png" />
     <None Update="NLog.config">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 
