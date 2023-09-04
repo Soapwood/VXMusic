@@ -43,6 +43,7 @@
   <ItemGroup>
     <PackageReference Include="Inflatable.Lastfm.SQLite" Version="1.1.0.351" />
     <PackageReference Include="NLog" Version="5.2.3" />
+    <PackageReference Include="NLog.Extensions.Logging" Version="5.3.3" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="7.0.0" />
     <PackageReference Include="System.Windows.Interactivity.WPF" Version="2.0.20525" />
   </ItemGroup>

@@ -15,10 +15,10 @@
         <PackageReference Include="Inflatable.Lastfm.SQLite" Version="1.1.0.351" />
         <PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.0-preview.6.23329.7" />
         <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="8.0.0-preview.6.23329.7" />
+        <PackageReference Include="Microsoft.Extensions.Logging" Version="8.0.0-preview.7.23375.6" />
         <PackageReference Include="NAudio" Version="2.1.0" />
         <PackageReference Include="NAudio.Lame" Version="2.1.0" />
         <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-        <PackageReference Include="NLog" Version="5.2.3" />
         <PackageReference Include="SharpDX" Version="4.2.0" />
         <PackageReference Include="SharpDX.Direct3D11" Version="4.2.0" />
         <PackageReference Include="SpotifyAPI.Web" Version="7.0.0" />

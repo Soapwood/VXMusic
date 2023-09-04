@@ -1,11 +1,18 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using System.Runtime.Serialization;
 using System.Windows;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using NLog;
+using NLog.Extensions.Logging;
+using VXMusic.Recognition.Shazam;
 using VXMusicDesktop.Branding;
 using VXMusicDesktop.Console;
+using ILogger = Microsoft.Extensions.Logging.ILogger;
+using LogLevel = Microsoft.Extensions.Logging.LogLevel;
 
 namespace VXMusicDesktop
 {
@@ -14,7 +21,8 @@ namespace VXMusicDesktop
     /// </summary>
     public partial class App : Application
     {
-        private readonly ILogger _logger = LogManager.GetCurrentClassLogger();
+        public static ILogger Logger;
+        public static ServiceProvider ServiceProvider;
         public static VXMusicSession VXMusicSession;
         
         // TODO https://blog.elmah.io/logging-and-global-error-handling-in-net-7-wpf-applications/
@@ -23,9 +31,11 @@ namespace VXMusicDesktop
 #if DEBUG
             ConsoleHelper.AllocConsole();
 #endif
-
-            _logger.Info(ConsoleOutputBranding.VxMusicLogo + Environment.NewLine + ConsoleOutputBranding.CreatorInfo);
-            _logger.Trace($"Booting VXMusic...");
+            
+            ConfigureLogging();
+            
+            Logger.LogInformation(ConsoleOutputBranding.VxMusicLogo + Environment.NewLine + ConsoleOutputBranding.CreatorInfo);
+            Logger.LogTrace($"Booting VXMusic...");
 
             IConfiguration configuration = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
@@ -65,6 +75,25 @@ namespace VXMusicDesktop
             };
 
             VXMusicSession = new VXMusicSession(recognitionSettings, connectionsSettings);
+        }
+
+        public static void ConfigureLogging()
+        {
+            var services = new ServiceCollection();
+
+            services.AddLogging(builder =>
+            {
+                builder.ClearProviders();
+                builder.SetMinimumLevel(LogLevel.Trace);
+                builder.AddNLog("NLog.config"); // Configure NLog as needed
+            });
+            
+            services.AddSingleton<App>();
+            services.AddTransient<ShazamClient>();
+
+            ServiceProvider = services.BuildServiceProvider();
+            
+            Logger = ServiceProvider.GetRequiredService<ILogger<App>>();
         }
     }
 }

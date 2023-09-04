@@ -1,6 +1,6 @@
 using NAudio.Lame;
 using NAudio.Wave;
-using NLog;
+using Microsoft.Extensions.Logging;
 
 namespace VXMusic.Conversion;
 
@@ -15,18 +15,18 @@ public class AudioDataConverter
 
     public byte[]? ConvertWavToMp3Async() // TODO Inject bytes not file 
     {
-        _logger.Info("Converting WAV to MP3.");
+        _logger.Log(LogLevel.Information,"Converting WAV to MP3.");
 
         byte[] audioData = File.ReadAllBytes("output.wav"); // TODO Really need to fucking use just bytes.
 
         if (audioData == null)
         {
-            _logger.Info("Could not read any bytes from output.wav, skipping conversion.");
+            _logger.Log(LogLevel.Information,"Could not read any bytes from output.wav, skipping conversion.");
             return null;
         }
         else
         {
-            _logger.Info("Audio recording read succeeded. Converting to MP3");
+            _logger.Log(LogLevel.Information,"Audio recording read succeeded. Converting to MP3");
 
             using (var retMs = new MemoryStream())
             using (var memoryStream = new MemoryStream(audioData))
@@ -41,18 +41,18 @@ public class AudioDataConverter
     
     public string? ConvertWavToBase64EncodedString() 
     {
-        _logger.Info("Converting WAV to Base64 encoded string.");
+        _logger.Log(LogLevel.Information,"Converting WAV to Base64 encoded string.");
 
         byte[] audioData = File.ReadAllBytes("output.wav"); // TODO Really need to fucking use just bytes.
         
         if(audioData == null)
         {
-            _logger.Info("Could not read any bytes from output.wav, skipping conversion.");
+            _logger.Log(LogLevel.Information,"Could not read any bytes from output.wav, skipping conversion.");
             return null;
         }
         else
         {
-            _logger.Info("Audio recording read succeeded. Converting to Base64 String.");
+            _logger.Log(LogLevel.Information,"Audio recording read succeeded. Converting to Base64 String.");
             return Convert.ToBase64String(audioData);
         }
     }

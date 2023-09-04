@@ -2,6 +2,7 @@ using NLog;
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
+using Microsoft.Extensions.DependencyInjection;
 using VXMusic;
 using VXMusic.API;
 using VXMusic.Recognition.AudD;
@@ -16,9 +17,7 @@ public class VXMusicSession
     // Current Recognition Options
     // Spotify Connected
     // Notification Options
-
-    public static readonly ILogger Logger = LogManager.GetCurrentClassLogger();
-
+    
     public RecognitionSettings? RecognitionSettings;
     public static NotificationSettings? NotificationSettings;
     public static ConnectionsSettings? ConnectionsSettings;
@@ -43,10 +42,10 @@ public class VXMusicSession
         switch (recognitionApi)
         {
             case RecognitionApi.Shazam:
-                RecognitionClient = new ShazamClient(Logger);
+                RecognitionClient = App.ServiceProvider.GetRequiredService<ShazamClient>(); //new ShazamClient(App.Logger);
                 return;
             case RecognitionApi.AudD:
-                RecognitionClient = new AudDClient(Logger);
+                RecognitionClient = new AudDClient(App.Logger);
                 return;
             default:
                 Trace.WriteLine("Recognition type not found!");
@@ -90,9 +89,9 @@ public class RecognitionSettings
         switch (GetCurrentRecognitionApiFromSettings())
         {
             case RecognitionApi.Shazam:
-                return new ShazamClient(VXMusicSession.Logger);
+                return App.ServiceProvider.GetRequiredService<ShazamClient>();//new ShazamClient(App.Logger);
             case RecognitionApi.AudD:
-                return new AudDClient(VXMusicSession.Logger);
+                return new AudDClient(App.Logger);
             default:
                 return null;
         }

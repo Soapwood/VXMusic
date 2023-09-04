@@ -8,7 +8,8 @@ namespace VXMusicDesktop.Branding
 {
     public class ConsoleOutputBranding
     {
-        public static readonly string VxMusicLogo = """                                                     
+        public static readonly string VxMusicLogo = """   
+                                                  
                            .=*#+                    .::                                   
                :=:       .+%%%=                     +#*       :--=.     #%:               
     -*.      -%@#:     -#@@%+@@%      .=*@@= *@*   -@@#  :+#@@@%*=:    %@@:  -+#@@@@@=    

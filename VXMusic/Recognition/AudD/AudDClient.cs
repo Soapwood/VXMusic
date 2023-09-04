@@ -1,4 +1,4 @@
-using NLog;
+using Microsoft.Extensions.Logging;
 using VXMusic.Conversion;
 
 namespace VXMusic.Recognition.AudD;
@@ -23,7 +23,7 @@ public class AudDClient : IRecognitionClient
 
         if (audDAudioData == null)
         {
-            _logger.Info("Could not get suitable data for AudD Recognition. Skipping recognition.");
+            _logger.Log(LogLevel.Information,"Could not get suitable data for AudD Recognition. Skipping recognition.");
 
             return new AudDResponse()
             {
@@ -32,7 +32,7 @@ public class AudDClient : IRecognitionClient
         }
         else
         {
-            _logger.Info("Sending converted recorded data to AudD for Recognition.");
+            _logger.Log(LogLevel.Information,"Sending converted recorded data to AudD for Recognition.");
             return await _audDHttpClient.GetArtist(audDAudioData);
         } 
     }

@@ -1,12 +1,13 @@
-using NAudio.Lame;
 using NAudio.Wave;
 using NAudio.CoreAudioApi;
 using System.Diagnostics;
+using Microsoft.Extensions.Logging;
 
 namespace VXMusic;
 
 public class WindowsAudioDeviceListener
 {
+
     private WasapiLoopbackCapture Capture;
     private WaveFileWriter Writer;
     private readonly String BufferFile = "output.wav";
@@ -17,6 +18,9 @@ public class WindowsAudioDeviceListener
 
     public WindowsAudioDeviceListener()
     {
+        // _logger = logger;
+        // _logger.LogTrace("Creating WindowsAudioDeviceListener");
+        
         // WasapiLoopbackCapture allows to capture all audio on default audio device
         // https://github.com/naudio/NAudio/blob/master/Docs/WasapiLoopbackCapture.md
         Capture = new WasapiLoopbackCapture();
@@ -27,6 +31,7 @@ public class WindowsAudioDeviceListener
 
     public void StartRecording()
     {
+        // _logger.LogTrace("Starting Recording...");
         try
         {
             Capture.DataAvailable += OnDataAvailable;
@@ -38,7 +43,7 @@ public class WindowsAudioDeviceListener
         }
         catch (Exception ex)
         {
-            Trace.WriteLine("Error starting recording: " + ex.Message);
+            // _logger.LogError("Error starting recording: " + Environment.NewLine + ex.Message);
         }
     }
 
@@ -52,7 +57,7 @@ public class WindowsAudioDeviceListener
         }
         catch (Exception ex)
         {
-            Trace.WriteLine("Error stopping recording: " + ex.Message);
+            // _logger.LogError("Error stopping recording: " + Environment.NewLine + ex.Message);
         }
     }
 
@@ -68,7 +73,7 @@ public class WindowsAudioDeviceListener
         }
         catch (Exception ex)
         {
-            Trace.WriteLine("Error writing to file: " + ex.Message);
+            // _logger.LogError("Error writing to file:" + Environment.NewLine + ex.Message);
         }
     }
 
