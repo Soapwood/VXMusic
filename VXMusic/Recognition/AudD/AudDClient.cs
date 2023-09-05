@@ -5,26 +5,30 @@ namespace VXMusic.Recognition.AudD;
 
 public class AudDClient : IRecognitionClient
 {
-    private ILogger _logger;
+    private ILogger<AudDClient> _logger;
 
     private AudDHttpClient _audDHttpClient;
     
-    public AudDClient(ILogger logger)
+    public AudDClient(ILogger<AudDClient> logger)
     {
         _logger = logger;
+        _logger.LogInformation("Creating AudDClient.");
+
         _audDHttpClient = new AudDHttpClient();
     }
 
     public async Task<IRecognitionApiClientResponse> RunRecognition()
     {
+        _logger.LogInformation("Running recognition using AudD.");
+
         var converter = new AudioDataConverter(_logger);
 
         var audDAudioData = converter.ConvertWavToMp3Async();
 
         if (audDAudioData == null)
         {
-            _logger.Log(LogLevel.Information,"Could not get suitable data for AudD Recognition. Skipping recognition.");
-
+            _logger.LogInformation("Could not get suitable data for AudD Recognition. Skipping recognition.");
+            
             return new AudDResponse()
             {
                 Status = Status.RecordingError
@@ -32,7 +36,7 @@ public class AudDClient : IRecognitionClient
         }
         else
         {
-            _logger.Log(LogLevel.Information,"Sending converted recorded data to AudD for Recognition.");
+            _logger.LogInformation("Sending converted recorded data to AudD for Recognition.");
             return await _audDHttpClient.GetArtist(audDAudioData);
         } 
     }

@@ -46,10 +46,10 @@ public class VXMusicSession
         switch (recognitionApi)
         {
             case RecognitionApi.Shazam:
-                RecognitionClient = App.ServiceProvider.GetRequiredService<ShazamClient>(); //new ShazamClient(App.Logger);
+                RecognitionClient = App.ServiceProvider.GetRequiredService<ShazamClient>();
                 return;
             case RecognitionApi.AudD:
-                RecognitionClient = new AudDClient(App.Logger);
+                RecognitionClient = App.ServiceProvider.GetRequiredService<AudDClient>();
                 return;
             default:
                 Trace.WriteLine("Recognition type not found!");
@@ -98,9 +98,9 @@ public class RecognitionSettings
         switch (GetCurrentRecognitionApiFromSettings())
         {
             case RecognitionApi.Shazam:
-                return App.ServiceProvider.GetRequiredService<ShazamClient>();//new ShazamClient(App.Logger);
+                return App.ServiceProvider.GetRequiredService<ShazamClient>();
             case RecognitionApi.AudD:
-                return new AudDClient(App.Logger);
+                return App.ServiceProvider.GetRequiredService<AudDClient>();
             default:
                 return null;
         }

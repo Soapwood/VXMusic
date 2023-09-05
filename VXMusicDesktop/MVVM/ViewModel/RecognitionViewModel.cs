@@ -1,17 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using VXMusic;
-using VXMusic.Recognition.AudD;
-using VXMusic.Recognition.Shazam;
 using VXMusicDesktop.Core;
-using VXMusicDesktop;
 using System.ComponentModel;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using VXMusic.API;
 
 namespace VXMusicDesktop.MVVM.ViewModel
@@ -19,6 +13,8 @@ namespace VXMusicDesktop.MVVM.ViewModel
 
     internal class RecognitionViewModel : INotifyPropertyChanged
     {
+        public static ILogger Logger = App.ServiceProvider.GetRequiredService<ILogger<App>>();
+
         private RelayCommand shazamButtonClick;
         private RelayCommand audDButtonClick;
         private RelayCommand listenButtonClick;
@@ -139,23 +135,23 @@ namespace VXMusicDesktop.MVVM.ViewModel
             if (result.Status == Status.Error)
             {
                 VXMusicSession.NotificationClient.SendNotification("Recognition failed! Oh jaysus", "", 5);
-                Trace.WriteLine("Recognition failed! Oh jaysus");
+                Logger.LogError("Recognition failed! Oh jaysus");
                 //Environment.Exit(0);
             }
             else if (result.Status == Status.NoMatches || result.Result == null)
             {
                 VXMusicSession.NotificationClient.SendNotification("Oops, couldn't get that.", "Tech Tip: Have you tried turning up your World Volume?", 5);
-                Trace.WriteLine("Oops, couldn't get that. Tech Tip: Have you tried turning up your World Volume?");
+                Logger.LogWarning("Oops, couldn't get that. Tech Tip: Have you tried turning up your World Volume?");
             }
             else if (result.Status == Status.RecordingError)
             {
                 VXMusicSession.NotificationClient.SendNotification("I couldn't hear anything!", "Something messed up when recording audio. Check your audio device.", 10);
-                Trace.WriteLine("I couldn't hear anything! Something messed up when recording audio. Check your audio device.");
+                Logger.LogError("I couldn't hear anything! Something messed up when recording audio. Check your audio device.");
             }
             else
             {
                 VXMusicSession.NotificationClient.SendNotification($"{result.Result.Artist} - {result.Result.Title}", $"{result.Result.Album} ({result.Result.ReleaseDate})", 8);
-                Trace.WriteLine($"{result.Result.Artist} - {result.Result.Title} {result.Result.Album} ({result.Result.ReleaseDate})");
+                Logger.LogInformation($"{result.Result.Artist} - {result.Result.Title} {result.Result.Album} ({result.Result.ReleaseDate})");
             }
 
             if(result.Result != null && VXMusicSession.ConnectionsSettings.IsSpotifyConnected)

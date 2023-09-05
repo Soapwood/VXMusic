@@ -11,6 +11,7 @@ using NLog.Extensions.Logging;
 using VXMusic;
 using VXMusic.Recognition.Shazam;
 using VXMusic.Audio.Recording;
+using VXMusic.Recognition.AudD;
 using VXMusicDesktop.Branding;
 using VXMusicDesktop.Console;
 using ILogger = Microsoft.Extensions.Logging.ILogger;
@@ -95,6 +96,7 @@ namespace VXMusicDesktop
              */
             services.AddSingleton<App>();
             services.AddTransient<ShazamClient>();
+            services.AddTransient<AudDClient>();
             services.AddTransient<WindowsAudioDeviceListener>();
 
             ServiceProvider = services.BuildServiceProvider();

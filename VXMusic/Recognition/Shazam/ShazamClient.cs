@@ -12,8 +12,8 @@ public class ShazamClient : IRecognitionClient
     public ShazamClient(ILogger<ShazamClient> logger)
     {
         _logger = logger;
-
         _logger.LogInformation("Creating ShazamClient.");
+        
         _shazamHttpClient = new ShazamHttpClient(); // TODO Make factgory for ShazamAPI client
     }
 

@@ -49,6 +49,7 @@ public class WindowsAudioDeviceListener : IAudioRecordingClient
 
     public void StartRecording()
     {
+        // Recreate WasapiLoopbackCapture object if it has been disposed.
         if (Capture == null)
             CreateCaptureInstance();
         
@@ -76,6 +77,9 @@ public class WindowsAudioDeviceListener : IAudioRecordingClient
             Capture?.StopRecording();
             Writer?.Dispose();
             Capture?.Dispose();
+            
+            // Now that we're creating the Audio Listener as a service, we want to keep the service alive in memory.
+            // However, we can't purge the audioBuffer publically. We need to dispose of it here and recreate it again.
             Capture = null;
         }
         catch (Exception ex)
