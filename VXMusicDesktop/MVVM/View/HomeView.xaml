@@ -70,12 +70,12 @@
                     </LinearGradientBrush>
                 </Border.Background>
                 <StackPanel>
-                    <TextBlock Text="Version: 0.1"
+                    <TextBlock Text="Version: 0.2"
                             Foreground="Black"
                             FontSize="18"
                             Margin="20,10,10,0"
                             HorizontalAlignment="Center"/>
-                    <TextBlock Text="- Added Shazam API Support&#x0a;- Added Spotify Integration&#x0a;- Added WIP Desktop Client"
+                    <TextBlock Text="- Added Spotify Playlist Support&#x0a;- Added Last.fm Integration&#x0a;- Logging and DI Structure"
                                    Foreground="Black"
                                    FontSize="12"
                                    Margin="10,20,0,0"
