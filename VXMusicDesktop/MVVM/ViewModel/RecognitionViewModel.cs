@@ -120,7 +120,19 @@ namespace VXMusicDesktop.MVVM.ViewModel
         private async void PerformListenButtonClick(object commandParameter)
         {
             // TODO Two recognitions can run at the same time, add check to disable button if it's already running
-            VXMusicAPI.RunRecording();
+            VXMusicSession.RecordingClient.StartRecording();
+            
+            VXMusicSession.NotificationClient.SendNotification("VXMusic is Listening...", "", VXMusicSession.RecordingClient.GetRecordingTimeSeconds());
+            
+            while (!VXMusicSession.RecordingClient.IsCaptureStateStopped())
+            {
+                Thread.Sleep(500);
+            }
+
+            VXMusicSession.RecordingClient.StopRecording();
+            
+            VXMusicSession.NotificationClient.SendNotification("Sounds great! Just a moment..", "", 2);
+            
             //var result = //await VXMusicAPI.RunRecognition();
             var result = await VXMusicSession.RecognitionClient.RunRecognition();
 

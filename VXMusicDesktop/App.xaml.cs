@@ -8,7 +8,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using NLog;
 using NLog.Extensions.Logging;
+using VXMusic;
 using VXMusic.Recognition.Shazam;
+using VXMusic.Audio.Recording;
 using VXMusicDesktop.Branding;
 using VXMusicDesktop.Console;
 using ILogger = Microsoft.Extensions.Logging.ILogger;
@@ -88,8 +90,12 @@ namespace VXMusicDesktop
                 builder.AddNLog("NLog.config"); // Configure NLog as needed
             });
             
+            /*
+             * Here we need to register all Clients that need to be used in the VXMusic Tool
+             */
             services.AddSingleton<App>();
             services.AddTransient<ShazamClient>();
+            services.AddTransient<WindowsAudioDeviceListener>();
 
             ServiceProvider = services.BuildServiceProvider();
             

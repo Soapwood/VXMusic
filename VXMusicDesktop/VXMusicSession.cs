@@ -5,6 +5,8 @@ using System.Diagnostics;
 using Microsoft.Extensions.DependencyInjection;
 using VXMusic;
 using VXMusic.API;
+using VXMusic.Audio;
+using VXMusic.Audio.Recording;
 using VXMusic.Recognition.AudD;
 using VXMusic.Recognition.Shazam;
 
@@ -24,6 +26,7 @@ public class VXMusicSession
 
     public static IRecognitionClient? RecognitionClient;
     public static INotificationClient? NotificationClient;
+    public static IAudioRecordingClient? RecordingClient;
 
     public VXMusicSession(RecognitionSettings recognitionSettings, ConnectionsSettings connectionsSettings)
     {
@@ -31,6 +34,7 @@ public class VXMusicSession
         NotificationSettings = new NotificationSettings();
         ConnectionsSettings = connectionsSettings;
 
+        RecordingClient = GetAudioRecordingClient();
         RecognitionClient = RecognitionSettings.GetClientFromSetRecognitionApi(); //VXMusicAPI.SetRecognitionApi(recognitionSettings.CurrentRecognitionApi);
         NotificationClient = new XSOverlay(); //VXMusicAPI.SetNotificationClient(notificationSettings.CurrentNotificationService);
     }
@@ -51,6 +55,11 @@ public class VXMusicSession
                 Trace.WriteLine("Recognition type not found!");
                 return;
         }
+    }
+    
+    public static IAudioRecordingClient GetAudioRecordingClient()
+    {
+        return App.ServiceProvider.GetRequiredService<WindowsAudioDeviceListener>();
     }
 }
 

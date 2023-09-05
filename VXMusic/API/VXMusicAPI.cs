@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using IF.Lastfm.Core.Scrobblers;
 using SpotifyAPI.Web;
+using VXMusic.Audio.Recording;
 using VXMusic.Lastfm;
 using VXMusic.Lastfm.Authentication;
 using VXMusic.Lastfm.Scrobbling;
@@ -29,29 +30,28 @@ namespace VXMusic.API
 
     public class VXMusicAPI
     {
-        private static XSOverlay _xsOverlay = new XSOverlay();
         //VXMusicSession
 
-        public static void RunRecording()
-        {
-            WindowsAudioDeviceListener recorder = new WindowsAudioDeviceListener();
-
-            recorder.StartRecording();
-
-            _xsOverlay.SendNotification("VXMusic is Listening...", "", recorder.RecordingTimeSeconds);
-            Trace.WriteLine("Recording started.");
-
-            // Wait for the capture to complete by monitoring the capture state
-            while (recorder.CurrentCaptureState != NAudio.CoreAudioApi.CaptureState.Stopped)
-            {
-                Thread.Sleep(500);
-            }
-
-            recorder.StopRecording();
-
-            Trace.WriteLine("Recording stopped. Audio saved.");
-            _xsOverlay.SendNotification("Sounds great! Just a moment..", "", 2);
-        }
+        // public static void RunRecording()
+        // {
+        //     WindowsAudioDeviceListener recorder = new WindowsAudioDeviceListener();
+        //
+        //     recorder.StartRecording();
+        //
+        //     _xsOverlay.SendNotification("VXMusic is Listening...", "", recorder.RecordingTimeSeconds);
+        //     Trace.WriteLine("Recording started.");
+        //
+        //     // Wait for the capture to complete by monitoring the capture state
+        //     while (recorder.CurrentCaptureState != NAudio.CoreAudioApi.CaptureState.Stopped)
+        //     {
+        //         Thread.Sleep(500);
+        //     }
+        //
+        //     recorder.StopRecording();
+        //
+        //     Trace.WriteLine("Recording stopped. Audio saved.");
+        //     _xsOverlay.SendNotification("Sounds great! Just a moment..", "", 2);
+        // }
 
         //public static IRecognitionClient SetRecognitionApi(RecognitionApi recognitionApi)
         //{

@@ -2,36 +2,56 @@ using NAudio.Wave;
 using NAudio.CoreAudioApi;
 using System.Diagnostics;
 using Microsoft.Extensions.Logging;
+using VXMusic.Audio;
 
-namespace VXMusic;
+namespace VXMusic.Audio.Recording;
 
-public class WindowsAudioDeviceListener
+public class WindowsAudioDeviceListener : IAudioRecordingClient
 {
+    private ILogger<WindowsAudioDeviceListener> _logger;
 
-    private WasapiLoopbackCapture Capture;
+    private WasapiLoopbackCapture? Capture;
     private WaveFileWriter Writer;
     private readonly String BufferFile = "output.wav";
-    
-    public int RecordingTimeSeconds;
 
-    public CaptureState CurrentCaptureState => Capture.CaptureState;
+    private int RecordingTimeSeconds;
 
-    public WindowsAudioDeviceListener()
+    private CaptureState CurrentCaptureState => Capture.CaptureState;
+
+    public WindowsAudioDeviceListener(ILogger<WindowsAudioDeviceListener> logger)
     {
-        // _logger = logger;
-        // _logger.LogTrace("Creating WindowsAudioDeviceListener");
-        
+        _logger = logger;
+        _logger.LogTrace("Creating WindowsAudioDeviceListener");
+
+        CreateCaptureInstance();
+        RecordingTimeSeconds = 5;
+    }
+    
+    public int GetRecordingTimeSeconds()
+    {
+        return RecordingTimeSeconds;
+    }
+
+    public bool IsCaptureStateStopped()
+    {
+        // Wait for the capture to complete by monitoring the capture state
+        return CurrentCaptureState == CaptureState.Stopped;
+    }
+    
+    private void CreateCaptureInstance()
+    {
         // WasapiLoopbackCapture allows to capture all audio on default audio device
         // https://github.com/naudio/NAudio/blob/master/Docs/WasapiLoopbackCapture.md
         Capture = new WasapiLoopbackCapture();
         Capture.ShareMode = AudioClientShareMode.Shared; // Set the share mode
         Capture.WaveFormat = new WaveFormat(44100, 16, 1); // Shazam needs 1 channel
-        RecordingTimeSeconds = 5;
     }
 
     public void StartRecording()
     {
-        // _logger.LogTrace("Starting Recording...");
+        if (Capture == null)
+            CreateCaptureInstance();
+        
         try
         {
             Capture.DataAvailable += OnDataAvailable;
@@ -43,8 +63,10 @@ public class WindowsAudioDeviceListener
         }
         catch (Exception ex)
         {
-            // _logger.LogError("Error starting recording: " + Environment.NewLine + ex.Message);
+            _logger.LogError("Error starting recording: " + Environment.NewLine + ex.Message);
         }
+        _logger.LogTrace("Recording Started.");
+
     }
 
     public void StopRecording()
@@ -54,11 +76,14 @@ public class WindowsAudioDeviceListener
             Capture?.StopRecording();
             Writer?.Dispose();
             Capture?.Dispose();
+            Capture = null;
         }
         catch (Exception ex)
         {
-            // _logger.LogError("Error stopping recording: " + Environment.NewLine + ex.Message);
+            _logger.LogError("Error stopping recording: " + Environment.NewLine + ex.Message);
         }
+        
+        _logger.LogTrace("Recording stopped.");
     }
 
     private void OnDataAvailable(object sender, WaveInEventArgs e)
@@ -73,7 +98,7 @@ public class WindowsAudioDeviceListener
         }
         catch (Exception ex)
         {
-            // _logger.LogError("Error writing to file:" + Environment.NewLine + ex.Message);
+            _logger.LogError("Error writing to file:" + Environment.NewLine + ex.Message);
         }
     }
 
