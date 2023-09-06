@@ -7,9 +7,9 @@ using VXMusic;
 using VXMusic.API;
 using VXMusic.Audio;
 using VXMusic.Audio.Recording;
-using VXMusic.Lastfm.Scrobbling;
 using VXMusic.Recognition.AudD;
 using VXMusic.Recognition.Shazam;
+using VXMusic.Lastfm.Scrobbling;
 
 //using System.Windows.Forms.PropertyGridInternal;
 

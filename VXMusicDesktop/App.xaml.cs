@@ -1,22 +1,18 @@
 ﻿using System;
-using System.Diagnostics;
 using System.IO;
-using System.Runtime.Serialization;
 using System.Windows;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using NLog;
 using NLog.Extensions.Logging;
-using VXMusic;
 using VXMusic.Recognition.Shazam;
 using VXMusic.Audio.Recording;
-using VXMusic.Lastfm.Scrobbling;
 using VXMusic.Recognition.AudD;
 using VXMusicDesktop.Branding;
 using VXMusicDesktop.Console;
 using ILogger = Microsoft.Extensions.Logging.ILogger;
 using LogLevel = Microsoft.Extensions.Logging.LogLevel;
+using VXMusic.Lastfm.Scrobbling;
 
 namespace VXMusicDesktop
 {

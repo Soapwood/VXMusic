@@ -16,7 +16,7 @@ namespace VXMusic.API
      * This shouldn't stay. Need to remove these calls as they're just quick patches for performing
      * logic that should be performed in the MVVM code anyway.
      */
-    
+
     public class VXMusicAPI
     {
         public static INotificationClient SetNotificationClient(NotificationService notificationService)
