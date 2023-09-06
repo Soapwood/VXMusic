@@ -14,13 +14,5 @@ namespace VXMusic.Lastfm
         {
             return new LastfmClient(LastfmAuthentication.ClientId, LastfmAuthentication.ClientSecret);
         }
-        
-        public static async Task<bool> Login(string username, string password)
-        {
-            var lastfm = await LastfmClientBuilder.Instance;
-            
-            var lastResponse = await lastfm.Auth.GetSessionTokenAsync(username, password);
-            return lastfm.Auth.Authenticated;
-        }
     }
 }

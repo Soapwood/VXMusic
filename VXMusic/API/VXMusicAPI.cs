@@ -12,45 +12,13 @@ using VXMusic.Spotify.Authentication;
 
 namespace VXMusic.API
 {
+    /*
+     * This shouldn't stay. Need to remove these calls as they're just quick patches for performing
+     * logic that should be performed in the MVVM code anyway.
+     */
     
     public class VXMusicAPI
     {
-        //VXMusicSession
-
-        // public static void RunRecording()
-        // {
-        //     WindowsAudioDeviceListener recorder = new WindowsAudioDeviceListener();
-        //
-        //     recorder.StartRecording();
-        //
-        //     _xsOverlay.SendNotification("VXMusic is Listening...", "", recorder.RecordingTimeSeconds);
-        //     Trace.WriteLine("Recording started.");
-        //
-        //     // Wait for the capture to complete by monitoring the capture state
-        //     while (recorder.CurrentCaptureState != NAudio.CoreAudioApi.CaptureState.Stopped)
-        //     {
-        //         Thread.Sleep(500);
-        //     }
-        //
-        //     recorder.StopRecording();
-        //
-        //     Trace.WriteLine("Recording stopped. Audio saved.");
-        //     _xsOverlay.SendNotification("Sounds great! Just a moment..", "", 2);
-        // }
-
-        //public static IRecognitionClient SetRecognitionApi(RecognitionApi recognitionApi)
-        //{
-        //    switch (recognitionApi)
-        //    {
-        //        case RecognitionApi.Shazam:
-        //            return new ShazamClient(); // 3-5 seconds
-        //        case RecognitionApi.AudD:
-        //            return new AudDClient(); // 10 seconds
-        //        default:
-        //            throw new ArgumentException("Invalid Recognition API Specified.");
-        //    }
-        //}
-
         public static INotificationClient SetNotificationClient(NotificationService notificationService)
         {
             switch (notificationService)
@@ -63,35 +31,6 @@ namespace VXMusic.API
                     throw new ArgumentException("Invalid Notification Service specified.");
             }
         }
-
-        //public async static Task<IApiClientResponse> RunRecognition()
-        //{
-        //var shazamClient = new ShazamClient(); // 3-5 seconds
-        //var result = await shazamClient.RunRecognition();
-
-        //var audDClient = new AudDClient();
-        //var result = await audDClient.RunRecognition();
-
-        //if (result.status == "error")
-        //{
-        //    _xsOverlay.XSNotification("Recognition failed! Oh jaysus", "", 5);
-        //    Trace.WriteLine("Recognition failed! Oh jaysus");
-        //    Environment.Exit(0);
-        //} else if (result.result == null)
-        //{
-        //    _xsOverlay.XSNotification("Oops, couldn't get that.", "Tech Tip: Have you tried turning up your World Volume?", 5);
-        //    Trace.WriteLine("Oops, couldn't get that. Tech Tip: Have you tried turning up your World Volume?");
-        //    Environment.Exit(0);
-        //} else
-        //{
-        //    _xsOverlay.XSNotification(result.result.artist, result.result.title, 8);
-        //    Trace.WriteLine($"{result.result.artist}: {result.result.title}");
-
-        //    return result;
-        //}
-
-        //   return null;
-        //}
 
         public async static Task<PrivateUser> LinkSpotify(string clientId)
         {
@@ -110,22 +49,8 @@ namespace VXMusic.API
             // TODO Only do this if it hasn't already been set up
 
             var last = await LastfmClientBuilder.CreateLastfmClient();
-            return await LastfmClientBuilder.Login(username, password);
+            return await LastfmAuthentication.Login(username, password);
         }
-
-        // public async static Task<ScrobbleResponse> Scrobble(string artist, string album, string trackName)
-        // {
-        //     var scrobbler = new LastfmScrobbler();
-        //
-        //     var response = await scrobbler.Scrobble(artist, album, trackName);
-        //
-        //     if (response.Success)
-        //     {
-        //         Trace.WriteLine("Successfully Scrobbled!");
-        //     }
-        //
-        //     return response;
-        // }
 
         public async static void ReportTrackToSpotifyPlaylist(IRecognitionApiClientResponse result)
         {
