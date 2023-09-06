@@ -8,28 +8,33 @@ namespace VXMusic.Audio.Recording;
 
 public class WindowsAudioDeviceListener : IAudioRecordingClient
 {
+    private readonly IServiceProvider _serviceProvider;
     private ILogger<WindowsAudioDeviceListener> _logger;
 
-    private WasapiLoopbackCapture? Capture;
-    private WaveFileWriter Writer;
-    private readonly String BufferFile = "output.wav";
+    private WasapiLoopbackCapture? _capture;
+    private WaveFileWriter? _writer;
+    
+    private const string BufferFile = "output.wav";
 
-    private int RecordingTimeSeconds;
+    private int _recordingTimeSeconds;
 
-    private CaptureState CurrentCaptureState => Capture.CaptureState;
+    private CaptureState CurrentCaptureState => _capture.CaptureState;
 
-    public WindowsAudioDeviceListener(ILogger<WindowsAudioDeviceListener> logger)
+    public WindowsAudioDeviceListener(IServiceProvider serviceProvider)
     {
-        _logger = logger;
+        _serviceProvider = serviceProvider;
+        _logger = _serviceProvider.GetService(typeof(ILogger<WindowsAudioDeviceListener>)) 
+            as ILogger<WindowsAudioDeviceListener> ?? throw new ApplicationException("A logger must be created in service provider.");
+        
         _logger.LogTrace("Creating WindowsAudioDeviceListener");
 
         CreateCaptureInstance();
-        RecordingTimeSeconds = 5;
+        _recordingTimeSeconds = 5;
     }
     
     public int GetRecordingTimeSeconds()
     {
-        return RecordingTimeSeconds;
+        return _recordingTimeSeconds;
     }
 
     public bool IsCaptureStateStopped()
@@ -42,25 +47,25 @@ public class WindowsAudioDeviceListener : IAudioRecordingClient
     {
         // WasapiLoopbackCapture allows to capture all audio on default audio device
         // https://github.com/naudio/NAudio/blob/master/Docs/WasapiLoopbackCapture.md
-        Capture = new WasapiLoopbackCapture();
-        Capture.ShareMode = AudioClientShareMode.Shared; // Set the share mode
-        Capture.WaveFormat = new WaveFormat(44100, 16, 1); // Shazam needs 1 channel
+        _capture = new WasapiLoopbackCapture();
+        _capture.ShareMode = AudioClientShareMode.Shared; // Set the share mode
+        _capture.WaveFormat = new WaveFormat(44100, 16, 1); // Shazam needs 1 channel
     }
 
     public void StartRecording()
     {
         // Recreate WasapiLoopbackCapture object if it has been disposed.
-        if (Capture == null)
+        if (_capture == null)
             CreateCaptureInstance();
         
         try
         {
-            Capture.DataAvailable += OnDataAvailable;
+            _capture.DataAvailable += OnDataAvailable;
             
             // We want to write as WAV for lossless recording. Will need to convert to other formats from there.
-            Writer = new WaveFileWriter(BufferFile, Capture.WaveFormat);
+            _writer = new WaveFileWriter(BufferFile, _capture.WaveFormat);
 
-            Capture.StartRecording();
+            _capture.StartRecording();
         }
         catch (Exception ex)
         {
@@ -74,13 +79,13 @@ public class WindowsAudioDeviceListener : IAudioRecordingClient
     {
         try
         {
-            Capture?.StopRecording();
-            Writer?.Dispose();
-            Capture?.Dispose();
+            _capture?.StopRecording();
+            _writer?.Dispose();
+            _capture?.Dispose();
             
             // Now that we're creating the Audio Listener as a service, we want to keep the service alive in memory.
             // However, we can't purge the audioBuffer publically. We need to dispose of it here and recreate it again.
-            Capture = null;
+            _capture = null;
         }
         catch (Exception ex)
         {
@@ -94,11 +99,11 @@ public class WindowsAudioDeviceListener : IAudioRecordingClient
     {
         try
         {
-            Writer?.Write(e.Buffer, 0, e.BytesRecorded);
+            _writer?.Write(e.Buffer, 0, e.BytesRecorded);
             
             // Limits to 10 second of recording. TODO Inject this time limit 
-            if (Writer.Position > Capture.WaveFormat.AverageBytesPerSecond * RecordingTimeSeconds)
-                Capture.StopRecording();
+            if (_writer.Position > _capture.WaveFormat.AverageBytesPerSecond * _recordingTimeSeconds)
+                _capture.StopRecording();
         }
         catch (Exception ex)
         {

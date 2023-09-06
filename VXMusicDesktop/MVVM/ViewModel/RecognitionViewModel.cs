@@ -159,7 +159,17 @@ namespace VXMusicDesktop.MVVM.ViewModel
 
             if (result.Result != null)
             {
-                VXMusicAPI.Scrobble(result.Result.Artist, result.Result.Album, result.Result.Title);
+                var lastfmResponse = await VXMusicSession.LastfmScrobbler.Scrobble(result.Result.Artist, result.Result.Album, result.Result.Title);
+                if (lastfmResponse.Success)
+                {
+                    Logger.LogInformation($"Successfully Scrobbled to Last.fm!");
+                    VXMusicSession.NotificationClient.SendNotification("Last.fm", "Successfully Scrobbled!", 2);
+                }
+                else
+                {
+                    Logger.LogError($"Scrobbling to Last.fm was not successful.");
+                    VXMusicSession.NotificationClient.SendNotification("Last.fm", "Scrobbling was not successful.", 2);
+                }
             }
         }
     }

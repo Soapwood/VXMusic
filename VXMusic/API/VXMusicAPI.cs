@@ -12,22 +12,7 @@ using VXMusic.Spotify.Authentication;
 
 namespace VXMusic.API
 {
-
-    public enum RecognitionApi
-    {
-        Shazam,
-        AudD,
-        Unknown
-    }
-
-    public enum NotificationService
-    {
-        XSOverlay,
-        SteamVR
-    }
-
-
-
+    
     public class VXMusicAPI
     {
         //VXMusicSession
@@ -128,19 +113,19 @@ namespace VXMusic.API
             return await LastfmClientBuilder.Login(username, password);
         }
 
-        public async static Task<ScrobbleResponse> Scrobble(string artist, string album, string trackName)
-        {
-            var scrobbler = new LastfmScrobbler();
-
-            var response = await scrobbler.Scrobble(artist, album, trackName);
-
-            if (response.Success)
-            {
-                Trace.WriteLine("Successfully Scrobbled!");
-            }
-
-            return response;
-        }
+        // public async static Task<ScrobbleResponse> Scrobble(string artist, string album, string trackName)
+        // {
+        //     var scrobbler = new LastfmScrobbler();
+        //
+        //     var response = await scrobbler.Scrobble(artist, album, trackName);
+        //
+        //     if (response.Success)
+        //     {
+        //         Trace.WriteLine("Successfully Scrobbled!");
+        //     }
+        //
+        //     return response;
+        // }
 
         public async static void ReportTrackToSpotifyPlaylist(IRecognitionApiClientResponse result)
         {

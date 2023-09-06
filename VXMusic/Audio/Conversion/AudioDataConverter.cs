@@ -6,16 +6,19 @@ namespace VXMusic.Conversion;
 
 public class AudioDataConverter
 {
-    private ILogger _logger;
+    private readonly IServiceProvider _serviceProvider;
+    private readonly ILogger<AudioDataConverter> _logger;
 
-    public AudioDataConverter(ILogger logger) 
+    public AudioDataConverter(IServiceProvider serviceProvider) 
     {
-        _logger = logger;
+        _serviceProvider = serviceProvider;
+        _logger = _serviceProvider.GetService(typeof(ILogger<AudioDataConverter>)) 
+            as ILogger<AudioDataConverter> ?? throw new ApplicationException("A logger must be created in service provider.");
     }
 
     public byte[]? ConvertWavToMp3Async() // TODO Inject bytes not file 
     {
-        _logger.Log(LogLevel.Information,"Converting WAV to MP3.");
+        _logger.LogTrace("Converting WAV to MP3.");
 
         byte[] audioData = File.ReadAllBytes("output.wav"); // TODO Really need to fucking use just bytes.
 
@@ -41,18 +44,18 @@ public class AudioDataConverter
     
     public string? ConvertWavToBase64EncodedString() 
     {
-        _logger.Log(LogLevel.Information,"Converting WAV to Base64 encoded string.");
+        _logger.LogTrace("Converting WAV to Base64 encoded string.");
 
         byte[] audioData = File.ReadAllBytes("output.wav"); // TODO Really need to fucking use just bytes.
         
         if(audioData == null)
         {
-            _logger.Log(LogLevel.Information,"Could not read any bytes from output.wav, skipping conversion.");
+            _logger.LogTrace("Could not read any bytes from output.wav, skipping conversion.");
             return null;
         }
         else
         {
-            _logger.Log(LogLevel.Information,"Audio recording read succeeded. Converting to Base64 String.");
+            _logger.LogTrace("Audio recording read succeeded. Converting to Base64 String.");
             return Convert.ToBase64String(audioData);
         }
     }

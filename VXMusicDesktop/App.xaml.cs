@@ -11,6 +11,7 @@ using NLog.Extensions.Logging;
 using VXMusic;
 using VXMusic.Recognition.Shazam;
 using VXMusic.Audio.Recording;
+using VXMusic.Lastfm.Scrobbling;
 using VXMusic.Recognition.AudD;
 using VXMusicDesktop.Branding;
 using VXMusicDesktop.Console;
@@ -98,6 +99,7 @@ namespace VXMusicDesktop
             services.AddTransient<ShazamClient>();
             services.AddTransient<AudDClient>();
             services.AddTransient<WindowsAudioDeviceListener>();
+            services.AddTransient<LastfmScrobbler>();
 
             ServiceProvider = services.BuildServiceProvider();
             

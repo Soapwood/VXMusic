@@ -5,13 +5,17 @@ namespace VXMusic.Recognition.AudD;
 
 public class AudDClient : IRecognitionClient
 {
+    private readonly IServiceProvider _serviceProvider;
     private ILogger<AudDClient> _logger;
 
     private AudDHttpClient _audDHttpClient;
     
-    public AudDClient(ILogger<AudDClient> logger)
+    public AudDClient(IServiceProvider serviceProvider)
     {
-        _logger = logger;
+        _serviceProvider = serviceProvider;
+        _logger = _serviceProvider.GetService(typeof(ILogger<AudDClient>)) 
+            as ILogger<AudDClient> ?? throw new ApplicationException("A logger must be created in service provider.");
+        
         _logger.LogInformation("Creating AudDClient.");
 
         _audDHttpClient = new AudDHttpClient();
@@ -21,7 +25,7 @@ public class AudDClient : IRecognitionClient
     {
         _logger.LogInformation("Running recognition using AudD.");
 
-        var converter = new AudioDataConverter(_logger);
+        var converter = new AudioDataConverter(_serviceProvider);
 
         var audDAudioData = converter.ConvertWavToMp3Async();
 

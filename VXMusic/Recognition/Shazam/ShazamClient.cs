@@ -5,13 +5,17 @@ namespace VXMusic.Recognition.Shazam;
 
 public class ShazamClient : IRecognitionClient
 {
-    private ILogger<ShazamClient> _logger;
+    private readonly IServiceProvider _serviceProvider;
+    private readonly ILogger<ShazamClient> _logger;
 
-    private ShazamHttpClient _shazamHttpClient;
+    private readonly ShazamHttpClient _shazamHttpClient;
 
-    public ShazamClient(ILogger<ShazamClient> logger)
+    public ShazamClient(IServiceProvider serviceProvider)
     {
-        _logger = logger;
+        _serviceProvider = serviceProvider;
+        _logger = _serviceProvider.GetService(typeof(ILogger<ShazamClient>)) 
+            as ILogger<ShazamClient> ?? throw new ApplicationException("A logger must be created in service provider.");
+        
         _logger.LogInformation("Creating ShazamClient.");
         
         _shazamHttpClient = new ShazamHttpClient(); // TODO Make factgory for ShazamAPI client
@@ -21,7 +25,7 @@ public class ShazamClient : IRecognitionClient
     {
         _logger.LogInformation("Running recognition using Shazam.");
 
-        var converter = new AudioDataConverter(_logger);
+        var converter = new AudioDataConverter(_serviceProvider);
         var shazamAudioData = converter.ConvertWavToBase64EncodedString();
 
         if(shazamAudioData == null)

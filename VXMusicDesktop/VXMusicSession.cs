@@ -7,6 +7,7 @@ using VXMusic;
 using VXMusic.API;
 using VXMusic.Audio;
 using VXMusic.Audio.Recording;
+using VXMusic.Lastfm.Scrobbling;
 using VXMusic.Recognition.AudD;
 using VXMusic.Recognition.Shazam;
 
@@ -27,6 +28,8 @@ public class VXMusicSession
     public static IRecognitionClient? RecognitionClient;
     public static INotificationClient? NotificationClient;
     public static IAudioRecordingClient? RecordingClient;
+    
+    public static LastfmScrobbler? LastfmScrobbler;
 
     public VXMusicSession(RecognitionSettings recognitionSettings, ConnectionsSettings connectionsSettings)
     {
@@ -37,6 +40,8 @@ public class VXMusicSession
         RecordingClient = GetAudioRecordingClient();
         RecognitionClient = RecognitionSettings.GetClientFromSetRecognitionApi(); //VXMusicAPI.SetRecognitionApi(recognitionSettings.CurrentRecognitionApi);
         NotificationClient = new XSOverlay(); //VXMusicAPI.SetNotificationClient(notificationSettings.CurrentNotificationService);
+        
+        LastfmScrobbler = App.ServiceProvider.GetRequiredService<LastfmScrobbler>();
     }
 
     public void SetRecognitionClient(RecognitionApi recognitionApi)
