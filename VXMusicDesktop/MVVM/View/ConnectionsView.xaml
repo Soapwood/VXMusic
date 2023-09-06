@@ -20,7 +20,7 @@
             <Border Width="300"
                     Height="200"
                     CornerRadius="10"
-                    Margin="50,0,0,0">
+                    Margin="20,0,0,0">
                 <Grid>
                     <StackPanel>
                         <Image Height="80"
@@ -71,7 +71,7 @@
             <Border Width="300"
                     Height="200"
                     CornerRadius="10"
-                    Margin="50,0,0,0">
+                    Margin="20,0,0,0">
                 <Grid>
                     <StackPanel>
                         <Image Height="60"
@@ -91,6 +91,7 @@
                             Margin="0,0,0,0"
                             HorizontalAlignment="Center"/>
                     </StackPanel>
+                    
                 </Grid>
 
                 <!--<StackPanel>
@@ -106,13 +107,44 @@
                                    HorizontalAlignment="Left"/>
                 </StackPanel>-->
             </Border>
-            <Button 
-                Content="Link Last.fm" 
+
+            <Border>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="100"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    
+                    <TextBox Width="250"
+                     Height="40"
+                     VerticalContentAlignment="Center"
+                     HorizontalAlignment="Center"
+                     Grid.Row="0"
+                     Text="Username"
+                     DataContext="fesfs"
+                     Style="{StaticResource ModernTextBox}" Margin="0,50,0,0"/>
+                    
+                    <TextBox Width="250"
+                     Height="40"
+                     VerticalContentAlignment="Center"
+                     HorizontalAlignment="Center"
+                     Grid.Row="1"
+                     Text="Password"
+                     Style="{StaticResource ModernTextBox}" Margin="0,-50,0,0"/>
+                </Grid>
+            </Border>
+
+            <Border>
+               <Button 
+                Content="Login" 
                 Command="{Binding LinkLastfmButtonClick}"
                 IsEnabled="True"
                 Padding="0"
-                Margin="30"
-                HorizontalAlignment="Right" Width="300" Height="100" />
+                Margin="00"
+                HorizontalAlignment="Left" Width="100" Height="100" />
+            </Border>
+            
+
         </StackPanel>
 
         <StackPanel>
