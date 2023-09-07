@@ -90,7 +90,7 @@
                     <Setter Property="Margin" Value="15,0,0,0"/>
                 </Style>
             </StackPanel.Resources>
-            
+
             <TextBlock Text="Integrations"
                    Foreground="Black"
                    FontSize="20"
@@ -103,21 +103,47 @@
                         Background="#F4EEE0"
                         CornerRadius="10">
                     <StackPanel>
-                        <TextBlock Text="Recognition API"
-                                   Foreground="Black"
-                                   FontSize="12"
-                                   Margin="0,5,0,0"
-                                   HorizontalAlignment="Center"/>
-                        <TextBlock Text="AudD"
-                                   Foreground="Black"
-                                   FontSize="12"
-                                   Margin="10,20,0,0"
-                                   HorizontalAlignment="Left"/>
-                        <TextBlock Text="Shazam"
-                                   Foreground="Black"
-                                   FontSize="12"
-                                   Margin="10,20,0,0"
-                                   HorizontalAlignment="Left"/>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition/>
+                                <RowDefinition Height="40"/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+
+                            <TextBlock Text="Recognition API"
+                                       Foreground="Black"
+                                       FontSize="12"
+                                       Margin="0,5,0,0"
+                                       HorizontalAlignment="Center"
+                                       Grid.Row="0"/>
+                            <TextBlock Text="Shazam"
+                                       Foreground="Black"
+                                       FontSize="12"
+                                       Margin="10,20,0,0"
+                                       HorizontalAlignment="Left"
+                                       Grid.Row="1"/>
+                            <Image Width="10"
+                               Height="10"
+                               Source="/Images/GreenDot.png"
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Bottom" Margin="72,0,0,3"
+                                   Grid.Row="1">
+                            </Image>
+                            <TextBlock Text="AudD"
+                                       Foreground="Black"
+                                       FontSize="12"
+                                       Margin="10,20,0,0"
+                                       HorizontalAlignment="Left"
+                                       Grid.Row="2"/>
+                            <Image Width="10"
+                               Height="10"
+                               Source="/Images/RedDot.png"
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Bottom" Margin="72,0,0,5"
+                                   Grid.Row="2">
+                            </Image>
+                        </Grid>
                     </StackPanel>
                 </Border>
 
@@ -126,21 +152,47 @@
                         Background="#F4EEE0"
                         CornerRadius="10">
                     <StackPanel>
-                        <TextBlock Text="Notification Service"
-                                   Foreground="Black"
-                                   FontSize="12"
-                                   Margin="0,5,0,0"
-                                   HorizontalAlignment="Center"/>
-                        <TextBlock Text="SteamVR"
-                                   Foreground="Black"
-                                   FontSize="12"
-                                   Margin="10,20,0,0"
-                                   HorizontalAlignment="Left"/>
-                        <TextBlock Text="XSOverlay"
-                                   Foreground="Black"
-                                   FontSize="12"
-                                   Margin="10,20,0,0"
-                                   HorizontalAlignment="Left"/>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition/>
+                                <RowDefinition Height="40"/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+
+                            <TextBlock Text="Notification Service"
+                                       Foreground="Black"
+                                       FontSize="12"
+                                       Margin="0,5,0,0"
+                                       HorizontalAlignment="Center"
+                                       Grid.Row="0"/>
+                            <TextBlock Text="SteamVR"
+                                       Foreground="Black"
+                                       FontSize="12"
+                                       Margin="10,20,0,0"
+                                       HorizontalAlignment="Left"
+                                       Grid.Row="1"/>
+                            <Image Width="10"
+                               Height="10"
+                               Source="/Images/RedDot.png"
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Bottom" Margin="72,0,0,3"
+                                   Grid.Row="1">
+                            </Image>
+                            <TextBlock Text="XSOverlay"
+                                       Foreground="Black"
+                                       FontSize="12"
+                                       Margin="10,20,0,0"
+                                       HorizontalAlignment="Left"
+                                       Grid.Row="2"/>
+                            <Image Width="10"
+                               Height="10"
+                               Source="/Images/GreenDot.png"
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Bottom" Margin="72,0,0,5"
+                                   Grid.Row="2">
+                            </Image>
+                        </Grid>
                     </StackPanel>
 
                 </Border>
@@ -150,17 +202,47 @@
                         Background="#F4EEE0"
                         CornerRadius="10">
                     <StackPanel>
-                        <TextBlock Text="Spotify Integration"
-                                   Foreground="Black"
-                                   FontSize="12"
-                                   Margin="0,5,0,0"
-                                   HorizontalAlignment="Center"/>
-                        <TextBlock Text="Not Connected"
-                                   Foreground="Black"
-                                   FontSize="12"
-                                   Margin="0,50,0,0"
-                                   HorizontalAlignment="Center"
-                                   VerticalAlignment="Center"/>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition/>
+                                <RowDefinition Height="40"/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+
+                            <TextBlock Text="Connections"
+                                       Foreground="Black"
+                                       FontSize="12"
+                                       Margin="0,5,0,0"
+                                       HorizontalAlignment="Center"
+                                       Grid.Row="0"/>
+                            <TextBlock Text="Spotify"
+                                       Foreground="Black"
+                                       FontSize="12"
+                                       Margin="10,20,0,0"
+                                       HorizontalAlignment="Left"
+                                       Grid.Row="1"/>
+                            <Image Width="10"
+                               Height="10"
+                               Source="/Images/GreenDot.png"
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Bottom" Margin="72,0,0,3"
+                                   Grid.Row="1">
+                            </Image>
+                            <TextBlock Text="Last.fm"
+                                       Foreground="Black"
+                                       FontSize="12"
+                                       Margin="10,20,0,0"
+                                       HorizontalAlignment="Left"
+                                       Grid.Row="2"/>
+                            <Image Width="10"
+                               Height="10"
+                               Source="/Images/RedDot.png"
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Bottom" Margin="72,0,0,5"
+                                   Grid.Row="2">
+                            </Image>
+                        </Grid>
                     </StackPanel>
                 </Border>
 
@@ -169,21 +251,39 @@
                         Background="#F4EEE0"
                         CornerRadius="10">
                     <StackPanel>
-                        <TextBlock Text="Connected Game Clients"
-                                   Foreground="Black"
-                                   FontSize="12"
-                                   Margin="0,5,0,0"
-                                   HorizontalAlignment="Center"/>
-                        <TextBlock Text="VRChat"
-                                   Foreground="Black"
-                                   FontSize="12"
-                                   Margin="10,20,0,0"
-                                   HorizontalAlignment="Left"/>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition/>
+                                <RowDefinition Height="40"/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+
+                            <TextBlock Text="Connected Game Clients"
+                                       Foreground="Black"
+                                       FontSize="12"
+                                       Margin="0,5,0,0"
+                                       HorizontalAlignment="Center"
+                                       Grid.Row="0"/>
+                            <TextBlock Text="VRChat"
+                                       Foreground="Black"
+                                       FontSize="12"
+                                       Margin="10,20,0,0"
+                                       HorizontalAlignment="Left"
+                                       Grid.Row="1"/>
+                            <Image Width="10"
+                               Height="10"
+                               Source="/Images/GreenDot.png"
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Bottom" Margin="72,0,0,3"
+                                   Grid.Row="1">
+                            </Image>
+                        </Grid>
                     </StackPanel>
                 </Border>
 
             </StackPanel>
-            
+
         </StackPanel>
 
     </StackPanel>
