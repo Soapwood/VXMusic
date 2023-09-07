@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using VXMusic.Spotify.Authentication;
+using VXMusicDesktop.MVVM.ViewModel;
 
 namespace VXMusicDesktop.MVVM.View
 {
@@ -20,9 +22,21 @@ namespace VXMusicDesktop.MVVM.View
     /// </summary>
     public partial class ConnectionsView : UserControl
     {
+        public bool IsSpotifyLoggedIn;
+
         public ConnectionsView()
         {
             InitializeComponent();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

@@ -46,6 +46,11 @@ public class SpotifyAuthentication
 
         return 0;
     }
+    
+    public static bool IsSpotifyConnected()
+    {
+        return (File.Exists(CredentialsPath));
+    }
 
     private static async Task Start()
     {
