@@ -7,6 +7,7 @@ using System.ComponentModel;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using VXMusic.API;
+using VXMusic.FileWriter;
 
 namespace VXMusicDesktop.MVVM.ViewModel
 {
@@ -159,6 +160,8 @@ namespace VXMusicDesktop.MVVM.ViewModel
 
             if (result.Result != null)
             {
+                VXMusicSession.PlaylistFileWriter.AddLineToFileIfDateMatches($"{result.Result.Artist} - {result.Result.Title} {result.Result.Album} ({result.Result.ReleaseDate})");
+                
                 var lastfmResponse = await VXMusicSession.LastfmScrobbler.Scrobble(result.Result.Artist, result.Result.Album, result.Result.Title);
                 if (lastfmResponse.Success)
                 {

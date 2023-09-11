@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace VXMusicDesktop.Branding
+﻿namespace VXMusic.Branding
 {
-    public class ConsoleOutputBranding
+    public static class ConsoleOutputBranding
     {
         public static readonly string VxMusicLogo = """   
                                                   

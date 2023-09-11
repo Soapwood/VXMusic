@@ -8,7 +8,8 @@ using NLog.Extensions.Logging;
 using VXMusic.Recognition.Shazam;
 using VXMusic.Audio.Recording;
 using VXMusic.Recognition.AudD;
-using VXMusicDesktop.Branding;
+using VXMusic.Branding;
+using VXMusic.FileWriter;
 using VXMusicDesktop.Console;
 using ILogger = Microsoft.Extensions.Logging.ILogger;
 using LogLevel = Microsoft.Extensions.Logging.LogLevel;
@@ -96,6 +97,7 @@ namespace VXMusicDesktop
             services.AddTransient<AudDClient>();
             services.AddTransient<WindowsAudioDeviceListener>();
             services.AddTransient<LastfmScrobbler>();
+            services.AddTransient<PlaylistFileWriter>();
 
             ServiceProvider = services.BuildServiceProvider();
             
