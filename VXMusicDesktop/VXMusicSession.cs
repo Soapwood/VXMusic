@@ -11,6 +11,7 @@ using VXMusic.FileWriter;
 using VXMusic.Recognition.AudD;
 using VXMusic.Recognition.Shazam;
 using VXMusic.Lastfm.Scrobbling;
+using VXMusic.LogParser.VRChat;
 
 //using System.Windows.Forms.PropertyGridInternal;
 
@@ -33,6 +34,8 @@ public class VXMusicSession
     public static PlaylistFileWriter? PlaylistFileWriter;
     public static LastfmScrobbler? LastfmScrobbler;
 
+    public static VRChatLogParser? VRChatLogParser;
+
     public VXMusicSession(RecognitionSettings recognitionSettings, ConnectionsSettings connectionsSettings)
     {
         RecognitionSettings = recognitionSettings;
@@ -45,6 +48,8 @@ public class VXMusicSession
         
         PlaylistFileWriter = App.ServiceProvider.GetRequiredService<PlaylistFileWriter>();
         LastfmScrobbler = App.ServiceProvider.GetRequiredService<LastfmScrobbler>();
+        
+        VRChatLogParser = App.ServiceProvider.GetRequiredService<VRChatLogParser>();
     }
 
     public void SetRecognitionClient(RecognitionApi recognitionApi)

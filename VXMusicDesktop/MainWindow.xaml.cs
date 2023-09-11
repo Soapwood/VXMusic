@@ -25,7 +25,7 @@ namespace VXMusicDesktop
             InitializeComponent();
             MouseDown += Window_MouseDown;
 
-            VXMusic.LogParser.VRChat.VRChatLogParser.Run();
+            //VXMusic.LogParser.VRChat.VRChatLogParser.Run();
         }
 
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)

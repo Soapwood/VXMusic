@@ -14,6 +14,7 @@ using VXMusicDesktop.Console;
 using ILogger = Microsoft.Extensions.Logging.ILogger;
 using LogLevel = Microsoft.Extensions.Logging.LogLevel;
 using VXMusic.Lastfm.Scrobbling;
+using VXMusic.LogParser.VRChat;
 
 namespace VXMusicDesktop
 {
@@ -93,12 +94,14 @@ namespace VXMusicDesktop
              * Here we need to register all Clients that need to be used in the VXMusic Tool
              */
             services.AddSingleton<App>();
+                
+            services.AddTransient<VRChatLogParser>();
             services.AddTransient<ShazamClient>();
             services.AddTransient<AudDClient>();
             services.AddTransient<WindowsAudioDeviceListener>();
             services.AddTransient<LastfmScrobbler>();
             services.AddTransient<PlaylistFileWriter>();
-
+            
             ServiceProvider = services.BuildServiceProvider();
             
             Logger = ServiceProvider.GetRequiredService<ILogger<App>>();

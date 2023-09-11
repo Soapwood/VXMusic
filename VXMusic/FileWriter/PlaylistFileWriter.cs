@@ -69,7 +69,7 @@ public class PlaylistFileWriter
 
         if (lastKnownLocationName != null)
         {
-            fileName = $"{currentDate} - {lastKnownLocationName}.txt";
+            fileName = $"{currentDate} {lastKnownLocationName}.txt";
         }
         else
         {

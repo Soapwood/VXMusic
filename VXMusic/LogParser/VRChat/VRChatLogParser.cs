@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
+using VXMusic.FileWriter;
 using VXMusic.LogParser.Helpers;
 using VXMusic.LogParser.Models;
 
@@ -12,10 +14,11 @@ namespace VXMusic.LogParser.VRChat
 {
     public class VRChatLogParser
     {
-
+        private readonly IServiceProvider _serviceProvider;
+        private static ILogger<VRChatLogParser> _logger;
+        
         public static ConfigurationModel Configuration { get; set; }
-
-
+        
         public static string LogFileName { get; set; }
         static readonly object logMutex = new object();
 
@@ -45,6 +48,16 @@ namespace VXMusic.LogParser.VRChat
 
         static ConcurrentQueue<NotificationDispatchModel> DispatchQueue = new ConcurrentQueue<NotificationDispatchModel>();
 
+        public VRChatLogParser(IServiceProvider serviceProvider)
+        {
+            _serviceProvider = serviceProvider;
+            _logger = _serviceProvider.GetService(typeof(ILogger<VRChatLogParser>)) 
+                as ILogger<VRChatLogParser> ?? throw new ApplicationException("A logger must be created in service provider.");
+
+            _logger.LogTrace("Creating VRChatLogParser.");
+
+            Run();
+        }
 
         public enum LogEventType
         {
@@ -64,8 +77,7 @@ namespace VXMusic.LogParser.VRChat
             }
 
             LogFileName = $"Session_{now.Year:0000}{now.Month:00}{now.Day:00}{now.Hour:00}{now.Minute:00}{now.Second:00}.log";
-            Log(VRChatLogParser.LogEventType.Info, $@"Log initialized at {ConfigurationModel.ExpandedUserFolderPath}\Logs\{VRChatLogParser.LogFileName}");
-
+            _logger.LogTrace($@"Log initialized at {ConfigurationModel.ExpandedUserFolderPath}\Logs\{LogFileName}");
 
             try
             {
@@ -75,14 +87,14 @@ namespace VXMusic.LogParser.VRChat
 
                 if (!HasApplicationMutex)
                 {
-                    Log(LogEventType.Error, "Failed to obtain exclusivity. Is another parser instance running?");
+                    _logger.LogError("Failed to obtain exclusivity. Is another parser instance running?");
                     Exit();
                 }
             }
             catch (Exception ex)
             {
-                Log(LogEventType.Error, "An exception occurred while attempting to determine exclusivity. Is another parser instance running?");
-                Log(ex);
+                _logger.LogError("An exception occurred while attempting to determine exclusivity. Is another parser instance running?");
+                _logger.LogError(ex.Message);
                 Exit();
             }
 
@@ -96,8 +108,8 @@ namespace VXMusic.LogParser.VRChat
             }
             catch (Exception ex)
             {
-                Log(LogEventType.Error, "An exception occurred while attempting to read or write the configuration file.");
-                Log(ex);
+                _logger.LogError("An exception occurred while attempting to read or write the configuration file.");
+                _logger.LogError(ex.Message);
                 Exit();
             }
 
@@ -105,7 +117,7 @@ namespace VXMusic.LogParser.VRChat
             LastMaximumKeywordsNotification = now.AddSeconds(-Configuration.MaximumKeywordsExceededCooldownSeconds);
             LogDetectionTimer = new Timer(new TimerCallback(LogDetectionTick), null, 0, Configuration.DirectoryPollFrequencyMilliseconds);
 
-            Log(LogEventType.Info, $"Log detection timer initialized with poll frequency {Configuration.DirectoryPollFrequencyMilliseconds} and parse frequency {Configuration.ParseFrequencyMilliseconds}.");
+            _logger.LogInformation($"Log detection timer initialized with poll frequency {Configuration.DirectoryPollFrequencyMilliseconds} and parse frequency {Configuration.ParseFrequencyMilliseconds}.");
         }
 
         static void LogDetectionTick(object timerState)
@@ -115,13 +127,13 @@ namespace VXMusic.LogParser.VRChat
                 if (!Subscriptions.ContainsKey(fn) && fn.Contains("output_log"))
                 {
                     Subscriptions.Add(fn, new TailSubscription(fn, ParseTick, 0, Configuration.ParseFrequencyMilliseconds, RewindLogForMetadata));
-                    Log(LogEventType.Info, $"A tail subscription was added to {fn}");
+                    _logger.LogTrace($"A tail subscription was added to {fn}");
                 }
         }
 
         static void RewindLogForMetadata(string filePath, long fromByte)
         {
-            Log(LogEventType.Info, $"Rewinding time to collect metadata for first time read of log at {filePath}...");
+            _logger.LogTrace($"Rewinding time to collect metadata for first time read of log at {filePath}...");
 
             string worldName = string.Empty;
             string instanceId = string.Empty;
@@ -197,11 +209,11 @@ namespace VXMusic.LogParser.VRChat
                 LastKnownLocationName = worldName;
                 LastKnownLocationID = instanceId;
 
-                Log(LogEventType.Info, $"Discovered instance {worldName} ({instanceId}).");
+                _logger.LogInformation($"Discovered instance {worldName} ({instanceId}).");
             }
             else
             {
-                Log(LogEventType.Info, $"No existing instance found.");
+                _logger.LogWarning($"No existing VRChat World instance found.");
             }
         }
 
@@ -263,14 +275,15 @@ namespace VXMusic.LogParser.VRChat
 
                             NextJoinIsLocalUser = true;
 
-                            Log(LogEventType.Event, $"World changed to {LastKnownLocationName} -> {LastKnownLocationID}");
-                            Log(LogEventType.Info, $"http://vrchat.com/home/launch?worldId={LastKnownLocationID.Replace(":", "&instanceId=")}", true);
+                            _logger.LogInformation($"World changed to {LastKnownLocationName} -> {LastKnownLocationID}");
+                            // TODO Wtf is happening here??
+                            //_logger.LogInformation($"http://vrchat.com/home/launch?worldId={LastKnownLocationID.Replace(":", "&instanceId=")}", true);
                         }
                         // Instance left and/or client exited
                         else if (line.Contains("[Behaviour] OnLeftRoom"))
                         {
                             PlayerIsBetweenWorlds = true;
-                            Log(LogEventType.Event, $"Left world or exited client.");
+                            _logger.LogInformation($"Left world or exited client.");
                         }
                         // Get player leaves
                         else if (line.Contains("[Behaviour] OnPlayerLeft "))
@@ -370,7 +383,7 @@ namespace VXMusic.LogParser.VRChat
 
         public static void Exit()
         {
-            Log(LogEventType.Info, "Cleaning up before termination.");
+            _logger.LogInformation("Cleaning up before termination.");
 
             IsExiting = true;
 
@@ -384,16 +397,16 @@ namespace VXMusic.LogParser.VRChat
 
                 Subscriptions.Clear();
 
-                Log(LogEventType.Info, "Subscriptions cleared.");
+                _logger.LogInformation("Subscriptions cleared.");
             }
 
             if (HasApplicationMutex)
             {
                 ApplicationMutex.ReleaseMutex();
-                Log(LogEventType.Info, "Application-level mutex released.");
+                _logger.LogInformation("Application-level mutex released.");
             }
 
-            Log(LogEventType.Info, "Exiting.");
+            _logger.LogInformation("Exiting.");
 
             Environment.Exit(-1);
         }
