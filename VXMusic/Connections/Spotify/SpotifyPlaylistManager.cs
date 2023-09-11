@@ -19,7 +19,7 @@ public class SpotifyPlaylistManager
         var newPlaylist = new PlaylistCreateRequest(playlistName);
 
         // TODO Make this injectable
-        newPlaylist.Description = "Made by VXMusic.";
+        newPlaylist.Description = "Playlist created by VXMusic.";
         newPlaylist.Collaborative = false;
         newPlaylist.Public = false;
 

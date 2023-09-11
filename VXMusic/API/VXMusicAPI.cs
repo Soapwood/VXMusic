@@ -75,8 +75,15 @@ namespace VXMusic.API
 
             Trace.WriteLine($"Total Playlists in your Account: {playlists.Count}");
 
+            // Prefix Playlist name with dd/MM date
             var currentDate = DateTime.Now.ToString("dd/MM");
-            var playlistName = $"{currentDate} - {LogParser.VRChat.VRChatLogParser.LastKnownLocationName}";
+            var playlistName = $"{currentDate}";
+            
+            // TODO Only run this if VRChat is running
+            var lastKnownLocationName = LogParser.VRChat.VRChatLogParser.LastKnownLocationName;
+
+            if (lastKnownLocationName != null)
+                playlistName += " - " + lastKnownLocationName;
 
             var existingPlaylist = SpotifyPlaylistManager.GetPlaylistIdByNameIfExists(playlistName, playlists);
 

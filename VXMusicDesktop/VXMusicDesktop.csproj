@@ -6,6 +6,7 @@
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
     <StartupObject>VXMusicDesktop.App</StartupObject>
+    <PackageIcon>VXLogo.png</PackageIcon>
   </PropertyGroup>
 
   <ItemGroup>
@@ -15,7 +16,10 @@
     <None Remove="Images\RedDot.png" />
     <None Remove="Images\ShazamLogo.png" />
     <None Remove="Images\Spotify_Logo_RGB_Green.png" />
-    <None Remove="Images\VXLogo.png" />
+    <None Update="Images\VXLogo.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
     <None Update="NLog.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
