@@ -137,7 +137,7 @@ namespace VXMusic.LogParser.VRChat
 
             string worldName = string.Empty;
             string instanceId = string.Empty;
-            int instanceCap = 0;
+            //int instanceCap = 0;
 
             byte[] firstNBytes = new byte[fromByte];
 
@@ -203,7 +203,7 @@ namespace VXMusic.LogParser.VRChat
                 }
             }
 
-            if (instanceCap > 0)
+            if (worldName != null || instanceId != null)
             {
                 // Read was presumably a success. Write values.
                 LastKnownLocationName = worldName;
