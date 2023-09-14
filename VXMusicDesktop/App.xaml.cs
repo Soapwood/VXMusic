@@ -15,6 +15,7 @@ using ILogger = Microsoft.Extensions.Logging.ILogger;
 using LogLevel = Microsoft.Extensions.Logging.LogLevel;
 using VXMusic.Lastfm.Scrobbling;
 using VXMusic.LogParser.VRChat;
+using VXMusic.Overlay;
 
 namespace VXMusicDesktop
 {
@@ -105,6 +106,8 @@ namespace VXMusicDesktop
             ServiceProvider = services.BuildServiceProvider();
             
             Logger = ServiceProvider.GetRequiredService<ILogger<App>>();
+
+            var vxMusicOverlay = new VXMusicOverlayInstance();
         }
     }
 }

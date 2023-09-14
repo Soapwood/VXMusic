@@ -56,7 +56,7 @@ public class SpotifyAuthentication
     {
         var json = await File.ReadAllTextAsync(CredentialsPath);
         var token = JsonConvert.DeserializeObject<PKCETokenResponse>(json);
-
+        
         var authenticator = new PKCEAuthenticator(SpotifyAuthentication.ClientId!, token!);
         authenticator.TokenRefreshed += (sender, token) =>
             File.WriteAllText(CredentialsPath, JsonConvert.SerializeObject(token));
@@ -65,17 +65,6 @@ public class SpotifyAuthentication
             .WithAuthenticator(authenticator);
 
         SpotifyClientConfig = config;
-
-        //var spotify = new SpotifyClient(config);
-
-        // var me = await spotify.UserProfile.Current();
-        // Console.WriteLine($"Welcome {me.DisplayName} ({me.Id}), you're authenticated!");
-        //
-        // var playlists = await spotify.PaginateAll(await spotify.Playlists.CurrentUsers().ConfigureAwait(false));
-        // Console.WriteLine($"Total Playlists in your Account: {playlists.Count}");
-
-        //_server.Dispose();
-        //.Exit(0);
     }
 
     private static async Task StartAuthentication()
