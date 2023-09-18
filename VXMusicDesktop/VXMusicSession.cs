@@ -12,6 +12,7 @@ using VXMusic.Recognition.AudD;
 using VXMusic.Recognition.Shazam;
 using VXMusic.Lastfm.Scrobbling;
 using VXMusic.LogParser.VRChat;
+using VXMusic.Overlay;
 
 //using System.Windows.Forms.PropertyGridInternal;
 
@@ -35,6 +36,8 @@ public class VXMusicSession
     public static LastfmScrobbler? LastfmScrobbler;
 
     public static VRChatLogParser? VRChatLogParser;
+    
+    public static VXMusicOverlayInstance? VXMusicOverlay;
 
     public VXMusicSession(RecognitionSettings recognitionSettings, ConnectionsSettings connectionsSettings)
     {
@@ -44,12 +47,15 @@ public class VXMusicSession
 
         RecordingClient = GetAudioRecordingClient();
         RecognitionClient = RecognitionSettings.GetClientFromSetRecognitionApi(); //VXMusicAPI.SetRecognitionApi(recognitionSettings.CurrentRecognitionApi);
-        NotificationClient = new XSOverlay(); //VXMusicAPI.SetNotificationClient(notificationSettings.CurrentNotificationService);
+        //NotificationClient = new XSOverlay(); //VXMusicAPI.SetNotificationClient(notificationSettings.CurrentNotificationService);
+        NotificationClient = App.ServiceProvider.GetRequiredService<VXMusicOverlayInstance>(); //VXMusicAPI.SetNotificationClient(notificationSettings.CurrentNotificationService);
         
         PlaylistFileWriter = App.ServiceProvider.GetRequiredService<PlaylistFileWriter>();
         LastfmScrobbler = App.ServiceProvider.GetRequiredService<LastfmScrobbler>();
         
         VRChatLogParser = App.ServiceProvider.GetRequiredService<VRChatLogParser>();
+        
+        //VXMusicOverlay = App.ServiceProvider.GetRequiredService<VXMusicOverlayInstance>();
     }
 
     public void SetRecognitionClient(RecognitionApi recognitionApi)

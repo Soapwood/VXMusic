@@ -25,7 +25,6 @@ namespace VXMusicDesktop
             InitializeComponent();
             MouseDown += Window_MouseDown;
 
-            //VXMusic.LogParser.VRChat.VRChatLogParser.Run();
         }
 
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
@@ -33,10 +32,5 @@ namespace VXMusicDesktop
             if (e.ChangedButton == MouseButton.Left)
                 DragMove();
         }
-
-        //private void ShazamButtonClick(object sender, EventArgs e)
-        //{
-
-        //}
     }
 }

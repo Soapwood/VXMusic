@@ -102,12 +102,11 @@ namespace VXMusicDesktop
             services.AddTransient<WindowsAudioDeviceListener>();
             services.AddTransient<LastfmScrobbler>();
             services.AddTransient<PlaylistFileWriter>();
+            services.AddTransient<VXMusicOverlayInstance>();
             
             ServiceProvider = services.BuildServiceProvider();
             
             Logger = ServiceProvider.GetRequiredService<ILogger<App>>();
-
-            var vxMusicOverlay = new VXMusicOverlayInstance();
         }
     }
 }

@@ -35,10 +35,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="OpenVR\" />
-    </ItemGroup>
-
-    <ItemGroup>
       <None Remove="Overlay\Resources\VXLogo.png" />
       <Content Include="Overlay\Resources\VXLogo.png">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>

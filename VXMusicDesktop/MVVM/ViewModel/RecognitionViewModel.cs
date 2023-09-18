@@ -166,12 +166,12 @@ namespace VXMusicDesktop.MVVM.ViewModel
                 if (lastfmResponse.Success)
                 {
                     Logger.LogInformation($"Successfully Scrobbled to Last.fm!");
-                    VXMusicSession.NotificationClient.SendNotification("Last.fm", "Successfully Scrobbled!", 2);
+                    //VXMusicSession.NotificationClient.SendNotification("Last.fm", "Successfully Scrobbled!", 2);
                 }
                 else
                 {
                     Logger.LogWarning($"Scrobbling to Last.fm was not successful.");
-                    VXMusicSession.NotificationClient.SendNotification("Last.fm", "Scrobbling was not successful.", 2);
+                    //VXMusicSession.NotificationClient.SendNotification("Last.fm", "Scrobbling was not successful.", 2);
                 }
             }
         }
