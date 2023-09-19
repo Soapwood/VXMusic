@@ -16,6 +16,7 @@ using LogLevel = Microsoft.Extensions.Logging.LogLevel;
 using VXMusic.Lastfm.Scrobbling;
 using VXMusic.LogParser.VRChat;
 using VXMusic.Overlay;
+using VXMusic;
 
 namespace VXMusicDesktop
 {
@@ -103,6 +104,7 @@ namespace VXMusicDesktop
             services.AddTransient<LastfmScrobbler>();
             services.AddTransient<PlaylistFileWriter>();
             services.AddTransient<VXMusicOverlayInstance>();
+            services.AddTransient<XSOverlay>();
             
             ServiceProvider = services.BuildServiceProvider();
             

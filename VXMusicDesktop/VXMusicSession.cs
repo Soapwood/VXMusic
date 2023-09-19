@@ -75,7 +75,25 @@ public class VXMusicSession
                 return;
         }
     }
-    
+
+    public void SetNotificationService(NotificationService recognitionApi)
+    {
+        NotificationSettings.CurrentNotificationService = recognitionApi;
+
+        switch (recognitionApi)
+        {
+            case NotificationService.SteamVR:
+                NotificationClient = App.ServiceProvider.GetRequiredService<VXMusicOverlayInstance>();
+                return;
+            case NotificationService.XSOverlay:
+                NotificationClient = App.ServiceProvider.GetRequiredService<XSOverlay>();
+                return;
+            default:
+                Trace.WriteLine("Recognition type not found!");
+                return;
+        }
+    }
+
     public static IAudioRecordingClient GetAudioRecordingClient()
     {
         return App.ServiceProvider.GetRequiredService<WindowsAudioDeviceListener>();

@@ -16,6 +16,8 @@
     <None Remove="Images\RedDot.png" />
     <None Remove="Images\ShazamLogo.png" />
     <None Remove="Images\Spotify_Logo_RGB_Green.png" />
+    <None Remove="Images\SteamVRLogo.png" />
+    <None Remove="Images\XSOverlayLogo.jpg" />
     <None Update="Images\VXLogo.png">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
@@ -47,8 +49,14 @@
     <Content Include="Images\Spotify_Logo_RGB_Green.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Images\SteamVRLogo.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Images\VXLogo.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\XSOverlayLogo.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
 
