@@ -16,7 +16,7 @@ public class AudDClient : IRecognitionClient
         _logger = _serviceProvider.GetService(typeof(ILogger<AudDClient>)) 
             as ILogger<AudDClient> ?? throw new ApplicationException("A logger must be created in service provider.");
         
-        _logger.LogInformation("Creating AudDClient.");
+        _logger.LogTrace("Creating AudDClient.");
 
         _audDHttpClient = new AudDHttpClient();
     }

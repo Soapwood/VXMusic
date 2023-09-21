@@ -97,15 +97,17 @@ namespace VXMusicDesktop
              */
             services.AddSingleton<App>();
                 
-            services.AddTransient<VRChatLogParser>();
-            services.AddTransient<ShazamClient>();
-            services.AddTransient<AudDClient>();
-            services.AddTransient<WindowsAudioDeviceListener>();
-            services.AddTransient<LastfmScrobbler>();
-            services.AddTransient<PlaylistFileWriter>();
-            services.AddTransient<VXMusicOverlayInstance>();
-            services.AddTransient<XSOverlay>();
-            
+            services.AddSingleton<ShazamClient>();
+            services.AddSingleton<AudDClient>();
+
+            services.AddSingleton<WindowsAudioDeviceListener>();
+            services.AddSingleton<LastfmScrobbler>();
+            services.AddSingleton<PlaylistFileWriter>();
+            services.AddSingleton<XSOverlay>();
+
+            services.AddSingleton<VRChatLogParser>();
+            services.AddSingleton<VXMusicOverlayInstance>();
+
             ServiceProvider = services.BuildServiceProvider();
             
             Logger = ServiceProvider.GetRequiredService<ILogger<App>>();
