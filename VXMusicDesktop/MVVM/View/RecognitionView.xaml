@@ -155,8 +155,15 @@
                 Command="{Binding ListenButtonClick}"
                 IsEnabled="{Binding IsRecognitionReady}"
                 Padding="0"
-                Margin="40"
-                HorizontalAlignment="Center" Width="600" Height="100" Click="Button_Click_4"/>
+                Margin="20"
+                FontSize="30"
+                HorizontalAlignment="Center" Width="600" Height="120" Click="Button_Click_4">
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="20"/>
+                </Style>
+            </Button.Resources>
+            </Button>
         </StackPanel>
     </StackPanel>
 

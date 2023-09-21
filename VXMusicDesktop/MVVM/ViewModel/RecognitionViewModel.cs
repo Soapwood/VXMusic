@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using VXMusic.API;
 using VXMusic.FileWriter;
+using System.Threading.Tasks;
 
 namespace VXMusicDesktop.MVVM.ViewModel
 {
@@ -117,16 +118,20 @@ namespace VXMusicDesktop.MVVM.ViewModel
         private async void PerformListenButtonClick(object commandParameter)
         {
             // TODO Two recognitions can run at the same time, add check to disable button if it's already running
-            VXMusicSession.RecordingClient.StartRecording();
-            
-            VXMusicSession.NotificationClient.SendNotification("VXMusic is Listening...", "", VXMusicSession.RecordingClient.GetRecordingTimeSeconds());
-            
-            while (!VXMusicSession.RecordingClient.IsCaptureStateStopped())
-            {
-                Thread.Sleep(500);
-            }
 
-            VXMusicSession.RecordingClient.StopRecording();
+            await Task.Run(() =>
+            {
+                VXMusicSession.RecordingClient.StartRecording();
+
+                VXMusicSession.NotificationClient.SendNotification("VXMusic is Listening...", "", VXMusicSession.RecordingClient.GetRecordingTimeSeconds());
+
+                while (!VXMusicSession.RecordingClient.IsCaptureStateStopped())
+                {
+                    Thread.Sleep(500);
+                }
+
+                VXMusicSession.RecordingClient.StopRecording();
+            });
             
             VXMusicSession.NotificationClient.SendNotification("Sounds great! Just a moment..", "", 2);
             
