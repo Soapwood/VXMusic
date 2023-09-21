@@ -12,6 +12,9 @@
   <ItemGroup>
     <None Remove="Images\AudD.jpg" />
     <None Remove="Images\CloseIcon.png" />
+    <None Remove="Images\DiscordLogoBlue.png" />
+    <None Remove="Images\GitHub_Logo.png" />
+    <None Remove="Images\GitHub_Logo_White.png" />
     <None Remove="Images\GreenDot.png" />
     <None Remove="Images\LastfmLogo.png" />
     <None Remove="Images\MinimiseIcon.png" />
@@ -38,6 +41,15 @@
     </Content>
     <Content Include="Images\CloseIcon.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\DiscordLogoBlue.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\GitHub_Logo.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\GitHub_Logo_White.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Images\GreenDot.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

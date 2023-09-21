@@ -6,8 +6,8 @@
              xmlns:local="clr-namespace:VXMusicDesktop.MVVM.View"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
-             Background="FloralWhite">
-    
+             Background="#D2CAC5">
+
     <StackPanel>
         <TextBlock Text=""
                    Foreground="Black"
