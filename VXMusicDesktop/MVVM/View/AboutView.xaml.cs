@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -23,6 +25,17 @@ namespace VXMusicDesktop.MVVM.View
         public AboutView()
         {
             InitializeComponent();
+        }
+
+        private void Url_Click(object sender, RoutedEventArgs e)
+        {
+            var link = (Hyperlink) sender;
+
+            Process.Start(new ProcessStartInfo
+            {
+                FileName = link.NavigateUri.ToString(),
+                UseShellExecute = true
+            });
         }
     }
 }

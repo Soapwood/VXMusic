@@ -14,7 +14,7 @@ namespace VXMusicDesktop.MVVM.ViewModel
         public RelayCommand NotificationsViewCommand { get; set; }
         public RelayCommand RecognitionViewCommand { get; set; }
         public RelayCommand ConnectionsViewCommand { get; set; }
-        public RelayCommand BindingsViewCommand { get; set; }
+        public RelayCommand OverlayViewCommand { get; set; }
         public RelayCommand AboutViewCommand { get; set; }
 
         public HomeViewModel HomeVM { get; set; }
@@ -22,7 +22,7 @@ namespace VXMusicDesktop.MVVM.ViewModel
         public RecognitionViewModel RecognitionVM { get; set; }
 
         public ConnectionsViewModel ConnectionsVM { get; set; }
-        public BindingsViewModel BindingsVM { get; set; }
+        public OverlayViewModel OverlayVm { get; set; }
         public AboutViewModel AboutVM { get; set; }
 
 
@@ -44,7 +44,7 @@ namespace VXMusicDesktop.MVVM.ViewModel
             NotificationsVM = new NotificationsViewModel();
             RecognitionVM = new RecognitionViewModel();
             ConnectionsVM = new ConnectionsViewModel();
-            BindingsVM = new BindingsViewModel();
+            OverlayVm = new OverlayViewModel();
             AboutVM = new AboutViewModel();
             CurrentView = HomeVM;
 
@@ -68,9 +68,9 @@ namespace VXMusicDesktop.MVVM.ViewModel
                 CurrentView = ConnectionsVM;
             });
 
-            BindingsViewCommand = new RelayCommand(o =>
+            OverlayViewCommand = new RelayCommand(o =>
             {
-                CurrentView = BindingsVM;
+                CurrentView = OverlayVm;
             });
 
             AboutViewCommand = new RelayCommand(o =>

@@ -6,8 +6,38 @@
              xmlns:local="clr-namespace:VXMusicDesktop.MVVM.View"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
-             Background="#1B1B1B">
+             Background="#D2CAC5">
     <Grid>
-            
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <!-- First TextBlock -->
+            <RowDefinition Height="Auto"/>
+            <!-- Second TextBlock -->
+        </Grid.RowDefinitions>
+
+        <TextBlock
+            Grid.Row="0"
+            VerticalAlignment="Center"
+            TextAlignment="Center"
+            FontFamily="/Fonts/#Brushstrike"
+            FontSize="80">
+            VXMusic
+        </TextBlock>
+
+        <TextBlock
+            Grid.Row="1"
+            VerticalAlignment="Center"
+            TextAlignment="Center"
+            FontSize="20">
+            <Hyperlink NavigateUri="https://github.com/Soapwood/VXMusic" Click="Url_Click" TargetName="_blank">
+                <Run Text="Github"/>
+            </Hyperlink>
+            <LineBreak/>
+            <Hyperlink NavigateUri="https://discord.gg/dZc7dJx6WY" Click="Url_Click" TargetName="_blank">
+                <Run Text="Discord"/>
+            </Hyperlink>
+            <LineBreak/><LineBreak/>
+            © Soapwood 2023
+        </TextBlock>
     </Grid>
 </UserControl>

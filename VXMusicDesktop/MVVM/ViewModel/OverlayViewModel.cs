@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace VXMusicDesktop.MVVM.ViewModel
 {
-    internal class BindingsViewModel
+    internal class OverlayViewModel
     {
     }
 }

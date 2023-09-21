@@ -29,8 +29,8 @@
                 <view:ConnectionsView/>
             </DataTemplate>
 
-            <DataTemplate DataType="{x:Type viewModel:BindingsViewModel}">
-                <view:BindingsView/>
+            <DataTemplate DataType="{x:Type viewModel:OverlayViewModel}">
+                <view:OverlayView/>
             </DataTemplate>
 
             <DataTemplate DataType="{x:Type viewModel:AboutViewModel}">

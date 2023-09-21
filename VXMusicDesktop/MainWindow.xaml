@@ -16,7 +16,12 @@
     <Window.DataContext>
         <viewModel:MainViewModel/>
     </Window.DataContext>
-    
+
+    <Window.Resources>
+        <BitmapImage x:Key="CloseButtonImage" UriSource="Images/CloseIcon.png"/>
+        <BitmapImage x:Key="MinimiseButtonImage" UriSource="Images/MinimiseIcon.png"/>
+    </Window.Resources>
+
     <Border Background="#D2CAC5"
             CornerRadius="10">
         <Grid>
@@ -29,6 +34,30 @@
                 <RowDefinition Height="75"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
+
+            <Button Grid.Column="1" 
+                    Width="30" 
+                    Height="30" 
+                    Margin="0,0,60,0"
+                    HorizontalAlignment="Right"
+                    Click="MinimizeButton_Click"
+                    BorderThickness="0">
+                <Button.Background>
+                    <ImageBrush ImageSource="{StaticResource MinimiseButtonImage}" Stretch="UniformToFill"/>
+                </Button.Background>
+            </Button>
+
+            <Button Grid.Column="2" 
+                    Width="30" 
+                    Height="30" 
+                    Margin="0,0,20,0"
+                    HorizontalAlignment="Right"
+                    Click="CloseButton_Click"
+                    BorderThickness="0">
+                <Button.Background>
+                    <ImageBrush ImageSource="{StaticResource CloseButtonImage}" Stretch="UniformToFill"/>
+                </Button.Background>
+            </Button>
 
             <StackPanel>
                 <!--<Image Width="50"
@@ -72,12 +101,12 @@
                              FontSize="14"
                              Style="{StaticResource MenuButtonTheme}"
                              Command="{Binding ConnectionsViewCommand}"/>
-                <RadioButton Content="Bindings"
+                <RadioButton Content="Overlay"
                              Height="80"
                              Foreground="Black"
                              FontSize="14"
                              Style="{StaticResource MenuButtonTheme}"
-                             Command="{Binding BindingsViewCommand}"/>
+                             Command="{Binding OverlayViewCommand}"/>
                 <RadioButton Content="About"
                              Height="80"
                              Foreground="Black"

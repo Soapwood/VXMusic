@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace VXMusicDesktop.MVVM.View
 {
     /// <summary>
-    /// Interaction logic for BindingsView.xaml
+    /// Interaction logic for OverlayView.xaml
     /// </summary>
-    public partial class BindingsView : UserControl
+    public partial class OverlayView : UserControl
     {
-        public BindingsView()
+        public OverlayView()
         {
             InitializeComponent();
         }
