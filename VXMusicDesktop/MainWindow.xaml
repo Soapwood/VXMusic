@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:VXMusicDesktop"
         xmlns:viewModel="clr-namespace:VXMusicDesktop.MVVM.ViewModel"
+        xmlns:custom="clr-namespace:VXMusicDesktop.Theme"
         mc:Ignorable="d"
         Height="600" Width="920"
         WindowStyle="None"
@@ -18,11 +19,19 @@
     </Window.DataContext>
 
     <Window.Resources>
-        <BitmapImage x:Key="CloseButtonImage" UriSource="Images/CloseIcon.png"/>
-        <BitmapImage x:Key="MinimiseButtonImage" UriSource="Images/MinimiseIcon.png"/>
+        <BitmapImage x:Key="CloseButtonImage" UriSource="Images/CloseIconWhite.png"/>
+        <BitmapImage x:Key="MinimiseButtonImage" UriSource="Images/MinimiseIconWhite.png"/>
+
+        <SolidColorBrush x:Key="PrimaryColor" Color="{Binding Source={x:Static custom:ColourSchemeManager.PrimaryColour}, Path=Color}" />
+        <SolidColorBrush x:Key="SecondaryColor" Color="{Binding Source={x:Static custom:ColourSchemeManager.SecondaryColour}, Path=Color}" />
+        <SolidColorBrush x:Key="Accent1Colour" Color="{Binding Source={x:Static custom:ColourSchemeManager.Accent1Colour}, Path=Color}" />
+        <SolidColorBrush x:Key="Accent2Colour" Color="{Binding Source={x:Static custom:ColourSchemeManager.Accent2Colour}, Path=Color}" />
+        <SolidColorBrush x:Key="TextBasic" Color="{Binding Source={x:Static custom:ColourSchemeManager.TextBasic}, Path=Color}" />
+
     </Window.Resources>
 
-    <Border Background="#D2CAC5"
+    <!--<Border Background="#D2CAC5"-->
+    <Border Background="{StaticResource PrimaryColor}" 
             CornerRadius="10">
         <Grid>
             <Grid.ColumnDefinitions>
@@ -69,7 +78,7 @@
                 <TextBlock Text="VXMusic"
                        VerticalAlignment="Center"
                        HorizontalAlignment="Center"
-                       Foreground="Black"
+                       Foreground="{StaticResource TextBasic}"
                        FontSize="32"
                        Margin="0,16,0,0"
                        FontFamily="/Fonts/#Brushstrike"/>
@@ -78,38 +87,38 @@
             <StackPanel Grid.Row="1">
                 <RadioButton Content="Home"
                              Height="80"
-                             Foreground="Black"
+                             Foreground="{StaticResource TextBasic}"
                              FontSize="14"
                              Style="{StaticResource MenuButtonTheme}"
                              IsChecked="True"
                              Command="{Binding HomeViewCommand}"/>
                 <RadioButton Content="Recognition"
                              Height="80"
-                             Foreground="Black"
+                             Foreground="{StaticResource TextBasic}"
                              FontSize="14"
                              Style="{StaticResource MenuButtonTheme}"
                              Command="{Binding RecognitionViewCommand}"/>
                 <RadioButton Content="Notifications"
                              Height="80"
-                             Foreground="Black"
+                             Foreground="{StaticResource TextBasic}"
                              FontSize="14"
                              Style="{StaticResource MenuButtonTheme}"
                              Command="{Binding NotificationsViewCommand}"/>
                 <RadioButton Content="Connections"
                              Height="80"
-                             Foreground="Black"
+                             Foreground="{StaticResource TextBasic}"
                              FontSize="14"
                              Style="{StaticResource MenuButtonTheme}"
                              Command="{Binding ConnectionsViewCommand}"/>
                 <RadioButton Content="Overlay"
                              Height="80"
-                             Foreground="Black"
+                             Foreground="{StaticResource TextBasic}"
                              FontSize="14"
                              Style="{StaticResource MenuButtonTheme}"
                              Command="{Binding OverlayViewCommand}"/>
                 <RadioButton Content="About"
                              Height="80"
-                             Foreground="Black"
+                             Foreground="{StaticResource TextBasic}"
                              FontSize="14"
                              Style="{StaticResource MenuButtonTheme}"
                              Command="{Binding AboutViewCommand}"/>

@@ -1,0 +1,25 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Color x:Key="Darkmode1PrimaryColour">#000000</Color>
+    <SolidColorBrush x:Key="Darkmode1Primary" Color="{StaticResource Darkmode1PrimaryColour}" />
+    <Color x:Key="Darkmode1SecondaryColour">#52057B</Color>
+    <SolidColorBrush x:Key="Darkmode1Secondary" Color="{StaticResource Darkmode1SecondaryColour}" />
+    <Color x:Key="Darkmode1Accent1Colour">#892CDC</Color>
+    <SolidColorBrush x:Key="Darkmode1Accent1" Color="{StaticResource Darkmode1Accent1Colour}" />
+    <Color x:Key="Darkmode1Accent2Colour">#BC6FF1</Color>
+    <SolidColorBrush x:Key="Darkmode1Accent2" Color="{StaticResource Darkmode1Accent2Colour}" />
+    <Color x:Key="Darkmode1TextBasicColour">#F8F0E3</Color>
+    <SolidColorBrush x:Key="Darkmode1TextBasic" Color="{StaticResource Darkmode1TextBasicColour}" />
+
+    <Color x:Key="Darkmode2PrimaryColour">#252525</Color>
+    <SolidColorBrush x:Key="Darkmode2Primary" Color="{StaticResource Darkmode2PrimaryColour}" />
+    <Color x:Key="Darkmode2SecondaryColour">#6930C3</Color>
+    <SolidColorBrush x:Key="Darkmode2Secondary" Color="{StaticResource Darkmode2SecondaryColour}" />
+    <Color x:Key="Darkmode2Accent1Colour">#64DFDF</Color>
+    <SolidColorBrush x:Key="Darkmode2Accent1" Color="{StaticResource Darkmode2Accent1Colour}" />
+    <Color x:Key="Darkmode2Accent2Colour">#80FFDB</Color>
+    <SolidColorBrush x:Key="Darkmode2Accent2" Color="{StaticResource Darkmode2Accent2Colour}" />
+    <Color x:Key="Darkmode2TextBasicColour">#F8F0E3</Color>
+    <SolidColorBrush x:Key="Darkmode2TextBasic" Color="{StaticResource Darkmode2TextBasicColour}" />
+</ResourceDictionary>

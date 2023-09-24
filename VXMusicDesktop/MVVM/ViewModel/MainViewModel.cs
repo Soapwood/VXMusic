@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using System.Windows.Media;
 using VXMusicDesktop.Core;
 
 namespace VXMusicDesktop.MVVM.ViewModel

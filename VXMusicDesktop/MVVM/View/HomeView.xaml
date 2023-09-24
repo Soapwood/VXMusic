@@ -4,11 +4,25 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:VXMusicDesktop.MVVM.View"
+             xmlns:custom="clr-namespace:VXMusicDesktop.Theme"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+
+    <UserControl.Resources>
+
+        <SolidColorBrush x:Key="PrimaryColor" Color="{Binding Source={x:Static custom:ColourSchemeManager.PrimaryColour}, Path=Color}" />
+        <SolidColorBrush x:Key="SecondaryColor" Color="{Binding Source={x:Static custom:ColourSchemeManager.SecondaryColour}, Path=Color}" />
+        <SolidColorBrush x:Key="Accent1Colour" Color="{Binding Source={x:Static custom:ColourSchemeManager.Accent1Colour}, Path=Color}" />
+        <SolidColorBrush x:Key="Accent2Colour" Color="{Binding Source={x:Static custom:ColourSchemeManager.Accent2Colour}, Path=Color}" />
+        <SolidColorBrush x:Key="TextBasic" Color="{Binding Source={x:Static custom:ColourSchemeManager.TextBasic}, Path=Color}" />
+
+        <custom:SolidColorBrushToColorConverter x:Key="SolidColorBrushToColorConverter" />
+
+    </UserControl.Resources>
+
     <StackPanel>
         <TextBlock Text="Home"
-                   Foreground="Black"
+                   Foreground="{StaticResource TextBasic}"
                    FontSize="28"
                    HorizontalAlignment="Left"
                    Margin="0,0,0,20"/>
@@ -16,10 +30,20 @@
                     Margin="0,0,0,10">
             <Border Width="400"
                     Height="200">
+
                 <Border.Background>
                     <LinearGradientBrush StartPoint="0,0" EndPoint="1,2">
-                        <GradientStop Color="#FFFCEB" Offset="0.0"/>
-                        <GradientStop Color="#C5BEBE" Offset="1"/>
+                        <GradientStop Offset="0.0">
+                            <GradientStop.Color>
+                                <Binding Source="{StaticResource SecondaryColor}" Converter="{StaticResource SolidColorBrushToColorConverter}"/>
+                            </GradientStop.Color>
+                        </GradientStop>
+
+                        <GradientStop Offset="0.4">
+                            <GradientStop.Color>
+                                <Binding Source="{StaticResource Accent1Colour}" Converter="{StaticResource SolidColorBrushToColorConverter}"/>
+                            </GradientStop.Color>
+                        </GradientStop>
                     </LinearGradientBrush>
                 </Border.Background>
 
@@ -32,12 +56,12 @@
                 <Grid>
                     <StackPanel>
                         <TextBlock Text="Virtual Xtension Music"
-                                   Foreground="Black"
+                                   Foreground="{StaticResource TextBasic}"
                                    FontSize="28"
                                    Margin="20,10,10,0"/>
 
                         <TextBlock Text="Music Companion for Social VR."
-                                   Foreground="Black"
+                                   Foreground="{StaticResource TextBasic}"
                                    FontSize="18"
                                    Margin="20,10,10,0"/>
 
@@ -63,20 +87,31 @@
                     Height="200"
                     CornerRadius="10"
                     Margin="45,0,0,0">
+
                 <Border.Background>
                     <LinearGradientBrush StartPoint="0,0" EndPoint="1,2">
-                        <GradientStop Color="#C5BEBE" Offset="0.0"/>
-                        <GradientStop Color="#FFFCEB" Offset="1"/>
+                        <GradientStop Offset="0.0">
+                            <GradientStop.Color>
+                                <Binding Source="{StaticResource SecondaryColor}" Converter="{StaticResource SolidColorBrushToColorConverter}"/>
+                            </GradientStop.Color>
+                        </GradientStop>
+
+                        <GradientStop Offset="0.4">
+                            <GradientStop.Color>
+                                <Binding Source="{StaticResource Accent1Colour}" Converter="{StaticResource SolidColorBrushToColorConverter}"/>
+                            </GradientStop.Color>
+                        </GradientStop>
                     </LinearGradientBrush>
                 </Border.Background>
+
                 <StackPanel>
                     <TextBlock Text="Version: 0.2"
-                            Foreground="Black"
+                            Foreground="{StaticResource TextBasic}"
                             FontSize="18"
                             Margin="20,10,10,0"
                             HorizontalAlignment="Center"/>
                     <TextBlock Text="- Added Spotify Playlist Support&#x0a;- Added Last.fm Integration&#x0a;- Logging and DI Structure"
-                                   Foreground="Black"
+                                   Foreground="{StaticResource TextBasic}"
                                    FontSize="12"
                                    Margin="10,20,0,0"
                                    HorizontalAlignment="Left"/>
@@ -92,7 +127,7 @@
             </StackPanel.Resources>
 
             <TextBlock Text="Integrations"
-                   Foreground="Black"
+                   Foreground="{StaticResource TextBasic}"
                    FontSize="20"
                    HorizontalAlignment="Left"
                    Margin="0,0,0,10"/>
@@ -100,8 +135,23 @@
             <StackPanel Orientation="Horizontal">
                 <Border Width="150"
                         Height="150"
-                        Background="#F4EEE0"
                         CornerRadius="10">
+                    <Border.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,2">
+                            <GradientStop Offset="0.0">
+                                <GradientStop.Color>
+                                    <Binding Source="{StaticResource SecondaryColor}" Converter="{StaticResource SolidColorBrushToColorConverter}"/>
+                                </GradientStop.Color>
+                            </GradientStop>
+
+                            <GradientStop Offset="0.4">
+                                <GradientStop.Color>
+                                    <Binding Source="{StaticResource Accent1Colour}" Converter="{StaticResource SolidColorBrushToColorConverter}"/>
+                                </GradientStop.Color>
+                            </GradientStop>
+                        </LinearGradientBrush>
+                    </Border.Background>
+                    
                     <StackPanel>
                         <Grid>
                             <Grid.RowDefinitions>
@@ -112,13 +162,13 @@
                             </Grid.RowDefinitions>
 
                             <TextBlock Text="Recognition API"
-                                       Foreground="Black"
+                                       Foreground="{StaticResource TextBasic}"
                                        FontSize="12"
                                        Margin="0,5,0,0"
                                        HorizontalAlignment="Center"
                                        Grid.Row="0"/>
                             <TextBlock Text="Shazam"
-                                       Foreground="Black"
+                                       Foreground="{StaticResource TextBasic}"
                                        FontSize="12"
                                        Margin="10,20,0,0"
                                        HorizontalAlignment="Left"
@@ -131,7 +181,7 @@
                                    Grid.Row="1">
                             </Image>
                             <TextBlock Text="AudD"
-                                       Foreground="Black"
+                                       Foreground="{StaticResource TextBasic}"
                                        FontSize="12"
                                        Margin="10,20,0,0"
                                        HorizontalAlignment="Left"
@@ -149,8 +199,24 @@
 
                 <Border Width="150"
                         Height="150"
-                        Background="#F4EEE0"
                         CornerRadius="10">
+
+                    <Border.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,2">
+                            <GradientStop Offset="0.0">
+                                <GradientStop.Color>
+                                    <Binding Source="{StaticResource SecondaryColor}" Converter="{StaticResource SolidColorBrushToColorConverter}"/>
+                                </GradientStop.Color>
+                            </GradientStop>
+
+                            <GradientStop Offset="0.4">
+                                <GradientStop.Color>
+                                    <Binding Source="{StaticResource Accent1Colour}" Converter="{StaticResource SolidColorBrushToColorConverter}"/>
+                                </GradientStop.Color>
+                            </GradientStop>
+                        </LinearGradientBrush>
+                    </Border.Background>
+                    
                     <StackPanel>
                         <Grid>
                             <Grid.RowDefinitions>
@@ -161,13 +227,13 @@
                             </Grid.RowDefinitions>
 
                             <TextBlock Text="Notification Service"
-                                       Foreground="Black"
+                                       Foreground="{StaticResource TextBasic}"
                                        FontSize="12"
                                        Margin="0,5,0,0"
                                        HorizontalAlignment="Center"
                                        Grid.Row="0"/>
                             <TextBlock Text="SteamVR"
-                                       Foreground="Black"
+                                       Foreground="{StaticResource TextBasic}"
                                        FontSize="12"
                                        Margin="10,20,0,0"
                                        HorizontalAlignment="Left"
@@ -180,7 +246,7 @@
                                    Grid.Row="1">
                             </Image>
                             <TextBlock Text="XSOverlay"
-                                       Foreground="Black"
+                                       Foreground="{StaticResource TextBasic}"
                                        FontSize="12"
                                        Margin="10,20,0,0"
                                        HorizontalAlignment="Left"
@@ -199,8 +265,23 @@
 
                 <Border Width="150"
                         Height="150"
-                        Background="#F4EEE0"
                         CornerRadius="10">
+                    <Border.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,2">
+                            <GradientStop Offset="0.0">
+                                <GradientStop.Color>
+                                    <Binding Source="{StaticResource SecondaryColor}" Converter="{StaticResource SolidColorBrushToColorConverter}"/>
+                                </GradientStop.Color>
+                            </GradientStop>
+
+                            <GradientStop Offset="0.4">
+                                <GradientStop.Color>
+                                    <Binding Source="{StaticResource Accent1Colour}" Converter="{StaticResource SolidColorBrushToColorConverter}"/>
+                                </GradientStop.Color>
+                            </GradientStop>
+                        </LinearGradientBrush>
+                    </Border.Background>
+
                     <StackPanel>
                         <Grid>
                             <Grid.RowDefinitions>
@@ -211,13 +292,13 @@
                             </Grid.RowDefinitions>
 
                             <TextBlock Text="Connections"
-                                       Foreground="Black"
+                                       Foreground="{StaticResource TextBasic}"
                                        FontSize="12"
                                        Margin="0,5,0,0"
                                        HorizontalAlignment="Center"
                                        Grid.Row="0"/>
                             <TextBlock Text="Spotify"
-                                       Foreground="Black"
+                                       Foreground="{StaticResource TextBasic}"
                                        FontSize="12"
                                        Margin="10,20,0,0"
                                        HorizontalAlignment="Left"
@@ -230,7 +311,7 @@
                                    Grid.Row="1">
                             </Image>
                             <TextBlock Text="Last.fm"
-                                       Foreground="Black"
+                                       Foreground="{StaticResource TextBasic}"
                                        FontSize="12"
                                        Margin="10,20,0,0"
                                        HorizontalAlignment="Left"
@@ -248,8 +329,23 @@
 
                 <Border Width="150"
                         Height="150"
-                        Background="#F4EEE0"
                         CornerRadius="10">
+                    <Border.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,2">
+                            <GradientStop Offset="0.0">
+                                <GradientStop.Color>
+                                    <Binding Source="{StaticResource SecondaryColor}" Converter="{StaticResource SolidColorBrushToColorConverter}"/>
+                                </GradientStop.Color>
+                            </GradientStop>
+
+                            <GradientStop Offset="0.4">
+                                <GradientStop.Color>
+                                    <Binding Source="{StaticResource Accent1Colour}" Converter="{StaticResource SolidColorBrushToColorConverter}"/>
+                                </GradientStop.Color>
+                            </GradientStop>
+                        </LinearGradientBrush>
+                    </Border.Background>
+
                     <StackPanel>
                         <Grid>
                             <Grid.RowDefinitions>
@@ -260,13 +356,13 @@
                             </Grid.RowDefinitions>
 
                             <TextBlock Text="Connected Game Clients"
-                                       Foreground="Black"
+                                       Foreground="{StaticResource TextBasic}"
                                        FontSize="12"
                                        Margin="0,5,0,0"
                                        HorizontalAlignment="Center"
                                        Grid.Row="0"/>
                             <TextBlock Text="VRChat"
-                                       Foreground="Black"
+                                       Foreground="{StaticResource TextBasic}"
                                        FontSize="12"
                                        Margin="10,20,0,0"
                                        HorizontalAlignment="Left"
