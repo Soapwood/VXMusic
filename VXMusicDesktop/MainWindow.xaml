@@ -52,6 +52,7 @@
                       SelectionChanged="ThemeDropdownSelection">
                 <ComboBoxItem Content="Darkmode1" />
                 <ComboBoxItem Content="Darkmode2" />
+                <ComboBoxItem Content="Lightmode1" />
             </ComboBox>
 
             <Button Grid.Column="1" 

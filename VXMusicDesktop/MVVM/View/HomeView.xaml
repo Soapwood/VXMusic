@@ -96,13 +96,13 @@
 
                 <StackPanel>
                     <TextBlock x:Name="ReleaseNotesBoxBorderHeaderText"
-                               Text="Version: 0.2"
+                               Text="Version: 0.3"
                                Foreground="{StaticResource TextBasic}"
                                FontSize="18"
                                Margin="20,10,10,0"
                                HorizontalAlignment="Center"/>
                     <TextBlock x:Name="ReleaseNotesBoxParagraphText"
-                               Text="- Added Spotify Playlist Support&#x0a;- Added Last.fm Integration&#x0a;- Logging and DI Structure"
+                               Text="- Added support for native&#x0a;  SteamVR Notifications&#x0a;- Added themes support.&#x0a;"
                                Foreground="{StaticResource TextBasic}"
                                FontSize="12"
                                Margin="10,20,0,0"

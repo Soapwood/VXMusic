@@ -12,7 +12,8 @@ namespace VXMusicDesktop.Theme
     public enum DesktopTheme
     {
         Darkmode1,
-        Darkmode2
+        Darkmode2,
+        Lightmode1
     }
 
     public class ColourSchemeManager
@@ -30,6 +31,12 @@ namespace VXMusicDesktop.Theme
         public static readonly string Darkmode2Accent1Colour = "#892CDC";
         public static readonly string Darkmode2Accent2Colour = "#BC6FF1";
         public static readonly string Darkmode2TextBasic = "#F8F0E3";
+
+        public static readonly string Lightmode1Primary = "#E4F1FF";
+        public static readonly string Lightmode1Secondary = "#9400FF";
+        public static readonly string Lightmode1Accent1Colour = "#AED2FF";
+        public static readonly string Lightmode1Accent2Colour = "#27005D";
+        public static readonly string Lightmode1TextBasic = "#040D12";
 
         public static readonly string SpotifyColour = "#1DB954";
         public static readonly string LastFmColour = "#C3000D";
@@ -51,6 +58,9 @@ namespace VXMusicDesktop.Theme
                     break;
                 case DesktopTheme.Darkmode2:
                     SetThemeDarkmode2();
+                    break;
+                case DesktopTheme.Lightmode1:
+                    SetThemeLightmode1();
                     break;
             }
         }
@@ -75,6 +85,15 @@ namespace VXMusicDesktop.Theme
             Accent1Colour = new SolidColorBrush(FromHex(Darkmode2Accent1Colour));
             Accent2Colour = new SolidColorBrush(FromHex(Darkmode2Accent2Colour));
             TextBasic = new SolidColorBrush(FromHex(Darkmode2TextBasic));
+        }
+
+        private static void SetThemeLightmode1()
+        {
+            PrimaryColour = new SolidColorBrush(FromHex(Lightmode1Primary));
+            SecondaryColour = new SolidColorBrush(FromHex(Lightmode1Secondary));
+            Accent1Colour = new SolidColorBrush(FromHex(Lightmode1Accent1Colour));
+            Accent2Colour = new SolidColorBrush(FromHex(Lightmode1Accent2Colour));
+            TextBasic = new SolidColorBrush(FromHex(Lightmode1TextBasic));
         }
 
         private static Color FromHex(string hex)
