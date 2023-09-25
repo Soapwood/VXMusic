@@ -9,8 +9,16 @@ using System.Windows.Media;
 
 namespace VXMusicDesktop.Theme
 {
+    public enum DesktopTheme
+    {
+        Darkmode1,
+        Darkmode2
+    }
+
     public class ColourSchemeManager
     {
+        public static event EventHandler ThemeChanged;
+
         public static readonly string Darkmode1Primary = "#252525";
         public static readonly string Darkmode1Secondary = "#6930C3";
         public static readonly string Darkmode1Accent1Colour = "#64DFDF";
@@ -34,7 +42,24 @@ namespace VXMusicDesktop.Theme
         public static SolidColorBrush SpotifyGreen { get; set; } = new SolidColorBrush(FromHex(SpotifyColour));
         public static SolidColorBrush LastFmRed { get; set; } = new SolidColorBrush(FromHex(LastFmColour));
 
-        public static void SetThemeDarkmode1()
+        public static void SetTheme(DesktopTheme theme)
+        {
+            switch(theme)
+            {
+                case DesktopTheme.Darkmode1:
+                    SetThemeDarkmode1();
+                    break;
+                case DesktopTheme.Darkmode2:
+                    SetThemeDarkmode2();
+                    break;
+            }
+        }
+        public static void RaiseThemeChanged()
+        {
+            ThemeChanged?.Invoke(null, EventArgs.Empty);
+        }
+
+        private static void SetThemeDarkmode1()
         {
             PrimaryColour = new SolidColorBrush(FromHex(Darkmode1Primary));
             SecondaryColour = new SolidColorBrush(FromHex(Darkmode1Secondary));
@@ -43,7 +68,7 @@ namespace VXMusicDesktop.Theme
             TextBasic = new SolidColorBrush(FromHex(Darkmode1TextBasic));
         }
 
-        public static void SetThemeDarkmode2()
+        private static void SetThemeDarkmode2()
         {
             PrimaryColour = new SolidColorBrush(FromHex(Darkmode2Primary));
             SecondaryColour = new SolidColorBrush(FromHex(Darkmode2Secondary));
@@ -51,7 +76,8 @@ namespace VXMusicDesktop.Theme
             Accent2Colour = new SolidColorBrush(FromHex(Darkmode2Accent2Colour));
             TextBasic = new SolidColorBrush(FromHex(Darkmode2TextBasic));
         }
-        public static Color FromHex(string hex)
+
+        private static Color FromHex(string hex)
         {
             hex = hex.TrimStart('#'); // Remove '#' if present
             if (hex.Length != 6)

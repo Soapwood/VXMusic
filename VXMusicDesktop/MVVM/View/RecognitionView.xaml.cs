@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using VXMusicDesktop.Theme;
 
 namespace VXMusicDesktop.MVVM.View
 {
@@ -23,41 +24,25 @@ namespace VXMusicDesktop.MVVM.View
         public RecognitionView()
         {
             InitializeComponent();
+
+            ColourSchemeManager.ThemeChanged += OnThemeChanged;
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void OnThemeChanged(object sender, EventArgs e)
         {
+            // Handle the theme change here for Home View
+            RecognitionTextHeader.Foreground = ColourSchemeManager.TextBasic;
 
-        }
+            RecognitionIntegration1BoxBorderGradientBrush.GradientStops[0].Color = ColourSchemeManager.SecondaryColour.Color;
+            RecognitionIntegration1BoxBorderGradientBrush.GradientStops[1].Color = ColourSchemeManager.Accent1Colour.Color;
+            RecognitionIntegration1HeaderText.Foreground = ColourSchemeManager.TextBasic;
 
-        private void RadioButton_Checked(object sender, RoutedEventArgs e)
-        {
+            RecognitionIntegration2BoxBorderGradientBrush.GradientStops[0].Color = ColourSchemeManager.SecondaryColour.Color;
+            RecognitionIntegration2BoxBorderGradientBrush.GradientStops[1].Color = ColourSchemeManager.Accent1Colour.Color;
+            RecognitionIntegration2HeaderText.Foreground = ColourSchemeManager.TextBasic;
 
-        }
-
-        private void Button_Click_1(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void Button_Click_2(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void UseShazamApi_Click(object sender, RoutedEventArgs e)
-        {
-            
-        }
-
-        private void Button_Click_3(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void Button_Click_4(object sender, RoutedEventArgs e)
-        {
-
+            RunRecognitionButton.Background = ColourSchemeManager.SecondaryColour;
+            RunRecognitionButton.Foreground = ColourSchemeManager.TextBasic;
         }
     }
 }

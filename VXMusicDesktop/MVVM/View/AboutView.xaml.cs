@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using VXMusicDesktop.Theme;
 
 namespace VXMusicDesktop.MVVM.View
 {
@@ -25,6 +26,15 @@ namespace VXMusicDesktop.MVVM.View
         public AboutView()
         {
             InitializeComponent();
+
+            ColourSchemeManager.ThemeChanged += OnThemeChanged;
+        }
+
+        private void OnThemeChanged(object sender, EventArgs e)
+        {
+            // Handle the theme change here for Home View
+            AboutTextHeader.Foreground = ColourSchemeManager.TextBasic;
+            AboutTextParagraph.Foreground = ColourSchemeManager.TextBasic;
         }
 
         private void Url_Click(object sender, RoutedEventArgs e)

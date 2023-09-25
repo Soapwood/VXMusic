@@ -23,7 +23,8 @@
     </UserControl.Resources>
 
     <StackPanel>
-        <TextBlock Text=""
+        <TextBlock Name="ConnectionsTextHeader"
+                   Text=""
                    Foreground="{StaticResource TextBasic}"
                    FontSize="28"
                    HorizontalAlignment="Left"
@@ -43,33 +44,23 @@
                        RenderTransformOrigin="0,0"
                        Margin="0,30,0,0"
                                HorizontalAlignment="Center"/>
-                        <TextBlock Text="Link VXMusic to Spotify"
+                        <TextBlock Name="ConnectionService1TextHeader"
+                            Text="Link VXMusic to Spotify"
                             Foreground="{StaticResource TextBasic}"
                             FontSize="18"
                             Margin="0,0,0,0"
                             HorizontalAlignment="Center"/>
 
-                        <TextBlock Text="Automatically add recognised songs to playlists!"
-                            Foreground="{StaticResource TextBasic}"
-                            FontSize="12"
-                            Margin="0,0,0,0"
-                            HorizontalAlignment="Center"/>
+                        <TextBlock Name="ConnectionService1TextParagraph"
+                                   Text="Automatically add recognised songs to playlists!"
+                                   Foreground="{StaticResource TextBasic}"
+                                   FontSize="12"
+                                   Margin="0,0,0,0"
+                                   HorizontalAlignment="Center"/>
                     </StackPanel>
                 </Grid>
-
-                <!--<StackPanel>
-                    <TextBlock Text="Version: 0.1"
-                            Foreground="Black"
-                            FontSize="18"
-                            Margin="20,10,10,0"
-                            HorizontalAlignment="Center"/>
-                    <TextBlock Text="- Added Shazam API Support&#x0a;- Added Spotify Integration&#x0a;- Added WIP Desktop Client"
-                                   Foreground="Black"
-                                   FontSize="12"
-                                   Margin="10,20,0,0"
-                                   HorizontalAlignment="Left"/>
-                </StackPanel>-->
             </Border>
+            
             <Button 
                 Content="{Binding SpotifyLinkButtonText}" 
                 Command="{Binding LinkSpotifyButtonClick}"
@@ -78,7 +69,7 @@
                 Margin="30"
                 Background="{StaticResource SpotifyGreen}"
                 Foreground="Black"
-                HorizontalAlignment="Right" Width="300" Height="80" Click="Button_Click">
+                HorizontalAlignment="Right" Width="300" Height="80">
                 <Button.Resources>
                     <Style TargetType="Border">
                         <Setter Property="CornerRadius" Value="40"/>
@@ -108,33 +99,22 @@
                        RenderTransformOrigin="0,0"
                        Margin="0,30,0,0"
                                HorizontalAlignment="Center"/>
-                        <TextBlock Text="Link VXMusic to Last.fm"
-                            Foreground="{StaticResource TextBasic}"
-                            FontSize="18"
-                            Margin="0,0,0,0"
-                            HorizontalAlignment="Center"/>
+                        <TextBlock Name="ConnectionService2TextHeader"
+                                   Text="Link VXMusic to Last.fm"
+                                   Foreground="{StaticResource TextBasic}"
+                                   FontSize="18"
+                                   Margin="0,0,0,0"
+                                   HorizontalAlignment="Center"/>
 
-                        <TextBlock Text="Scrobble recognised songs!"
-                            Foreground="{StaticResource TextBasic}"
-                            FontSize="12"
-                            Margin="0,0,0,0"
-                            HorizontalAlignment="Center"/>
-                    </StackPanel>
-                    
-                </Grid>
-
-                <!--<StackPanel>
-                    <TextBlock Text="Version: 0.1"
-                            Foreground="Black"
-                            FontSize="18"
-                            Margin="20,10,10,0"
-                            HorizontalAlignment="Center"/>
-                    <TextBlock Text="- Added Shazam API Support&#x0a;- Added Spotify Integration&#x0a;- Added WIP Desktop Client"
-                                   Foreground="Black"
+                        <TextBlock Name="ConnectionService2TextParagraph"
+                                   Text="Scrobble recognised songs!"
+                                   Foreground="{StaticResource TextBasic}"
                                    FontSize="12"
-                                   Margin="10,20,0,0"
-                                   HorizontalAlignment="Left"/>
-                </StackPanel>-->
+                                   Margin="0,0,0,0"
+                                   HorizontalAlignment="Center"/>
+                    </StackPanel>
+
+                </Grid>
             </Border>
 
             <Border>

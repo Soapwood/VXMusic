@@ -17,6 +17,7 @@ using VXMusic.Lastfm.Scrobbling;
 using VXMusic.LogParser.VRChat;
 using VXMusic.Overlay;
 using VXMusic;
+using System.Diagnostics;
 
 namespace VXMusicDesktop
 {
@@ -111,6 +112,12 @@ namespace VXMusicDesktop
             ServiceProvider = services.BuildServiceProvider();
             
             Logger = ServiceProvider.GetRequiredService<ILogger<App>>();
+        }
+
+        public static void RestartApplication()
+        {
+            Process.Start(Application.ResourceAssembly.Location);
+            Application.Current.Shutdown();
         }
     }
 }

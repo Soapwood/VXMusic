@@ -108,7 +108,7 @@ public class VXMusicSession
         
         VRChatLogParser = App.ServiceProvider.GetRequiredService<VRChatLogParser>();
 
-        ColourSchemeManager.SetThemeDarkmode1();
+        ColourSchemeManager.SetTheme(DesktopTheme.Darkmode1);
 
         //VXMusicOverlay = App.ServiceProvider.GetRequiredService<VXMusicOverlayInstance>();
     }

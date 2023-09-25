@@ -29,7 +29,8 @@
 
 
     <StackPanel>
-        <TextBlock Text="Choose Recognition API"
+        <TextBlock Name="RecognitionTextHeader"
+                   Text="Choose Recognition API"
                    Foreground="{StaticResource TextBasic}"
                    FontSize="28"
                    HorizontalAlignment="Left"
@@ -43,7 +44,7 @@
                     Margin="50,0,0,0">
 
                 <Border.Background>
-                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,2">
+                    <LinearGradientBrush x:Name="RecognitionIntegration1BoxBorderGradientBrush" StartPoint="0,0" EndPoint="1,2">
                         <GradientStop Offset="0.0">
                             <GradientStop.Color>
                                 <Binding Source="{StaticResource SecondaryColor}" Converter="{StaticResource SolidColorBrushToColorConverter}"/>
@@ -67,11 +68,12 @@
                        RenderTransformOrigin="0.5,0.5"
                        Margin="0,10,0,0"/>
 
-                        <TextBlock Text="Shazam"
-                            Foreground="{StaticResource TextBasic}"
-                            FontSize="18"
-                            Margin="0,0,0,0"
-                            HorizontalAlignment="Center"/>
+                        <TextBlock x:Name="RecognitionIntegration1HeaderText"
+                                   Text="Shazam"
+                                   Foreground="{StaticResource TextBasic}"
+                                   FontSize="18"
+                                   Margin="0,0,0,0"
+                                   HorizontalAlignment="Center"/>
 
                         <Button 
                              Height="40"
@@ -108,7 +110,7 @@
                     Margin="200,0,0,0">
 
                 <Border.Background>
-                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,2">
+                    <LinearGradientBrush x:Name="RecognitionIntegration2BoxBorderGradientBrush" StartPoint="0,0" EndPoint="1,2">
                         <GradientStop Offset="0.0">
                             <GradientStop.Color>
                                 <Binding Source="{StaticResource SecondaryColor}" Converter="{StaticResource SolidColorBrushToColorConverter}"/>
@@ -131,11 +133,12 @@
                        RenderTransformOrigin="0,0"
                        Margin="0,10,0,0"
                                HorizontalAlignment="Center"/>
-                        <TextBlock Text="AudD.io"
-                            Foreground="{StaticResource TextBasic}"
-                            FontSize="18"
-                            Margin="0,0,0,0"
-                            HorizontalAlignment="Center"/>
+                        <TextBlock x:Name="RecognitionIntegration2HeaderText"
+                                   Text="AudD.io"
+                                   Foreground="{StaticResource TextBasic}"
+                                   FontSize="18"
+                                   Margin="0,0,0,0"
+                                   HorizontalAlignment="Center"/>
 
                         <Button 
                              Height="40"
@@ -167,6 +170,7 @@
 
         <StackPanel>
             <Button 
+                x:Name="RunRecognitionButton"
                 Content="Run Recognition" 
                 Command="{Binding ListenButtonClick}"
                 IsEnabled="{Binding IsRecognitionReady}"
@@ -176,7 +180,7 @@
                 FontSize="30"
                 Foreground="{StaticResource TextBasic}"
                 BorderThickness="0"
-                HorizontalAlignment="Center" Width="600" Height="120" Click="Button_Click_4">
+                HorizontalAlignment="Center" Width="600" Height="120">
                 <Button.Resources>
                     <Style TargetType="Border">
                         <Setter Property="CornerRadius" Value="20"/>

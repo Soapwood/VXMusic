@@ -1,16 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Media;
+using VXMusic;
 using VXMusicDesktop.Core;
 
 namespace VXMusicDesktop.MVVM.ViewModel
 {
     internal class MainViewModel : ObservableObject
     {
+        /*
+         *  Menu Navigation
+         */
+
         public RelayCommand HomeViewCommand { get; set; }
         public RelayCommand NotificationsViewCommand { get; set; }
         public RelayCommand RecognitionViewCommand { get; set; }
@@ -38,6 +45,12 @@ namespace VXMusicDesktop.MVVM.ViewModel
             }
         }
 
+        ///*
+        // *  Main menu inputs 
+        // */
+        //private RelayCommand themeDropdown;
+
+        //public ICommand ThemeDropdown => themeDropdown ??= new RelayCommand(ThemeDropdownSelection);
 
         public MainViewModel()
         { 

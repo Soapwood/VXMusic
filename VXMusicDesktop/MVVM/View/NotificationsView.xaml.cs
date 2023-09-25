@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using VXMusicDesktop.Theme;
 
 namespace VXMusicDesktop.MVVM.View
 {
@@ -23,16 +24,17 @@ namespace VXMusicDesktop.MVVM.View
         public NotificationsView()
         {
             InitializeComponent();
+
+            ColourSchemeManager.ThemeChanged += OnThemeChanged;
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void OnThemeChanged(object sender, EventArgs e)
         {
+            // Handle the theme change here for Home View
+            NotificationsTextHeader.Foreground = ColourSchemeManager.TextBasic;
 
-        }
-
-        private void Button_Click_1(object sender, RoutedEventArgs e)
-        {
-
+            NotificationService1TextHeader.Foreground = ColourSchemeManager.TextBasic;
+            NotificationService2TextHeader.Foreground = ColourSchemeManager.TextBasic;
         }
     }
 }

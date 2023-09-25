@@ -21,18 +21,21 @@
     </UserControl.Resources>
 
     <StackPanel>
-        <TextBlock Text="Home"
+        <TextBlock Name="HomeTextHeader"
+                   Text="Home"
                    Foreground="{StaticResource TextBasic}"
                    FontSize="28"
                    HorizontalAlignment="Left"
                    Margin="0,0,0,20"/>
+        
         <StackPanel Orientation="Horizontal"
                     Margin="0,0,0,10">
-            <Border Width="400"
+            <Border Name="MainBoxBorder"
+                    Width="400"
                     Height="200">
 
                 <Border.Background>
-                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,2">
+                    <LinearGradientBrush x:Name="MainBoxBorderGradientBrush" StartPoint="0,0" EndPoint="1,2">
                         <GradientStop Offset="0.0">
                             <GradientStop.Color>
                                 <Binding Source="{StaticResource SecondaryColor}" Converter="{StaticResource SolidColorBrushToColorConverter}"/>
@@ -55,30 +58,17 @@
 
                 <Grid>
                     <StackPanel>
-                        <TextBlock Text="Virtual Xtension Music"
+                        <TextBlock x:Name="MainBoxBorderHeaderText"
+                                   Text="Virtual Xtension Music"
                                    Foreground="{StaticResource TextBasic}"
                                    FontSize="28"
                                    Margin="20,10,10,0"/>
 
-                        <TextBlock Text="Music Companion for Social VR."
+                        <TextBlock x:Name="MainBoxBorderParagraphText"
+                                   Text="Music Companion for Social VR."
                                    Foreground="{StaticResource TextBasic}"
                                    FontSize="18"
                                    Margin="20,10,10,0"/>
-
-                        <Image Width="222"
-                       Height="215"
-                       Source="/Images/gaben.jpg"
-                       HorizontalAlignment="Right"
-                       VerticalAlignment="Bottom" Margin="0,0,-90,-75" RenderTransformOrigin="0.5,0.5">
-                            <Image.RenderTransform>
-                                <TransformGroup>
-                                    <ScaleTransform/>
-                                    <SkewTransform/>
-                                    <RotateTransform Angle="-12.179"/>
-                                    <TranslateTransform/>
-                                </TransformGroup>
-                            </Image.RenderTransform>
-                        </Image>
                     </StackPanel>
                 </Grid>
             </Border>
@@ -89,7 +79,7 @@
                     Margin="45,0,0,0">
 
                 <Border.Background>
-                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,2">
+                    <LinearGradientBrush x:Name="ReleaseNotesBoxBorderGradientBrush" StartPoint="0,0" EndPoint="1,2">
                         <GradientStop Offset="0.0">
                             <GradientStop.Color>
                                 <Binding Source="{StaticResource SecondaryColor}" Converter="{StaticResource SolidColorBrushToColorConverter}"/>
@@ -105,16 +95,18 @@
                 </Border.Background>
 
                 <StackPanel>
-                    <TextBlock Text="Version: 0.2"
-                            Foreground="{StaticResource TextBasic}"
-                            FontSize="18"
-                            Margin="20,10,10,0"
-                            HorizontalAlignment="Center"/>
-                    <TextBlock Text="- Added Spotify Playlist Support&#x0a;- Added Last.fm Integration&#x0a;- Logging and DI Structure"
-                                   Foreground="{StaticResource TextBasic}"
-                                   FontSize="12"
-                                   Margin="10,20,0,0"
-                                   HorizontalAlignment="Left"/>
+                    <TextBlock x:Name="ReleaseNotesBoxBorderHeaderText"
+                               Text="Version: 0.2"
+                               Foreground="{StaticResource TextBasic}"
+                               FontSize="18"
+                               Margin="20,10,10,0"
+                               HorizontalAlignment="Center"/>
+                    <TextBlock x:Name="ReleaseNotesBoxParagraphText"
+                               Text="- Added Spotify Playlist Support&#x0a;- Added Last.fm Integration&#x0a;- Logging and DI Structure"
+                               Foreground="{StaticResource TextBasic}"
+                               FontSize="12"
+                               Margin="10,20,0,0"
+                               HorizontalAlignment="Left"/>
                 </StackPanel>
             </Border>
         </StackPanel>
@@ -126,18 +118,19 @@
                 </Style>
             </StackPanel.Resources>
 
-            <TextBlock Text="Integrations"
-                   Foreground="{StaticResource TextBasic}"
-                   FontSize="20"
-                   HorizontalAlignment="Left"
-                   Margin="0,0,0,10"/>
+            <TextBlock x:Name="IntegrationsHeaderText"
+                       Text="Integrations"
+                       Foreground="{StaticResource TextBasic}"
+                       FontSize="20"
+                       HorizontalAlignment="Left"
+                       Margin="0,0,0,10"/>
 
             <StackPanel Orientation="Horizontal">
                 <Border Width="150"
                         Height="150"
                         CornerRadius="10">
                     <Border.Background>
-                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,2">
+                        <LinearGradientBrush x:Name="RecognitionIntegrationsBoxBorderGradientBrush" StartPoint="0,0" EndPoint="1,2">
                             <GradientStop Offset="0.0">
                                 <GradientStop.Color>
                                     <Binding Source="{StaticResource SecondaryColor}" Converter="{StaticResource SolidColorBrushToColorConverter}"/>
@@ -161,13 +154,15 @@
                                 <RowDefinition/>
                             </Grid.RowDefinitions>
 
-                            <TextBlock Text="Recognition API"
+                            <TextBlock x:Name="RecognitionIntegrationsBoxHeaderText"
+                                       Text="Recognition API"
                                        Foreground="{StaticResource TextBasic}"
                                        FontSize="12"
                                        Margin="0,5,0,0"
                                        HorizontalAlignment="Center"
                                        Grid.Row="0"/>
-                            <TextBlock Text="Shazam"
+                            <TextBlock x:Name="API1RecognitionIntegrationsBoxHeaderText"
+                                       Text="Shazam"
                                        Foreground="{StaticResource TextBasic}"
                                        FontSize="12"
                                        Margin="10,20,0,0"
@@ -180,7 +175,8 @@
                                VerticalAlignment="Bottom" Margin="72,0,0,3"
                                    Grid.Row="1">
                             </Image>
-                            <TextBlock Text="AudD"
+                            <TextBlock x:Name="API2RecognitionIntegrationsBoxHeaderText"
+                                       Text="AudD"
                                        Foreground="{StaticResource TextBasic}"
                                        FontSize="12"
                                        Margin="10,20,0,0"
@@ -202,7 +198,7 @@
                         CornerRadius="10">
 
                     <Border.Background>
-                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,2">
+                        <LinearGradientBrush x:Name="NotificationIntegrationsBoxBorderGradientBrush" StartPoint="0,0" EndPoint="1,2">
                             <GradientStop Offset="0.0">
                                 <GradientStop.Color>
                                     <Binding Source="{StaticResource SecondaryColor}" Converter="{StaticResource SolidColorBrushToColorConverter}"/>
@@ -226,13 +222,15 @@
                                 <RowDefinition/>
                             </Grid.RowDefinitions>
 
-                            <TextBlock Text="Notification Service"
+                            <TextBlock x:Name="NotificationIntegrationsBoxHeaderText"
+                                       Text="Notification Service"
                                        Foreground="{StaticResource TextBasic}"
                                        FontSize="12"
                                        Margin="0,5,0,0"
                                        HorizontalAlignment="Center"
                                        Grid.Row="0"/>
-                            <TextBlock Text="SteamVR"
+                            <TextBlock x:Name="Service1NotificationIntegrationsBoxHeaderText"
+                                       Text="SteamVR"
                                        Foreground="{StaticResource TextBasic}"
                                        FontSize="12"
                                        Margin="10,20,0,0"
@@ -245,7 +243,8 @@
                                VerticalAlignment="Bottom" Margin="72,0,0,3"
                                    Grid.Row="1">
                             </Image>
-                            <TextBlock Text="XSOverlay"
+                            <TextBlock x:Name="Service2NotificationIntegrationsBoxHeaderText"
+                                       Text="XSOverlay"
                                        Foreground="{StaticResource TextBasic}"
                                        FontSize="12"
                                        Margin="10,20,0,0"
@@ -267,7 +266,7 @@
                         Height="150"
                         CornerRadius="10">
                     <Border.Background>
-                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,2">
+                        <LinearGradientBrush x:Name="ConnectionIntegrationsBoxBorderGradientBrush" StartPoint="0,0" EndPoint="1,2">
                             <GradientStop Offset="0.0">
                                 <GradientStop.Color>
                                     <Binding Source="{StaticResource SecondaryColor}" Converter="{StaticResource SolidColorBrushToColorConverter}"/>
@@ -291,13 +290,15 @@
                                 <RowDefinition/>
                             </Grid.RowDefinitions>
 
-                            <TextBlock Text="Connections"
+                            <TextBlock x:Name="ConnectionIntegrationsBoxHeaderText"
+                                       Text="Connections"
                                        Foreground="{StaticResource TextBasic}"
                                        FontSize="12"
                                        Margin="0,5,0,0"
                                        HorizontalAlignment="Center"
                                        Grid.Row="0"/>
-                            <TextBlock Text="Spotify"
+                            <TextBlock x:Name="Connection1NotificationIntegrationsBoxHeaderText"
+                                       Text="Spotify"
                                        Foreground="{StaticResource TextBasic}"
                                        FontSize="12"
                                        Margin="10,20,0,0"
@@ -310,7 +311,8 @@
                                VerticalAlignment="Bottom" Margin="72,0,0,3"
                                    Grid.Row="1">
                             </Image>
-                            <TextBlock Text="Last.fm"
+                            <TextBlock x:Name="Connection2NotificationIntegrationsBoxHeaderText"
+                                       Text="Last.fm"
                                        Foreground="{StaticResource TextBasic}"
                                        FontSize="12"
                                        Margin="10,20,0,0"
@@ -331,7 +333,7 @@
                         Height="150"
                         CornerRadius="10">
                     <Border.Background>
-                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,2">
+                        <LinearGradientBrush x:Name="GameClientIntegrationsBoxBorderGradientBrush" StartPoint="0,0" EndPoint="1,2">
                             <GradientStop Offset="0.0">
                                 <GradientStop.Color>
                                     <Binding Source="{StaticResource SecondaryColor}" Converter="{StaticResource SolidColorBrushToColorConverter}"/>
@@ -355,13 +357,15 @@
                                 <RowDefinition/>
                             </Grid.RowDefinitions>
 
-                            <TextBlock Text="Connected Game Clients"
+                            <TextBlock x:Name="GameClientIntegrationsBoxHeaderText"
+                                       Text="Connected Game Clients"
                                        Foreground="{StaticResource TextBasic}"
                                        FontSize="12"
                                        Margin="0,5,0,0"
                                        HorizontalAlignment="Center"
                                        Grid.Row="0"/>
-                            <TextBlock Text="VRChat"
+                            <TextBlock x:Name="GameClient1NotificationIntegrationsBoxHeaderText"
+                                       Text="VRChat"
                                        Foreground="{StaticResource TextBasic}"
                                        FontSize="12"
                                        Margin="10,20,0,0"

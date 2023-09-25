@@ -28,18 +28,22 @@
         </Grid.RowDefinitions>
 
         <TextBlock
+            Name="AboutTextHeader"
             Grid.Row="0"
             VerticalAlignment="Center"
             TextAlignment="Center"
             FontFamily="/Fonts/#Brushstrike"
+            Foreground="{StaticResource TextBasic}"
             FontSize="80">
             VXMusic
         </TextBlock>
 
         <TextBlock
+            Name="AboutTextParagraph"
             Grid.Row="1"
             VerticalAlignment="Center"
             TextAlignment="Center"
+            Foreground="{StaticResource TextBasic}"
             FontSize="20">
             <Hyperlink NavigateUri="https://github.com/Soapwood/VXMusic" Click="Url_Click" TargetName="_blank">
                 <Run Text="Github"/>

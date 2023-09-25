@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using VXMusic.Spotify.Authentication;
 using VXMusicDesktop.MVVM.ViewModel;
+using VXMusicDesktop.Theme;
 
 namespace VXMusicDesktop.MVVM.View
 {
@@ -27,16 +28,20 @@ namespace VXMusicDesktop.MVVM.View
         public ConnectionsView()
         {
             InitializeComponent();
+
+            ColourSchemeManager.ThemeChanged += OnThemeChanged;
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void OnThemeChanged(object sender, EventArgs e)
         {
+            // Handle the theme change here for Home View
+            ConnectionsTextHeader.Foreground = ColourSchemeManager.TextBasic;
 
-        }
+            ConnectionService1TextHeader.Foreground = ColourSchemeManager.TextBasic;
+            ConnectionService1TextParagraph.Foreground = ColourSchemeManager.TextBasic;
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)
-        {
-
+            ConnectionService2TextHeader.Foreground = ColourSchemeManager.TextBasic;
+            ConnectionService2TextParagraph.Foreground = ColourSchemeManager.TextBasic;
         }
     }
 }

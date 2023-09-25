@@ -20,7 +20,8 @@
     </UserControl.Resources>
 
     <StackPanel>
-        <TextBlock Text="Select Notification Method"
+        <TextBlock Name="NotificationsTextHeader"
+                   Text="Select Notification Method"
                    Foreground="{StaticResource TextBasic}"
                    FontSize="28"
                    HorizontalAlignment="Left"
@@ -41,11 +42,12 @@
                        RenderTransformOrigin="0,0"
                        Margin="0,30,0,0"
                                HorizontalAlignment="Center"/>
-                        <TextBlock Text="Use SteamVR for Notifications"
-                            Foreground="{StaticResource TextBasic}"
-                            FontSize="18"
-                            Margin="0,0,0,0"
-                            HorizontalAlignment="Center"/>
+                        <TextBlock Name="NotificationService1TextHeader"
+                                   Text="Use SteamVR for Notifications"
+                                   Foreground="{StaticResource TextBasic}"
+                                   FontSize="18"
+                                   Margin="0,0,0,0"
+                                   HorizontalAlignment="Center"/>
                     </StackPanel>
                 </Grid>
 
@@ -71,7 +73,7 @@
                     Command="{Binding SteamVREnableButtonClick}"
                     Content="Enable"
                     Margin="20,0,0,0"
-                    IsEnabled="{Binding IsXSOverlayNotificationServiceEnabled}" Click="Button_Click_1">
+                    IsEnabled="{Binding IsXSOverlayNotificationServiceEnabled}">
                 <Button.Resources>
                     <Style TargetType="Border">
                         <Setter Property="CornerRadius" Value="40"/>
@@ -107,9 +109,10 @@
                        RenderTransformOrigin="0,0"
                        Margin="0,30,0,0"
                                HorizontalAlignment="Center"/>
-                       
-                        <TextBlock Text="Use XSOverlay for Notifications"
-                            Foreground="#F8F0E3"
+
+                        <TextBlock Name="NotificationService2TextHeader"
+                                   Text="Use XSOverlay for Notifications"
+                            Foreground="{StaticResource TextBasic}"
                             FontSize="18"
                             Margin="0,10,0,0"
                             HorizontalAlignment="Center"/>
