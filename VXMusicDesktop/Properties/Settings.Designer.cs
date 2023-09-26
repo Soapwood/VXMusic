@@ -70,5 +70,17 @@ namespace VXMusicDesktop.Properties {
                 this["LastfmEnabled"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Darkmode1")]
+        public string DesktopTheme {
+            get {
+                return ((string)(this["DesktopTheme"]));
+            }
+            set {
+                this["DesktopTheme"] = value;
+            }
+        }
     }
 }

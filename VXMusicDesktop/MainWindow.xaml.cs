@@ -65,13 +65,25 @@ namespace VXMusicDesktop
 
         private void ThemeDropdownSelection(object sender, SelectionChangedEventArgs e)
         {
+            // Show Hint Text above combo box if Dropdown isn't open
+            if (DesktopThemeComboBox.IsDropDownOpen)
+            {
+                DesktopThemeComboBoxHintText.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                DesktopThemeComboBoxHintText.Visibility = DesktopThemeComboBox.SelectedItem == null ? Visibility.Visible : Visibility.Collapsed;
+            }
+
+
             if (sender is ComboBox comboBox)
             {
                 if (comboBox.SelectedIndex >= 0)
                 {
-                    string selectedOption = ((ComboBoxItem)comboBox.SelectedItem).Content.ToString();
+                    string selectedOption = comboBox.SelectedItem.ToString();
                     DesktopTheme themeToUpdateTo = (DesktopTheme) Enum.Parse(typeof(DesktopTheme), selectedOption);
 
+                    DesktopThemeSettings.SetDesktopThemeInSettings(themeToUpdateTo);
                     ColourSchemeManager.SetTheme(themeToUpdateTo);
                     ColourSchemeManager.RaiseThemeChanged();
 

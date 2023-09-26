@@ -48,10 +48,6 @@ namespace VXMusicDesktop.MVVM.ViewModel
         ///*
         // *  Main menu inputs 
         // */
-        //private RelayCommand themeDropdown;
-
-        //public ICommand ThemeDropdown => themeDropdown ??= new RelayCommand(ThemeDropdownSelection);
-
         public MainViewModel()
         { 
             HomeVM = new HomeViewModel();

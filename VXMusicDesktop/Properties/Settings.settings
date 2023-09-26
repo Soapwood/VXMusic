@@ -14,5 +14,8 @@
     <Setting Name="LastfmEnabled" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
+    <Setting Name="DesktopTheme" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Darkmode1</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

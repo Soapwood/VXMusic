@@ -44,16 +44,22 @@
                 <RowDefinition/>
             </Grid.RowDefinitions>
 
-            <ComboBox Grid.Column="1"
+            <ComboBox x:Name="DesktopThemeComboBox" 
+                      Grid.Column="1"
                       Width="200" 
                       Height="25"
                       Margin="300,0,0,0"
-                      Text="Choose Theme"
+                      ItemsSource="{x:Static custom:ColourSchemeManager.DesktopThemeValues}"
                       SelectionChanged="ThemeDropdownSelection">
-                <ComboBoxItem Content="Darkmode1" />
-                <ComboBoxItem Content="Darkmode2" />
-                <ComboBoxItem Content="Lightmode1" />
             </ComboBox>
+
+            <TextBlock x:Name="DesktopThemeComboBoxHintText"
+                       Grid.Column="1"
+                       Text="Select Theme"
+                       Foreground="{StaticResource PrimaryColor}"
+                       Visibility="Visible"
+                       IsHitTestVisible="False"
+                       Margin="415,30,-115,495" Grid.RowSpan="2" />
 
             <Button Grid.Column="1" 
                     Width="30" 

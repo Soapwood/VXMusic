@@ -16,6 +16,19 @@ namespace VXMusicDesktop.Theme
         Lightmode1
     }
 
+    public static class DesktopThemeExtensions
+    {
+        public static DesktopTheme[] Values
+        {
+            get
+            {
+                return Enum.GetValues(typeof(DesktopTheme))
+                           .Cast<DesktopTheme>()
+                           .ToArray();
+            }
+        }
+    }
+
     public class ColourSchemeManager
     {
         public static event EventHandler ThemeChanged;
@@ -48,6 +61,17 @@ namespace VXMusicDesktop.Theme
         public static SolidColorBrush TextBasic { get; set; }
         public static SolidColorBrush SpotifyGreen { get; set; } = new SolidColorBrush(FromHex(SpotifyColour));
         public static SolidColorBrush LastFmRed { get; set; } = new SolidColorBrush(FromHex(LastFmColour));
+
+        // This is used to access the values of the DesktopTheme Enum in XAML
+        public static DesktopTheme[] DesktopThemeValues
+        {
+            get
+            {
+                return Enum.GetValues(typeof(DesktopTheme))
+                           .Cast<DesktopTheme>()
+                           .ToArray();
+            }
+        }
 
         public static void SetTheme(DesktopTheme theme)
         {
