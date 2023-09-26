@@ -11,6 +11,7 @@
                 <ResourceDictionary Source="Theme/MenuButtonTheme.xaml"/>
                 <ResourceDictionary Source="Theme/RegularButtonTheme.xaml"/>
                 <ResourceDictionary Source="Theme/TextBoxTheme.xaml"/>
+                <ResourceDictionary Source="Theme/RoundedComboBoxTheme.xaml"/>
 
                 <ResourceDictionary Source="ColourSchemes.xaml"/>
 

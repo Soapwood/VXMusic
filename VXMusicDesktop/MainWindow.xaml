@@ -45,6 +45,7 @@
             </Grid.RowDefinitions>
 
             <ComboBox x:Name="DesktopThemeComboBox" 
+                      Style="{StaticResource RoundedComboBoxTheme}"
                       Grid.Column="1"
                       Width="200" 
                       Height="25"
@@ -56,7 +57,7 @@
             <TextBlock x:Name="DesktopThemeComboBoxHintText"
                        Grid.Column="1"
                        Text="Select Theme"
-                       Foreground="{StaticResource PrimaryColor}"
+                       Foreground="{StaticResource TextBasic}"
                        Visibility="Visible"
                        IsHitTestVisible="False"
                        Margin="415,30,-115,495" Grid.RowSpan="2" />

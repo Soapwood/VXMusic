@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -34,7 +35,6 @@ namespace VXMusicDesktop
         private void OnThemeChanged(object sender, EventArgs e)
         {
             // Handle the theme change here, e.g., update UI elements
-            //UpdateUIElements();
 
             MainWindowBorder.Background = ColourSchemeManager.PrimaryColour;
             MainWindowTitleText.Foreground = ColourSchemeManager.TextBasic;
@@ -45,6 +45,12 @@ namespace VXMusicDesktop
             MainWindowRadioButtonConnections.Foreground = ColourSchemeManager.TextBasic;
             MainWindowRadioButtonOverlay.Foreground = ColourSchemeManager.TextBasic;
             MainWindowRadioButtonAbout.Foreground = ColourSchemeManager.TextBasic;
+
+            DesktopThemeComboBoxHintText.Foreground = ColourSchemeManager.TextBasic;
+            DesktopThemeComboBoxHintText.Visibility = Visibility.Visible;
+            DesktopThemeComboBox.Foreground = ColourSchemeManager.TextBasic;
+            DesktopThemeComboBox.Background = ColourSchemeManager.SecondaryColour;
+            DesktopThemeComboBox.BorderBrush = ColourSchemeManager.TextBasic;
         }
 
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
@@ -66,14 +72,7 @@ namespace VXMusicDesktop
         private void ThemeDropdownSelection(object sender, SelectionChangedEventArgs e)
         {
             // Show Hint Text above combo box if Dropdown isn't open
-            if (DesktopThemeComboBox.IsDropDownOpen)
-            {
-                DesktopThemeComboBoxHintText.Visibility = Visibility.Collapsed;
-            }
-            else
-            {
-                DesktopThemeComboBoxHintText.Visibility = DesktopThemeComboBox.SelectedItem == null ? Visibility.Visible : Visibility.Collapsed;
-            }
+            CheckThemeComboBoxVisibility();
 
 
             if (sender is ComboBox comboBox)
@@ -86,13 +85,27 @@ namespace VXMusicDesktop
                     DesktopThemeSettings.SetDesktopThemeInSettings(themeToUpdateTo);
                     ColourSchemeManager.SetTheme(themeToUpdateTo);
                     ColourSchemeManager.RaiseThemeChanged();
-
+                    
+                    //CheckThemeComboBoxVisibility();
                     //ColourSchemeManager.SetTheme(themeToUpdateTo);
                     //object dataContextOld = this.DataContext;
                     //this.DataContext = null;
                     //this.DataContext = dataContextOld;
                     //App.RestartApplication();
                 }
+            }
+        }
+
+        private void CheckThemeComboBoxVisibility()
+        {
+            // Show Hint Text above combo box if Dropdown isn't open
+            if (DesktopThemeComboBox.IsDropDownOpen)
+            {
+                DesktopThemeComboBoxHintText.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                DesktopThemeComboBoxHintText.Visibility = DesktopThemeComboBox.SelectedItem == null ? Visibility.Visible : Visibility.Collapsed;
             }
         }
     }
