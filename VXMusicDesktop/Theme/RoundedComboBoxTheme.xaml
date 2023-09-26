@@ -12,7 +12,7 @@
         <Setter Property="Background" Value="{StaticResource SecondaryColor}" />
         <Setter Property="BorderBrush" Value="{StaticResource TextBasic}" />
         <Setter Property="Foreground" Value="{StaticResource TextBasic}" />
-        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="BorderThickness" Value="0" />
         <Setter Property="Padding" Value="5,2" />
         <Setter Property="Template">
             <Setter.Value>

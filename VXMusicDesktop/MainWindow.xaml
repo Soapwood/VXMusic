@@ -19,8 +19,8 @@
     </Window.DataContext>
 
     <Window.Resources>
-        <BitmapImage x:Key="CloseButtonImage" UriSource="Images/CloseIconWhite.png"/>
-        <BitmapImage x:Key="MinimiseButtonImage" UriSource="Images/MinimiseIconWhite.png"/>
+        <BitmapImage x:Key="CloseButtonImage" UriSource="{Binding Source={x:Static custom:ColourSchemeManager.CloseImage}, Path=UriSource}"/>
+        <BitmapImage x:Key="MinimiseButtonImage" UriSource="{Binding Source={x:Static custom:ColourSchemeManager.MinimiseImage}, Path=UriSource}"/>
 
         <SolidColorBrush x:Key="PrimaryColor" Color="{Binding Source={x:Static custom:ColourSchemeManager.PrimaryColour}, Path=Color}" />
         <SolidColorBrush x:Key="SecondaryColor" Color="{Binding Source={x:Static custom:ColourSchemeManager.SecondaryColour}, Path=Color}" />
@@ -47,22 +47,29 @@
             <ComboBox x:Name="DesktopThemeComboBox" 
                       Style="{StaticResource RoundedComboBoxTheme}"
                       Grid.Column="1"
+                      Grid.Row="1"
                       Width="200" 
                       Height="25"
-                      Margin="300,0,0,0"
+                      Panel.ZIndex="3"
+                      Margin="500,480,0,0"
                       ItemsSource="{x:Static custom:ColourSchemeManager.DesktopThemeValues}"
                       SelectionChanged="ThemeDropdownSelection">
             </ComboBox>
 
             <TextBlock x:Name="DesktopThemeComboBoxHintText"
                        Grid.Column="1"
+                       Grid.Row="1"
                        Text="Select Theme"
                        Foreground="{StaticResource TextBasic}"
                        Visibility="Visible"
                        IsHitTestVisible="False"
-                       Margin="415,30,-115,495" Grid.RowSpan="2" />
+                       Width="100"
+                       Height="20"
+                       Panel.ZIndex="3"
+                       Margin="410,483,0,0" />
 
-            <Button Grid.Column="1" 
+            <Button Name="MainWindowMinimiseButton" 
+                    Grid.Column="1" 
                     Width="30" 
                     Height="30" 
                     Margin="0,0,60,0"
@@ -70,11 +77,12 @@
                     Click="MinimizeButton_Click"
                     BorderThickness="0">
                 <Button.Background>
-                    <ImageBrush ImageSource="{StaticResource MinimiseButtonImage}" Stretch="UniformToFill"/>
+                    <ImageBrush x:Name="MainWindowMinimiseButtonImageBrush" ImageSource="{StaticResource MinimiseButtonImage}" Stretch="UniformToFill"/>
                 </Button.Background>
             </Button>
 
-            <Button Grid.Column="1" 
+            <Button Name="MainWindowCloseButton" 
+                    Grid.Column="1" 
                     Width="30" 
                     Height="30" 
                     Margin="0,0,20,0"
@@ -82,7 +90,7 @@
                     Click="CloseButton_Click"
                     BorderThickness="0">
                 <Button.Background>
-                    <ImageBrush ImageSource="{StaticResource CloseButtonImage}" Stretch="UniformToFill"/>
+                    <ImageBrush x:Name="MainWindowCloseButtonImageBrush" ImageSource="{StaticResource CloseButtonImage}" Stretch="UniformToFill"/>
                 </Button.Background>
             </Button>
 

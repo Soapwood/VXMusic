@@ -51,6 +51,9 @@ namespace VXMusicDesktop
             DesktopThemeComboBox.Foreground = ColourSchemeManager.TextBasic;
             DesktopThemeComboBox.Background = ColourSchemeManager.SecondaryColour;
             DesktopThemeComboBox.BorderBrush = ColourSchemeManager.TextBasic;
+
+            MainWindowMinimiseButtonImageBrush.ImageSource = ColourSchemeManager.MinimiseImage;
+            MainWindowCloseButtonImageBrush.ImageSource = ColourSchemeManager.CloseImage;
         }
 
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)

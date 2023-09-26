@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace VXMusicDesktop.Theme
 {
@@ -54,6 +55,11 @@ namespace VXMusicDesktop.Theme
         public static readonly string SpotifyColour = "#1DB954";
         public static readonly string LastFmColour = "#C3000D";
 
+        public static readonly string DarkmodeMinimiseButton = "Images/MinimiseIconWhite.png";
+        public static readonly string DarkmodeCloseButton = "Images/CloseIconWhite.png";
+        public static readonly string LightmodeMinimiseButton = "Images/MinimiseIconBlack.png";
+        public static readonly string LightmodeCloseButton = "Images/CloseIconBlack.png";
+
         public static SolidColorBrush PrimaryColour { get; set; }
         public static SolidColorBrush SecondaryColour { get; set; }
         public static SolidColorBrush Accent1Colour { get; set; }
@@ -61,6 +67,8 @@ namespace VXMusicDesktop.Theme
         public static SolidColorBrush TextBasic { get; set; }
         public static SolidColorBrush SpotifyGreen { get; set; } = new SolidColorBrush(FromHex(SpotifyColour));
         public static SolidColorBrush LastFmRed { get; set; } = new SolidColorBrush(FromHex(LastFmColour));
+        public static BitmapImage CloseImage { get; set; }
+        public static BitmapImage MinimiseImage { get; set; }
 
         // This is used to access the values of the DesktopTheme Enum in XAML
         public static DesktopTheme[] DesktopThemeValues
@@ -100,6 +108,8 @@ namespace VXMusicDesktop.Theme
             Accent1Colour = new SolidColorBrush(FromHex(Darkmode1Accent1Colour));
             Accent2Colour = new SolidColorBrush(FromHex(Darkmode1Accent2Colour));
             TextBasic = new SolidColorBrush(FromHex(Darkmode1TextBasic));
+            CloseImage = new BitmapImage(new Uri($"pack://application:,,,/VXMusicDesktop;component/{ColourSchemeManager.DarkmodeCloseButton}"));
+            MinimiseImage = new BitmapImage(new Uri($"pack://application:,,,/VXMusicDesktop;component/{ColourSchemeManager.DarkmodeMinimiseButton}"));
         }
 
         private static void SetThemeDarkmode2()
@@ -109,6 +119,8 @@ namespace VXMusicDesktop.Theme
             Accent1Colour = new SolidColorBrush(FromHex(Darkmode2Accent1Colour));
             Accent2Colour = new SolidColorBrush(FromHex(Darkmode2Accent2Colour));
             TextBasic = new SolidColorBrush(FromHex(Darkmode2TextBasic));
+            CloseImage = new BitmapImage(new Uri($"pack://application:,,,/VXMusicDesktop;component/{ColourSchemeManager.DarkmodeCloseButton}"));
+            MinimiseImage = new BitmapImage(new Uri($"pack://application:,,,/VXMusicDesktop;component/{ColourSchemeManager.DarkmodeMinimiseButton}"));
         }
 
         private static void SetThemeLightmode1()
@@ -118,6 +130,8 @@ namespace VXMusicDesktop.Theme
             Accent1Colour = new SolidColorBrush(FromHex(Lightmode1Accent1Colour));
             Accent2Colour = new SolidColorBrush(FromHex(Lightmode1Accent2Colour));
             TextBasic = new SolidColorBrush(FromHex(Lightmode1TextBasic));
+            CloseImage = new BitmapImage(new Uri($"pack://application:,,,/VXMusicDesktop;component/{ColourSchemeManager.LightmodeCloseButton}"));
+            MinimiseImage = new BitmapImage(new Uri($"pack://application:,,,/VXMusicDesktop;component/{ColourSchemeManager.LightmodeMinimiseButton}"));
         }
 
         private static Color FromHex(string hex)
