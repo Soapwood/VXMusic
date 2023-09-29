@@ -27,7 +27,7 @@ public class VXMusicSession
     // Notification Options
     
     public RecognitionSettings? RecognitionSettings;
-    public static NotificationSettings? NotificationSettings;
+    public NotificationSettings? NotificationSettings;
     public static ConnectionsSettings? ConnectionsSettings;
     public static DesktopThemeSettings? DesktopThemeSettings;
 
@@ -52,7 +52,7 @@ public class VXMusicSession
         RecognitionClient = RecognitionSettings.GetClientFromSetRecognitionApi(); //VXMusicAPI.SetRecognitionApi(recognitionSettings.CurrentRecognitionApi);
         //NotificationClient = new XSOverlay(); //VXMusicAPI.SetNotificationClient(notificationSettings.CurrentNotificationService);
 
-        NotificationClient = App.ServiceProvider.GetRequiredService<XSOverlay>(); //VXMusicAPI.SetNotificationClient(notificationSettings.CurrentNotificationService);
+        NotificationClient = NotificationSettings.GetNotificationServiceFromSetConfiguration(); //VXMusicAPI.SetNotificationClient(notificationSettings.CurrentNotificationService);
 
         PlaylistFileWriter = App.ServiceProvider.GetRequiredService<PlaylistFileWriter>();
         LastfmScrobbler = App.ServiceProvider.GetRequiredService<LastfmScrobbler>();
@@ -175,7 +175,31 @@ public class NotificationSettings
     public NotificationSettings()
     {
         Enum.TryParse<NotificationService>(VXMusicDesktop.Properties.Settings.Default.NotificationService, out CurrentNotificationService);
+    }
 
+    public static NotificationService GetCurrentNotificationServiceFromSettings()
+    {
+        Enum.TryParse<NotificationService>(VXMusicDesktop.Properties.Settings.Default.NotificationService, out var currentNotificationService);
+        return currentNotificationService;
+    }
+
+    public static INotificationClient GetNotificationServiceFromSetConfiguration()
+    {
+        switch (GetCurrentNotificationServiceFromSettings())
+        {
+            case NotificationService.SteamVR:
+                return App.ServiceProvider.GetRequiredService<VXMusicOverlayInstance>();
+            case NotificationService.XSOverlay:
+                return App.ServiceProvider.GetRequiredService<XSOverlay>();
+            default:
+                return null;
+        }
+    }
+
+    public static void SetNotificationServiceInSettings(NotificationService api)
+    {
+        VXMusicDesktop.Properties.Settings.Default.NotificationService = api.ToString();
+        VXMusicDesktop.Properties.Settings.Default.Save();
     }
 }
 

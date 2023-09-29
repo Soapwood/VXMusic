@@ -106,12 +106,14 @@ namespace VXMusicDesktop.MVVM.ViewModel
         private void PerformShazamButtonClick(object commandParameter)
         {
             App.VXMusicSession.SetRecognitionClient(RecognitionApi.Shazam);
+            RecognitionSettings.SetRecognitionApiInSettings(RecognitionApi.Shazam);
             ProcessRecognitionApiState();
         }
 
         private void PerformAudDButtonClick(object commandParameter)
         {
             App.VXMusicSession.SetRecognitionClient(RecognitionApi.AudD);
+            RecognitionSettings.SetRecognitionApiInSettings(RecognitionApi.AudD);
             ProcessRecognitionApiState();
         }
 

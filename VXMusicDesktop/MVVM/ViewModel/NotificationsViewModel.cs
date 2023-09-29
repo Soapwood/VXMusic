@@ -17,11 +17,16 @@ namespace VXMusicDesktop.MVVM.ViewModel
         private RelayCommand steamVREnableButtonClick;
         private RelayCommand xsOverlayEnableButtonClick;
 
+        private RelayCommand notificationViewLoaded;
+
         public ICommand SteamVREnableButtonClick => steamVREnableButtonClick ??= new RelayCommand(PerformSteamVREnableButtonClick);
-        private bool _isSteamVRNotificationServiceEnabled = true;
+        private bool _isSteamVRNotificationServiceEnabled;
 
         public ICommand XSOverlayEnableButtonClick => xsOverlayEnableButtonClick ??= new RelayCommand(PerformXSOverlayEnableButtonClick);
         private bool _isXSOverlayNotificationServiceEnabled;
+
+        public ICommand NotificationViewLoaded => notificationViewLoaded ??= new RelayCommand(OnNotificationViewLoaded);
+
 
         private bool _isNotificationServiceReady = true;
 
@@ -58,6 +63,11 @@ namespace VXMusicDesktop.MVVM.ViewModel
             }
         }
 
+        private void OnNotificationViewLoaded(object commandParameter)
+        {
+            ProcessNotificationServiceState();
+        }
+
         protected virtual void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
@@ -66,18 +76,20 @@ namespace VXMusicDesktop.MVVM.ViewModel
         private void PerformSteamVREnableButtonClick(object commandParameter)
         {
             App.VXMusicSession.SetNotificationService(NotificationService.SteamVR);
-            ProcessRecognitionApiState(NotificationService.SteamVR);
+            NotificationSettings.SetNotificationServiceInSettings(NotificationService.SteamVR);
+            ProcessNotificationServiceState();
         }
 
         private void PerformXSOverlayEnableButtonClick(object commandParameter)
         {
             App.VXMusicSession.SetNotificationService(NotificationService.XSOverlay);
-            ProcessRecognitionApiState(NotificationService.XSOverlay);
+            NotificationSettings.SetNotificationServiceInSettings(NotificationService.XSOverlay);
+            ProcessNotificationServiceState();
         }
 
-        private void ProcessRecognitionApiState(NotificationService incomingService)
+        private void ProcessNotificationServiceState()
         {
-            switch (incomingService)
+            switch (App.VXMusicSession.NotificationSettings.CurrentNotificationService)
             {
                 case NotificationService.SteamVR:
                     IsSteamVRNotificationServiceEnabled = true;
