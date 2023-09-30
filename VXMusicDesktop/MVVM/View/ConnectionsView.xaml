@@ -123,36 +123,41 @@
                         <RowDefinition Height="100"/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
-                    
+
                     <TextBox Width="250"
                      Height="40"
                      VerticalContentAlignment="Center"
                      HorizontalAlignment="Center"
                      Grid.Row="0"
+                     TextChanged="LastFmUsernameBox_TextChanged"
+                     GotFocus="UsernameTextBox_GotFocus"
+                     LostFocus="UsernameTextBox_LostFocus"
                      Text="Username"
-                     DataContext="fesfs"
-                     Style="{StaticResource ModernTextBox}" Margin="0,50,0,0"/>
-                    
-                    <TextBox Width="250"
+                     Style="{StaticResource ModernTextBox}" Margin="0,50,0,0">
+                        <TextBox.Tag>Username</TextBox.Tag>
+                    </TextBox>
+
+                    <PasswordBox x:Name="LastFmPasswordBox" Width="250"
                      Height="40"
                      VerticalContentAlignment="Center"
                      HorizontalAlignment="Center"
                      Grid.Row="1"
-                     Text="Password"
-                     Style="{StaticResource ModernTextBox}" Margin="0,-50,0,0"/>
+                     PasswordChanged="LastFmPasswordBox_PasswordChanged"
+                     Style="{StaticResource ModernPasswordBox}"
+                     Margin="0,-50,0,0" Password="Password"/>
                 </Grid>
             </Border>
 
             <Border>
                 <Button 
-                    Content="Login" 
+                    Content="{Binding LastFmLinkButtonText}" 
                     Background="{StaticResource LastFmRed}"
                     Foreground="{StaticResource TextBasic}"
                     Command="{Binding LinkLastfmButtonClick}"
                     IsEnabled="True"
                     Padding="0"
                     Margin="00"
-                    HorizontalAlignment="Left" Width="100" Height="60">
+                    HorizontalAlignment="Left" Width="100" Height="60" Click="Button_Click">
                     <Button.Resources>
                         <Style TargetType="Border">
                             <Setter Property="CornerRadius" Value="20"/>

@@ -7,28 +7,41 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using VXMusic.API;
+using VXMusic.Lastfm.Authentication;
 using VXMusic.Spotify.Authentication;
 using VXMusicDesktop.Core;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace VXMusicDesktop.MVVM.ViewModel
 {
     internal class ConnectionsViewModel : INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler PropertyChanged;
+
         private RelayCommand linkSpotifyButtonClick;
         private RelayCommand linkLastfmButtonClick;
 
         private bool _shouldSpotifyLinkButtonBeShown;
         private string _spotifyLinkButtonText;
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        private string _lastFmUsername = "Username";
+        private string _lastFmPassword = "Password";
+
+        private bool _shouldLastFmLinkButtonBeShown;
+        private string _lastFmLinkButtonText;
 
         public ICommand LinkSpotifyButtonClick => linkSpotifyButtonClick ??= new RelayCommand(PerformLinkSpotifyButtonClick);
         public ICommand LinkLastfmButtonClick => linkLastfmButtonClick ??= new RelayCommand(PerformLinkLastfmButtonClick);
+
+        private bool _isLastFmConnected = false;
 
         public ConnectionsViewModel() 
         {
             ShouldSpotifyLinkButtonBeEnabled = !SpotifyAuthentication.IsSpotifyConnected();
             SpotifyLinkButtonText = DetermineSpotifyLinkButtonStateContent();
+
+            ShouldLastFmLinkButtonBeEnabled = VXMusicSession.ConnectionsSettings.IsLastfmConnected;
+            LastFmLinkButtonText = DetermineLastFmLinkButtonStateContent();
         }
 
         protected virtual void OnPropertyChanged(string propertyName)
@@ -39,13 +52,51 @@ namespace VXMusicDesktop.MVVM.ViewModel
         public bool ShouldSpotifyLinkButtonBeEnabled
         {
             get { return !SpotifyAuthentication.IsSpotifyConnected(); }
-            //get { return _isSpotifyConnected; }
             set
             {
                 if (_shouldSpotifyLinkButtonBeShown != value)
                 {
                     _shouldSpotifyLinkButtonBeShown = value;
                     OnPropertyChanged(nameof(ShouldSpotifyLinkButtonBeEnabled));
+                }
+            }
+        }
+
+        public bool ShouldLastFmLinkButtonBeEnabled
+        {
+            get { return !_isLastFmConnected; }
+            set
+            {
+                if (_isLastFmConnected != value)
+                {
+                    _shouldSpotifyLinkButtonBeShown = value;
+                    OnPropertyChanged(nameof(ShouldLastFmLinkButtonBeEnabled));
+                }
+            }
+        }
+
+        public string LastFmUsername
+        {
+            get { return _lastFmUsername; }
+            set
+            {
+                if (_lastFmUsername != value)
+                {
+                    _lastFmUsername = value;
+                    OnPropertyChanged(nameof(LastFmUsername));
+                }
+            }
+        }
+
+        public string LastFmPassword
+        {
+            get { return _lastFmPassword; }
+            set
+            {
+                if (_lastFmPassword != value)
+                {
+                    _lastFmPassword = value;
+                    OnPropertyChanged(nameof(LastFmPassword));
                 }
             }
         }
@@ -68,6 +119,19 @@ namespace VXMusicDesktop.MVVM.ViewModel
             }
         }
 
+        public string LastFmLinkButtonText
+        {
+            get { return _lastFmLinkButtonText; }
+            set
+            {
+                if (_lastFmLinkButtonText != value)
+                {
+                    _lastFmLinkButtonText = value;
+                    OnPropertyChanged(nameof(LastFmLinkButtonText));
+                }
+            }
+        }
+
         private void PerformLinkSpotifyButtonClick(object commandParameter)
         {
             var response = VXMusicAPI.LinkSpotify(VXMusicSession.ConnectionsSettings.SpotifySettings.ClientId);
@@ -80,18 +144,23 @@ namespace VXMusicDesktop.MVVM.ViewModel
             SpotifyLinkButtonText = DetermineSpotifyLinkButtonStateContent();
         }
 
-        private void PerformLinkLastfmButtonClick(object commandParameter)
+        private async void PerformLinkLastfmButtonClick(object commandParameter)
         {
-            var response = VXMusicAPI.LinkLastfm(VXMusicSession.ConnectionsSettings.LastfmSettings.ClientId,
+            var response = await VXMusicAPI.LinkLastfm(VXMusicSession.ConnectionsSettings.LastfmSettings.ClientId,
                                                     VXMusicSession.ConnectionsSettings.LastfmSettings.ClientSecret,
-                                                    VXMusicSession.ConnectionsSettings.LastfmSettings.Username,
-                                                    VXMusicSession.ConnectionsSettings.LastfmSettings.Password);
-            if (response != null)
+                                                    LastFmUsername,
+                                                    LastFmPassword);
+            if (response)
             {
+                ShouldLastFmLinkButtonBeEnabled = true;
                 VXMusicSession.ConnectionsSettings.IsLastfmConnected = true;
             }
         }
 
+        private string DetermineLastFmLinkButtonStateContent()
+        {
+            return ShouldLastFmLinkButtonBeEnabled ? "Login" : "Connected!";
+        }
 
     }
 }
