@@ -57,9 +57,13 @@ namespace VXMusicDesktop.MVVM.View
 
             ConnectionService1TextHeader.Foreground = ColourSchemeManager.TextBasic;
             ConnectionService1TextParagraph.Foreground = ColourSchemeManager.TextBasic;
+            ConnectionsIntegration1BoxBorderGradientBrush.GradientStops[0].Color = ColourSchemeManager.SecondaryColour.Color;
+            ConnectionsIntegration1BoxBorderGradientBrush.GradientStops[1].Color = ColourSchemeManager.Accent1Colour.Color;
 
             ConnectionService2TextHeader.Foreground = ColourSchemeManager.TextBasic;
             ConnectionService2TextParagraph.Foreground = ColourSchemeManager.TextBasic;
+            ConnectionsIntegration2BoxBorderGradientBrush.GradientStops[0].Color = ColourSchemeManager.SecondaryColour.Color;
+            ConnectionsIntegration2BoxBorderGradientBrush.GradientStops[1].Color = ColourSchemeManager.Accent1Colour.Color;
         }
 
         private void LastFmPasswordBox_PasswordChanged(object sender, RoutedEventArgs e)

@@ -18,6 +18,7 @@
         <SolidColorBrush x:Key="Accent2Colour" Color="{Binding Source={x:Static custom:ColourSchemeManager.Accent2Colour}, Path=Color}" />
         <SolidColorBrush x:Key="TextBasic" Color="{Binding Source={x:Static custom:ColourSchemeManager.TextBasic}, Path=Color}" />
 
+        <custom:SolidColorBrushToColorConverter x:Key="SolidColorBrushToColorConverter" />
     </UserControl.Resources>
 
     <i:Interaction.Triggers>
@@ -42,6 +43,23 @@
                     Height="200"
                     CornerRadius="10"
                     Margin="20,0,0,0">
+
+                <Border.Background>
+                    <LinearGradientBrush x:Name="NotificationIntegration1BoxBorderGradientBrush" StartPoint="0,0" EndPoint="1,2">
+                        <GradientStop Offset="0.0">
+                            <GradientStop.Color>
+                                <Binding Source="{StaticResource SecondaryColor}" Converter="{StaticResource SolidColorBrushToColorConverter}"/>
+                            </GradientStop.Color>
+                        </GradientStop>
+
+                        <GradientStop Offset="0.4">
+                            <GradientStop.Color>
+                                <Binding Source="{StaticResource Accent1Colour}" Converter="{StaticResource SolidColorBrushToColorConverter}"/>
+                            </GradientStop.Color>
+                        </GradientStop>
+                    </LinearGradientBrush>
+                </Border.Background>
+
                 <Grid>
                     <StackPanel>
                         <Image Height="80"
@@ -109,6 +127,23 @@
                     Height="200"
                     CornerRadius="10"
                     Margin="20,0,0,0">
+
+                <Border.Background>
+                    <LinearGradientBrush x:Name="NotificationIntegration2BoxBorderGradientBrush" StartPoint="0,0" EndPoint="1,2">
+                        <GradientStop Offset="0.0">
+                            <GradientStop.Color>
+                                <Binding Source="{StaticResource SecondaryColor}" Converter="{StaticResource SolidColorBrushToColorConverter}"/>
+                            </GradientStop.Color>
+                        </GradientStop>
+
+                        <GradientStop Offset="0.4">
+                            <GradientStop.Color>
+                                <Binding Source="{StaticResource Accent1Colour}" Converter="{StaticResource SolidColorBrushToColorConverter}"/>
+                            </GradientStop.Color>
+                        </GradientStop>
+                    </LinearGradientBrush>
+                </Border.Background>
+
                 <Grid>
                     <StackPanel>
                         <Image Height="60"

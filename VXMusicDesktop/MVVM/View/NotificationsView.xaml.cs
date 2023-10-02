@@ -34,7 +34,12 @@ namespace VXMusicDesktop.MVVM.View
             NotificationsTextHeader.Foreground = ColourSchemeManager.TextBasic;
 
             NotificationService1TextHeader.Foreground = ColourSchemeManager.TextBasic;
+            NotificationIntegration1BoxBorderGradientBrush.GradientStops[0].Color = ColourSchemeManager.SecondaryColour.Color;
+            NotificationIntegration1BoxBorderGradientBrush.GradientStops[1].Color = ColourSchemeManager.Accent1Colour.Color;
+
             NotificationService2TextHeader.Foreground = ColourSchemeManager.TextBasic;
+            NotificationIntegration2BoxBorderGradientBrush.GradientStops[0].Color = ColourSchemeManager.SecondaryColour.Color;
+            NotificationIntegration2BoxBorderGradientBrush.GradientStops[1].Color = ColourSchemeManager.Accent1Colour.Color;
         }
     }
 }
