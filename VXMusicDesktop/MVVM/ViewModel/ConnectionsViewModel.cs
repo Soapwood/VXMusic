@@ -5,6 +5,8 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
+using System.Windows;
 using System.Windows.Input;
 using VXMusic.API;
 using VXMusic.Lastfm.Authentication;
@@ -17,7 +19,7 @@ namespace VXMusicDesktop.MVVM.ViewModel
     internal class ConnectionsViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
-
+        
         private RelayCommand linkSpotifyButtonClick;
         private RelayCommand linkLastfmButtonClick;
 
@@ -40,7 +42,7 @@ namespace VXMusicDesktop.MVVM.ViewModel
             ShouldSpotifyLinkButtonBeEnabled = !SpotifyAuthentication.IsSpotifyConnected();
             SpotifyLinkButtonText = DetermineSpotifyLinkButtonStateContent();
 
-            ShouldLastFmLinkButtonBeEnabled = VXMusicSession.ConnectionsSettings.IsLastfmConnected;
+            ShouldLastFmLinkButtonBeEnabled = !VXMusicSession.ConnectionsSettings.IsLastfmConnected;
             LastFmLinkButtonText = DetermineLastFmLinkButtonStateContent();
         }
 
@@ -134,26 +136,36 @@ namespace VXMusicDesktop.MVVM.ViewModel
 
         private void PerformLinkSpotifyButtonClick(object commandParameter)
         {
+            if (!ShouldSpotifyLinkButtonBeEnabled)
+                return;
+
             var response = VXMusicAPI.LinkSpotify(VXMusicSession.ConnectionsSettings.SpotifySettings.ClientId);
             if(response != null)
             {
                 VXMusicSession.ConnectionsSettings.IsSpotifyConnected = true;
-            }
+                ShouldSpotifyLinkButtonBeEnabled = false;
+                SpotifyLinkButtonText = DetermineSpotifyLinkButtonStateContent();
+                VXMusicSession.RaiseSpotifyLoggedIn();
+            } else
+            {
 
-            ShouldSpotifyLinkButtonBeEnabled = false;
-            SpotifyLinkButtonText = DetermineSpotifyLinkButtonStateContent();
+            }
         }
 
         private async void PerformLinkLastfmButtonClick(object commandParameter)
         {
+            if (!ShouldLastFmLinkButtonBeEnabled)
+                return;
+
             var response = await VXMusicAPI.LinkLastfm(VXMusicSession.ConnectionsSettings.LastfmSettings.ClientId,
                                                     VXMusicSession.ConnectionsSettings.LastfmSettings.ClientSecret,
                                                     LastFmUsername,
                                                     LastFmPassword);
             if (response)
             {
-                ShouldLastFmLinkButtonBeEnabled = true;
+                _isLastFmConnected = true;
                 VXMusicSession.ConnectionsSettings.IsLastfmConnected = true;
+                VXMusicSession.RaiseLastFmLoggedIn();
             }
         }
 

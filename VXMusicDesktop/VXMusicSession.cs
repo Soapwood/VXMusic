@@ -15,6 +15,7 @@ using VXMusic.LogParser.VRChat;
 using VXMusic.Overlay;
 using System.Windows.Media;
 using VXMusicDesktop.Theme;
+using VXMusicDesktop.MVVM.ViewModel;
 
 //using System.Windows.Forms.PropertyGridInternal;
 
@@ -41,6 +42,9 @@ public class VXMusicSession
     public static VRChatLogParser? VRChatLogParser;
     
     public static VXMusicOverlayInstance? VXMusicOverlay;
+
+    public static event EventHandler LastFmLogin;
+    public static event EventHandler SpotifyLogin;
 
     public VXMusicSession(RecognitionSettings recognitionSettings, ConnectionsSettings connectionsSettings)
     {
@@ -103,6 +107,16 @@ public class VXMusicSession
     public static IAudioRecordingClient GetAudioRecordingClient()
     {
         return App.ServiceProvider.GetRequiredService<WindowsAudioDeviceListener>();
+    }
+
+    public static void RaiseLastFmLoggedIn()
+    {
+        LastFmLogin?.Invoke(null, EventArgs.Empty);
+    }
+
+    public static void RaiseSpotifyLoggedIn()
+    {
+        SpotifyLogin?.Invoke(null, EventArgs.Empty);
     }
 }
 

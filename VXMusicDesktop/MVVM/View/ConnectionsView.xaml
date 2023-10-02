@@ -61,7 +61,7 @@
                 </Grid>
             </Border>
             
-            <Button 
+            <Button x:Name="SpotifyLoginButton"
                 Content="{Binding SpotifyLinkButtonText}" 
                 Command="{Binding LinkSpotifyButtonClick}"
                 IsEnabled="{Binding ShouldSpotifyLinkButtonBeEnabled}"
@@ -69,7 +69,7 @@
                 Margin="30"
                 Background="{StaticResource SpotifyGreen}"
                 Foreground="Black"
-                HorizontalAlignment="Right" Width="300" Height="80">
+                HorizontalAlignment="Right" Width="300" Height="80" Click="SpotifyLoginButton_Click">
                 <Button.Resources>
                     <Style TargetType="Border">
                         <Setter Property="CornerRadius" Value="40"/>
@@ -142,19 +142,32 @@
                      VerticalContentAlignment="Center"
                      HorizontalAlignment="Center"
                      Grid.Row="1"
+                     IsEnabled="{Binding ShouldLastFmLinkButtonBeEnabled}"
                      PasswordChanged="LastFmPasswordBox_PasswordChanged"
+                     GotFocus="PasswordTextBox_GotFocus"
+                     LostFocus="PasswordTextBox_LostFocus"
                      Style="{StaticResource ModernPasswordBox}"
                      Margin="0,-50,0,0" Password="Password"/>
+
+                    <TextBlock x:Name="LastFmPasswordBoxHintText"
+                       Text="Password"
+                       Foreground="{StaticResource TextBasic}"
+                       Visibility="Visible"
+                       IsHitTestVisible="False"
+                       Width="100"
+                       Height="20"
+                       Panel.ZIndex="6"
+                       Margin="32,15,118,65" Grid.Row="1" />
                 </Grid>
             </Border>
 
             <Border>
-                <Button 
+                <Button x:Name="LastFmLoginButton"
                     Content="{Binding LastFmLinkButtonText}" 
                     Background="{StaticResource LastFmRed}"
                     Foreground="{StaticResource TextBasic}"
                     Command="{Binding LinkLastfmButtonClick}"
-                    IsEnabled="True"
+                    IsEnabled="{Binding ShouldLastFmLinkButtonBeEnabled}"
                     Padding="0"
                     Margin="00"
                     HorizontalAlignment="Left" Width="100" Height="60" Click="Button_Click">

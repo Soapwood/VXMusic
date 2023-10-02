@@ -1,4 +1,5 @@
-﻿using System;
+﻿using com.csutil;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,8 @@ namespace VXMusicDesktop.MVVM.View
     /// </summary>
     public partial class ConnectionsView : UserControl
     {
+        public static event EventHandler LastFmLogin;
+
         public bool IsSpotifyLoggedIn;
 
         public readonly string UsernameBoxHintText = "Username";
@@ -33,6 +36,18 @@ namespace VXMusicDesktop.MVVM.View
             InitializeComponent();
 
             ColourSchemeManager.ThemeChanged += OnThemeChanged;
+            VXMusicSession.LastFmLogin += OnLastFmLogin;
+            VXMusicSession.SpotifyLogin += OnSpotifyLogin;
+        }
+
+        protected virtual void OnLastFmLogin(object sender, EventArgs e)
+        {
+            LastFmLoginButton.Content = "Connected!";
+        }
+
+        protected virtual void OnSpotifyLogin(object sender, EventArgs e)
+        {
+            SpotifyLoginButton.Content = "Connected!";
         }
 
         private void OnThemeChanged(object sender, EventArgs e)
@@ -52,6 +67,21 @@ namespace VXMusicDesktop.MVVM.View
             if (this.DataContext is ConnectionsViewModel connectionsViewModel)
             {
                 connectionsViewModel.LastFmPassword = ((PasswordBox)e.OriginalSource).Password;
+
+                LastFmPasswordBoxHintText.Visibility = String.IsNullOrEmpty(connectionsViewModel.LastFmPassword) ? Visibility.Visible : Visibility.Hidden;
+            }
+        }
+
+        private void PasswordTextBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            LastFmPasswordBoxHintText.Visibility = Visibility.Hidden;
+        }
+
+        private void PasswordTextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (this.DataContext is ConnectionsViewModel connectionsViewModel)
+            {
+                LastFmPasswordBoxHintText.Visibility = String.IsNullOrEmpty(connectionsViewModel.LastFmPassword) ? Visibility.Visible : Visibility.Hidden;
             }
         }
 
@@ -102,6 +132,11 @@ namespace VXMusicDesktop.MVVM.View
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void SpotifyLoginButton_Click(object sender, RoutedEventArgs e)
         {
 
         }
