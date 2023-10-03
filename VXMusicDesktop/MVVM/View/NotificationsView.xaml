@@ -52,7 +52,7 @@
                             </GradientStop.Color>
                         </GradientStop>
 
-                        <GradientStop Offset="0.4">
+                        <GradientStop Offset="0.7">
                             <GradientStop.Color>
                                 <Binding Source="{StaticResource Accent1Colour}" Converter="{StaticResource SolidColorBrushToColorConverter}"/>
                             </GradientStop.Color>
@@ -136,7 +136,7 @@
                             </GradientStop.Color>
                         </GradientStop>
 
-                        <GradientStop Offset="0.4">
+                        <GradientStop Offset="0.6">
                             <GradientStop.Color>
                                 <Binding Source="{StaticResource Accent1Colour}" Converter="{StaticResource SolidColorBrushToColorConverter}"/>
                             </GradientStop.Color>

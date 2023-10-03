@@ -7,6 +7,7 @@
     <UseWPF>true</UseWPF>
     <StartupObject>VXMusicDesktop.App</StartupObject>
     <PackageIcon>VXLogo.png</PackageIcon>
+    <ApplicationIcon>Images\VXLogoIcon.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
@@ -88,6 +89,7 @@
     <Content Include="Images\XSOverlayLogo.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Images\VXLogoIcon.ico" />
   </ItemGroup>
 
   <ItemGroup>
@@ -103,11 +105,23 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Update="Properties\Settings.Designer.cs">
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
 
   <ItemGroup>
