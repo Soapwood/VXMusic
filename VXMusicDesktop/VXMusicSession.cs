@@ -46,6 +46,9 @@ public class VXMusicSession
     public static event EventHandler LastFmLogin;
     public static event EventHandler SpotifyLogin;
 
+    public static event EventHandler SteamVrNotificationEnabled;
+    public static event EventHandler XsOverlayNotificationEnabled;
+
     public VXMusicSession(RecognitionSettings recognitionSettings, ConnectionsSettings connectionsSettings)
     {
         RecognitionSettings = recognitionSettings;
@@ -117,6 +120,16 @@ public class VXMusicSession
     public static void RaiseSpotifyLoggedIn()
     {
         SpotifyLogin?.Invoke(null, EventArgs.Empty);
+    }
+
+    public static void RaiseSteamVrNotificationEnabled()
+    {
+        SteamVrNotificationEnabled?.Invoke(null, EventArgs.Empty);
+    }
+
+    public static void RaiseXsOverlayNotificationEnabled()
+    {
+        XsOverlayNotificationEnabled?.Invoke(null, EventArgs.Empty);
     }
 }
 

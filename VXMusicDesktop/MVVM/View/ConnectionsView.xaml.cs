@@ -24,8 +24,6 @@ namespace VXMusicDesktop.MVVM.View
     /// </summary>
     public partial class ConnectionsView : UserControl
     {
-        public static event EventHandler LastFmLogin;
-
         public bool IsSpotifyLoggedIn;
 
         public readonly string UsernameBoxHintText = "Username";

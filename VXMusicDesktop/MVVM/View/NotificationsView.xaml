@@ -89,7 +89,7 @@
                                    HorizontalAlignment="Left"/>
                 </StackPanel>-->
             </Border>
-            <Button 
+            <Button Name="EnableSteamVRNotificationButton"
                     Height="80"
                     Width="300"
                     Foreground="Black"
@@ -177,7 +177,7 @@
                 </StackPanel>-->
             </Border>
 
-            <Button 
+            <Button Name="EnableXsOverlayNotificationButton"
                     Height="80"
                     Width="300"
                     Foreground="Black"

@@ -26,6 +26,9 @@ namespace VXMusicDesktop.MVVM.View
             InitializeComponent();
 
             ColourSchemeManager.ThemeChanged += OnThemeChanged;
+
+            VXMusicSession.SteamVrNotificationEnabled += OnSteamVrNotificationEnabled;
+            VXMusicSession.XsOverlayNotificationEnabled += OnXsOverlayNotificationEnabled;
         }
 
         private void OnThemeChanged(object sender, EventArgs e)
@@ -40,6 +43,17 @@ namespace VXMusicDesktop.MVVM.View
             NotificationService2TextHeader.Foreground = ColourSchemeManager.TextBasic;
             NotificationIntegration2BoxBorderGradientBrush.GradientStops[0].Color = ColourSchemeManager.SecondaryColour.Color;
             NotificationIntegration2BoxBorderGradientBrush.GradientStops[1].Color = ColourSchemeManager.Accent1Colour.Color;
+        }
+        protected virtual void OnSteamVrNotificationEnabled(object sender, EventArgs e)
+        {
+            EnableSteamVRNotificationButton.Content = "Connected!";
+            EnableXsOverlayNotificationButton.Content = "Use";
+        }
+
+        protected virtual void OnXsOverlayNotificationEnabled(object sender, EventArgs e)
+        {
+            EnableXsOverlayNotificationButton.Content = "Connected!";
+            EnableSteamVRNotificationButton.Content = "Use";
         }
     }
 }

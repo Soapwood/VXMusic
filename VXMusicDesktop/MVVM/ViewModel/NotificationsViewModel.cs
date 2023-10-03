@@ -78,6 +78,7 @@ namespace VXMusicDesktop.MVVM.ViewModel
             App.VXMusicSession.SetNotificationService(NotificationService.SteamVR);
             NotificationSettings.SetNotificationServiceInSettings(NotificationService.SteamVR);
             ProcessNotificationServiceState();
+            VXMusicSession.RaiseSteamVrNotificationEnabled();
         }
 
         private void PerformXSOverlayEnableButtonClick(object commandParameter)
@@ -85,6 +86,7 @@ namespace VXMusicDesktop.MVVM.ViewModel
             App.VXMusicSession.SetNotificationService(NotificationService.XSOverlay);
             NotificationSettings.SetNotificationServiceInSettings(NotificationService.XSOverlay);
             ProcessNotificationServiceState();
+            VXMusicSession.RaiseXsOverlayNotificationEnabled();
         }
 
         private void ProcessNotificationServiceState()
