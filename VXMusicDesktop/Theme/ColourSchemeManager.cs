@@ -33,6 +33,7 @@ namespace VXMusicDesktop.Theme
     public class ColourSchemeManager
     {
         public static event EventHandler ThemeChanged;
+        public static event EventHandler MenuOptionChanged;
 
         public static readonly string Darkmode1Primary = "#252525";
         public static readonly string Darkmode1Secondary = "#6930C3";
@@ -55,6 +56,8 @@ namespace VXMusicDesktop.Theme
         public static readonly string SpotifyColour = "#1DB954";
         public static readonly string LastFmColour = "#C3000D";
 
+        public static readonly string TransparentColour = "#000000";
+
         public static readonly string DarkmodeMinimiseButton = "Images/MinimiseIconWhite.png";
         public static readonly string DarkmodeCloseButton = "Images/CloseIconWhite.png";
         public static readonly string LightmodeMinimiseButton = "Images/MinimiseIconBlack.png";
@@ -67,6 +70,7 @@ namespace VXMusicDesktop.Theme
         public static SolidColorBrush TextBasic { get; set; }
         public static SolidColorBrush SpotifyGreen { get; set; } = new SolidColorBrush(FromHex(SpotifyColour));
         public static SolidColorBrush LastFmRed { get; set; } = new SolidColorBrush(FromHex(LastFmColour));
+        public static SolidColorBrush Transparent { get; set; }
         public static BitmapImage CloseImage { get; set; }
         public static BitmapImage MinimiseImage { get; set; }
 
@@ -101,6 +105,11 @@ namespace VXMusicDesktop.Theme
             ThemeChanged?.Invoke(null, EventArgs.Empty);
         }
 
+        public static void RaiseMenuOptionChanged()
+        {
+            MenuOptionChanged?.Invoke(null, EventArgs.Empty);
+        }
+
         private static void SetThemeDarkmode1()
         {
             PrimaryColour = new SolidColorBrush(FromHex(Darkmode1Primary));
@@ -110,6 +119,7 @@ namespace VXMusicDesktop.Theme
             TextBasic = new SolidColorBrush(FromHex(Darkmode1TextBasic));
             CloseImage = new BitmapImage(new Uri($"pack://application:,,,/VXMusicDesktop;component/{ColourSchemeManager.DarkmodeCloseButton}"));
             MinimiseImage = new BitmapImage(new Uri($"pack://application:,,,/VXMusicDesktop;component/{ColourSchemeManager.DarkmodeMinimiseButton}"));
+            Transparent = new SolidColorBrush(FromHex(TransparentColour));
         }
 
         private static void SetThemeDarkmode2()
@@ -121,6 +131,7 @@ namespace VXMusicDesktop.Theme
             TextBasic = new SolidColorBrush(FromHex(Darkmode2TextBasic));
             CloseImage = new BitmapImage(new Uri($"pack://application:,,,/VXMusicDesktop;component/{ColourSchemeManager.DarkmodeCloseButton}"));
             MinimiseImage = new BitmapImage(new Uri($"pack://application:,,,/VXMusicDesktop;component/{ColourSchemeManager.DarkmodeMinimiseButton}"));
+            Transparent = new SolidColorBrush(FromHex(TransparentColour));
         }
 
         private static void SetThemeLightmode1()
@@ -132,6 +143,7 @@ namespace VXMusicDesktop.Theme
             TextBasic = new SolidColorBrush(FromHex(Lightmode1TextBasic));
             CloseImage = new BitmapImage(new Uri($"pack://application:,,,/VXMusicDesktop;component/{ColourSchemeManager.LightmodeCloseButton}"));
             MinimiseImage = new BitmapImage(new Uri($"pack://application:,,,/VXMusicDesktop;component/{ColourSchemeManager.LightmodeMinimiseButton}"));
+            Transparent = new SolidColorBrush(FromHex(TransparentColour));
         }
 
         private static Color FromHex(string hex)

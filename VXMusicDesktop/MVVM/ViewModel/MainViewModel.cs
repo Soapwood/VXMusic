@@ -9,6 +9,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using VXMusic;
 using VXMusicDesktop.Core;
+using VXMusicDesktop.Theme;
 
 namespace VXMusicDesktop.MVVM.ViewModel
 {
@@ -42,6 +43,7 @@ namespace VXMusicDesktop.MVVM.ViewModel
             set { 
                 _currentView = value;
                 OnPropertyChanged();
+                ColourSchemeManager.RaiseMenuOptionChanged();
             }
         }
 
