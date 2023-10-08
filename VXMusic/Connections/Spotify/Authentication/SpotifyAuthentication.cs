@@ -1,8 +1,10 @@
+using com.csutil;
 using Newtonsoft.Json;
 using SpotifyAPI.Web;
 using SpotifyAPI.Web.Auth;
 using System.Diagnostics;
 using System.Security.Authentication;
+using VXMusic.Connections.Spotify;
 
 namespace VXMusic.Spotify.Authentication;
 
@@ -14,6 +16,8 @@ public class SpotifyAuthentication
     private static readonly EmbedIOAuthServer _server = new(new Uri("http://localhost:5543/callback"), 5543);
 
     public static SpotifyClientConfig SpotifyClientConfig;
+
+    public static bool IsSpotifyConnected = false;
 
     private static void Exiting()
     {
@@ -47,9 +51,22 @@ public class SpotifyAuthentication
         return 0;
     }
     
-    public static bool IsSpotifyConnected()
+    public async static Task<bool> CheckIfSpotifyIsConnected()
     {
-        return (File.Exists(CredentialsPath));
+        //await GetSpotifyUserAuthentication();
+
+        try
+        {
+            var currentUser = await SpotifyUserProfileManager.GetCurrentUser();
+            IsSpotifyConnected = !currentUser.Id.IsNullOrEmpty();
+
+            return IsSpotifyConnected;
+        } 
+        catch (SpotifyAPI.Web.APIUnauthorizedException ex)
+        {
+            throw new SpotifyAPI.Web.APIUnauthorizedException("Spotify is not connected - user not found.");
+            //return false;
+        }
     }
 
     private static async Task Start()
