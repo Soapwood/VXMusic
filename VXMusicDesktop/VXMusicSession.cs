@@ -16,6 +16,7 @@ using VXMusic.Overlay;
 using System.Windows.Media;
 using VXMusicDesktop.Theme;
 using VXMusicDesktop.MVVM.ViewModel;
+using VXMusic.Spotify.Authentication;
 
 //using System.Windows.Forms.PropertyGridInternal;
 
@@ -44,7 +45,7 @@ public class VXMusicSession
     public static VXMusicOverlayInstance? VXMusicOverlay;
 
     public static event EventHandler LastFmLogin;
-    public static event EventHandler SpotifyLogin;
+    //public static event EventHandler SpotifyLogin;
 
     public static event EventHandler SteamVrNotificationEnabled;
     public static event EventHandler XsOverlayNotificationEnabled;
@@ -67,6 +68,8 @@ public class VXMusicSession
         VRChatLogParser = App.ServiceProvider.GetRequiredService<VRChatLogParser>();
 
         ColourSchemeManager.SetTheme(DesktopThemeSettings.GetDesktopThemeFromSettings());
+
+        SpotifyAuthentication.ClientId = ConnectionsSettings.SpotifySettings.ClientId;
 
         //VXMusicOverlay = App.ServiceProvider.GetRequiredService<VXMusicOverlayInstance>();
     }
@@ -115,11 +118,6 @@ public class VXMusicSession
     public static void RaiseLastFmLoggedIn()
     {
         LastFmLogin?.Invoke(null, EventArgs.Empty);
-    }
-
-    public static void RaiseSpotifyLoggedIn()
-    {
-        SpotifyLogin?.Invoke(null, EventArgs.Empty);
     }
 
     public static void RaiseSteamVrNotificationEnabled()
@@ -185,12 +183,12 @@ public class ConnectionsSettings
     public LastfmSettings LastfmSettings { get; set; }
 
     // User Settings
-    public bool IsSpotifyConnected { get; set; }
+    //public bool IsSpotifyConnected { get; set; }
     public bool IsLastfmConnected { get; set; }
 
     public ConnectionsSettings()
     {
-        IsSpotifyConnected = VXMusicDesktop.Properties.Settings.Default.SpotifyEnabled;
+        //IsSpotifyConnected = VXMusicDesktop.Properties.Settings.Default.SpotifyEnabled;
         IsLastfmConnected = VXMusicDesktop.Properties.Settings.Default.LastfmEnabled;
     }
 }

@@ -9,6 +9,7 @@ using Microsoft.Extensions.Logging;
 using VXMusic.API;
 using VXMusic.FileWriter;
 using System.Threading.Tasks;
+using VXMusic.Spotify.Authentication;
 
 namespace VXMusicDesktop.MVVM.ViewModel
 {
@@ -162,7 +163,7 @@ namespace VXMusicDesktop.MVVM.ViewModel
                 Logger.LogInformation($"{result.Result.Artist} - {result.Result.Title} {result.Result.Album} ({result.Result.ReleaseDate})");
             }
 
-            if(result.Result != null && VXMusicSession.ConnectionsSettings.IsSpotifyConnected)
+            if(result.Result != null && SpotifyAuthentication.CurrentConnectionState == SpotifyConnectionState.Connected)
                 VXMusicAPI.ReportTrackToSpotifyPlaylist(result);
 
             if (result.Result != null)

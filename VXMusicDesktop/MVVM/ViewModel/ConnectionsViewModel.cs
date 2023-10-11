@@ -39,8 +39,10 @@ namespace VXMusicDesktop.MVVM.ViewModel
 
         public ConnectionsViewModel() 
         {
-            ShouldSpotifyLinkButtonBeEnabled = !SpotifyAuthentication.IsSpotifyConnected();
-            SpotifyLinkButtonText = DetermineSpotifyLinkButtonStateContent();
+            //ShouldSpotifyLinkButtonBeEnabled = true; // !SpotifyAuthentication.IsSpotifyConnected();
+            //SpotifyLinkButtonText = DetermineSpotifyLinkButtonStateContent();
+            if (SpotifyAuthentication.CredentialFileExists)
+                SpotifyAuthentication.CheckIfSpotifyIsConnected();
 
             ShouldLastFmLinkButtonBeEnabled = !VXMusicSession.ConnectionsSettings.IsLastfmConnected;
             LastFmLinkButtonText = DetermineLastFmLinkButtonStateContent();
@@ -51,18 +53,18 @@ namespace VXMusicDesktop.MVVM.ViewModel
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public bool ShouldSpotifyLinkButtonBeEnabled
-        {
-            get { return !SpotifyAuthentication.IsSpotifyConnected(); }
-            set
-            {
-                if (_shouldSpotifyLinkButtonBeShown != value)
-                {
-                    _shouldSpotifyLinkButtonBeShown = value;
-                    OnPropertyChanged(nameof(ShouldSpotifyLinkButtonBeEnabled));
-                }
-            }
-        }
+        //public bool ShouldSpotifyLinkButtonBeEnabled
+        //{
+        //    get { return true; } //!SpotifyAuthentication.IsSpotifyConnected(); }
+        //    set
+        //    {
+        //        if (_shouldSpotifyLinkButtonBeShown != value)
+        //        {
+        //            _shouldSpotifyLinkButtonBeShown = value;
+        //            OnPropertyChanged(nameof(ShouldSpotifyLinkButtonBeEnabled));
+        //        }
+        //    }
+        //}
 
         public bool ShouldLastFmLinkButtonBeEnabled
         {
@@ -103,20 +105,20 @@ namespace VXMusicDesktop.MVVM.ViewModel
             }
         }
 
-        private string DetermineSpotifyLinkButtonStateContent()
-        {
-            return ShouldSpotifyLinkButtonBeEnabled ? "Link Spotify" : "Connected!";
-        }
+        //private string DetermineSpotifyLinkButtonStateContent()
+        //{
+        //    return ShouldSpotifyLinkButtonBeEnabled ? "Link Spotify" : "Connected!";
+        //}
 
         public string SpotifyLinkButtonText
         {
-            get { return _spotifyLinkButtonText; }
+            get { return SpotifyAuthentication.CurrentConnectionState.ToString(); }
             set
             {
                 if (_spotifyLinkButtonText != value)
                 {
                     _spotifyLinkButtonText = value;
-                    OnPropertyChanged(nameof(ShouldSpotifyLinkButtonBeEnabled));
+                    OnPropertyChanged(nameof(SpotifyLinkButtonText));
                 }
             }
         }
@@ -136,16 +138,16 @@ namespace VXMusicDesktop.MVVM.ViewModel
 
         private void PerformLinkSpotifyButtonClick(object commandParameter)
         {
-            if (!ShouldSpotifyLinkButtonBeEnabled)
+            if (SpotifyAuthentication.CurrentConnectionState == SpotifyConnectionState.Connected)
                 return;
 
-            var response = VXMusicAPI.LinkSpotify(VXMusicSession.ConnectionsSettings.SpotifySettings.ClientId);
+            var response = VXMusicAPI.LinkSpotify();
             if(response != null)
             {
-                VXMusicSession.ConnectionsSettings.IsSpotifyConnected = true;
-                ShouldSpotifyLinkButtonBeEnabled = false;
-                SpotifyLinkButtonText = DetermineSpotifyLinkButtonStateContent();
-                VXMusicSession.RaiseSpotifyLoggedIn();
+                //VXMusicSession.ConnectionsSettings.IsSpotifyConnected = true;
+                //ShouldSpotifyLinkButtonBeEnabled = false;
+                //SpotifyLinkButtonText = DetermineSpotifyLinkButtonStateContent();
+                SpotifyAuthentication.RaiseSpotifyLoggingIn();
             } else
             {
 

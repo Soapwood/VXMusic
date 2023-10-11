@@ -32,10 +32,8 @@ namespace VXMusic.API
             }
         }
 
-        public async static Task<PrivateUser> LinkSpotify(string clientId)
+        public async static Task<PrivateUser> LinkSpotify()
         {
-            SpotifyAuthentication.ClientId = clientId;
-
             var spotify = await SpotifyClientBuilder.CreateSpotifyClient();
             return await spotify.UserProfile.Current();
         }

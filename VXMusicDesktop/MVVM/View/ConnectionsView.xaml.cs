@@ -35,7 +35,7 @@ namespace VXMusicDesktop.MVVM.View
 
             ColourSchemeManager.ThemeChanged += OnThemeChanged;
             VXMusicSession.LastFmLogin += OnLastFmLogin;
-            VXMusicSession.SpotifyLogin += OnSpotifyLogin;
+            SpotifyAuthentication.SpotifyLogin += OnSpotifyLogin;
         }
 
         protected virtual void OnLastFmLogin(object sender, EventArgs e)
@@ -45,7 +45,10 @@ namespace VXMusicDesktop.MVVM.View
 
         protected virtual void OnSpotifyLogin(object sender, EventArgs e)
         {
-            SpotifyLoginButton.Content = "Connected!";
+            Application.Current.Dispatcher.Invoke(() => // OMFG THIS WORKS TO UPDATE THE UI ALL THE TIME
+            {
+                SpotifyLoginButton.Content = SpotifyAuthentication.CurrentConnectionState.ToString();
+            });
         }
 
         private void OnThemeChanged(object sender, EventArgs e)

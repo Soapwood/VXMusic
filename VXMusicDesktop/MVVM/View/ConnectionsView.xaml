@@ -83,7 +83,6 @@
             <Button x:Name="SpotifyLoginButton"
                 Content="{Binding SpotifyLinkButtonText}" 
                 Command="{Binding LinkSpotifyButtonClick}"
-                IsEnabled="{Binding ShouldSpotifyLinkButtonBeEnabled}"
                 Padding="0"
                 Margin="30"
                 Background="{StaticResource SpotifyGreen}"

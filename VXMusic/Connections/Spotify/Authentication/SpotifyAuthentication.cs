@@ -8,6 +8,14 @@ using VXMusic.Connections.Spotify;
 
 namespace VXMusic.Spotify.Authentication;
 
+public enum SpotifyConnectionState
+{
+    NotConnected,
+    Connecting,
+    Connected,
+    ConnectionFailed
+}
+
 public class SpotifyAuthentication
 {
     private const string CredentialsPath = "credentials.json";
@@ -17,17 +25,31 @@ public class SpotifyAuthentication
 
     public static SpotifyClientConfig SpotifyClientConfig;
 
-    public static bool IsSpotifyConnected = false;
+    public static event EventHandler SpotifyLogin;
+
+    public static bool CredentialFileExists => File.Exists(CredentialsPath);
+
+    public static SpotifyConnectionState CurrentConnectionState { get; set; }
 
     private static void Exiting()
     {
         Console.CursorVisible = true;
     }
 
+    public static void RaiseSpotifyLoggingIn()
+    {
+        SpotifyLogin.Invoke(null, EventArgs.Empty);
+        //SpotifyAuthentication.SpotifyLogin?.Invoke(null, EventArgs.Empty);
+        //SpotifyLogin?.Invoke(null, EventArgs.Empty);
+    }
+
     public static async Task<int> GetSpotifyUserAuthentication()
     {
         // This is a bug in the SWAN Logging library, need this hack to bring back the cursor
         AppDomain.CurrentDomain.ProcessExit += (sender, e) => Exiting();
+
+        CurrentConnectionState = SpotifyConnectionState.Connecting;
+
 
         if (string.IsNullOrEmpty(ClientId))
         {
@@ -58,9 +80,9 @@ public class SpotifyAuthentication
         try
         {
             var currentUser = await SpotifyUserProfileManager.GetCurrentUser();
-            IsSpotifyConnected = !currentUser.Id.IsNullOrEmpty();
+            CurrentConnectionState = SpotifyConnectionState.Connected;
 
-            return IsSpotifyConnected;
+            return true;
         } 
         catch (SpotifyAPI.Web.APIUnauthorizedException ex)
         {
@@ -82,6 +104,13 @@ public class SpotifyAuthentication
             .WithAuthenticator(authenticator);
 
         SpotifyClientConfig = config;
+
+        bool wasConnecting = CurrentConnectionState.Equals(SpotifyConnectionState.Connecting);
+
+        CurrentConnectionState = SpotifyConnectionState.Connected;
+
+        if(wasConnecting)
+            RaiseSpotifyLoggingIn();
     }
 
     private static async Task StartAuthentication()

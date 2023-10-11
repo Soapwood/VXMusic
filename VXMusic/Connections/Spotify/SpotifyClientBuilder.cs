@@ -19,22 +19,10 @@ public class SpotifyClientBuilder
 
     private readonly string _spotifyAccountEndpoint = "https://accounts.spotify.com/api/token";
 
-
     public static async Task<SpotifyClient> CreateSpotifyClient()
     {
         await SpotifyAuthentication.GetSpotifyUserAuthentication();
         return new SpotifyClient(SpotifyAuthentication.SpotifyClientConfig);
     }
-
-    // TODO Need to handle token refresh https://johnnycrazy.github.io/SpotifyAPI-NET/docs/client_credentials
-    // private async Task<ClientCredentialsTokenResponse> GetAccessToken()
-    // {
-    //     var config = SpotifyClientConfig.CreateDefault();
-    //     
-    //     var request = new ClientCredentialsRequest(_clientId, _clientSecret);
-    //     
-    //     return await new OAuthClient(config).RequestToken(request);;
-    // }
-    
 }
 
