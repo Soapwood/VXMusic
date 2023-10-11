@@ -16,6 +16,27 @@ public enum SpotifyConnectionState
     ConnectionFailed
 }
 
+public static class SpotifyConnectionStateExtensions
+{
+    public static string ToDisplayString(this SpotifyConnectionState state)
+    {
+        switch (state)
+        {
+            case SpotifyConnectionState.NotConnected:
+                return "Connect";
+            case SpotifyConnectionState.Connecting:
+                return "Check your browser";
+            case SpotifyConnectionState.Connected:
+                return "Connected!";
+            case SpotifyConnectionState.ConnectionFailed:
+                return "Connection Failed.";
+            default:
+                return "ERROR";
+        }
+    }
+}
+
+
 public class SpotifyAuthentication
 {
     private const string CredentialsPath = "credentials.json";

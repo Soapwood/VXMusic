@@ -112,7 +112,7 @@ namespace VXMusicDesktop.MVVM.ViewModel
 
         public string SpotifyLinkButtonText
         {
-            get { return SpotifyAuthentication.CurrentConnectionState.ToString(); }
+            get { return SpotifyConnectionStateExtensions.ToDisplayString(SpotifyAuthentication.CurrentConnectionState); }
             set
             {
                 if (_spotifyLinkButtonText != value)

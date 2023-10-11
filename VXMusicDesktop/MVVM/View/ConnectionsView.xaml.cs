@@ -47,7 +47,7 @@ namespace VXMusicDesktop.MVVM.View
         {
             Application.Current.Dispatcher.Invoke(() => // OMFG THIS WORKS TO UPDATE THE UI ALL THE TIME
             {
-                SpotifyLoginButton.Content = SpotifyAuthentication.CurrentConnectionState.ToString();
+                SpotifyLoginButton.Content = SpotifyConnectionStateExtensions.ToDisplayString(SpotifyAuthentication.CurrentConnectionState);
             });
         }
 
