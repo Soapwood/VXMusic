@@ -1,0 +1,24 @@
+{
+    "name": "Unity.XR.Management.Editor",
+    "rootNamespace": "",
+    "references": [
+        "Unity.XR.Management"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [
+        {
+            "name": "Unity",
+            "expression": "2022.3.15f1",
+            "define": "UNITY_XR_VISIONOS_SUPPORTED"
+        }
+    ],
+    "noEngineReferences": false
+}

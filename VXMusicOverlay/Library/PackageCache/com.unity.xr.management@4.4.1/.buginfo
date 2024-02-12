@@ -1,0 +1,5 @@
+system: jira
+server: jira.unity3d.com
+project: XRMB
+issuetype: Bug
+package: XR Management

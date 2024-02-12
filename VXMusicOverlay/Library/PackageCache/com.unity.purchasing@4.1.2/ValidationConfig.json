@@ -1,0 +1,16 @@
+{
+	"FilenameValidation":
+	{
+		"Filenames":
+		[
+			{
+				"Filename": "Editor/SwitchStoreEditorWindow.cs.meta",
+				"Targets": "+"
+			},
+            {
+				"Filename": "Editor/SwitchStoreEditorWindow.cs",
+				"Targets": "+"
+			}
+		]
+	}
+}

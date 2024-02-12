@@ -1,0 +1,42 @@
+{
+  "name": "com.unity.xr.management",
+  "displayName": "XR Plugin Management",
+  "version": "4.4.1",
+  "unity": "2019.4",
+  "unityRelease": "15f1",
+  "description": "Package that provides simple management of XR plug-ins. Manages and offers help with loading, initialization, settings, and build support for XR plug-ins.",
+  "keywords": [
+    "xr",
+    "sdk",
+    "ar",
+    "vr",
+    "management",
+    "build",
+    "plugin"
+  ],
+  "dependencies": {
+    "com.unity.modules.subsystems": "1.0.0",
+    "com.unity.modules.vr": "1.0.0",
+    "com.unity.modules.xr": "1.0.0",
+    "com.unity.xr.legacyinputhelpers": "2.1.7"
+  },
+  "repository": {
+    "url": "https://github.cds.internal.unity3d.com/unity/xr.sdk.management.git",
+    "type": "git",
+    "revision": "0eaf10a186d9e12b264d5e10d1c7daa345428fb4"
+  },
+  "_upm": {
+    "changelog": "### Added\n- Added [Apple visionOS XR provider](https://create.unity.com/spatial) to the list of known packages."
+  },
+  "upmCi": {
+    "footprint": "b0fac136c8af91d3b8a220548b6a349b9bab9b9a"
+  },
+  "documentationUrl": "https://docs.unity3d.com/Packages/com.unity.xr.management@4.4/manual/index.html",
+  "samples": [
+    {
+      "displayName": "Example XR Management implementation",
+      "description": "Example code showing how to implement various portions of the XR Management API.",
+      "path": "Samples~"
+    }
+  ]
+}
