@@ -9,7 +9,7 @@ namespace Plugins
         private Animator _animator;
         // private GameObject _overlayScriptWrapper;
 
-        private EasyOpenVROverlayForUnity _vxmOverlay;
+        private VXMusicOverlay _vxmOverlay;
 
         private string _animationName = "VXMRecognition";
 
@@ -22,7 +22,7 @@ namespace Plugins
         
             if (_vxmOverlayGameObject != null)
             {
-                _vxmOverlay = _vxmOverlayGameObject.GetComponent<EasyOpenVROverlayForUnity>();
+                _vxmOverlay = _vxmOverlayGameObject.GetComponent<VXMusicOverlay>();
 
                 if (_vxmOverlay != null)
                 {

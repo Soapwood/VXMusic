@@ -53,11 +53,12 @@
   </PropertyGroup>
   <ItemGroup>
      <Compile Include="Assets\Plugins\VXMusicInterface.cs" />
-     <Compile Include="Assets\Plugins\EasyOpenVROverlayForUnity.cs" />
+     <Compile Include="Assets\Plugins\VXMusicOverlay.cs" />
      <Compile Include="Assets\Plugins\MainThreadDispatcher.cs" />
      <Compile Include="Assets\Plugins\openvr_api.cs" />
      <Compile Include="Assets\Plugins\SteamVR_Utils.cs" />
      <Compile Include="Assets\Plugins\VXLogoAnimationController.cs" />
+     <Compile Include="Assets\Plugins\RecognitionAudioTrigger.cs" />
  <Reference Include="UnityEngine">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2020.3.30f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
  </Reference>
