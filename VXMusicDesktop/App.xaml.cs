@@ -122,10 +122,10 @@ namespace VXMusicDesktop
             services.AddSingleton<LastfmScrobbler>();
             services.AddSingleton<PlaylistFileWriter>();
             services.AddSingleton<XSOverlay>();
+            services.AddSingleton<SteamVRNotificationClient>();
 
             services.AddSingleton<VRChatLogParser>();
-            //services.AddSingleton<VXMusicOverlayInstance>();
-
+            
             ServiceProvider = services.BuildServiceProvider();
             
             Logger = ServiceProvider.GetRequiredService<ILogger<App>>();
