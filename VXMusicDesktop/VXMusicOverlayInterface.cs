@@ -19,7 +19,7 @@ public class VXMusicOverlayInterface
             FileName = runtimePath,
             Arguments = "",
             UseShellExecute = false, // Set this to false to redirect output if needed
-            CreateNoWindow = false, // Set this to true to hide the Unity window
+            CreateNoWindow = true, // Set this to true to hide the Unity window
             //WindowStyle = ProcessWindowStyle.Minimized
         };
 
@@ -33,51 +33,28 @@ public class VXMusicOverlayInterface
 
         Console.WriteLine("Starting VXMusic Overlay");
         unityProcess.Start();
+        
     }
 
     public static async Task StartVXMusicServerStream()
     {
+        Console.WriteLine("Waiting for Unity client to connect...");
+        
         while (true)
         {
             using (NamedPipeServerStream serverStream =
                    new NamedPipeServerStream("VXMusicOverlayEventPipe", PipeDirection.InOut))
             {
-                Console.WriteLine("Waiting for Unity client to connect...");
+                Console.WriteLine("Waiting for request from VXMusic Overlay");
                 await serverStream.WaitForConnectionAsync();
 
                 using (StreamReader reader = new StreamReader(serverStream))
                 using (StreamWriter writer = new StreamWriter(serverStream) { AutoFlush = true })
                 {
-                    //await serverStream.WaitForConnectionAsync();
-
-                    
                     string eventData = await reader.ReadLineAsync();
-                    //while ((eventData = await reader.ReadLineAsync()) != null)
-                    //{
-                        Console.WriteLine($"Received event from Unity: {eventData}");
-                        await ProcessIncomingUnityEventMessage(writer, eventData);
-
-                        //await writer.WriteLineAsync(line);
-                    //}
-
-                    // while (true)
-                    // {
-                    //     //reader.BaseStream.Seek(0, SeekOrigin.Begin);
-                    //     string eventData = reader.ReadLine();
-                    //     if (eventData != null)
-                    //     {
-                    //         // Process the received event data
-                    //
-                    //         await ProcessIncomingUnityEventMessage(writer, eventData);
-                    //         //return;
-                    //     }
-                    //     // Process the message and prepare a response
-                    //     //string response = "Response from .NET: " + message.ToUpper();
-                    //
-                    //     // Send the response back to Unity
-                    //     // writer.WriteLine(response);
-                    //     // writer.Flush();
-                    // }
+                    Console.WriteLine($"Received event from Unity: {eventData}");
+                    await ProcessIncomingUnityEventMessage(writer, eventData);
+  
                 }
             }
         }

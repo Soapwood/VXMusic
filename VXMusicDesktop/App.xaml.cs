@@ -47,6 +47,11 @@ namespace VXMusicDesktop
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                 .Build();
 
+            var overlaySettings = new OverlaySettings()
+            {
+                RuntimePath = configuration["Overlay:RuntimePath"]
+            };
+            
             var recognitionSettings = new RecognitionSettings()
             {
                 ShazamSettings = new ShazamSettings()
@@ -80,6 +85,18 @@ namespace VXMusicDesktop
             };
 
             VXMusicSession = new VXMusicSession(recognitionSettings, connectionsSettings);
+
+            VXMusicOverlayInterface.StartVXMusicServerStream();
+            
+            //#if RELEASE || DEBUG
+            VXMusicOverlayInterface.LaunchVXMOverlayRuntime(overlaySettings.RuntimePath);
+            //#endif
+
+            //VXMusicOverlayInterface.ConnectToUnitySession();
+            // while (true)
+            // {
+            //    VXMusicOverlayInterface.ListenForOverlayMessage();
+            // }
         }
 
         public static void ConfigureLogging()
@@ -107,7 +124,7 @@ namespace VXMusicDesktop
             services.AddSingleton<XSOverlay>();
 
             services.AddSingleton<VRChatLogParser>();
-            services.AddSingleton<VXMusicOverlayInstance>();
+            //services.AddSingleton<VXMusicOverlayInstance>();
 
             ServiceProvider = services.BuildServiceProvider();
             
