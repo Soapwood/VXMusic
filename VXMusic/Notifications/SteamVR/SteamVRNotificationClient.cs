@@ -35,22 +35,6 @@ namespace VXMusic.Overlay
         {
             _steamVrNotificationClient.SendNotificationInternal(title, content, timeout, image);
         }
-        public void SetLeftOverlayTrackedDevice()
-        {
-            _logger.LogInformation("Setting Overlay tracked device to: Left Hand");
-            _steamVrNotificationClient.SetOverlayTrackedDeviceInternal(TrackedDeviceRole.LeftHand);
-        }
-
-        public void SetRightHandOverlayTrackedDevice()
-        {
-            _logger.LogInformation("Setting Overlay tracked device to: Right Hand");
-            _steamVrNotificationClient.SetOverlayTrackedDeviceInternal(TrackedDeviceRole.RightHand);
-        }
-
-        public TrackedDeviceRole GetOverlayTrackedDevice()
-        {
-            return _steamVrNotificationClient.TrackedDevice;
-        }
     }
 
     class SteamVRNotificationOverlay : OVRSharp.Overlay
@@ -59,7 +43,7 @@ namespace VXMusic.Overlay
         private readonly ILogger<VXMusicOverlay> _logger;
 
         public SteamVRNotificationOverlay(IServiceProvider serviceProvider)
-            : base("vxmusic", "VXMusic")
+            : base("vxmusicsteamvrnotifhook", "VXMusicNotifHook")
         {
             _serviceProvider = serviceProvider;
             _logger = _serviceProvider.GetService(typeof(ILogger<VXMusicOverlay>))
