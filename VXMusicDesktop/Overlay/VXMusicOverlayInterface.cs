@@ -14,7 +14,7 @@ public class VXMusicOverlayInterface
 {
     public static ILogger Logger = App.ServiceProvider.GetRequiredService<ILogger<App>>();
 
-    public static void LaunchVXMOverlayRuntime(string runtimePath)
+    public static int LaunchVXMOverlayRuntime(string runtimePath)
     {
         ProcessStartInfo overlayProcessStartInfo = new ProcessStartInfo
         {
@@ -25,17 +25,19 @@ public class VXMusicOverlayInterface
             //WindowStyle = ProcessWindowStyle.Minimized
         };
 
-        Process unityProcess = new Process
+        Process overlayProcess = new Process
         {
             StartInfo = overlayProcessStartInfo
         };
 
-        unityProcess.EnableRaisingEvents = true;
-        unityProcess.Exited += (sender, e) => { Console.WriteLine("Closing down VXMOverlay."); };
+        overlayProcess.EnableRaisingEvents = true;
+        overlayProcess.Exited += (sender, e) => { Console.WriteLine("Closing down VXMOverlay."); };
 
         Logger.LogInformation("Starting VXMusic Overlay Runtime...");
         Logger.LogDebug($"Running {overlayProcessStartInfo.FileName} with args: [{overlayProcessStartInfo.Arguments}]");
-        unityProcess.Start();
+        overlayProcess.Start();
+
+        return overlayProcess.Id;
     }
 
     public static async Task StartVXMusicServerStream()
@@ -65,7 +67,7 @@ public class VXMusicOverlayInterface
     {
         switch (incomingMessage)
         {
-            case "VX_TRIGGER_RECOGNITION":
+            case "VX_RECOGNITION_REQ": 
                 Logger.LogDebug($"Sending event to Unity Client: {VXMMessages.RECOGNITION_ACKNOWLEDGE}");
                 writer.WriteLine(VXMMessages.RECOGNITION_ACKNOWLEDGE);
                 await RunRecognition();
@@ -82,57 +84,10 @@ public class VXMusicOverlayInterface
         }
     }
 
-    public static async Task<bool> RunRecognition()
+    public static async Task RunRecognition()
     {
         // TODO Two recognitions can run at the same time, add check to disable button if it's already running
-
-        await Task.Run(() =>
-        {
-            VXMusicSession.RecordingClient.StartRecording();
-
-            VXMusicSession.NotificationClient.SendNotification("VXMusic is Listening...", "",
-                VXMusicSession.RecordingClient.GetRecordingTimeSeconds());
-
-            while (!VXMusicSession.RecordingClient.IsCaptureStateStopped())
-            {
-                Thread.Sleep(500);
-            }
-
-            VXMusicSession.RecordingClient.StopRecording();
-        });
-
-        VXMusicSession.NotificationClient.SendNotification("Sounds great! Just a moment..", "", 2);
-
-        //var result = //await VXMusicAPI.RunRecognition();
-        var result = await VXMusicSession.RecognitionClient.RunRecognition();
-
-        if (result.Status == Status.Error)
-        {
-            VXMusicSession.NotificationClient.SendNotification("Recognition failed! Oh jaysus", "", 5);
-            Console.WriteLine("Recognition failed! Oh jaysus");
-            //Environment.Exit(0);
-        }
-        else if (result.Status == Status.NoMatches || result.Result == null)
-        {
-            VXMusicSession.NotificationClient.SendNotification("Oops, couldn't get that.",
-                "Tech Tip: Have you tried turning up your World Volume?", 5);
-            Console.WriteLine("Oops, couldn't get that. Tech Tip: Have you tried turning up your World Volume?");
-        }
-        else if (result.Status == Status.RecordingError)
-        {
-            VXMusicSession.NotificationClient.SendNotification("I couldn't hear anything!",
-                "Something messed up when recording audio. Check your audio device.", 10);
-            Console.WriteLine(
-                "I couldn't hear anything! Something messed up when recording audio. Check your audio device.");
-        }
-        else
-        {
-            VXMusicSession.NotificationClient.SendNotification($"{result.Result.Artist} - {result.Result.Title}",
-                $"{result.Result.Album} ({result.Result.ReleaseDate})", 8);
-            Console.WriteLine(
-                $"{result.Result.Artist} - {result.Result.Title} {result.Result.Album} ({result.Result.ReleaseDate})");
-        }
-
-        return true;
+        Logger.LogInformation("Running Recognition Flow from Overlay Trigger.");
+        VXMusicActions.PerformRecognitionFlow();
     }
 }
