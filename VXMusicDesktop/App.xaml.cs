@@ -29,18 +29,19 @@ namespace VXMusicDesktop
         public static ILogger Logger;
         public static ServiceProvider ServiceProvider;
         public static VXMusicSession VXMusicSession;
+
+        private static int VXMOverlayProcessId; 
         
         // TODO https://blog.elmah.io/logging-and-global-error-handling-in-net-7-wpf-applications/
-        public App()
+        public App() : base()
         {
 #if DEBUG
             ConsoleHelper.AllocConsole();
 #endif
-            
             ConfigureLogging();
             
             Logger.LogInformation(ConsoleOutputBranding.VxMusicLogo + Environment.NewLine + ConsoleOutputBranding.CreatorInfo);
-            Logger.LogTrace($"Booting VXMusic...");
+            Logger.LogTrace($"Booting VXMusic Desktop Client...");
 
             IConfiguration configuration = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
@@ -88,15 +89,9 @@ namespace VXMusicDesktop
 
             VXMusicOverlayInterface.StartVXMusicServerStream();
             
-            //#if RELEASE || DEBUG
-            VXMusicOverlayInterface.LaunchVXMOverlayRuntime(overlaySettings.RuntimePath);
-            //#endif
-
-            //VXMusicOverlayInterface.ConnectToUnitySession();
-            // while (true)
-            // {
-            //    VXMusicOverlayInterface.ListenForOverlayMessage();
-            // }
+//#if RELEASE || DEBUG
+            VXMOverlayProcessId = VXMusicOverlayInterface.LaunchVXMOverlayRuntime(overlaySettings.RuntimePath);
+//#endif
         }
 
         public static void ConfigureLogging()
@@ -131,10 +126,23 @@ namespace VXMusicDesktop
             Logger = ServiceProvider.GetRequiredService<ILogger<App>>();
         }
 
-        public static void RestartApplication()
+        protected override void OnExit(ExitEventArgs e)
         {
-            Process.Start(Application.ResourceAssembly.Location);
-            Application.Current.Shutdown();
+            // Your cleanup logic here
+            base.OnExit(e);
+
+            try
+            {
+                Process process = Process.GetProcessById(VXMOverlayProcessId);
+                process.Kill();
+                process.WaitForExit(); // Optional: Wait for the process to exit
+                Logger.LogDebug($"Successfully killed process with PID {VXMOverlayProcessId}.");
+            }
+            catch (Exception ex)
+            {
+                // Handle exceptions, if any
+                Logger.LogDebug($"Error killing process: {ex.Message}");
+            }
         }
     }
 }
