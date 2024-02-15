@@ -4,17 +4,19 @@ using System.IO.Pipes;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Diagnostics;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using VXMusicDesktop;
 
 namespace VXMusic.Overlay;
 
 public class VXMusicOverlayInterface
 {
-    public static NamedPipeServerStream PipeServer;
+    public static ILogger Logger = App.ServiceProvider.GetRequiredService<ILogger<App>>();
 
     public static void LaunchVXMOverlayRuntime(string runtimePath)
     {
-        ProcessStartInfo startInfo = new ProcessStartInfo
+        ProcessStartInfo overlayProcessStartInfo = new ProcessStartInfo
         {
             FileName = runtimePath,
             Arguments = "",
@@ -25,36 +27,35 @@ public class VXMusicOverlayInterface
 
         Process unityProcess = new Process
         {
-            StartInfo = startInfo
+            StartInfo = overlayProcessStartInfo
         };
 
         unityProcess.EnableRaisingEvents = true;
         unityProcess.Exited += (sender, e) => { Console.WriteLine("Closing down VXMOverlay."); };
 
-        Console.WriteLine("Starting VXMusic Overlay");
+        Logger.LogInformation("Starting VXMusic Overlay Runtime...");
+        Logger.LogDebug($"Running {overlayProcessStartInfo.FileName} with args: [{overlayProcessStartInfo.Arguments}]");
         unityProcess.Start();
-        
     }
 
     public static async Task StartVXMusicServerStream()
     {
-        Console.WriteLine("Waiting for Unity client to connect...");
+        Logger.LogInformation("Waiting for Unity Runtime Client to Connect...");
         
         while (true)
         {
             using (NamedPipeServerStream serverStream =
                    new NamedPipeServerStream("VXMusicOverlayEventPipe", PipeDirection.InOut))
             {
-                Console.WriteLine("Waiting for request from VXMusic Overlay");
+                Logger.LogInformation("Listening for Request from VXMusic Overlay");
                 await serverStream.WaitForConnectionAsync();
 
                 using (StreamReader reader = new StreamReader(serverStream))
                 using (StreamWriter writer = new StreamWriter(serverStream) { AutoFlush = true })
                 {
                     string eventData = await reader.ReadLineAsync();
-                    Console.WriteLine($"Received event from Unity: {eventData}");
+                    Logger.LogDebug($"Received event from Unity Client: {eventData}");
                     await ProcessIncomingUnityEventMessage(writer, eventData);
-  
                 }
             }
         }
@@ -65,19 +66,18 @@ public class VXMusicOverlayInterface
         switch (incomingMessage)
         {
             case "VX_TRIGGER_RECOGNITION":
-                writer.WriteLine("VX_RECOGNITION_ACK");
-                //writer.Flush();
+                Logger.LogDebug($"Sending event to Unity Client: {VXMMessages.RECOGNITION_ACKNOWLEDGE}");
+                writer.WriteLine(VXMMessages.RECOGNITION_ACKNOWLEDGE);
                 await RunRecognition();
-                writer.WriteLine("VX_RECOGNITION_FIN");
-                //writer.Flush();
+                Logger.LogDebug($"Sending event to Unity Client: {VXMMessages.RECOGNITION_FINISH}");
+                writer.WriteLine(VXMMessages.RECOGNITION_FINISH);
                 return true;
             case "VX_CONNECT_REQ":
                 // Send the connection ack response back to Unity
-                writer.WriteLine("VX_CONNECT_ACK");
-                //writer.Flush();
+                writer.WriteLine(VXMMessages.CONNECTION_ACKNOWLEDGE);
                 return true;
             default:
-                Console.WriteLine("UNRECOGNISED MESSAGE SENT FROM UNITY");
+                Logger.LogError($"UNRECOGNISED MESSAGE SENT FROM UNITY TO VXMUSIC: {incomingMessage}");
                 return false;
         }
     }

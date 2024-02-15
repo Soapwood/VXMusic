@@ -71,6 +71,7 @@ public class VXMusicSession
 
         SpotifyAuthentication.ClientId = ConnectionsSettings.SpotifySettings.ClientId;
 
+        //VXListenForOverlayMessage();
         //VXMusicOverlay = App.ServiceProvider.GetRequiredService<VXMusicOverlayInstance>();
     }
 
@@ -99,7 +100,7 @@ public class VXMusicSession
         switch (recognitionApi)
         {
             case NotificationService.SteamVR:
-                NotificationClient = App.ServiceProvider.GetRequiredService<VXMusicOverlayInstance>();
+                NotificationClient = App.ServiceProvider.GetRequiredService<SteamVRNotificationClient>();
                 return;
             case NotificationService.XSOverlay:
                 NotificationClient = App.ServiceProvider.GetRequiredService<XSOverlay>();
@@ -129,6 +130,11 @@ public class VXMusicSession
     {
         XsOverlayNotificationEnabled?.Invoke(null, EventArgs.Empty);
     }
+}
+
+public class OverlaySettings
+{
+    public string RuntimePath;
 }
 
 public class RecognitionSettings
@@ -213,7 +219,7 @@ public class NotificationSettings
         switch (GetCurrentNotificationServiceFromSettings())
         {
             case NotificationService.SteamVR:
-                return App.ServiceProvider.GetRequiredService<VXMusicOverlayInstance>();
+                return App.ServiceProvider.GetRequiredService<SteamVRNotificationClient>();
             case NotificationService.XSOverlay:
                 return App.ServiceProvider.GetRequiredService<XSOverlay>();
             default:
