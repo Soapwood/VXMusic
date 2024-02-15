@@ -66,7 +66,7 @@ namespace Plugins
         //Display logs related to events
         public bool eventLog = false;
 
-        private GameObject VXMusicLogo = GameObject.Find("VXMusicOverlayLogo");
+        private GameObject VXMusicLogo;
         //private Animator vxMusicLogoAnimationController = GetComponent<Animator>();
 
         [Header("RenderTexture")]
@@ -385,8 +385,9 @@ namespace Plugins
             //--------
             //showDevices();
 
-            Debug.Log(Tag + "Initialization completed");
-        
+            Debug.Log(Tag + "Initialising overlay");
+            VXMusicLogo = GameObject.Find("VXMusicOverlayLogo");
+            
             _VXMusicInterfaceObject = GameObject.Find("VXMusicInterfacePipe");
             _VXMusicInterface = _VXMusicInterfaceObject.GetComponent<VXMusicInterface>();
 
@@ -986,7 +987,7 @@ namespace Plugins
                 if (IsInputLockButtonPressed() && !IsInRecognitionState)
                 {
                     _recognitionAudioSource.recognitionAudioSource.Play();
-                    _VXMusicInterface.SendRequestToServer("VX_TRIGGER_RECOGNITION");
+                    _VXMusicInterface.SendRequestToServer("VX_RECOGNITION_REQ"); 
                 }
             }
         }
