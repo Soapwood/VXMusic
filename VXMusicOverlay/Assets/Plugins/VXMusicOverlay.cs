@@ -984,8 +984,9 @@ namespace Plugins
                 tapped = false;
                 PerformHapticFeedback(lr);
 
-                if (IsInputLockButtonPressed() && !IsInRecognitionState)
+                if (IsInputLockButtonPressed() && !_VXMusicInterface.IsInRecognitionState)
                 {
+                    
                     _recognitionAudioSource.recognitionAudioSource.Play();
                     _VXMusicInterface.SendRequestToServer("VX_RECOGNITION_REQ"); 
                 }

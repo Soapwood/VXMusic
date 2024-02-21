@@ -50,15 +50,15 @@ namespace Plugins
 
             if (newValue)
             {
-                MainThreadDispatcher.ExecuteOnMainThread(() =>
-                {
+                //MainThreadDispatcher.ExecuteOnMainThread(() =>
+                //{
                     _isVxInProcessingState = true;
                     
                     _animator.enabled = true;
                     _animator.Play(_animationName, -1, 0f);
                     _animator.speed = 1;
                 
-                });
+                //});
             }
             else
             {
