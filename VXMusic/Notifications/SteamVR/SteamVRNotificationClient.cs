@@ -43,7 +43,7 @@ namespace VXMusic.Overlay
         private readonly ILogger<VXMusicOverlay> _logger;
 
         public SteamVRNotificationOverlay(IServiceProvider serviceProvider)
-            : base("vxmusicsteamvrnotifhook", "VXMusicNotifHook")
+            : base("vxmusicsteamvrnotifhook", "VXMusic")
         {
             _serviceProvider = serviceProvider;
             _logger = _serviceProvider.GetService(typeof(ILogger<VXMusicOverlay>))

@@ -12,8 +12,8 @@ namespace VXMusic.Connections.Spotify
     {
         public static async Task<PrivateUser> GetCurrentUser()
         {
-            //if (SpotifyClientBuilder.Instance == null)
-            //    throw new Exception("Not authenticated with Spotify API.");  // TODO Handle this, and output to UI
+            if (SpotifyClientBuilder.Instance == null)
+                throw new Exception("Not authenticated with Spotify API.");  // TODO Handle this, and output to UI
 
             var spotify = await SpotifyClientBuilder.Instance;
 

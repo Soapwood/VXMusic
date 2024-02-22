@@ -59,7 +59,13 @@ public class SpotifyAuthentication
 
     public static void RaiseSpotifyLoggingIn()
     {
-        SpotifyLogin.Invoke(null, EventArgs.Empty);
+        try
+        {
+            SpotifyLogin.Invoke(null, EventArgs.Empty);
+        } catch (Exception e) {
+            Trace.TraceError("SpotifyLogin delegate has not been created.");
+        }
+        
         //SpotifyAuthentication.SpotifyLogin?.Invoke(null, EventArgs.Empty);
         //SpotifyLogin?.Invoke(null, EventArgs.Empty);
     }
@@ -126,12 +132,9 @@ public class SpotifyAuthentication
 
         SpotifyClientConfig = config;
 
-        bool wasConnecting = CurrentConnectionState.Equals(SpotifyConnectionState.Connecting);
-
         CurrentConnectionState = SpotifyConnectionState.Connected;
 
-        if(wasConnecting)
-            RaiseSpotifyLoggingIn();
+        RaiseSpotifyLoggingIn();
     }
 
     private static async Task StartAuthentication()

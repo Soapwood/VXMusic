@@ -39,8 +39,6 @@ namespace VXMusicDesktop.MVVM.ViewModel
 
         public ConnectionsViewModel() 
         {
-            //ShouldSpotifyLinkButtonBeEnabled = true; // !SpotifyAuthentication.IsSpotifyConnected();
-            //SpotifyLinkButtonText = DetermineSpotifyLinkButtonStateContent();
             if (SpotifyAuthentication.CredentialFileExists)
                 SpotifyAuthentication.CheckIfSpotifyIsConnected();
 

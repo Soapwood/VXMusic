@@ -12,7 +12,7 @@ public class VXMusicActions
 {
     public static ILogger Logger = App.ServiceProvider.GetRequiredService<ILogger<App>>();
 
-    public static async void PerformRecognitionFlow()
+    public static async Task<bool> PerformRecognitionFlow()
     {
         // TODO Two recognitions can run at the same time, add check to disable button if it's already running
 
@@ -86,5 +86,7 @@ public class VXMusicActions
                 }
             }
         }
+
+        return true;
     }
 }

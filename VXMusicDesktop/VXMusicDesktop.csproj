@@ -8,6 +8,7 @@
     <StartupObject>VXMusicDesktop.App</StartupObject>
     <PackageIcon>VXLogo.png</PackageIcon>
     <ApplicationIcon>Images\VXLogoIcon.ico</ApplicationIcon>
+    <RunPostBuildEvent>Always</RunPostBuildEvent>
   </PropertyGroup>
 
   <ItemGroup>
@@ -35,6 +36,7 @@
     <None Update="NLog.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Remove="Overlay\bin\MonoBleedingEdge\etc\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -115,6 +117,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Remove="Overlay\bin\MonoBleedingEdge\etc\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -122,6 +125,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Remove="Overlay\bin\MonoBleedingEdge\etc\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -133,5 +137,17 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Overlay\bin\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Remove="Overlay\bin\MonoBleedingEdge\etc\**" />
+  </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="xcopy &quot;$(ProjectDir)\Overlay\bin&quot; &quot;$(OutDir)\Overlay&quot; /E /H /Y" />
+  </Target>
 
 </Project>

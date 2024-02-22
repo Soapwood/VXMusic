@@ -17,14 +17,125 @@
         <SolidColorBrush x:Key="Accent2Colour" Color="{Binding Source={x:Static custom:ColourSchemeManager.Accent2Colour}, Path=Color}" />
         <SolidColorBrush x:Key="TextBasic" Color="{Binding Source={x:Static custom:ColourSchemeManager.TextBasic}, Path=Color}" />
 
+        <custom:SolidColorBrushToColorConverter x:Key="SolidColorBrushToColorConverter" />
     </UserControl.Resources>
 
-    <Grid>
-        <TextBlock HorizontalAlignment="Center"
-                   VerticalAlignment="Center"
-                   FontSize="30"
-                   Foreground="{StaticResource TextBasic}">
-            [WIP]
-        </TextBlock>
-    </Grid>
+    <StackPanel>
+        <TextBlock Name="NotificationsTextHeader"
+                   Text="Select Notification Method"
+                   Foreground="{StaticResource TextBasic}"
+                   FontSize="28"
+                   HorizontalAlignment="Left"
+                   Margin="10,0,0,10"/>
+
+        <StackPanel Orientation="Horizontal"
+                    Margin="0,0,0,10">
+
+
+            <Border Width="300"
+                    Height="200"
+                    CornerRadius="10"
+                    Margin="20,0,0,0">
+
+                <Border.Background>
+                    <LinearGradientBrush x:Name="NotificationIntegration1BoxBorderGradientBrush" StartPoint="0,0" EndPoint="1,2">
+                        <GradientStop Offset="0.0">
+                            <GradientStop.Color>
+                                <Binding Source="{StaticResource SecondaryColor}" Converter="{StaticResource SolidColorBrushToColorConverter}"/>
+                            </GradientStop.Color>
+                        </GradientStop>
+
+                        <GradientStop Offset="0.7">
+                            <GradientStop.Color>
+                                <Binding Source="{StaticResource Accent1Colour}" Converter="{StaticResource SolidColorBrushToColorConverter}"/>
+                            </GradientStop.Color>
+                        </GradientStop>
+                    </LinearGradientBrush>
+                </Border.Background>
+
+                <Grid>
+                    <StackPanel>
+                        <Image Height="80"
+                       Source="/Images/SteamVRLogo.png"
+                       RenderTransformOrigin="0,0"
+                       Margin="0,30,0,0"
+                               HorizontalAlignment="Center"/>
+                        <TextBlock Name="NotificationService1TextHeader"
+                                   Text="Use SteamVR for Notifications"
+                                   Foreground="{StaticResource TextBasic}"
+                                   FontSize="18"
+                                   Margin="0,0,0,0"
+                                   HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </Grid>
+
+                <!--<StackPanel>
+                    <TextBlock Text="Version: 0.1"
+                            Foreground="Black"
+                            FontSize="18"
+                            Margin="20,10,10,0"
+                            HorizontalAlignment="Center"/>
+                    <TextBlock Text="- Added Shazam API Support&#x0a;- Added Spotify Integration&#x0a;- Added WIP Desktop Client"
+                                   Foreground="Black"
+                                   FontSize="12"
+                                   Margin="10,20,0,0"
+                                   HorizontalAlignment="Left"/>
+                </StackPanel>-->
+            </Border>
+            <Button Name="SetLeftHandOverlayTracking"
+                    Height="80"
+                    Width="99"
+                    Foreground="Black"
+                    FontSize="14"
+                    Command="{Binding LeftHandTrackedDeviceOverlay}"
+                    Content="Left Hand"
+                    Margin="20,0,0,0"
+                    IsEnabled="True">
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="40"/>
+                    </Style>
+                </Button.Resources>
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ShazamApi}" Value="true">
+                                <Setter Property="Content" Value="Active"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ShazamApi}" Value="false">
+                                <Setter Property="Content" Value="Inactive"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+            <Button Name="SetRightHandOverlayTracking"
+                    Height="80"
+                    Width="99"
+                    Foreground="Black"
+                    FontSize="14"
+                    Command="{Binding RightHandTrackedDeviceOverlay}"
+                    Content="Right Hand"
+                    Margin="40,0,0,0"
+                    IsEnabled="True">
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="40"/>
+                    </Style>
+                </Button.Resources>
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ShazamApi}" Value="true">
+                                <Setter Property="Content" Value="Active"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ShazamApi}" Value="false">
+                                <Setter Property="Content" Value="Inactive"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+        </StackPanel>
+    </StackPanel>
 </UserControl>
