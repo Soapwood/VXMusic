@@ -27,7 +27,7 @@
                    FontSize="28"
                    HorizontalAlignment="Left"
                    Margin="0,0,0,20"/>
-        
+
         <StackPanel Orientation="Horizontal"
                     Margin="0,0,0,10">
             <Border Name="MainBoxBorder"
@@ -114,7 +114,7 @@
         <StackPanel>
             <StackPanel.Resources>
                 <Style TargetType="{x:Type Border}">
-                    <Setter Property="Margin" Value="15,0,0,0"/>
+                    <Setter Property="Margin" Value="0,0,0,0"/>
                 </Style>
             </StackPanel.Resources>
 
@@ -144,7 +144,7 @@
                             </GradientStop>
                         </LinearGradientBrush>
                     </Border.Background>
-                    
+
                     <StackPanel>
                         <Grid>
                             <Grid.RowDefinitions>
@@ -195,7 +195,8 @@
 
                 <Border Width="150"
                         Height="150"
-                        CornerRadius="10">
+                        CornerRadius="10"  
+                        Margin="15,0,0,0">
 
                     <Border.Background>
                         <LinearGradientBrush x:Name="NotificationIntegrationsBoxBorderGradientBrush" StartPoint="0,0" EndPoint="1,2">
@@ -212,7 +213,7 @@
                             </GradientStop>
                         </LinearGradientBrush>
                     </Border.Background>
-                    
+
                     <StackPanel>
                         <Grid>
                             <Grid.RowDefinitions>
@@ -264,7 +265,8 @@
 
                 <Border Width="150"
                         Height="150"
-                        CornerRadius="10">
+                        CornerRadius="10"
+                        Margin="15,0,0,0">
                     <Border.Background>
                         <LinearGradientBrush x:Name="ConnectionIntegrationsBoxBorderGradientBrush" StartPoint="0,0" EndPoint="1,2">
                             <GradientStop Offset="0.0">
@@ -331,7 +333,8 @@
 
                 <Border Width="150"
                         Height="150"
-                        CornerRadius="10">
+                        CornerRadius="10"
+                        Margin="15,0,0,0">
                     <Border.Background>
                         <LinearGradientBrush x:Name="GameClientIntegrationsBoxBorderGradientBrush" StartPoint="0,0" EndPoint="1,2">
                             <GradientStop Offset="0.0">
@@ -376,7 +379,21 @@
                                Source="/Images/GreenDot.png"
                                HorizontalAlignment="Left"
                                VerticalAlignment="Bottom" Margin="72,0,0,3"
-                                   Grid.Row="1">
+                                Grid.Row="1">
+                            </Image>
+                            <TextBlock x:Name="GameClient2NotificationIntegrationsBoxHeaderText"
+                                       Text="Resonite"
+                                       Foreground="{StaticResource TextBasic}"
+                                       FontSize="12"
+                                       Margin="10,20,0,0"
+                                       HorizontalAlignment="Left"
+                                       Grid.Row="2"/>
+                            <Image Width="10"
+                               Height="10"
+                               Source="/Images/RedDot.png"
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Bottom" Margin="72,0,0,3"
+                                   Grid.Row="2">
                             </Image>
                         </Grid>
                     </StackPanel>

@@ -52,6 +52,10 @@
             <Hyperlink NavigateUri="https://discord.gg/dZc7dJx6WY" Click="Url_Click" TargetName="_blank">
                 <Run Text="Discord"/>
             </Hyperlink>
+            <LineBreak/>
+            <Hyperlink NavigateUri="https://twitter.com/soapwood_" Click="Url_Click" TargetName="_blank">
+                <Run Text="Twitter / X"/>
+            </Hyperlink>
             <LineBreak/><LineBreak/>
             © Soapwood 2023
         </TextBlock>
