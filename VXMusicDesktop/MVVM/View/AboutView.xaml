@@ -44,8 +44,8 @@
             VerticalAlignment="Center"
             TextAlignment="Center"
             Foreground="{StaticResource TextBasic}"
-            FontSize="20">
-            <Hyperlink NavigateUri="https://github.com/Soapwood/VXMusic" Click="Url_Click" TargetName="_blank">
+            FontSize="18">
+            <Hyperlink NavigateUri="https://github.com/Soapwood" Click="Url_Click" TargetName="_blank">
                 <Run Text="Github"/>
             </Hyperlink>
             <LineBreak/>
@@ -57,7 +57,11 @@
                 <Run Text="Twitter / X"/>
             </Hyperlink>
             <LineBreak/><LineBreak/>
-            © Soapwood 2023
+            VXMusicDesktop © Soapwood 2024
+            <LineBreak/><LineBreak/>
+            VXMusic Open Source Library coming Soon™
+            <LineBreak/><LineBreak/>
+            BRUSHSTRIKE is a brush typeface designed by Francesco Canovaro
         </TextBlock>
     </Grid>
 </UserControl>

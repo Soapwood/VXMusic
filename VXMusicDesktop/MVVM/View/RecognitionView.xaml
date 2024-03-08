@@ -36,7 +36,7 @@
                    HorizontalAlignment="Left"
                    Margin="10,0,0,20"/>
         <StackPanel Orientation="Horizontal"
-                    Margin="0,0,0,10">
+                    Margin="0,0,0,20">
 
             <Border Width="200"
                     Height="200"
@@ -182,6 +182,19 @@
             </Border>
         </StackPanel>
 
+        <!-- New BYOAPI Settings -->
+        <StackPanel Orientation="Horizontal" Margin="50,0,0,20">
+            <RadioButton Content="Enable BYOAPI" x:Name="EnableBYOAPIRadioButton" Height="40" Width="130" Style="{StaticResource CustomRadioButtonStyle}" Click="EnableBYOAPIRadioButton_Click" >
+                <RadioButton.ContentTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding}" TextAlignment="Center" VerticalAlignment="Center"/>
+                    </DataTemplate>
+                </RadioButton.ContentTemplate>
+            </RadioButton>
+            <PasswordBox x:Name="APIKeyTextBox" Margin="10,0,0,0" Style="{StaticResource ModernApiKeyBox}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" IsEnabled="False" Visibility="Collapsed" />
+        </StackPanel>
+
+
         <StackPanel>
             <Button 
                 x:Name="RunRecognitionButton"
@@ -190,7 +203,7 @@
                 IsEnabled="{Binding IsRecognitionReady}"
                 Background="{StaticResource SecondaryColor}"
                 Padding="0"
-                Margin="20"
+                Margin="0"
                 FontSize="30"
                 Foreground="{StaticResource TextBasic}"
                 BorderThickness="0"
