@@ -20,12 +20,18 @@ namespace VXMusicDesktop.MVVM.ViewModel
 
         private RelayCommand shazamButtonClick;
         private RelayCommand audDButtonClick;
+        
+        private RelayCommand shazamByoApiRadioButtonClick;
+        private RelayCommand audDByoApiRadioButtonClick;
+
         private RelayCommand listenButtonClick;
 
         private RelayCommand recognitionViewLoaded;
 
         public ICommand ShazamButtonClick => shazamButtonClick ??= new RelayCommand(PerformShazamButtonClick);
         public ICommand AudDButtonClick => audDButtonClick ??= new RelayCommand(PerformAudDButtonClick);
+        public ICommand ShazamByoApiRadioButtonClick => shazamByoApiRadioButtonClick ??= new RelayCommand(PerformEnableShazamByoApiClick);
+        public ICommand AudDByoApiRadioButtonClick => audDByoApiRadioButtonClick ??= new RelayCommand(PerformEnableAudDByoApiClick);
         public ICommand ListenButtonClick => listenButtonClick ??= new RelayCommand(PerformListenButtonClick);
         public ICommand RecognitionViewLoaded => recognitionViewLoaded ??= new RelayCommand(OnRecognitionViewLoaded);
 
@@ -33,13 +39,14 @@ namespace VXMusicDesktop.MVVM.ViewModel
         public static String CurrentRecognitionApi;
         public static bool ShazamApi = true;
 
-        public static String AudDButtonText = "Donkey fungus";
 
         // // //
         public event PropertyChangedEventHandler? PropertyChanged;
         
         private bool _isShazamApiEnabled;
+        private bool _isShazamByoApiEnabled;
         private bool _isAudDApiEnabled;
+        private bool _isAudDByoApiEnabled;
 
         private bool _isRecognitionReady = true;
 
@@ -58,6 +65,16 @@ namespace VXMusicDesktop.MVVM.ViewModel
             }
         }
 
+        public bool IsShazamByoApiEnabled
+        {
+            get { return _isShazamByoApiEnabled; }
+            set
+            {
+                _isShazamByoApiEnabled = value;
+                OnPropertyChanged(nameof(IsShazamByoApiEnabled));
+            }
+        }
+
         public bool IsAudDApiEnabled
         {
             get { return _isAudDApiEnabled; }
@@ -65,6 +82,16 @@ namespace VXMusicDesktop.MVVM.ViewModel
             {
                 _isAudDApiEnabled = value;
                 OnPropertyChanged(nameof(IsAudDApiEnabled)); 
+            }
+        }
+
+        public bool IsAudDByoApiEnabled
+        {
+            get { return _isAudDByoApiEnabled; }
+            set
+            {
+                _isAudDByoApiEnabled = value;
+                OnPropertyChanged(nameof(IsAudDByoApiEnabled));
             }
         }
 
@@ -116,6 +143,23 @@ namespace VXMusicDesktop.MVVM.ViewModel
             App.VXMusicSession.SetRecognitionClient(RecognitionApi.AudD);
             RecognitionSettings.SetRecognitionApiInSettings(RecognitionApi.AudD);
             ProcessRecognitionApiState();
+        }
+
+        private void PerformEnableShazamByoApiClick(object commandParameter)
+        {
+            IsShazamByoApiEnabled = !IsShazamByoApiEnabled;
+            
+            //App.VXMusicSession.SetRecognitionClient(RecognitionApi.AudD);
+            //RecognitionSettings.SetRecognitionApiInSettings(RecognitionApi.AudD);
+            //ProcessRecognitionApiState();
+        }
+
+        private void PerformEnableAudDByoApiClick(object commandParameter)
+        {
+            IsAudDByoApiEnabled = !IsAudDByoApiEnabled;
+            //App.VXMusicSession.SetRecognitionClient(RecognitionApi.AudD);
+            //RecognitionSettings.SetRecognitionApiInSettings(RecognitionApi.AudD);
+            //ProcessRecognitionApiState();
         }
 
         private async void PerformListenButtonClick(object commandParameter)
