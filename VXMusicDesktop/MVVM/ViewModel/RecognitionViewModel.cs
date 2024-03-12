@@ -129,6 +129,8 @@ namespace VXMusicDesktop.MVVM.ViewModel
             }
 
             _isRecognitionReady = IsShazamApiEnabled || IsAudDApiEnabled;
+            
+            Logger.LogInformation($"Recognition API set to {App.VXMusicSession.RecognitionSettings.CurrentRecognitionApi}");
         }
 
         private void PerformShazamButtonClick(object commandParameter)

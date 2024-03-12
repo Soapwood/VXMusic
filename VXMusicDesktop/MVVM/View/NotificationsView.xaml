@@ -40,7 +40,7 @@
 
 
             <Border Width="300"
-                    Height="200"
+                    Height="150"
                     CornerRadius="10"
                     Margin="20,0,0,0">
 
@@ -65,7 +65,7 @@
                         <Image Height="80"
                        Source="/Images/SteamVRLogo.png"
                        RenderTransformOrigin="0,0"
-                       Margin="0,30,0,0"
+                       Margin="0,20,0,0"
                                HorizontalAlignment="Center"/>
                         <TextBlock Name="NotificationService1TextHeader"
                                    Text="Use SteamVR for Notifications"
@@ -91,14 +91,14 @@
             </Border>
             <Button Name="EnableSteamVRNotificationButton"
                     Height="80"
-                    Width="300"
+                    Width="80"
                     Foreground="Black"
                     FontSize="14"
                     HorizontalAlignment="Center"
                     Command="{Binding SteamVREnableButtonClick}"
-                    Content="Enable"
+                    Content=""
                     Margin="20,0,0,0"
-                    IsEnabled="{Binding IsXSOverlayNotificationServiceEnabled}">
+                    IsEnabled="true">
                 <Button.Resources>
                     <Style TargetType="Border">
                         <Setter Property="CornerRadius" Value="40"/>
@@ -107,10 +107,11 @@
                 <Button.Style>
                     <Style TargetType="Button">
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding ShazamApi}" Value="true">
+                            <DataTrigger Binding="{Binding IsSteamVRNotificationServiceEnabled}" Value="true">
                                 <Setter Property="Content" Value="Active"/>
+                                <Setter Property="Background" Value="{StaticResource SecondaryColor}"/>
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding ShazamApi}" Value="false">
+                            <DataTrigger Binding="{Binding IsXSOverlayNotificationServiceEnabled}" Value="false">
                                 <Setter Property="Content" Value="Inactive"/>
                             </DataTrigger>
                         </Style.Triggers>
@@ -124,7 +125,7 @@
 
 
             <Border Width="300"
-                    Height="200"
+                    Height="150"
                     CornerRadius="10"
                     Margin="20,0,0,0">
 
@@ -149,7 +150,7 @@
                         <Image Height="60"
                        Source="/Images/XSOverlayLogo.jpg"
                        RenderTransformOrigin="0,0"
-                       Margin="0,30,0,0"
+                       Margin="0,25,0,0"
                                HorizontalAlignment="Center"/>
 
                         <TextBlock Name="NotificationService2TextHeader"
@@ -179,14 +180,14 @@
 
             <Button Name="EnableXsOverlayNotificationButton"
                     Height="80"
-                    Width="300"
+                    Width="80"
                     Foreground="Black"
                     FontSize="14"
                     HorizontalAlignment="Center"
                     Command="{Binding XSOverlayEnableButtonClick}"
-                    Content="Enable"
+                    Content=""
                     Margin="20,0,0,0"
-                    IsEnabled="{Binding IsSteamVRNotificationServiceEnabled}">
+                    IsEnabled="true">
                 <Button.Resources>
                     <Style TargetType="Border">
                         <Setter Property="CornerRadius" Value="40"/>
@@ -195,10 +196,11 @@
                 <Button.Style>
                     <Style TargetType="Button">
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding ShazamApi}" Value="true">
+                            <DataTrigger Binding="{Binding IsXSOverlayNotificationServiceEnabled}" Value="true">
                                 <Setter Property="Content" Value="Active"/>
+                                <Setter Property="Background" Value="{StaticResource SecondaryColor}"/>
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding ShazamApi}" Value="false">
+                            <DataTrigger Binding="{Binding IsXSOverlayNotificationServiceEnabled}" Value="false">
                                 <Setter Property="Content" Value="Inactive"/>
                             </DataTrigger>
                         </Style.Triggers>

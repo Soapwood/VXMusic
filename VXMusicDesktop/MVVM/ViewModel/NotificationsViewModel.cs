@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using VXMusic;
 using VXMusicDesktop.Core;
 
@@ -12,6 +14,8 @@ namespace VXMusicDesktop.MVVM.ViewModel
 {
     internal class NotificationsViewModel : INotifyPropertyChanged
     {
+        public static ILogger Logger = App.ServiceProvider.GetRequiredService<ILogger<App>>();
+
         public event PropertyChangedEventHandler? PropertyChanged;
 
         private RelayCommand steamVREnableButtonClick;
@@ -79,6 +83,8 @@ namespace VXMusicDesktop.MVVM.ViewModel
             NotificationSettings.SetNotificationServiceInSettings(NotificationService.SteamVR);
             ProcessNotificationServiceState();
             VXMusicSession.RaiseSteamVrNotificationEnabled();
+            
+            Logger.LogInformation($"Notification Service set to {App.VXMusicSession.NotificationSettings.CurrentNotificationService}");
         }
 
         private void PerformXSOverlayEnableButtonClick(object commandParameter)
@@ -87,6 +93,8 @@ namespace VXMusicDesktop.MVVM.ViewModel
             NotificationSettings.SetNotificationServiceInSettings(NotificationService.XSOverlay);
             ProcessNotificationServiceState();
             VXMusicSession.RaiseXsOverlayNotificationEnabled();
+            
+            Logger.LogInformation($"Notification Service set to {App.VXMusicSession.NotificationSettings.CurrentNotificationService}");
         }
 
         private void ProcessNotificationServiceState()

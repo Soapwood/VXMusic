@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using VXMusicDesktop.MVVM.ViewModel;
 using VXMusicDesktop.Theme;
 
 namespace VXMusicDesktop.MVVM.View
@@ -44,6 +45,12 @@ namespace VXMusicDesktop.MVVM.View
 
             RunRecognitionButton.Background = ColourSchemeManager.SecondaryColour;
             RunRecognitionButton.Foreground = ColourSchemeManager.TextBasic;
+
+            // if (RecognitionIntegrationEnableShazamApiButton.DataContext as RecognitionViewModel)
+            //     RecognitionIntegrationEnableShazamApiButton.Background = ColourSchemeManager.SecondaryColour;
+            //
+            // if (RecognitionIntegrationEnableAudDApiButton.DataContext.ToString() == "Active")
+            //     RecognitionIntegrationEnableAudDApiButton.Background = ColourSchemeManager.SecondaryColour;
 
             EnableShazamBYOAPIRadioButton.Background = ColourSchemeManager.Accent2Colour;
             //EnableShazamBYOAPIRadioButton.Opacity = 0;

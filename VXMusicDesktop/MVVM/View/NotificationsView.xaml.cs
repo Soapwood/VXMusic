@@ -43,17 +43,20 @@ namespace VXMusicDesktop.MVVM.View
             NotificationService2TextHeader.Foreground = ColourSchemeManager.TextBasic;
             NotificationIntegration2BoxBorderGradientBrush.GradientStops[0].Color = ColourSchemeManager.SecondaryColour.Color;
             NotificationIntegration2BoxBorderGradientBrush.GradientStops[1].Color = ColourSchemeManager.Accent1Colour.Color;
+
+            //EnableXsOverlayNotificationButton.Background = ColourSchemeManager.SecondaryColour;
+            //EnableSteamVRNotificationButton.Background = ColourSchemeManager.SecondaryColour;
         }
         protected virtual void OnSteamVrNotificationEnabled(object sender, EventArgs e)
         {
-            EnableSteamVRNotificationButton.Content = "Connected!";
-            EnableXsOverlayNotificationButton.Content = "Use";
+            //EnableSteamVRNotificationButton.Content = "Connected!";
+            //EnableXsOverlayNotificationButton.Content = "Use";
         }
 
         protected virtual void OnXsOverlayNotificationEnabled(object sender, EventArgs e)
         {
-            EnableXsOverlayNotificationButton.Content = "Connected!";
-            EnableSteamVRNotificationButton.Content = "Use";
+            //EnableXsOverlayNotificationButton.Content = "Connected!";
+            //EnableSteamVRNotificationButton.Content = "Use";
         }
     }
 }

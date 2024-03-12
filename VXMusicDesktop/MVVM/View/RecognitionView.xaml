@@ -34,7 +34,7 @@
                    Foreground="{StaticResource TextBasic}"
                    FontSize="28"
                    HorizontalAlignment="Left"
-                   Margin="0,0,0,10"/>
+                   Margin="10,0,0,10"/>
         <StackPanel Orientation="Horizontal"
                     Margin="0,0,0,0">
 
@@ -42,7 +42,7 @@
                     Height="100"
                     CornerRadius="10"
                     HorizontalAlignment="Left"
-                    Margin="10,0,10,0">
+                    Margin="20,0,10,0">
 
                 <Border.Background>
                     <LinearGradientBrush x:Name="RecognitionIntegration1BoxBorderGradientBrush" StartPoint="0,0" EndPoint="1,2">
@@ -87,24 +87,23 @@
                                VerticalAlignment="Center"/>
 
                     <Button Grid.Column="2"
+                             x:Name="RecognitionIntegrationEnableShazamApiButton"
                              Height="40"
-                             Width="178"
+                             Width="40"
                              FontSize="14"
                              HorizontalAlignment="Right"
                              Command="{Binding ShazamButtonClick}"
-                             Background="{Binding SecondaryColor}"
-                             Foreground="{Binding TextBasic}"
-                             Content="Enable Shazam"
-                             IsEnabled="{Binding IsAudDApiEnabled}"
+                             Foreground="{StaticResource TextBasic}"
+                             Content=""
+                             IsEnabled="true"
                              Margin="0,0,10,0">
                         <Button.Style>
                             <Style TargetType="Button">
                                 <Style.Triggers>
-                                    <DataTrigger Binding="{Binding ShazamApi}" Value="true">
-                                        <Setter Property="Content" Value="Active"/>
+                                    <DataTrigger Binding="{Binding IsShazamApiEnabled}" Value="true">
+                                        <Setter Property="Background" Value="{StaticResource SecondaryColor}"/>
                                     </DataTrigger>
-                                    <DataTrigger Binding="{Binding ShazamApi}" Value="false">
-                                        <Setter Property="Content" Value="Inactive"/>
+                                    <DataTrigger Binding="{Binding IsShazamApiEnabled}" Value="false">
                                     </DataTrigger>
                                 </Style.Triggers>
                             </Style>
@@ -138,7 +137,7 @@
                     Height="100"
                     CornerRadius="10"
                     HorizontalAlignment="Left"
-                    Margin="10,10,10,0">
+                    Margin="20,10,10,0">
 
                 <Border.Background>
                     <LinearGradientBrush x:Name="RecognitionIntegration2BoxBorderGradientBrush" StartPoint="0,0" EndPoint="1,2">
@@ -181,24 +180,25 @@
                                 VerticalAlignment="Center"/>
 
                     <Button Grid.Column="2"
+                             x:Name="RecognitionIntegrationEnableAudDApiButton"
                              Height="40"
-                             Width="178"
+                             Width="40"
                              FontSize="14"
                              HorizontalAlignment="Right"
                              Command="{Binding AudDButtonClick}"
-                             Background="{Binding SecondaryColor}"
-                             Foreground="{Binding TextBasic}"
-                             Content="Enable AudD"
+                             Foreground="{StaticResource TextBasic}"
+                             Content=""
                              Margin="0,0,10,0"
-                             IsEnabled="{Binding IsShazamApiEnabled}">
+                             IsEnabled="true">
 
                         <Button.Style>
                             <Style TargetType="Button">
                                 <Style.Triggers>
-                                    <DataTrigger Binding="{Binding ShazamApi}" Value="true">
+                                    <DataTrigger Binding="{Binding IsAudDApiEnabled}" Value="true">
                                         <Setter Property="Content" Value="Active"/>
+                                        <Setter Property="Background" Value="{StaticResource SecondaryColor}"/>
                                     </DataTrigger>
-                                    <DataTrigger Binding="{Binding ShazamApi}" Value="false">
+                                    <DataTrigger Binding="{Binding IsAudDApiEnabled}" Value="false">
                                         <Setter Property="Content" Value="Inactive"/>
                                     </DataTrigger>
                                 </Style.Triggers>
