@@ -17,7 +17,9 @@
         <SolidColorBrush x:Key="Accent1Colour" Color="{Binding Source={x:Static custom:ColourSchemeManager.Accent1Colour}, Path=Color}" />
         <SolidColorBrush x:Key="Accent2Colour" Color="{Binding Source={x:Static custom:ColourSchemeManager.Accent2Colour}, Path=Color}" />
         <SolidColorBrush x:Key="TextBasic" Color="{Binding Source={x:Static custom:ColourSchemeManager.TextBasic}, Path=Color}" />
-
+        
+        <BooleanToVisibilityConverter x:Key="BoolToVis"/>
+        
         <custom:SolidColorBrushToColorConverter x:Key="SolidColorBrushToColorConverter" />
     </UserControl.Resources>
 
@@ -38,7 +40,7 @@
         <StackPanel Orientation="Horizontal"
                     Margin="0,0,0,0">
 
-            <Border Width="400"
+            <Border Width="350"
                     Height="100"
                     CornerRadius="10"
                     HorizontalAlignment="Left"
@@ -118,22 +120,22 @@
 
             </Border>
 
-            <!-- New BYOAPI Settings -->
-            <RadioButton HorizontalAlignment="Center" VerticalAlignment="Center" Content="Enable BYOAPI" x:Name="EnableShazamBYOAPIRadioButton" Style="{StaticResource CustomRadioButtonStyle}" IsChecked="{Binding IsShazamByoApiEnabled}" Command="{Binding ShazamByoApiRadioButtonClick}" >
-                <RadioButton.ContentTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding}" TextAlignment="Center" VerticalAlignment="Center"/>
-                    </DataTemplate>
-                </RadioButton.ContentTemplate>
-                
-            </RadioButton>
-            <PasswordBox x:Name="ShazamAPIKeyTextBox" Margin="10,0,0,0" Width="100" Height="40" Style="{StaticResource ModernApiKeyBox}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" IsEnabled="False" Visibility="Collapsed" />
+            <!-- BYOAPI -->
+            <CheckBox Content="BYOAPI Key"
+                      IsChecked="{Binding IsShazamByoApiEnabled, Mode=TwoWay}"
+                      VerticalAlignment="Center" HorizontalAlignment="Center"
+                      Style="{StaticResource CustomCheckBoxStyle}"/>
+            <PasswordBox Visibility="{Binding IsShazamByoApiEnabled, Converter={StaticResource BoolToVis}}"
+                         Style="{StaticResource ModernPasswordBox}"
+                         IsEnabled="{Binding IsShazamByoApiEnabled}"
+                         Width="200" Height="50" Margin="10,0,0,0"/>
+
         </StackPanel>
 
         <StackPanel Orientation="Horizontal"
                     Margin="0,0,0,0">
 
-            <Border Width="400"
+            <Border Width="350"
                     Height="100"
                     CornerRadius="10"
                     HorizontalAlignment="Left"
@@ -214,15 +216,16 @@
                 </Grid>
             </Border>
 
-            <RadioButton HorizontalAlignment="Center" VerticalAlignment="Center" Content="Enable BYOAPI" x:Name="EnableAudDBYOAPIRadioButton" Style="{StaticResource CustomRadioButtonStyle}" IsChecked="{Binding IsAudDByoApiEnabled}" Command="{Binding AudDByoApiRadioButtonClick}" >
-                <RadioButton.ContentTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding}" TextAlignment="Center" VerticalAlignment="Center"/>
-                    </DataTemplate>
-                </RadioButton.ContentTemplate>
-            </RadioButton>
-            <PasswordBox x:Name="AudDAPIKeyTextBox" Margin="10,0,0,0" Width="100" Height="40" Style="{StaticResource ModernApiKeyBox}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" IsEnabled="False" Visibility="Collapsed" />
-
+            <!-- BYOAPI -->
+            <CheckBox Content="BYOAPI Key"
+                      IsChecked="{Binding IsAudDByoApiEnabled, Mode=TwoWay}"
+                      VerticalAlignment="Center" HorizontalAlignment="Center"
+                      Style="{StaticResource CustomCheckBoxStyle}"/>
+            <PasswordBox Visibility="{Binding IsAudDByoApiEnabled, Converter={StaticResource BoolToVis}}"
+                         IsEnabled="{Binding IsAudDByoApiEnabled}"
+                         Width="200" Height="50" Margin="10,0,0,0"
+                         Style="{StaticResource ModernPasswordBox}"
+                         VerticalAlignment="Center" HorizontalAlignment="Center" />
         </StackPanel>
 
         <StackPanel>

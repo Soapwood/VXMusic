@@ -52,11 +52,20 @@ namespace VXMusicDesktop.MVVM.View
             // if (RecognitionIntegrationEnableAudDApiButton.DataContext.ToString() == "Active")
             //     RecognitionIntegrationEnableAudDApiButton.Background = ColourSchemeManager.SecondaryColour;
 
-            EnableShazamBYOAPIRadioButton.Background = ColourSchemeManager.Accent2Colour;
+            //EnableShazamBYOAPIRadioButton.Background = ColourSchemeManager.Accent2Colour;
             //EnableShazamBYOAPIRadioButton.Opacity = 0;
-            EnableAudDBYOAPIRadioButton.Background= ColourSchemeManager.Accent2Colour;
+            //EnableAudDBYOAPIRadioButton.Background= ColourSchemeManager.Accent2Colour;
             //EnableAudDBYOAPIRadioButton.Opacity = 0;
         }
 
+        private void EnableShazamBYOAPIRadioButton_Click(object sender, RoutedEventArgs e)
+        {
+            //EnableShazamBYOAPIRadioButton.IsChecked = !EnableShazamBYOAPIRadioButton.IsChecked;
+        }
+        
+        private void EnableAudDBYOAPIRadioButton_Click(object sender, RoutedEventArgs e)
+        {
+            //EnableAudDBYOAPIRadioButton.IsChecked = !EnableAudDBYOAPIRadioButton.IsChecked;
+        }
     }
 }

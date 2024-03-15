@@ -159,6 +159,8 @@ namespace VXMusicDesktop.MVVM.ViewModel
         private void PerformEnableAudDByoApiClick(object commandParameter)
         {
             IsAudDByoApiEnabled = !IsAudDByoApiEnabled;
+            
+            
             //App.VXMusicSession.SetRecognitionClient(RecognitionApi.AudD);
             //RecognitionSettings.SetRecognitionApiInSettings(RecognitionApi.AudD);
             //ProcessRecognitionApiState();
