@@ -124,11 +124,16 @@
             <CheckBox Content="BYOAPI Key"
                       IsChecked="{Binding IsShazamByoApiEnabled, Mode=TwoWay}"
                       VerticalAlignment="Center" HorizontalAlignment="Center"
-                      Style="{StaticResource CustomCheckBoxStyle}"/>
-            <PasswordBox Visibility="{Binding IsShazamByoApiEnabled, Converter={StaticResource BoolToVis}}"
+                      Style="{StaticResource CustomCheckBoxStyle}"
+                      Checked="ShazamByoApiCheckButtonChecked" Unchecked="ShazamByoApiCheckButtonUnchecked"/>
+            <PasswordBox x:Name="ShazamByoApiPasswordBox"
+                         Visibility="{Binding IsShazamByoApiEnabled, Converter={StaticResource BoolToVis}}"
                          Style="{StaticResource ModernPasswordBox}"
                          IsEnabled="{Binding IsShazamByoApiEnabled}"
-                         Width="200" Height="50" Margin="10,0,0,0"/>
+                         Width="200" Height="50" Margin="10,0,0,0"
+                         PasswordChanged="ShazamByoApiPasswordBoxChanged"
+                         GotFocus="ShazamByoApiPasswordBoxGotFocus"
+                         LostFocus="ShazamByoApiPasswordBoxLostFocus"/>
 
         </StackPanel>
 
@@ -220,12 +225,17 @@
             <CheckBox Content="BYOAPI Key"
                       IsChecked="{Binding IsAudDByoApiEnabled, Mode=TwoWay}"
                       VerticalAlignment="Center" HorizontalAlignment="Center"
-                      Style="{StaticResource CustomCheckBoxStyle}"/>
-            <PasswordBox Visibility="{Binding IsAudDByoApiEnabled, Converter={StaticResource BoolToVis}}"
+                      Style="{StaticResource CustomCheckBoxStyle}"
+                      Checked="AudDByoApiCheckButtonChecked" Unchecked="AudDByoApiCheckButtonUnchecked"/>
+            <PasswordBox x:Name="AudDByoApiPasswordBox" 
+                         Visibility="{Binding IsAudDByoApiEnabled, Converter={StaticResource BoolToVis}}"
                          IsEnabled="{Binding IsAudDByoApiEnabled}"
                          Width="200" Height="50" Margin="10,0,0,0"
                          Style="{StaticResource ModernPasswordBox}"
-                         VerticalAlignment="Center" HorizontalAlignment="Center" />
+                         VerticalAlignment="Center" HorizontalAlignment="Center" 
+                         GotFocus="AudDByoApiPasswordBoxGotFocus"
+                         LostFocus="AudDByoApiPasswordBoxLostFocus"
+                         PasswordChanged="AudDByoApiPasswordBoxChanged" />
         </StackPanel>
 
         <StackPanel>

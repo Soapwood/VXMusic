@@ -57,15 +57,85 @@ namespace VXMusicDesktop.MVVM.View
             //EnableAudDBYOAPIRadioButton.Background= ColourSchemeManager.Accent2Colour;
             //EnableAudDBYOAPIRadioButton.Opacity = 0;
         }
-
-        private void EnableShazamBYOAPIRadioButton_Click(object sender, RoutedEventArgs e)
+        
+        private void ShazamByoApiCheckButtonChecked(object sender, RoutedEventArgs e)
         {
-            //EnableShazamBYOAPIRadioButton.IsChecked = !EnableShazamBYOAPIRadioButton.IsChecked;
+            if (this.DataContext is RecognitionViewModel recognitionViewModel)
+            {
+                recognitionViewModel.IsShazamByoApiEnabled = true;
+
+                //LastFmPasswordBoxHintText.Visibility = String.IsNullOrEmpty(connectionsViewModel.LastFmPassword) ? Visibility.Visible : Visibility.Hidden;
+            }
         }
         
-        private void EnableAudDBYOAPIRadioButton_Click(object sender, RoutedEventArgs e)
+        private void ShazamByoApiCheckButtonUnchecked(object sender, RoutedEventArgs e)
         {
-            //EnableAudDBYOAPIRadioButton.IsChecked = !EnableAudDBYOAPIRadioButton.IsChecked;
+            if (this.DataContext is RecognitionViewModel recognitionViewModel)
+            {
+                recognitionViewModel.IsAudDByoApiEnabled = false;
+
+                //LastFmPasswordBoxHintText.Visibility = String.IsNullOrEmpty(connectionsViewModel.LastFmPassword) ? Visibility.Visible : Visibility.Hidden;
+            }
+        }
+        
+        
+        private void ShazamByoApiPasswordBoxChanged(object sender, RoutedEventArgs e)
+        {
+            if (this.DataContext is RecognitionViewModel recognitionViewModel)
+            {
+                recognitionViewModel.ShazamByoApiToken = ((PasswordBox)e.OriginalSource).Password;
+            }
+        }
+
+        private void ShazamByoApiPasswordBoxGotFocus(object sender, RoutedEventArgs e)
+        {
+            // if (this.DataContext is RecognitionViewModel recognitionViewModel)
+            // {
+            //     recognitionViewModel.ShazamByoApiToken = ((PasswordBox)e.OriginalSource).Password;
+            // }
+        }
+
+        private void ShazamByoApiPasswordBoxLostFocus(object sender, RoutedEventArgs e)
+        {
+            // TODO Check connection
+        }
+        
+        private void AudDByoApiPasswordBoxChanged(object sender, RoutedEventArgs e)
+        {
+            if (this.DataContext is RecognitionViewModel recognitionViewModel)
+            {
+                recognitionViewModel.AudDByoApiToken = ((PasswordBox)e.OriginalSource).Password;
+            }
+        }
+
+        private void AudDByoApiPasswordBoxGotFocus(object sender, RoutedEventArgs e)
+        {
+            //LastFmPasswordBoxHintText.Visibility = Visibility.Hidden;
+        }
+
+        private void AudDByoApiPasswordBoxLostFocus(object sender, RoutedEventArgs e)
+        {
+            // TODO Check connection
+        }
+
+        private void AudDByoApiCheckButtonChecked(object sender, RoutedEventArgs e)
+        {
+            if (this.DataContext is RecognitionViewModel recognitionViewModel)
+            {
+                recognitionViewModel.IsAudDByoApiEnabled = true;
+
+                //LastFmPasswordBoxHintText.Visibility = String.IsNullOrEmpty(connectionsViewModel.LastFmPassword) ? Visibility.Visible : Visibility.Hidden;
+            }
+        }
+        
+        private void AudDByoApiCheckButtonUnchecked(object sender, RoutedEventArgs e)
+        {
+            if (this.DataContext is RecognitionViewModel recognitionViewModel)
+            {
+                recognitionViewModel.IsAudDByoApiEnabled = false;
+
+                //LastFmPasswordBoxHintText.Visibility = String.IsNullOrEmpty(connectionsViewModel.LastFmPassword) ? Visibility.Visible : Visibility.Hidden;
+            }
         }
     }
 }
