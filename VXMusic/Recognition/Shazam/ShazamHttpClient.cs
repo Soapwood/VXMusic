@@ -11,17 +11,29 @@ public class ShazamResponse : IRecognitionApiClientResponse
 
 public class ShazamHttpClient
 {
+    private HttpClient _shazamHttpClient;
+    private string _shazamApiKey;
+
+    public ShazamHttpClient(string apiKey)
+    {
+        _shazamHttpClient = new HttpClient();
+        _shazamApiKey = apiKey;
+    }
+
+    public void SetShazamApiKey(string apiKey)
+    {
+        _shazamApiKey = apiKey;
+    }
+    
     public async Task<IRecognitionApiClientResponse> GetArtist(string audioDataBase64)
     {
-        var client = new HttpClient();
-
         var request = new HttpRequestMessage
         {
             Method = HttpMethod.Post,
             RequestUri = new Uri("https://shazam.p.rapidapi.com/songs/detect"), // TODO Add origin. Does this latency of response?
             Headers =
             {
-                { "X-RapidAPI-Key", "bb058b1a1cmsh9026752692f380bp1ffca1jsnc94e79c37484" },
+                { "X-RapidAPI-Key", _shazamApiKey },
                 { "X-RapidAPI-Host", "shazam.p.rapidapi.com" },
             },
             Content = new StringContent(audioDataBase64)
@@ -32,7 +44,8 @@ public class ShazamHttpClient
                 }
             }
         };
-        using (var response = await client.SendAsync(request))
+        
+        using (var response = await _shazamHttpClient.SendAsync(request))
         {
             response.EnsureSuccessStatusCode();
             var body = await response.Content.ReadAsStringAsync();

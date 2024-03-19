@@ -164,6 +164,15 @@ namespace VXMusicDesktop.MVVM.ViewModel
             
             Logger.LogInformation($"Recognition API set to {App.VXMusicSession.RecognitionSettings.CurrentRecognitionApi}");
         }
+        
+        public void PerformSaveAndTestShazamByoApiUnchecked()
+        {
+            if (String.IsNullOrEmpty(_shazamByoApiToken))
+                return;
+            
+            VXMusicSession.RecognitionClient.SetByoApiKey(_shazamByoApiToken);
+        }
+        
 
         private void PerformShazamButtonClick(object commandParameter)
         {
@@ -208,6 +217,17 @@ namespace VXMusicDesktop.MVVM.ViewModel
         private void PerformEnableAudDByoApiUnchecked(object commandParameter)
         {
             IsAudDByoApiEnabled = false;
+            //App.VXMusicSession.SetRecognitionClient(RecognitionApi.AudD);
+            //RecognitionSettings.SetRecognitionApiInSettings(RecognitionApi.AudD);
+            //ProcessRecognitionApiState();
+        }
+        
+        private void PerformSaveAndTestAudDByoApiUnchecked(object commandParameter)
+        {
+            if (String.IsNullOrEmpty(_audDByoApiToken))
+                return;
+
+            
             //App.VXMusicSession.SetRecognitionClient(RecognitionApi.AudD);
             //RecognitionSettings.SetRecognitionApiInSettings(RecognitionApi.AudD);
             //ProcessRecognitionApiState();

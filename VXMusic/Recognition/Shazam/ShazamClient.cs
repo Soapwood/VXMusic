@@ -10,6 +10,9 @@ public class ShazamClient : IRecognitionClient
 
     private readonly ShazamHttpClient _shazamHttpClient;
 
+    private readonly string DefaultShazamApiKey = "bb058b1a1cmsh9026752692f380bp1ffca1jsnc94e79c37484";
+    private string ShazamByoApiKey = "";
+    
     public ShazamClient(IServiceProvider serviceProvider)
     {
         _serviceProvider = serviceProvider;
@@ -17,8 +20,19 @@ public class ShazamClient : IRecognitionClient
             as ILogger<ShazamClient> ?? throw new ApplicationException("A logger must be created in service provider.");
         
         _logger.LogInformation("Creating ShazamClient.");
+
         
-        _shazamHttpClient = new ShazamHttpClient(); // TODO Make factgory for ShazamAPI client
+        var apiKey = String.IsNullOrEmpty(ShazamByoApiKey) ? DefaultShazamApiKey : ShazamByoApiKey;
+        
+        _shazamHttpClient = new ShazamHttpClient(apiKey); // TODO Make factgory for ShazamAPI client
+    }
+
+    public void SetByoApiKey(string byoApikey)
+    {
+        ShazamByoApiKey = byoApikey;
+        // TODO Save the key to user settings
+        
+        _shazamHttpClient.SetShazamApiKey(ShazamByoApiKey);
     }
 
     public async Task<IRecognitionApiClientResponse> RunRecognition()

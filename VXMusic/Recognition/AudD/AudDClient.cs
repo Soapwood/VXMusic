@@ -44,4 +44,9 @@ public class AudDClient : IRecognitionClient
             return await _audDHttpClient.GetArtist(audDAudioData);
         } 
     }
+
+    public void SetByoApiKey(string byoApiKey)
+    {
+        throw new NotImplementedException();
+    }
 }

@@ -97,7 +97,18 @@ namespace VXMusicDesktop.MVVM.View
 
         private void ShazamByoApiPasswordBoxLostFocus(object sender, RoutedEventArgs e)
         {
-            // TODO Check connection
+            if (this.DataContext is RecognitionViewModel recognitionViewModel)
+            {
+                recognitionViewModel.ShazamByoApiToken = ((PasswordBox)e.OriginalSource).Password;
+            }
+        }
+        
+        private void PerformSaveAndTestShazamByoApiUnchecked(object sender, RoutedEventArgs e)
+        {
+            if (this.DataContext is RecognitionViewModel recognitionViewModel)
+            {
+                recognitionViewModel.PerformSaveAndTestShazamByoApiUnchecked();
+            }
         }
         
         private void AudDByoApiPasswordBoxChanged(object sender, RoutedEventArgs e)
@@ -115,7 +126,10 @@ namespace VXMusicDesktop.MVVM.View
 
         private void AudDByoApiPasswordBoxLostFocus(object sender, RoutedEventArgs e)
         {
-            // TODO Check connection
+            if (this.DataContext is RecognitionViewModel recognitionViewModel)
+            {
+                recognitionViewModel.AudDByoApiToken = ((PasswordBox)e.OriginalSource).Password;
+            }
         }
 
         private void AudDByoApiCheckButtonChecked(object sender, RoutedEventArgs e)
