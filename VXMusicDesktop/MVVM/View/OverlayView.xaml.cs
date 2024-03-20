@@ -24,5 +24,15 @@ namespace VXMusicDesktop.MVVM.View
         {
             InitializeComponent();
         }
+        
+        private void SetLaunchOverlayOnStartupEnabled(object commandParameter, RoutedEventArgs routedEventArgs)
+        {
+            App.VXMusicSession.SetLaunchOverlayOnStartup(true);
+        }
+
+        private void SetLaunchOverlayOnStartupDisabled(object commandParameter, RoutedEventArgs routedEventArgs)
+        {
+            App.VXMusicSession.SetLaunchOverlayOnStartup(false);
+        }
     }
 }

@@ -11,7 +11,8 @@
              Background="Transparent" d:DataContext="{d:DesignInstance }">
 
     <UserControl.Resources>
-
+        <BitmapImage x:Key="SaveButtonImage" UriSource="{Binding Source={x:Static custom:ColourSchemeManager.SaveButtonImage}, Path=UriSource}"/>
+        
         <SolidColorBrush x:Key="PrimaryColor" Color="{Binding Source={x:Static custom:ColourSchemeManager.PrimaryColour}, Path=Color}" />
         <SolidColorBrush x:Key="SecondaryColor" Color="{Binding Source={x:Static custom:ColourSchemeManager.SecondaryColour}, Path=Color}" />
         <SolidColorBrush x:Key="Accent1Colour" Color="{Binding Source={x:Static custom:ColourSchemeManager.Accent1Colour}, Path=Color}" />
@@ -136,19 +137,18 @@
                              GotFocus="ShazamByoApiPasswordBoxGotFocus"
                              LostFocus="ShazamByoApiPasswordBoxLostFocus"/>
                 <Button x:Name="SaveAndTestShazamByoApiKeyButton"
-                        Height="20"
+                        Height="21"
                         Width="20"
                         FontSize="14"
                         HorizontalAlignment="Center"
-                        HorizontalContentAlignment="Center"
-                        VerticalContentAlignment="Center"
                         Visibility="{Binding IsShazamByoApiEnabled, Converter={StaticResource BoolToVis}}"
                         Click="PerformSaveAndTestShazamByoApiUnchecked"
-                        Foreground="{StaticResource TextBasic}"
-                        Background="{StaticResource SecondaryColor}"
-                        Content="S"
                         Margin="5,0,0,0"
-                        IsEnabled="true"/>
+                        IsEnabled="true">
+                <Button.Background>
+                    <ImageBrush ImageSource="{StaticResource SaveButtonImage}" Stretch="UniformToFill"/>
+                </Button.Background>
+                </Button>
             </StackPanel>
 
         </StackPanel>
@@ -254,7 +254,7 @@
                              LostFocus="AudDByoApiPasswordBoxLostFocus"
                              PasswordChanged="AudDByoApiPasswordBoxChanged" />
                 <Button x:Name="SaveAndTestAudDByoApiKeyButton"
-                        Height="20"
+                        Height="21"
                         Width="20"
                         FontSize="14"
                         HorizontalAlignment="Center"
@@ -262,11 +262,12 @@
                         VerticalContentAlignment="Center"
                         Visibility="{Binding IsAudDByoApiEnabled, Converter={StaticResource BoolToVis}}"
                         Command="{Binding PerformSaveAndTestAudDByoApiUnchecked}"
-                        Foreground="{StaticResource TextBasic}"
-                        Background="{StaticResource SecondaryColor}"
-                        Content="S"
                         Margin="5,0,0,0"
-                        IsEnabled="true"/>
+                        IsEnabled="true">
+                <Button.Background>
+                    <ImageBrush ImageSource="{StaticResource SaveButtonImage}" Stretch="UniformToFill"/>
+                </Button.Background>
+                </Button>
         </StackPanel>
         </StackPanel>
 

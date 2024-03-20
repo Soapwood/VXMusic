@@ -17,12 +17,33 @@
         <SolidColorBrush x:Key="Accent2Colour" Color="{Binding Source={x:Static custom:ColourSchemeManager.Accent2Colour}, Path=Color}" />
         <SolidColorBrush x:Key="TextBasic" Color="{Binding Source={x:Static custom:ColourSchemeManager.TextBasic}, Path=Color}" />
 
+        <!-- Switch Style -->
+        <Style x:Key="SwitchButtonStyle" TargetType="ToggleButton">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ToggleButton">
+                        <Border x:Name="Border" CornerRadius="10" BorderBrush="Gray" BorderThickness="1" Width="80" Height="30">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter TargetName="Border" Property="Background" Value="{StaticResource Accent2Colour}"/>
+                            </Trigger>
+                            <Trigger Property="IsChecked" Value="False">
+                                <Setter TargetName="Border" Property="Background" Value="{StaticResource TextBasic}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
         <custom:SolidColorBrushToColorConverter x:Key="SolidColorBrushToColorConverter" />
     </UserControl.Resources>
 
     <StackPanel>
         <TextBlock Name="OverlayTextHeader"
-                   Text="Overlay Configuration - COMING SOON"
+                   Text="Overlay Configuration"
                    Foreground="{StaticResource TextBasic}"
                    FontSize="28"
                    HorizontalAlignment="Left"
@@ -30,8 +51,43 @@
 
         <StackPanel Orientation="Horizontal"
                     Margin="0,0,0,10">
+            
+            <Border Width="300"
+                    Height="60"
+                    CornerRadius="10"
+                    HorizontalAlignment="Left"
+                    Margin="20,0,10,0">
 
+                <Border.Background>
+                    <LinearGradientBrush x:Name="OverlayMenuOption1BoxBorderGradientBrush" StartPoint="0,0" EndPoint="1,2">
+                        <GradientStop Offset="0.0">
+                            <GradientStop.Color>
+                                <Binding Source="{StaticResource SecondaryColor}" Converter="{StaticResource SolidColorBrushToColorConverter}"/>
+                            </GradientStop.Color>
+                        </GradientStop>
 
+                        <GradientStop Offset="0.5">
+                            <GradientStop.Color>
+                                <Binding Source="{StaticResource Accent1Colour}" Converter="{StaticResource SolidColorBrushToColorConverter}"/>
+                            </GradientStop.Color>
+                        </GradientStop>
+                    </LinearGradientBrush>
+                </Border.Background>
+                
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock x:Name="LaunchOverlayOnStartupTextBlock"
+                               Text="Launch Overlay on Startup"
+                               Foreground="{StaticResource TextBasic}"
+                               FontSize="12"
+                               Margin="20,0,20,0"
+                               VerticalAlignment="Center"/>
+                    <ToggleButton Style="{StaticResource SwitchButtonStyle}" 
+                                  Width="80" Height="60"
+                                  IsChecked="{Binding LaunchOverlayOnStartup}"
+                                  Checked="SetLaunchOverlayOnStartupEnabled" Unchecked="SetLaunchOverlayOnStartupDisabled" />
+                </StackPanel>
+            </Border>
+            
             <!--<Border Width="300"
                     Height="200"
                     CornerRadius="10"

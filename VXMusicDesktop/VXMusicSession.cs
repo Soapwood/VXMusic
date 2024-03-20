@@ -30,6 +30,7 @@ public class VXMusicSession
     
     public RecognitionSettings? RecognitionSettings;
     public NotificationSettings? NotificationSettings;
+    public static OverlaySettings? OverlaySettings;
     public static ConnectionsSettings? ConnectionsSettings;
     public static DesktopThemeSettings? DesktopThemeSettings;
 
@@ -50,11 +51,12 @@ public class VXMusicSession
     public static event EventHandler SteamVrNotificationEnabled;
     public static event EventHandler XsOverlayNotificationEnabled;
 
-    public VXMusicSession(RecognitionSettings recognitionSettings, ConnectionsSettings connectionsSettings)
+    public VXMusicSession(RecognitionSettings recognitionSettings, ConnectionsSettings connectionsSettings, OverlaySettings overlaySettings)
     {
         RecognitionSettings = recognitionSettings;
         NotificationSettings = new NotificationSettings();
         ConnectionsSettings = connectionsSettings;
+        OverlaySettings = overlaySettings;
 
         RecordingClient = GetAudioRecordingClient();
         RecognitionClient = RecognitionSettings.GetClientFromSetRecognitionApi(); //VXMusicAPI.SetRecognitionApi(recognitionSettings.CurrentRecognitionApi);
@@ -70,6 +72,9 @@ public class VXMusicSession
         ColourSchemeManager.SetTheme(DesktopThemeSettings.GetDesktopThemeFromSettings());
 
         SpotifyAuthentication.ClientId = ConnectionsSettings.SpotifySettings.ClientId;
+        
+        if(OverlaySettings.LaunchOverlayOnStartup)
+            VXMusicOverlayInterface.LaunchVXMOverlayRuntime(overlaySettings.RuntimePath);
 
         //VXListenForOverlayMessage();
         //VXMusicOverlay = App.ServiceProvider.GetRequiredService<VXMusicOverlayInstance>();
@@ -106,9 +111,20 @@ public class VXMusicSession
                 NotificationClient = App.ServiceProvider.GetRequiredService<XSOverlay>();
                 return;
             default:
-                Trace.WriteLine("Recognition type not found!");
+                Trace.WriteLine("Notification service type not found!");
                 return;
         }
+    }
+    
+    public void SetLaunchOverlayOnStartup(bool launchOverlayOnStartup)
+    {
+        VXMusicDesktop.Properties.Settings.Default.LaunchOverlayOnStartup = launchOverlayOnStartup;
+        VXMusicDesktop.Properties.Settings.Default.Save();
+    }
+    
+    public bool GetCurrentOverlayLaunchOnStartupFromSetting()
+    {
+        return VXMusicDesktop.Properties.Settings.Default.LaunchOverlayOnStartup;
     }
 
     public static IAudioRecordingClient GetAudioRecordingClient()
@@ -135,6 +151,12 @@ public class VXMusicSession
 public class OverlaySettings
 {
     public string RuntimePath;
+    public bool LaunchOverlayOnStartup;
+
+    public OverlaySettings()
+    {
+        LaunchOverlayOnStartup = VXMusicDesktop.Properties.Settings.Default.LaunchOverlayOnStartup;
+    }
 }
 
 public class RecognitionSettings

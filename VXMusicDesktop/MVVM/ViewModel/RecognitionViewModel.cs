@@ -170,7 +170,7 @@ namespace VXMusicDesktop.MVVM.ViewModel
             if (String.IsNullOrEmpty(_shazamByoApiToken))
                 return;
             
-            VXMusicSession.RecognitionClient.SetByoApiKey(_shazamByoApiToken);
+            VXMusicSession.RecognitionClient.SetByoApiKeyAndTest(_shazamByoApiToken);
         }
         
 

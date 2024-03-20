@@ -85,12 +85,13 @@ namespace VXMusicDesktop
                 }
             };
 
-            VXMusicSession = new VXMusicSession(recognitionSettings, connectionsSettings);
+            VXMusicSession = new VXMusicSession(recognitionSettings, connectionsSettings, overlaySettings);
 
             VXMusicOverlayInterface.StartVXMusicServerStream();
             
 //#if RELEASE || DEBUG
-            VXMOverlayProcessId = VXMusicOverlayInterface.LaunchVXMOverlayRuntime(overlaySettings.RuntimePath);
+            // if(overlaySettings.LaunchOverlayOnStartup)
+            //     VXMOverlayProcessId = VXMusicOverlayInterface.LaunchVXMOverlayRuntime(overlaySettings.RuntimePath);
 //#endif
         }
 
