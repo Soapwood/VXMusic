@@ -104,7 +104,7 @@ namespace VXMusicDesktop
                     string selectedOption = comboBox.SelectedItem.ToString();
                     DesktopTheme themeToUpdateTo = (DesktopTheme) Enum.Parse(typeof(DesktopTheme), selectedOption);
 
-                    DesktopThemeSettings.SetDesktopThemeInSettings(themeToUpdateTo);
+                    VXUserSettings.Desktop.SetDesktopThemeInSettings(themeToUpdateTo);
                     ColourSchemeManager.SetTheme(themeToUpdateTo);
                     ColourSchemeManager.RaiseThemeChanged();
                 }
