@@ -45,7 +45,7 @@ public class AudDClient : IRecognitionClient
         } 
     }
 
-    public void SetByoApiKey(string byoApiKey)
+    public Task<bool> SetByoApiKeyAndTest(string byoApiKey)
     {
         throw new NotImplementedException();
     }

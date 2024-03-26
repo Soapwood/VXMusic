@@ -57,9 +57,13 @@ public class VXMusicSession
         NotificationSettings = new NotificationSettings();
         ConnectionsSettings = connectionsSettings;
         OverlaySettings = overlaySettings;
+    }
 
+    public void Initialise()
+    {
         RecordingClient = GetAudioRecordingClient();
         RecognitionClient = RecognitionSettings.GetClientFromSetRecognitionApi(); //VXMusicAPI.SetRecognitionApi(recognitionSettings.CurrentRecognitionApi);
+        
         //NotificationClient = new XSOverlay(); //VXMusicAPI.SetNotificationClient(notificationSettings.CurrentNotificationService);
 
         NotificationClient = NotificationSettings.GetNotificationServiceFromSetConfiguration(); //VXMusicAPI.SetNotificationClient(notificationSettings.CurrentNotificationService);
@@ -69,12 +73,12 @@ public class VXMusicSession
         
         VRChatLogParser = App.ServiceProvider.GetRequiredService<VRChatLogParser>();
 
-        ColourSchemeManager.SetTheme(DesktopThemeSettings.GetDesktopThemeFromSettings());
+        ColourSchemeManager.SetTheme(VXUserSettings.Desktop.GetCurrentDesktopTheme());
 
         SpotifyAuthentication.ClientId = ConnectionsSettings.SpotifySettings.ClientId;
         
         if(OverlaySettings.LaunchOverlayOnStartup)
-            VXMusicOverlayInterface.LaunchVXMOverlayRuntime(overlaySettings.RuntimePath);
+            VXMusicOverlayInterface.LaunchVXMOverlayRuntime(OverlaySettings.RuntimePath);
 
         //VXListenForOverlayMessage();
         //VXMusicOverlay = App.ServiceProvider.GetRequiredService<VXMusicOverlayInstance>();
@@ -116,17 +120,6 @@ public class VXMusicSession
         }
     }
     
-    public void SetLaunchOverlayOnStartup(bool launchOverlayOnStartup)
-    {
-        VXMusicDesktop.Properties.Settings.Default.LaunchOverlayOnStartup = launchOverlayOnStartup;
-        VXMusicDesktop.Properties.Settings.Default.Save();
-    }
-    
-    public bool GetCurrentOverlayLaunchOnStartupFromSetting()
-    {
-        return VXMusicDesktop.Properties.Settings.Default.LaunchOverlayOnStartup;
-    }
-
     public static IAudioRecordingClient GetAudioRecordingClient()
     {
         return App.ServiceProvider.GetRequiredService<WindowsAudioDeviceListener>();
@@ -155,7 +148,7 @@ public class OverlaySettings
 
     public OverlaySettings()
     {
-        LaunchOverlayOnStartup = VXMusicDesktop.Properties.Settings.Default.LaunchOverlayOnStartup;
+        LaunchOverlayOnStartup = VXUserSettings.Overlay.GetCurrentOverlayLaunchOnStartup();
     }
 }
 
@@ -170,29 +163,12 @@ public class RecognitionSettings
 
     public RecognitionSettings()
     {
-        CurrentRecognitionApi = GetCurrentRecognitionApiFromSettings();
+        CurrentRecognitionApi = VXUserSettings.Recognition.GetCurrentRecognitionApi();
     }
-
-    public static RecognitionApi GetCurrentRecognitionApiFromSettings()
-    {
-        Enum.TryParse<RecognitionApi>(VXMusicDesktop.Properties.Settings.Default.RecognitionAPI, out var currentRecognitionApi);
-        return currentRecognitionApi;
-    }
-
-    public static String GetRecognitionApiString()
-    {
-        return VXMusicDesktop.Properties.Settings.Default.RecognitionAPI;
-    }
-
-    public static void SetRecognitionApiInSettings(RecognitionApi api)
-    {
-        VXMusicDesktop.Properties.Settings.Default.RecognitionAPI = api.ToString();
-        VXMusicDesktop.Properties.Settings.Default.Save();
-    }
-
+    
     public static IRecognitionClient GetClientFromSetRecognitionApi()
     {
-        switch (GetCurrentRecognitionApiFromSettings())
+        switch (VXUserSettings.Recognition.GetCurrentRecognitionApi())
         {
             case RecognitionApi.Shazam:
                 return App.ServiceProvider.GetRequiredService<ShazamClient>();
@@ -217,7 +193,7 @@ public class ConnectionsSettings
     public ConnectionsSettings()
     {
         //IsSpotifyConnected = VXMusicDesktop.Properties.Settings.Default.SpotifyEnabled;
-        IsLastfmConnected = VXMusicDesktop.Properties.Settings.Default.LastfmEnabled;
+        IsLastfmConnected = VXUserSettings.Connections.GetLastfmEnabled();
     }
 }
 
@@ -227,18 +203,12 @@ public class NotificationSettings
 
     public NotificationSettings()
     {
-        Enum.TryParse<NotificationService>(VXMusicDesktop.Properties.Settings.Default.NotificationService, out CurrentNotificationService);
-    }
-
-    public static NotificationService GetCurrentNotificationServiceFromSettings()
-    {
-        Enum.TryParse<NotificationService>(VXMusicDesktop.Properties.Settings.Default.NotificationService, out var currentNotificationService);
-        return currentNotificationService;
+        CurrentNotificationService = VXUserSettings.Notifications.GetCurrentNotificationService();
     }
 
     public static INotificationClient GetNotificationServiceFromSetConfiguration()
     {
-        switch (GetCurrentNotificationServiceFromSettings())
+        switch (VXUserSettings.Notifications.GetCurrentNotificationService())
         {
             case NotificationService.SteamVR:
                 return App.ServiceProvider.GetRequiredService<SteamVRNotificationClient>();
@@ -248,12 +218,6 @@ public class NotificationSettings
                 return null;
         }
     }
-
-    public static void SetNotificationServiceInSettings(NotificationService api)
-    {
-        VXMusicDesktop.Properties.Settings.Default.NotificationService = api.ToString();
-        VXMusicDesktop.Properties.Settings.Default.Save();
-    }
 }
 
 public class ShazamSettings
@@ -262,11 +226,17 @@ public class ShazamSettings
     public required string ClientSecret { get; set; }
     public required string X_RapidAPI_Key { get; set; }
     public required string X_RapidAPI_Host { get; set; }
+
+    public bool IsByoApiEnabled;
+    public string? ByoApiKey;
 }
 
 public class AudDSettings
 {
     public required string ClientId { get; set; }
+    
+    public bool IsByoApiEnabled;
+    public string? ByoApiKey;
 }
 
 public class SpotifySettings
@@ -297,25 +267,4 @@ public class LogLevelSettings
 public class DesktopThemeSettings
 {
     public string? DesktopTheme { get; set; }
-
-    public static DesktopTheme GetDesktopThemeFromSettings()
-    {
-        // Parse a string to get the enum value
-        string currentThemeFromSettings = VXMusicDesktop.Properties.Settings.Default.DesktopTheme;
-        
-        if (Enum.TryParse<DesktopTheme>(currentThemeFromSettings, out DesktopTheme desktopTheme))
-        {
-            return desktopTheme;
-        }
-        else
-        {
-            throw new Exception("Unable to get Desktop Theme from string in Settings.settings");
-        }
-    }
-
-    public static void SetDesktopThemeInSettings(DesktopTheme theme)
-    {
-        VXMusicDesktop.Properties.Settings.Default.DesktopTheme = theme.ToString();
-        VXMusicDesktop.Properties.Settings.Default.Save();
-    }
 }

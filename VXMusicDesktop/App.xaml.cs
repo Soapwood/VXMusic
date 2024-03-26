@@ -38,10 +38,10 @@ namespace VXMusicDesktop
 #if DEBUG
             ConsoleHelper.AllocConsole();
 #endif
-            ConfigureLogging();
+            //ConfigureServices();
             
-            Logger.LogInformation(ConsoleOutputBranding.VxMusicLogo + Environment.NewLine + ConsoleOutputBranding.CreatorInfo);
-            Logger.LogTrace($"Booting VXMusic Desktop Client...");
+            //Logger.LogInformation(ConsoleOutputBranding.VxMusicLogo + Environment.NewLine + ConsoleOutputBranding.CreatorInfo);
+            //Logger.LogTrace($"Booting VXMusic Desktop Client...");
 
             IConfiguration configuration = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
@@ -60,12 +60,18 @@ namespace VXMusicDesktop
                     ClientId = configuration["Recognition:Shazam:ClientId"],
                     ClientSecret = configuration["Recognition:Shazam:ClientSecret"],
                     X_RapidAPI_Key = configuration["Recognition:Shazam:X-RapidAPI-Key"],
-                    X_RapidAPI_Host = configuration["Recognition:Shazam:X-RapidAPI-Host"]
+                    X_RapidAPI_Host = configuration["Recognition:Shazam:X-RapidAPI-Host"],
+                    IsByoApiEnabled = VXUserSettings.Recognition.GetIsShazamByoApiEnabled(),
+                    ByoApiKey = VXUserSettings.Recognition.GetIsShazamByoApiEnabled() ? 
+                        VXUserSettings.Recognition.GetShazamByoApiKey() : null
                 },
 
                 AudDSettings = new AudDSettings()
                 {
                     ClientId = configuration["Recognition:Shazam:ClientId"],
+                    IsByoApiEnabled = VXUserSettings.Recognition.GetIsAudDByoApiEnabled(),
+                    ByoApiKey = VXUserSettings.Recognition.GetIsAudDByoApiEnabled() ? 
+                        VXUserSettings.Recognition.GetAudDByoApiKey() : null
                 }
             };
 
@@ -87,6 +93,13 @@ namespace VXMusicDesktop
 
             VXMusicSession = new VXMusicSession(recognitionSettings, connectionsSettings, overlaySettings);
 
+            ConfigureServices();
+            
+            Logger.LogInformation(ConsoleOutputBranding.VxMusicLogo + Environment.NewLine + ConsoleOutputBranding.CreatorInfo);
+            Logger.LogTrace($"Booting VXMusic Desktop Client...");
+            
+            VXMusicSession.Initialise();
+            
             VXMusicOverlayInterface.StartVXMusicServerStream();
             
 //#if RELEASE || DEBUG
@@ -95,7 +108,7 @@ namespace VXMusicDesktop
 //#endif
         }
 
-        public static void ConfigureLogging()
+        public static void ConfigureServices()
         {
             var services = new ServiceCollection();
 
@@ -110,8 +123,12 @@ namespace VXMusicDesktop
              * Here we need to register all Clients that need to be used in the VXMusic Tool
              */
             services.AddSingleton<App>();
-                
-            services.AddSingleton<ShazamClient>();
+            
+            // Handle creating Recognition Clients based off of BYOAPI Configuration
+            services.AddSingleton<ShazamClient>(serviceProvider => VXMusicSession.RecognitionSettings!.ShazamSettings.IsByoApiEnabled
+                ? new ShazamClient(serviceProvider, VXMusicSession.RecognitionSettings.ShazamSettings.ByoApiKey!)
+                : new ShazamClient(serviceProvider));
+            
             services.AddSingleton<AudDClient>();
 
             services.AddSingleton<WindowsAudioDeviceListener>();

@@ -10,9 +10,10 @@ public class ShazamClient : IRecognitionClient
 
     private readonly ShazamHttpClient _shazamHttpClient;
 
-    private readonly string DefaultShazamApiKey = "bb058b1a1cmsh9026752692f380bp1ffca1jsnc94e79c37484";
-    private string ShazamByoApiKey = "";
+    public bool IsUsingInjectedApiKey;
     
+    private readonly string DefaultShazamApiKey = "bb058b1a1cmsh9026752692f380bp1ffca1jsnc94e79c37484";
+
     public ShazamClient(IServiceProvider serviceProvider)
     {
         _serviceProvider = serviceProvider;
@@ -20,19 +21,28 @@ public class ShazamClient : IRecognitionClient
             as ILogger<ShazamClient> ?? throw new ApplicationException("A logger must be created in service provider.");
         
         _logger.LogInformation("Creating ShazamClient.");
+        _logger.LogDebug("ShazamClient is configured to use DefaultShazamApiKey");
 
+        _shazamHttpClient = new ShazamHttpClient(DefaultShazamApiKey); 
+    }
+    
+    public ShazamClient(IServiceProvider serviceProvider, string apiKey)
+    {
+        _serviceProvider = serviceProvider;
+        _logger = _serviceProvider.GetService(typeof(ILogger<ShazamClient>)) 
+            as ILogger<ShazamClient> ?? throw new ApplicationException("A logger must be created in service provider.");
         
-        var apiKey = String.IsNullOrEmpty(ShazamByoApiKey) ? DefaultShazamApiKey : ShazamByoApiKey;
-        
+        _logger.LogInformation("Creating ShazamClient.");
+        _logger.LogDebug("ShazamClient is configured to use an injected Api Key.");
+
+        IsUsingInjectedApiKey = true;
         _shazamHttpClient = new ShazamHttpClient(apiKey); // TODO Make factgory for ShazamAPI client
     }
 
-    public void SetByoApiKey(string byoApikey)
+    public async Task<bool> SetByoApiKeyAndTest(string byoApikey)
     {
-        ShazamByoApiKey = byoApikey;
-        // TODO Save the key to user settings
-        
-        _shazamHttpClient.SetShazamApiKey(ShazamByoApiKey);
+        _shazamHttpClient.SetShazamApiKey(byoApikey);
+        return await _shazamHttpClient.TestApiServiceConnection();
     }
 
     public async Task<IRecognitionApiClientResponse> RunRecognition()

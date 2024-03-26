@@ -142,7 +142,7 @@
                         FontSize="14"
                         HorizontalAlignment="Center"
                         Visibility="{Binding IsShazamByoApiEnabled, Converter={StaticResource BoolToVis}}"
-                        Click="PerformSaveAndTestShazamByoApiUnchecked"
+                        Click="PerformSaveAndTestShazamByoApi"
                         Margin="5,0,0,0"
                         IsEnabled="true">
                 <Button.Background>

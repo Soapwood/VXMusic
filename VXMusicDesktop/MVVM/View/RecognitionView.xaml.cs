@@ -103,11 +103,11 @@ namespace VXMusicDesktop.MVVM.View
             }
         }
         
-        private void PerformSaveAndTestShazamByoApiUnchecked(object sender, RoutedEventArgs e)
+        private void PerformSaveAndTestShazamByoApi(object sender, RoutedEventArgs e)
         {
             if (this.DataContext is RecognitionViewModel recognitionViewModel)
             {
-                recognitionViewModel.PerformSaveAndTestShazamByoApiUnchecked();
+                recognitionViewModel.PerformSaveAndTestShazamByoApi();
             }
         }
         

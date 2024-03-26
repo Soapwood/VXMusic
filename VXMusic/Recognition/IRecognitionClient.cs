@@ -4,5 +4,5 @@ public interface IRecognitionClient
 {
     public Task<IRecognitionApiClientResponse> RunRecognition();
 
-    public void SetByoApiKey(string byoApiKey);
+    public Task<bool> SetByoApiKeyAndTest(string byoApiKey);
 }

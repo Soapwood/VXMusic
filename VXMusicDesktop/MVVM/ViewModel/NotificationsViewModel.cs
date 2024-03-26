@@ -80,7 +80,7 @@ namespace VXMusicDesktop.MVVM.ViewModel
         private void PerformSteamVREnableButtonClick(object commandParameter)
         {
             App.VXMusicSession.SetNotificationService(NotificationService.SteamVR);
-            NotificationSettings.SetNotificationServiceInSettings(NotificationService.SteamVR);
+            VXUserSettings.Notifications.SetNotificationServiceInSettings(NotificationService.SteamVR);
             ProcessNotificationServiceState();
             VXMusicSession.RaiseSteamVrNotificationEnabled();
             
@@ -90,7 +90,7 @@ namespace VXMusicDesktop.MVVM.ViewModel
         private void PerformXSOverlayEnableButtonClick(object commandParameter)
         {
             App.VXMusicSession.SetNotificationService(NotificationService.XSOverlay);
-            NotificationSettings.SetNotificationServiceInSettings(NotificationService.XSOverlay);
+            VXUserSettings.Notifications.SetNotificationServiceInSettings(NotificationService.XSOverlay);
             ProcessNotificationServiceState();
             VXMusicSession.RaiseXsOverlayNotificationEnabled();
             

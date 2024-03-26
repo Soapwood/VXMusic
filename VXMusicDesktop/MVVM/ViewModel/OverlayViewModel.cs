@@ -24,7 +24,7 @@ namespace VXMusicDesktop.MVVM.ViewModel
 
         public OverlayViewModel()
         {
-            _launchOverlayOnStartup = App.VXMusicSession.GetCurrentOverlayLaunchOnStartupFromSetting();
+            _launchOverlayOnStartup = VXUserSettings.Overlay.GetCurrentOverlayLaunchOnStartup();
         }
         
         protected virtual void OnPropertyChanged(string propertyName)
