@@ -168,13 +168,16 @@
                                        Margin="10,20,0,0"
                                        HorizontalAlignment="Left"
                                        Grid.Row="1"/>
-                            <Image Width="10"
-                               Height="10"
-                               Source="/Images/GreenDot.png"
-                               HorizontalAlignment="Left"
-                               VerticalAlignment="Bottom" Margin="72,0,0,3"
-                                   Grid.Row="1">
-                            </Image>
+                            <Ellipse Grid.Row="1"
+                                     Width="10" 
+                                     Height="10"
+                                     Margin="72,0,0,5"
+                                     HorizontalAlignment="Left"
+                                     VerticalAlignment="Bottom">
+                                <Ellipse.Fill>
+                                    <SolidColorBrush Color="#FF0000"/>
+                                </Ellipse.Fill>
+                            </Ellipse>
                             <TextBlock x:Name="API2RecognitionIntegrationsBoxHeaderText"
                                        Text="AudD"
                                        Foreground="{StaticResource TextBasic}"
@@ -182,13 +185,16 @@
                                        Margin="10,20,0,0"
                                        HorizontalAlignment="Left"
                                        Grid.Row="2"/>
-                            <Image Width="10"
-                               Height="10"
-                               Source="/Images/RedDot.png"
-                               HorizontalAlignment="Left"
-                               VerticalAlignment="Bottom" Margin="72,0,0,5"
-                                   Grid.Row="2">
-                            </Image>
+                            <Ellipse Grid.Row="2"
+                                     Width="10" 
+                                     Height="10"
+                                     Margin="72,0,0,5"
+                                     HorizontalAlignment="Left"
+                                     VerticalAlignment="Bottom">
+                                <Ellipse.Fill>
+                                    <SolidColorBrush Color="#FF0000"/>
+                                </Ellipse.Fill>
+                            </Ellipse>
                         </Grid>
                     </StackPanel>
                 </Border>
@@ -237,13 +243,16 @@
                                        Margin="10,20,0,0"
                                        HorizontalAlignment="Left"
                                        Grid.Row="1"/>
-                            <Image Width="10"
-                               Height="10"
-                               Source="/Images/RedDot.png"
-                               HorizontalAlignment="Left"
-                               VerticalAlignment="Bottom" Margin="72,0,0,3"
-                                   Grid.Row="1">
-                            </Image>
+                            <Ellipse Grid.Row="1"
+                                     Width="10" 
+                                     Height="10"
+                                     Margin="72,0,0,5"
+                                     HorizontalAlignment="Left"
+                                     VerticalAlignment="Bottom">
+                                <Ellipse.Fill>
+                                    <SolidColorBrush Color="#FF0000"/>
+                                </Ellipse.Fill>
+                            </Ellipse>
                             <TextBlock x:Name="Service2NotificationIntegrationsBoxHeaderText"
                                        Text="XSOverlay"
                                        Foreground="{StaticResource TextBasic}"
@@ -251,13 +260,16 @@
                                        Margin="10,20,0,0"
                                        HorizontalAlignment="Left"
                                        Grid.Row="2"/>
-                            <Image Width="10"
-                               Height="10"
-                               Source="/Images/GreenDot.png"
-                               HorizontalAlignment="Left"
-                               VerticalAlignment="Bottom" Margin="72,0,0,5"
-                                   Grid.Row="2">
-                            </Image>
+                            <Ellipse Grid.Row="2"
+                                     Width="10" 
+                                     Height="10"
+                                     Margin="72,0,0,5"
+                                     HorizontalAlignment="Left"
+                                     VerticalAlignment="Bottom">
+                                <Ellipse.Fill>
+                                    <SolidColorBrush Color="#FF0000"/>
+                                </Ellipse.Fill>
+                            </Ellipse>
                         </Grid>
                     </StackPanel>
 
@@ -306,13 +318,16 @@
                                        Margin="10,20,0,0"
                                        HorizontalAlignment="Left"
                                        Grid.Row="1"/>
-                            <Image Width="10"
-                               Height="10"
-                               Source="/Images/GreenDot.png"
-                               HorizontalAlignment="Left"
-                               VerticalAlignment="Bottom" Margin="72,0,0,3"
-                                   Grid.Row="1">
-                            </Image>
+                            <Ellipse Grid.Row="1"
+                                     Width="10" 
+                                     Height="10"
+                                     Margin="72,0,0,5"
+                                     HorizontalAlignment="Left"
+                                     VerticalAlignment="Bottom">
+                                <Ellipse.Fill>
+                                    <SolidColorBrush Color="#FF0000"/>
+                                </Ellipse.Fill>
+                            </Ellipse>
                             <TextBlock x:Name="Connection2NotificationIntegrationsBoxHeaderText"
                                        Text="Last.fm"
                                        Foreground="{StaticResource TextBasic}"
@@ -320,13 +335,16 @@
                                        Margin="10,20,0,0"
                                        HorizontalAlignment="Left"
                                        Grid.Row="2"/>
-                            <Image Width="10"
-                               Height="10"
-                               Source="/Images/RedDot.png"
-                               HorizontalAlignment="Left"
-                               VerticalAlignment="Bottom" Margin="72,0,0,5"
-                                   Grid.Row="2">
-                            </Image>
+                            <Ellipse Grid.Row="2"
+                                     Width="10" 
+                                     Height="10"
+                                     Margin="72,0,0,5"
+                                     HorizontalAlignment="Left"
+                                     VerticalAlignment="Bottom">
+                                <Ellipse.Fill>
+                                    <SolidColorBrush Color="#FF0000"/>
+                                </Ellipse.Fill>
+                            </Ellipse>
                         </Grid>
                     </StackPanel>
                 </Border>
@@ -374,13 +392,16 @@
                                        Margin="10,20,0,0"
                                        HorizontalAlignment="Left"
                                        Grid.Row="1"/>
-                            <Image Width="10"
-                               Height="10"
-                               Source="/Images/GreenDot.png"
-                               HorizontalAlignment="Left"
-                               VerticalAlignment="Bottom" Margin="72,0,0,3"
-                                Grid.Row="1">
-                            </Image>
+                            <Ellipse Grid.Row="1"
+                                     Width="10" 
+                                     Height="10"
+                                     Margin="72,0,0,3"
+                                     HorizontalAlignment="Left"
+                                     VerticalAlignment="Bottom">
+                                <Ellipse.Fill>
+                                    <SolidColorBrush Color="#00FF00"/>
+                                </Ellipse.Fill>
+                            </Ellipse>
                             <TextBlock x:Name="GameClient2NotificationIntegrationsBoxHeaderText"
                                        Text="Resonite"
                                        Foreground="{StaticResource TextBasic}"
@@ -388,13 +409,16 @@
                                        Margin="10,20,0,0"
                                        HorizontalAlignment="Left"
                                        Grid.Row="2"/>
-                            <Image Width="10"
-                               Height="10"
-                               Source="/Images/RedDot.png"
-                               HorizontalAlignment="Left"
-                               VerticalAlignment="Bottom" Margin="72,0,0,3"
-                                   Grid.Row="2">
-                            </Image>
+                            <Ellipse Grid.Row="2"
+                                     Width="10" 
+                                     Height="10"
+                                     Margin="72,0,0,5"
+                                     HorizontalAlignment="Left"
+                                     VerticalAlignment="Bottom">
+                                <Ellipse.Fill>
+                                    <SolidColorBrush Color="#FF0000"/>
+                                </Ellipse.Fill>
+                            </Ellipse>
                         </Grid>
                     </StackPanel>
                 </Border>
