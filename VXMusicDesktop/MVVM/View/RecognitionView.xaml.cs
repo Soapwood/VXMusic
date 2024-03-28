@@ -62,8 +62,10 @@ namespace VXMusicDesktop.MVVM.View
         {
             if (this.DataContext is RecognitionViewModel recognitionViewModel)
             {
+                recognitionViewModel.IsShazamApiConnected = false;
                 recognitionViewModel.IsShazamByoApiEnabled = true;
 
+                recognitionViewModel.PerformSaveAndTestShazamByoApi();
                 //LastFmPasswordBoxHintText.Visibility = String.IsNullOrEmpty(connectionsViewModel.LastFmPassword) ? Visibility.Visible : Visibility.Hidden;
             }
         }
@@ -72,9 +74,10 @@ namespace VXMusicDesktop.MVVM.View
         {
             if (this.DataContext is RecognitionViewModel recognitionViewModel)
             {
+                recognitionViewModel.IsShazamApiConnected = false;
                 recognitionViewModel.IsAudDByoApiEnabled = false;
 
-                //LastFmPasswordBoxHintText.Visibility = String.IsNullOrEmpty(connectionsViewModel.LastFmPassword) ? Visibility.Visible : Visibility.Hidden;
+                recognitionViewModel.SetApiKeyToDefaultAndTest();
             }
         }
         
@@ -83,6 +86,7 @@ namespace VXMusicDesktop.MVVM.View
         {
             if (this.DataContext is RecognitionViewModel recognitionViewModel)
             {
+                recognitionViewModel.IsShazamApiConnected = false;
                 recognitionViewModel.ShazamByoApiToken = ((PasswordBox)e.OriginalSource).Password;
             }
         }
@@ -115,6 +119,7 @@ namespace VXMusicDesktop.MVVM.View
         {
             if (this.DataContext is RecognitionViewModel recognitionViewModel)
             {
+                recognitionViewModel.IsAudDApiConnected = false;
                 recognitionViewModel.AudDByoApiToken = ((PasswordBox)e.OriginalSource).Password;
             }
         }
@@ -146,9 +151,10 @@ namespace VXMusicDesktop.MVVM.View
         {
             if (this.DataContext is RecognitionViewModel recognitionViewModel)
             {
+                recognitionViewModel.IsAudDApiConnected = false;
                 recognitionViewModel.IsAudDByoApiEnabled = false;
 
-                //LastFmPasswordBoxHintText.Visibility = String.IsNullOrEmpty(connectionsViewModel.LastFmPassword) ? Visibility.Visible : Visibility.Hidden;
+                
             }
         }
     }

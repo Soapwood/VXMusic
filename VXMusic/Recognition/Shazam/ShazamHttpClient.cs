@@ -22,7 +22,7 @@ public class ShazamHttpClient
         _shazamApiKey = apiKey;
     }
 
-    public void SetShazamApiKey(string apiKey)
+    public void SetApiKey(string apiKey)
     {
         _shazamApiKey = apiKey;
     }

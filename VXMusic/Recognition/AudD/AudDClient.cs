@@ -49,4 +49,14 @@ public class AudDClient : IRecognitionClient
     {
         throw new NotImplementedException();
     }
+
+    public void SetDefaultApiKey()
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<bool> TestApiConnection()
+    {
+        throw new NotImplementedException();
+    }
 }

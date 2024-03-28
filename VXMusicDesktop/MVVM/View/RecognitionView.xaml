@@ -8,7 +8,8 @@
              xmlns:custom="clr-namespace:VXMusicDesktop.Theme"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
-             Background="Transparent" d:DataContext="{d:DesignInstance }">
+             Background="Transparent" 
+             d:DataContext="{d:DesignInstance}">
 
     <UserControl.Resources>
         <BitmapImage x:Key="SaveButtonImage" UriSource="{Binding Source={x:Static custom:ColourSchemeManager.SaveButtonImage}, Path=UriSource}"/>
@@ -20,7 +21,7 @@
         <SolidColorBrush x:Key="TextBasic" Color="{Binding Source={x:Static custom:ColourSchemeManager.TextBasic}, Path=Color}" />
         
         <BooleanToVisibilityConverter x:Key="BoolToVis"/>
-        
+        <custom:BooleanToColorConverter x:Key="BooleanToColorConverter"/>
         <custom:SolidColorBrushToColorConverter x:Key="SolidColorBrushToColorConverter" />
     </UserControl.Resources>
 
@@ -81,15 +82,28 @@
                            RenderTransformOrigin="0.5,0.5"
                            Margin="15,0,0,0"/>
 
-                    <TextBlock Grid.Column="1"
-                               x:Name="RecognitionIntegration1HeaderText"
+                    <StackPanel Grid.Column="1"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Left"
+                                Orientation="Horizontal">
+                    <TextBlock x:Name="RecognitionIntegration1HeaderText"
                                Text="Shazam"
                                Foreground="{StaticResource TextBasic}"
                                FontSize="18"
                                Margin="20,0,0,0"
                                VerticalAlignment="Center"/>
+                    <Ellipse Width="10" 
+                             Height="10"
+                             Margin="10,5,0,0"
+                             HorizontalAlignment="Center"
+                             VerticalAlignment="Center">
+                        <Ellipse.Fill>
+                            <SolidColorBrush Color="{Binding IsShazamApiConnected, Converter={StaticResource BooleanToColorConverter}}"/>
+                        </Ellipse.Fill>
+                    </Ellipse>
+                    </StackPanel>
 
-                    <Button Grid.Column="2"
+                    <Button Grid.Column="3"
                              x:Name="RecognitionIntegrationEnableShazamApiButton"
                              Height="40"
                              Width="40"
@@ -194,6 +208,11 @@
                            Source="/Images/AudD.jpg"
                            RenderTransformOrigin="0.5,0.5"
                            Margin="15,0,0,0"/>
+                    
+                    <StackPanel Grid.Column="1"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Left"
+                                Orientation="Horizontal">
                     <TextBlock x:Name="RecognitionIntegration2HeaderText"
                                 Grid.Column="1"
                                 Text="AudD.io"
@@ -201,6 +220,16 @@
                                 FontSize="18"
                                 Margin="20,0,0,0"
                                 VerticalAlignment="Center"/>
+                    <Ellipse Width="10" 
+                             Height="10"
+                             Margin="10,5,0,0"
+                             HorizontalAlignment="Center"
+                             VerticalAlignment="Center">
+                        <Ellipse.Fill>
+                            <SolidColorBrush Color="{Binding IsAudDApiConnected, Converter={StaticResource BooleanToColorConverter}}"/>
+                        </Ellipse.Fill>
+                    </Ellipse>
+                    </StackPanel>
 
                     <Button Grid.Column="2"
                              x:Name="RecognitionIntegrationEnableAudDApiButton"
