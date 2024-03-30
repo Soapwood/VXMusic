@@ -11,7 +11,7 @@ public class ShazamResponse : IRecognitionApiClientResponse
     public Result Result { get; set; }
 }
 
-public class ShazamHttpClient
+public class ShazamHttpClient : IHttpClient
 {
     private HttpClient _shazamHttpClient;
     private string _shazamApiKey;
@@ -61,7 +61,7 @@ public class ShazamHttpClient
         }
     }
     
-    public async Task<bool> TestApiServiceConnection()
+    public async Task<bool> TestConnection()
     {
         var request = new HttpRequestMessage
         {
@@ -88,5 +88,9 @@ public class ShazamHttpClient
             return false;
         }
     }
-    
+
+    public Task<IRecognitionApiClientResponse> GetArtist(byte[] audioBytes)
+    {
+        throw new NotImplementedException();
+    }
 }

@@ -26,6 +26,8 @@ namespace VXMusicDesktop.MVVM.View
         public RecognitionView()
         {
             InitializeComponent();
+            
+            // TODO Populate BYOAPI PasswordBox if BYOAPI is enabled and value is in Settings.
 
             ColourSchemeManager.ThemeChanged += OnThemeChanged;
         }
@@ -62,7 +64,7 @@ namespace VXMusicDesktop.MVVM.View
         {
             if (this.DataContext is RecognitionViewModel recognitionViewModel)
             {
-                recognitionViewModel.IsShazamApiConnected = false;
+                recognitionViewModel.SharedViewModel.IsShazamApiConnected = false;
                 recognitionViewModel.IsShazamByoApiEnabled = true;
 
                 recognitionViewModel.PerformSaveAndTestShazamByoApi();
@@ -74,7 +76,7 @@ namespace VXMusicDesktop.MVVM.View
         {
             if (this.DataContext is RecognitionViewModel recognitionViewModel)
             {
-                recognitionViewModel.IsShazamApiConnected = false;
+                recognitionViewModel.SharedViewModel.IsShazamApiConnected = false;
                 recognitionViewModel.IsAudDByoApiEnabled = false;
 
                 recognitionViewModel.SetApiKeyToDefaultAndTest();
@@ -86,17 +88,13 @@ namespace VXMusicDesktop.MVVM.View
         {
             if (this.DataContext is RecognitionViewModel recognitionViewModel)
             {
-                recognitionViewModel.IsShazamApiConnected = false;
+                recognitionViewModel.SharedViewModel.IsShazamApiConnected = false;
                 recognitionViewModel.ShazamByoApiToken = ((PasswordBox)e.OriginalSource).Password;
             }
         }
 
         private void ShazamByoApiPasswordBoxGotFocus(object sender, RoutedEventArgs e)
         {
-            // if (this.DataContext is RecognitionViewModel recognitionViewModel)
-            // {
-            //     recognitionViewModel.ShazamByoApiToken = ((PasswordBox)e.OriginalSource).Password;
-            // }
         }
 
         private void ShazamByoApiPasswordBoxLostFocus(object sender, RoutedEventArgs e)
@@ -119,14 +117,13 @@ namespace VXMusicDesktop.MVVM.View
         {
             if (this.DataContext is RecognitionViewModel recognitionViewModel)
             {
-                recognitionViewModel.IsAudDApiConnected = false;
+                recognitionViewModel.SharedViewModel.IsAudDApiConnected = false;
                 recognitionViewModel.AudDByoApiToken = ((PasswordBox)e.OriginalSource).Password;
             }
         }
 
         private void AudDByoApiPasswordBoxGotFocus(object sender, RoutedEventArgs e)
         {
-            //LastFmPasswordBoxHintText.Visibility = Visibility.Hidden;
         }
 
         private void AudDByoApiPasswordBoxLostFocus(object sender, RoutedEventArgs e)
@@ -141,9 +138,10 @@ namespace VXMusicDesktop.MVVM.View
         {
             if (this.DataContext is RecognitionViewModel recognitionViewModel)
             {
+                recognitionViewModel.SharedViewModel.IsAudDApiConnected = false;
                 recognitionViewModel.IsAudDByoApiEnabled = true;
 
-                //LastFmPasswordBoxHintText.Visibility = String.IsNullOrEmpty(connectionsViewModel.LastFmPassword) ? Visibility.Visible : Visibility.Hidden;
+                recognitionViewModel.PerformSaveAndTestAudDByoApi();
             }
         }
         
@@ -151,10 +149,10 @@ namespace VXMusicDesktop.MVVM.View
         {
             if (this.DataContext is RecognitionViewModel recognitionViewModel)
             {
-                recognitionViewModel.IsAudDApiConnected = false;
+                recognitionViewModel.SharedViewModel.IsAudDApiConnected = false;
                 recognitionViewModel.IsAudDByoApiEnabled = false;
 
-                
+                recognitionViewModel.SetApiKeyToDefaultAndTest();
             }
         }
     }

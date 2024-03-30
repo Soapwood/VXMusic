@@ -42,6 +42,8 @@
                 <view:AboutView/>
             </DataTemplate>
 
+            <!-- <viewModel:ViewModelLocator x:Key="ViewModelLocator"/> -->
+            
         </ResourceDictionary>
     </Application.Resources>
 </Application>

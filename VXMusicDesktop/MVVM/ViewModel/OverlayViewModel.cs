@@ -10,7 +10,7 @@ using VXMusicDesktop.Core;
 
 namespace VXMusicDesktop.MVVM.ViewModel
 {
-    internal class OverlayViewModel : INotifyPropertyChanged
+    public class OverlayViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler? PropertyChanged;
 

@@ -12,7 +12,7 @@ using System.ComponentModel;
 
 namespace VXMusicDesktop.MVVM.ViewModel
 {
-    internal class AboutViewModel : INotifyPropertyChanged
+    public class AboutViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler? PropertyChanged;
 

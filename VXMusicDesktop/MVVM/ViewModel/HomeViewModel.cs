@@ -6,7 +6,14 @@ using System.Threading.Tasks;
 
 namespace VXMusicDesktop.MVVM.ViewModel
 {
-    internal class HomeViewModel
+    public class HomeViewModel
     {
+        // Shared ViewModel for sharing concurrency values between certain Views.
+        public SharedViewModel SharedViewModel { get; }
+        
+        public HomeViewModel(SharedViewModel sharedViewModel)
+        {
+            SharedViewModel = sharedViewModel;
+        }
     }
 }

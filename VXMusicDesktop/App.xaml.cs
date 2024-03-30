@@ -18,6 +18,7 @@ using VXMusic.LogParser.VRChat;
 using VXMusic.Overlay;
 using VXMusic;
 using System.Diagnostics;
+using VXMusicDesktop.MVVM.ViewModel;
 
 namespace VXMusicDesktop
 {
@@ -138,6 +139,8 @@ namespace VXMusicDesktop
             services.AddSingleton<SteamVRNotificationClient>();
 
             services.AddSingleton<VRChatLogParser>();
+
+            //services.AddSingleton<ViewModelLocator>(serviceProvider => new ViewModelLocator(serviceProvider));
             
             ServiceProvider = services.BuildServiceProvider();
             

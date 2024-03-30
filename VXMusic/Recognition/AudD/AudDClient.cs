@@ -9,6 +9,8 @@ public class AudDClient : IRecognitionClient
     private ILogger<AudDClient> _logger;
 
     private AudDHttpClient _audDHttpClient;
+
+    private readonly string DefaultAudDApiKey = "f0c51b25ecd8068fce82a5bcfd9f5b6e";
     
     public AudDClient(IServiceProvider serviceProvider)
     {
@@ -45,18 +47,19 @@ public class AudDClient : IRecognitionClient
         } 
     }
 
-    public Task<bool> SetByoApiKeyAndTest(string byoApiKey)
+    public async Task<bool> SetByoApiKeyAndTest(string byoApiKey)
     {
-        throw new NotImplementedException();
+        _audDHttpClient.SetApiKey(byoApiKey);
+        return await _audDHttpClient.TestConnection();
     }
 
     public void SetDefaultApiKey()
     {
-        throw new NotImplementedException();
+        _audDHttpClient.SetApiKey(DefaultAudDApiKey);
     }
 
-    public Task<bool> TestApiConnection()
+    public async Task<bool> TestApiConnection()
     {
-        throw new NotImplementedException();
+        return await _audDHttpClient.TestConnection();
     }
 }

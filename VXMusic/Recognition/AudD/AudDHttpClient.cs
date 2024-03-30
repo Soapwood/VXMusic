@@ -16,7 +16,7 @@ public class AudDResponse : IRecognitionApiClientResponse
 public class AudDHttpClient : IHttpClient
 {
     private readonly string ApiEndpoint = "https://api.audd.io/recognize";
-    private readonly string ApiToken;
+    private string _audDApiKey;
 
     public AudDHttpClient()
     {
@@ -25,7 +25,7 @@ public class AudDHttpClient : IHttpClient
             .AddJsonFile("C:\\Users\\Tam\\RiderProjects\\VXMusic\\VXMusic\\appsettings.json", optional: false, reloadOnChange: true)
             .Build();
         
-        ApiToken = config["AudD:ApiToken"];
+        _audDApiKey = config["AudD:ApiToken"];
     }
 
     public async Task<IRecognitionApiClientResponse> GetArtist(byte[] audioBytes)
@@ -35,7 +35,7 @@ public class AudDHttpClient : IHttpClient
             // Add the API token and 'return' fields to the JSON body
             var jsonBody = new
             {
-                api_token = ApiToken,
+                api_token = _audDApiKey,
                 @return = "spotify"
             };
 
@@ -81,6 +81,16 @@ public class AudDHttpClient : IHttpClient
         }
     }
 
+    public void SetApiKey(string apiKey)
+    {
+        _audDApiKey = apiKey;
+    }
+
+    public async Task<bool> TestConnection()
+    {
+        return true;
+    }
+
     public async Task<AudDResponse> GetArtist(string audioFilePath)
     {
         FileInfo audioFile = new FileInfo(audioFilePath);
@@ -92,7 +102,7 @@ public class AudDHttpClient : IHttpClient
                 // Add the API token and 'return' fields to the JSON body
                 var jsonBody = new
                 {
-                    api_token = ApiToken,
+                    api_token = _audDApiKey,
                     @return = "spotify"
                 };
 

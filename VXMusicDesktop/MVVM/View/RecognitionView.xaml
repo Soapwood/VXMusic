@@ -98,7 +98,7 @@
                              HorizontalAlignment="Center"
                              VerticalAlignment="Center">
                         <Ellipse.Fill>
-                            <SolidColorBrush Color="{Binding IsShazamApiConnected, Converter={StaticResource BooleanToColorConverter}}"/>
+                            <SolidColorBrush Color="{Binding SharedViewModel.IsShazamApiConnected, Converter={StaticResource BooleanToColorConverter}}"/>
                         </Ellipse.Fill>
                     </Ellipse>
                     </StackPanel>
@@ -226,7 +226,7 @@
                              HorizontalAlignment="Center"
                              VerticalAlignment="Center">
                         <Ellipse.Fill>
-                            <SolidColorBrush Color="{Binding IsAudDApiConnected, Converter={StaticResource BooleanToColorConverter}}"/>
+                            <SolidColorBrush Color="{Binding SharedViewModel.IsAudDApiConnected, Converter={StaticResource BooleanToColorConverter}}"/>
                         </Ellipse.Fill>
                     </Ellipse>
                     </StackPanel>

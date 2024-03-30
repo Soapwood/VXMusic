@@ -12,7 +12,7 @@ using VXMusicDesktop.Core;
 
 namespace VXMusicDesktop.MVVM.ViewModel
 {
-    internal class NotificationsViewModel : INotifyPropertyChanged
+    public class NotificationsViewModel : INotifyPropertyChanged
     {
         public static ILogger Logger = App.ServiceProvider.GetRequiredService<ILogger<App>>();
 

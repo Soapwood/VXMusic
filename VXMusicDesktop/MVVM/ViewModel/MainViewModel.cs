@@ -13,7 +13,7 @@ using VXMusicDesktop.Theme;
 
 namespace VXMusicDesktop.MVVM.ViewModel
 {
-    internal class MainViewModel : ObservableObject
+    public class MainViewModel : ObservableObject
     {
         /*
          *  Menu Navigation
@@ -26,6 +26,7 @@ namespace VXMusicDesktop.MVVM.ViewModel
         public RelayCommand OverlayViewCommand { get; set; }
         public RelayCommand AboutViewCommand { get; set; }
 
+        public SharedViewModel SharedVM { get; }
         public HomeViewModel HomeVM { get; set; }
         public NotificationsViewModel NotificationsVM { get; set; }
         public RecognitionViewModel RecognitionVM { get; set; }
@@ -51,10 +52,12 @@ namespace VXMusicDesktop.MVVM.ViewModel
         // *  Main menu inputs 
         // */
         public MainViewModel()
-        { 
-            HomeVM = new HomeViewModel();
+        {
+            SharedVM = new SharedViewModel();
+            
+            HomeVM = new HomeViewModel(SharedVM);
             NotificationsVM = new NotificationsViewModel();
-            RecognitionVM = new RecognitionViewModel();
+            RecognitionVM = new RecognitionViewModel(SharedVM);
             ConnectionsVM = new ConnectionsViewModel();
             OverlayVm = new OverlayViewModel();
             AboutVM = new AboutViewModel();
@@ -90,5 +93,6 @@ namespace VXMusicDesktop.MVVM.ViewModel
                 CurrentView = AboutVM;
             });
         }
+        
     }
 }

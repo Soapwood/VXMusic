@@ -16,7 +16,7 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace VXMusicDesktop.MVVM.ViewModel
 {
-    internal class ConnectionsViewModel : INotifyPropertyChanged
+    public class ConnectionsViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
         

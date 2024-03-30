@@ -42,7 +42,7 @@ public class ShazamClient : IRecognitionClient
     public async Task<bool> SetByoApiKeyAndTest(string byoApikey)
     {
         _shazamHttpClient.SetApiKey(byoApikey);
-        return await _shazamHttpClient.TestApiServiceConnection();
+        return await _shazamHttpClient.TestConnection();
     }
 
     public void SetDefaultApiKey()
@@ -52,7 +52,7 @@ public class ShazamClient : IRecognitionClient
 
     public async Task<bool> TestApiConnection()
     {
-        return await _shazamHttpClient.TestApiServiceConnection();
+        return await _shazamHttpClient.TestConnection();
     }
     
     public async Task<IRecognitionApiClientResponse> RunRecognition()
