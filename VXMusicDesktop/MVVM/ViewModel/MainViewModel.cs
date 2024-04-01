@@ -58,7 +58,7 @@ namespace VXMusicDesktop.MVVM.ViewModel
             HomeVM = new HomeViewModel(SharedVM);
             NotificationsVM = new NotificationsViewModel();
             RecognitionVM = new RecognitionViewModel(SharedVM);
-            ConnectionsVM = new ConnectionsViewModel();
+            ConnectionsVM = new ConnectionsViewModel(SharedVM);
             OverlayVm = new OverlayViewModel();
             AboutVM = new AboutViewModel();
             CurrentView = HomeVM;

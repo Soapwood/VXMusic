@@ -100,7 +100,7 @@ public class SpotifyAuthentication
         return 0;
     }
     
-    public async static Task<bool> CheckIfSpotifyIsConnected()
+    public static async Task<bool> CheckIfSpotifyIsConnected()
     {
         //await GetSpotifyUserAuthentication();
 

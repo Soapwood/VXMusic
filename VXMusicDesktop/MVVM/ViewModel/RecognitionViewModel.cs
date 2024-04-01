@@ -70,8 +70,8 @@ namespace VXMusicDesktop.MVVM.ViewModel
 
         public RecognitionViewModel(SharedViewModel sharedViewModel)
         {
-            Initialise();
             SharedViewModel = sharedViewModel;
+            Initialise();
         }
 
         public void Initialise()
@@ -93,7 +93,7 @@ namespace VXMusicDesktop.MVVM.ViewModel
         private void OnRecognitionViewLoaded(object commandParameter)
         {
             ProcessRecognitionApiState();
-            CheckIfCurrentApiIsConnected();
+            //CheckIfCurrentApiIsConnected();
         }
 
         protected virtual void OnPropertyChanged(string propertyName)

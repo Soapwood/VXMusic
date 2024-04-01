@@ -28,10 +28,10 @@ public class VXMusicSession
     // Spotify Connected
     // Notification Options
     
-    public RecognitionSettings? RecognitionSettings;
+    public RecognitionSettings RecognitionSettings;
     public NotificationSettings? NotificationSettings;
     public static OverlaySettings? OverlaySettings;
-    public static ConnectionsSettings? ConnectionsSettings;
+    public static ConnectionsSettings ConnectionsSettings;
     public static DesktopThemeSettings? DesktopThemeSettings;
 
     public static IRecognitionClient? RecognitionClient;

@@ -328,7 +328,7 @@
                                      HorizontalAlignment="Left"
                                      VerticalAlignment="Bottom">
                                 <Ellipse.Fill>
-                                    <SolidColorBrush Color="#FF0000"/>
+                                    <SolidColorBrush Color="{Binding SharedViewModel.IsSpotifyConnected, Converter={StaticResource BooleanToColorConverter}}"/>
                                 </Ellipse.Fill>
                             </Ellipse>
                             <TextBlock x:Name="Connection2NotificationIntegrationsBoxHeaderText"
@@ -402,7 +402,7 @@
                                      HorizontalAlignment="Left"
                                      VerticalAlignment="Bottom">
                                 <Ellipse.Fill>
-                                    <SolidColorBrush Color="#00FF00"/>
+                                    <SolidColorBrush Color="#FF0000"/>
                                 </Ellipse.Fill>
                             </Ellipse>
                             <TextBlock x:Name="GameClient2NotificationIntegrationsBoxHeaderText"

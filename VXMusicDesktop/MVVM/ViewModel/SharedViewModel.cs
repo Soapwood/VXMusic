@@ -8,9 +8,13 @@ public class SharedViewModel : INotifyPropertyChanged
 {
     public event PropertyChangedEventHandler? PropertyChanged;
 
+    // Recognition Shared Fields
     private bool _isShazamApiConnected;
     private bool _isAudDApiConnected;
 
+    // Connection Shared Fields
+    private bool _isSpotifyConnected;
+    
     public bool IsShazamApiConnected
     {
         get { return _isShazamApiConnected; }
@@ -28,6 +32,16 @@ public class SharedViewModel : INotifyPropertyChanged
         {
             _isAudDApiConnected = value;
             OnPropertyChanged(nameof(IsAudDApiConnected));
+        }
+    }
+    
+    public bool IsSpotifyConnected
+    {
+        get { return _isSpotifyConnected; }
+        set
+        {
+            _isSpotifyConnected = value;
+            OnPropertyChanged(nameof(IsSpotifyConnected));
         }
     }
 

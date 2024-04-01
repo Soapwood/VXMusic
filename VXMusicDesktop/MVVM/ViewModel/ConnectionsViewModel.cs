@@ -18,6 +18,9 @@ namespace VXMusicDesktop.MVVM.ViewModel
 {
     public class ConnectionsViewModel : INotifyPropertyChanged
     {
+        // Shared ViewModel for sharing concurrency values between certain Views.
+        public SharedViewModel SharedViewModel { get; }
+        
         public event PropertyChangedEventHandler PropertyChanged;
         
         private RelayCommand linkSpotifyButtonClick;
@@ -37,13 +40,24 @@ namespace VXMusicDesktop.MVVM.ViewModel
 
         private bool _isLastFmConnected = false;
 
-        public ConnectionsViewModel() 
+        public ConnectionsViewModel(SharedViewModel sharedViewModel)
+        {
+            SharedViewModel = sharedViewModel;
+            Initialise();
+        }
+
+        public void Initialise()
         {
             if (SpotifyAuthentication.CredentialFileExists)
-                SpotifyAuthentication.CheckIfSpotifyIsConnected();
-
-            ShouldLastFmLinkButtonBeEnabled = !VXMusicSession.ConnectionsSettings.IsLastfmConnected;
+                IsSpotifyConnected();
+            
+            ShouldLastFmLinkButtonBeEnabled = VXMusicSession.ConnectionsSettings.IsLastfmConnected;
             LastFmLinkButtonText = DetermineLastFmLinkButtonStateContent();
+        }
+
+        public async Task IsSpotifyConnected()
+        {
+            SharedViewModel.IsSpotifyConnected = await SpotifyAuthentication.CheckIfSpotifyIsConnected();
         }
 
         protected virtual void OnPropertyChanged(string propertyName)
