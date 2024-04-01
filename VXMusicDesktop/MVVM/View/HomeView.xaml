@@ -99,13 +99,14 @@
 
                 <StackPanel>
                     <TextBlock x:Name="ReleaseNotesBoxBorderHeaderText"
-                               Text="Version: 0.4"
+                               Text="VX News"
                                Foreground="{StaticResource TextBasic}"
                                FontSize="18"
                                Margin="20,10,10,0"
                                HorizontalAlignment="Center"/>
-                    <TextBlock x:Name="ReleaseNotesBoxParagraphText"
-                               Text="- Added VXMusic Overlay&#x0a;- Implemented BYOAPI system&#x0a;  for Shazam and AudD.io&#x0a;"
+                    <TextBlock x:Name="VxMusicNewsBoxParagraphText"
+                               Text="{Binding VxNewsGistText}"
+                               TextWrapping="Wrap"
                                Foreground="{StaticResource TextBasic}"
                                FontSize="12"
                                Margin="10,20,0,0"

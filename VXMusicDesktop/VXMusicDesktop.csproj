@@ -9,6 +9,7 @@
     <PackageIcon>VXLogo.png</PackageIcon>
     <ApplicationIcon>Images\VXLogoIcon.ico</ApplicationIcon>
     <RunPostBuildEvent>Always</RunPostBuildEvent>
+    <Version>0.4.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
@@ -61,9 +62,6 @@
     <Content Include="Images\GitHub_Logo_White.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Images\GreenDot.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="Images\LastfmLogo.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -71,9 +69,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Images\MinimiseIconWhite.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\RedDot.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Images\ShazamLogo.png">

@@ -43,7 +43,7 @@ namespace VXMusicDesktop.MVVM.View
             ReleaseNotesBoxBorderGradientBrush.GradientStops[1].Color = ColourSchemeManager.Accent1Colour.Color;
 
             ReleaseNotesBoxBorderHeaderText.Foreground = ColourSchemeManager.TextBasic;
-            ReleaseNotesBoxParagraphText.Foreground = ColourSchemeManager.TextBasic;
+            VxMusicNewsBoxParagraphText.Foreground = ColourSchemeManager.TextBasic;
 
             IntegrationsHeaderText.Foreground = ColourSchemeManager.TextBasic;
 
