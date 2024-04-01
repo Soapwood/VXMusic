@@ -18,6 +18,7 @@ using VXMusic.LogParser.VRChat;
 using VXMusic.Overlay;
 using VXMusic;
 using System.Diagnostics;
+using System.Reflection;
 using VXMusicDesktop.MVVM.ViewModel;
 
 namespace VXMusicDesktop
@@ -30,6 +31,7 @@ namespace VXMusicDesktop
         public static ILogger Logger;
         public static ServiceProvider ServiceProvider;
         public static VXMusicSession VXMusicSession;
+        public static Version ApplicationVersion;
 
         private static int VXMOverlayProcessId; 
         
@@ -43,6 +45,8 @@ namespace VXMusicDesktop
             
             //Logger.LogInformation(ConsoleOutputBranding.VxMusicLogo + Environment.NewLine + ConsoleOutputBranding.CreatorInfo);
             //Logger.LogTrace($"Booting VXMusic Desktop Client...");
+            
+            ApplicationVersion = Assembly.GetExecutingAssembly().GetName().Version;
 
             IConfiguration configuration = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())

@@ -43,7 +43,7 @@
                 <RowDefinition Height="75"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-
+            
             <ComboBox x:Name="DesktopThemeComboBox" 
                       Style="{StaticResource RoundedComboBoxTheme}"
                       Grid.Column="1"
@@ -67,6 +67,14 @@
                        Height="20"
                        Panel.ZIndex="3"
                        Margin="410,483,0,0" />
+            
+            <!-- Version Text -->
+            <TextBlock x:Name="VersionTextBlock"
+                       Grid.Column="1" 
+                       VerticalAlignment="Top" 
+                       HorizontalAlignment="Right" 
+                       Margin="0,30,120,0"
+                       Foreground="{StaticResource TextBasic}"/>
 
             <Button Name="MainWindowMinimiseButton" 
                     Grid.Column="1" 
@@ -155,7 +163,6 @@
                             Grid.Column="1"
                             Margin="10"
                             Content="{Binding CurrentView}"/>
-
         </Grid>
     </Border>
 </Window>

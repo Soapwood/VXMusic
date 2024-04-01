@@ -188,7 +188,7 @@ namespace VXMusicDesktop.Theme
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return (bool)value ? "#00FF00" : "#FF0000";
+            return (bool)value ? "#45BF55" : "#CD0402";
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
