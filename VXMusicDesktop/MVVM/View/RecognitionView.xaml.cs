@@ -48,6 +48,14 @@ namespace VXMusicDesktop.MVVM.View
             RunRecognitionButton.Background = ColourSchemeManager.SecondaryColour;
             RunRecognitionButton.Foreground = ColourSchemeManager.TextBasic;
 
+            ShazamByoApiCheckBox.Background = ColourSchemeManager.Accent1Colour;
+            ShazamByoApiCheckBox.Foreground = ColourSchemeManager.TextBasic;
+            ShazamByoApiPasswordBox.Background = ColourSchemeManager.SecondaryColour;
+            
+            AudDByoApiCheckBox.Background = ColourSchemeManager.Accent1Colour;
+            AudDByoApiCheckBox.Foreground = ColourSchemeManager.TextBasic;
+            AudDByoApiPasswordBox.Background = ColourSchemeManager.SecondaryColour;
+
             // if (RecognitionIntegrationEnableShazamApiButton.DataContext as RecognitionViewModel)
             //     RecognitionIntegrationEnableShazamApiButton.Background = ColourSchemeManager.SecondaryColour;
             //
@@ -77,7 +85,7 @@ namespace VXMusicDesktop.MVVM.View
             if (this.DataContext is RecognitionViewModel recognitionViewModel)
             {
                 recognitionViewModel.SharedViewModel.IsShazamApiConnected = false;
-                recognitionViewModel.IsAudDByoApiEnabled = false;
+                recognitionViewModel.IsShazamByoApiEnabled = false;
 
                 recognitionViewModel.SetApiKeyToDefaultAndTest();
             }

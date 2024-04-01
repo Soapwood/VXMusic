@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -12,11 +14,13 @@ using VXMusic.LogParser.Models;
 
 namespace VXMusic.LogParser.VRChat
 {
-    public class VRChatLogParser
+    public class VRChatLogParser : INotifyPropertyChanged
     {
         private readonly IServiceProvider _serviceProvider;
         private static ILogger<VRChatLogParser> _logger;
         
+        public event PropertyChangedEventHandler? PropertyChanged;
+
         public static ConfigurationModel Configuration { get; set; }
         
         public static string LogFileName { get; set; }
@@ -24,7 +28,7 @@ namespace VXMusic.LogParser.VRChat
 
         public static Mutex ApplicationMutex; // TODO make priv
         public static bool HasApplicationMutex = false; // TODO make priv
-
+        
         static volatile bool IsExiting = false;
 
         static Task DispatchTask;
@@ -42,12 +46,24 @@ namespace VXMusic.LogParser.VRChat
         static string LastKnownLocationID { get; set; } // World ID
         static bool PlayerIsBetweenWorlds { get; set; }
         static bool NextJoinIsLocalUser { get; set; }
-
-
+        
         public static ConcurrentQueue<string> MessageQueue = new ConcurrentQueue<string>();
 
         static ConcurrentQueue<NotificationDispatchModel> DispatchQueue = new ConcurrentQueue<NotificationDispatchModel>();
 
+        private bool IsVRChatShuttingDown;
+        private bool _isVrChatSessionRunning { get; set; }
+        
+        public bool IsVrChatSessionRunning
+        {
+            get { return _isVrChatSessionRunning; }
+            set
+            {
+                _isVrChatSessionRunning = value;
+                OnPropertyChanged(nameof(IsVrChatSessionRunning));
+            }
+        }
+        
         public VRChatLogParser(IServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider;
@@ -65,8 +81,13 @@ namespace VXMusic.LogParser.VRChat
             Event,
             Info
         }
+        
+        protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
 
-        public static void Run()
+        public void Run()
         {
             DateTime now = DateTime.Now;
 
@@ -77,7 +98,7 @@ namespace VXMusic.LogParser.VRChat
             }
 
             LogFileName = $"Session_{now.Year:0000}{now.Month:00}{now.Day:00}{now.Hour:00}{now.Minute:00}{now.Second:00}.log";
-            _logger.LogTrace($@"Log initialized at {ConfigurationModel.ExpandedUserFolderPath}\Logs\{LogFileName}");
+            _logger.LogDebug($@"Log initialized at {ConfigurationModel.ExpandedUserFolderPath}\Logs\{LogFileName}");
 
             try
             {
@@ -117,17 +138,32 @@ namespace VXMusic.LogParser.VRChat
             LastMaximumKeywordsNotification = now.AddSeconds(-Configuration.MaximumKeywordsExceededCooldownSeconds);
             LogDetectionTimer = new Timer(new TimerCallback(LogDetectionTick), null, 0, Configuration.DirectoryPollFrequencyMilliseconds);
 
-            _logger.LogInformation($"Log detection timer initialized with poll frequency {Configuration.DirectoryPollFrequencyMilliseconds} and parse frequency {Configuration.ParseFrequencyMilliseconds}.");
+            _logger.LogDebug($"Log detection timer initialized with poll frequency {Configuration.DirectoryPollFrequencyMilliseconds} and parse frequency {Configuration.ParseFrequencyMilliseconds}.");
         }
 
-        static void LogDetectionTick(object timerState)
+        void LogDetectionTick(object timerState)
         {
             string[] allFiles = Directory.GetFiles(Environment.ExpandEnvironmentVariables(Configuration.OutputLogRoot));
             foreach (string fn in allFiles)
                 if (!Subscriptions.ContainsKey(fn) && fn.Contains("output_log"))
                 {
-                    Subscriptions.Add(fn, new TailSubscription(fn, ParseTick, 0, Configuration.ParseFrequencyMilliseconds, RewindLogForMetadata));
-                    _logger.LogTrace($"A tail subscription was added to {fn}");
+                    try
+                    {
+                        Subscriptions.Add(fn,
+                            new TailSubscription(fn, ParseTick, 0, Configuration.ParseFrequencyMilliseconds,
+                                RewindLogForMetadata));
+                        //IsVrChatSessionRunning = true;
+                        _logger.LogTrace($"A tail subscription was added to {fn}");
+                        
+                    }
+                    catch (ArgumentException ae)
+                    {
+                        _logger.LogWarning("Adding subscription failed. Subscription already exists. Client must be running.");
+                    }
+                    
+                    //IsVrChatSessionRunning = true;
+                    //IsVRChatShuttingDown = false;
+                    _logger.LogInformation("VRChat client has connected!");
                 }
         }
 
@@ -208,7 +244,7 @@ namespace VXMusic.LogParser.VRChat
                 // Read was presumably a success. Write values.
                 LastKnownLocationName = worldName;
                 LastKnownLocationID = instanceId;
-
+                
                 _logger.LogInformation($"Discovered instance {worldName} ({instanceId}).");
             }
             else
@@ -221,12 +257,15 @@ namespace VXMusic.LogParser.VRChat
         /// This is messy, but they've changed format on me often enough that it's difficult to care!
         /// </summary>
         /// <param name="content"></param>
-        static void ParseTick(string content)
+        void ParseTick(string content)
         {
             List<EventType> ToSend = new List<EventType>();
 
             if (!string.IsNullOrWhiteSpace(content))
             {
+                if(!IsVRChatShuttingDown)
+                    IsVrChatSessionRunning = true;
+                
                 string[] lines = content.Split('\n');
 
                 foreach (string dirtyLine in lines)
@@ -284,6 +323,18 @@ namespace VXMusic.LogParser.VRChat
                         {
                             PlayerIsBetweenWorlds = true;
                             _logger.LogInformation($"Left world or exited client.");
+                        }
+                        else if (line.Contains("[Behaviour] Client invoked disconnect."))
+                        {
+                            IsVrChatSessionRunning = false;
+                            IsVRChatShuttingDown = true;
+                            _logger.LogWarning($"VRChat Client is disconnecting.");
+                        }
+                        else if (line.Contains("VRCApplication: OnApplicationQuit"))
+                        {
+                            IsVrChatSessionRunning = false;
+                            IsVRChatShuttingDown = true;
+                            _logger.LogWarning($"VRChat Client has shutdown.");
                         }
                         // Get player leaves
                         else if (line.Contains("[Behaviour] OnPlayerLeft "))
@@ -343,6 +394,8 @@ namespace VXMusic.LogParser.VRChat
                 }
             }
         }
+
+        
 
         static bool CurrentlySilenced()
         {

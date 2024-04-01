@@ -152,47 +152,63 @@
                 </Grid>
             </Border>
 
-            <Border>
+            <Border Height="120">
                 <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="100"/>
+                        <RowDefinition Height="80"/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
 
-                    <TextBox Width="250"
-                     Height="40"
-                     VerticalContentAlignment="Center"
-                     HorizontalAlignment="Center"
-                     Grid.Row="0"
-                     TextChanged="LastFmUsernameBox_TextChanged"
-                     GotFocus="UsernameTextBox_GotFocus"
-                     LostFocus="UsernameTextBox_LostFocus"
-                     Text="Username"
-                     Style="{StaticResource ModernTextBox}" Margin="0,50,0,0">
-                        <TextBox.Tag>Username</TextBox.Tag>
+                    <TextBlock x:Name="LastFmUsernameBoxHintText"
+                                Text="Username"
+                                Foreground="{StaticResource TextBasic}"
+                                Visibility="Visible"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                IsHitTestVisible="False"
+                                Width="100"
+                                Height="20"
+                                Panel.ZIndex="6"
+                                Margin="50,4,0,0" />
+                        
+                    <TextBox  x:Name="LastFmUsernameTextBox" 
+                                Width="250"
+                                Height="40"
+                                VerticalContentAlignment="Center"
+                                HorizontalAlignment="Center"
+                                TextChanged="LastFmUsernameBox_TextChanged"
+                                GotFocus="LastFmUsernameTextBox_GotFocus"
+                                LostFocus="LastFmUsernameTextBox_LostFocus"
+                                Text=""
+                                Style="{StaticResource ModernTextBox}" Margin="10,0,0,0">
+                                <TextBox.Tag>Username</TextBox.Tag>
                     </TextBox>
 
+
                     <PasswordBox x:Name="LastFmPasswordBox" Width="250"
-                     Height="40"
-                     VerticalContentAlignment="Center"
-                     HorizontalAlignment="Center"
-                     Grid.Row="1"
-                     IsEnabled="{Binding ShouldLastFmLinkButtonBeEnabled}"
-                     PasswordChanged="LastFmPasswordBox_PasswordChanged"
-                     GotFocus="PasswordTextBox_GotFocus"
-                     LostFocus="PasswordTextBox_LostFocus"
-                     Style="{StaticResource ModernPasswordBox}"
-                     Margin="0,-50,0,0" Password="Password"/>
+                        Grid.Row="1"
+                        Height="40"
+                        VerticalContentAlignment="Center"
+                        HorizontalAlignment="Center"
+                        IsEnabled="{Binding ShouldLastFmLinkButtonBeEnabled}"
+                        PasswordChanged="LastFmPasswordBox_PasswordChanged"
+                        GotFocus="LastFmPasswordTextBox_GotFocus"
+                        LostFocus="LastFmPasswordTextBox_LostFocus"
+                        Style="{StaticResource ModernPasswordBox}"
+                        Margin="10,0,0,0"/>
 
                     <TextBlock x:Name="LastFmPasswordBoxHintText"
-                       Text="Password"
-                       Foreground="{StaticResource TextBasic}"
-                       Visibility="Visible"
-                       IsHitTestVisible="False"
-                       Width="100"
-                       Height="20"
-                       Panel.ZIndex="6"
-                       Margin="32,15,118,65" Grid.Row="1" />
+                        Text="Password"
+                        Foreground="{StaticResource TextBasic}"
+                        Visibility="Visible"
+                        IsHitTestVisible="False"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        Width="100"
+                        Height="20"
+                        Panel.ZIndex="6"
+                        Margin="50,0,0,0" Grid.Row="1" />
+      
                 </Grid>
             </Border>
 
@@ -204,7 +220,7 @@
                     Command="{Binding LinkLastfmButtonClick}"
                     IsEnabled="{Binding ShouldLastFmLinkButtonBeEnabled}"
                     Padding="0"
-                    Margin="00"
+                    Margin="0,20,0,0"
                     HorizontalAlignment="Left" Width="100" Height="60" Click="Button_Click">
                     <Button.Resources>
                         <Style TargetType="Border">

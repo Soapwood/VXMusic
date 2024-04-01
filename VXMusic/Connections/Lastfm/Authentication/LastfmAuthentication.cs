@@ -21,14 +21,14 @@ public class LastfmAuthentication
     {
         var lastfm = await LastfmClientBuilder.Instance;
 
-        if (CredentialFileExists)
-        {
-            var credentials = CredentialsEncryption.RetrieveCredentials(EncryptionPassphrase);
-        }
-        else
-        {
-            CredentialsEncryption.StoreCredentials(username, password, EncryptionPassphrase);
-        }
+        // if (CredentialFileExists)
+        // {
+        //     var credentials = CredentialsEncryption.RetrieveCredentials(EncryptionPassphrase);
+        // }
+        // else
+        // {
+        //     CredentialsEncryption.StoreCredentials(username, password, EncryptionPassphrase);
+        // }
 
         var lastResponse = await lastfm.Auth.GetSessionTokenAsync(username, password);
         return lastfm.Auth.Authenticated;

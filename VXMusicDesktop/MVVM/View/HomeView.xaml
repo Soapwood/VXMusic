@@ -109,7 +109,7 @@
                                TextWrapping="Wrap"
                                Foreground="{StaticResource TextBasic}"
                                FontSize="12"
-                               Margin="10,20,0,0"
+                               Margin="10,10,0,0"
                                HorizontalAlignment="Left"/>
                 </StackPanel>
             </Border>
@@ -346,7 +346,7 @@
                                      HorizontalAlignment="Left"
                                      VerticalAlignment="Bottom">
                                 <Ellipse.Fill>
-                                    <SolidColorBrush Color="#FF0000"/>
+                                    <SolidColorBrush Color="{Binding SharedViewModel.IsLastFmConnected, Converter={StaticResource BooleanToColorConverter}}"/>
                                 </Ellipse.Fill>
                             </Ellipse>
                         </Grid>
@@ -403,26 +403,26 @@
                                      HorizontalAlignment="Left"
                                      VerticalAlignment="Bottom">
                                 <Ellipse.Fill>
-                                    <SolidColorBrush Color="#FF0000"/>
+                                    <SolidColorBrush Color="{Binding SharedViewModel.IsVrChatConnected, Converter={StaticResource BooleanToColorConverter}}"/>
                                 </Ellipse.Fill>
                             </Ellipse>
-                            <TextBlock x:Name="GameClient2NotificationIntegrationsBoxHeaderText"
-                                       Text="Resonite"
-                                       Foreground="{StaticResource TextBasic}"
-                                       FontSize="12"
-                                       Margin="10,20,0,0"
-                                       HorizontalAlignment="Left"
-                                       Grid.Row="2"/>
-                            <Ellipse Grid.Row="2"
-                                     Width="10" 
-                                     Height="10"
-                                     Margin="72,0,0,5"
-                                     HorizontalAlignment="Left"
-                                     VerticalAlignment="Bottom">
-                                <Ellipse.Fill>
-                                    <SolidColorBrush Color="#FF0000"/>
-                                </Ellipse.Fill>
-                            </Ellipse>
+                            <!-- <TextBlock x:Name="GameClient2NotificationIntegrationsBoxHeaderText" -->
+                            <!--            Text="Resonite" -->
+                            <!--            Foreground="{StaticResource TextBasic}" -->
+                            <!--            FontSize="12" -->
+                            <!--            Margin="10,20,0,0" -->
+                            <!--            HorizontalAlignment="Left" -->
+                            <!--            Grid.Row="2"/> -->
+                            <!-- <Ellipse Grid.Row="2" -->
+                            <!--          Width="10"  -->
+                            <!--          Height="10" -->
+                            <!--          Margin="72,0,0,5" -->
+                            <!--          HorizontalAlignment="Left" -->
+                            <!--          VerticalAlignment="Bottom"> -->
+                            <!--     <Ellipse.Fill> -->
+                            <!--         <SolidColorBrush Color="#FF0000"/> -->
+                            <!--     </Ellipse.Fill> -->
+                            <!-- </Ellipse> -->
                         </Grid>
                     </StackPanel>
                 </Border>

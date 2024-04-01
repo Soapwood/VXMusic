@@ -29,9 +29,9 @@ public class VXMusicSession
     // Notification Options
     
     public RecognitionSettings RecognitionSettings;
-    public NotificationSettings? NotificationSettings;
-    public static OverlaySettings? OverlaySettings;
-    public static ConnectionsSettings ConnectionsSettings;
+    public NotificationSettings NotificationSettings;
+    public static OverlaySettings OverlaySettings;
+    public ConnectionsSettings ConnectionsSettings;
     public static DesktopThemeSettings? DesktopThemeSettings;
 
     public static IRecognitionClient? RecognitionClient;
@@ -41,7 +41,7 @@ public class VXMusicSession
     public static PlaylistFileWriter? PlaylistFileWriter;
     public static LastfmScrobbler? LastfmScrobbler;
 
-    public static VRChatLogParser? VRChatLogParser;
+    public VRChatLogParser VRChatLogParser;
     
     public static VXMusicOverlayInstance? VXMusicOverlay;
 
@@ -193,7 +193,7 @@ public class ConnectionsSettings
     public ConnectionsSettings()
     {
         //IsSpotifyConnected = VXMusicDesktop.Properties.Settings.Default.SpotifyEnabled;
-        IsLastfmConnected = VXUserSettings.Connections.GetLastfmEnabled();
+        //IsLastfmConnected = VXUserSettings.Connections.GetLastfmConnected();
     }
 }
 

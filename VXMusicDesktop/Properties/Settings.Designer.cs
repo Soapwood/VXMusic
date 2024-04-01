@@ -49,24 +49,24 @@ namespace VXMusicDesktop.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool SpotifyEnabled {
+        public bool IsSpotifyConnected {
             get {
-                return ((bool)(this["SpotifyEnabled"]));
+                return ((bool)(this["IsSpotifyConnected"]));
             }
             set {
-                this["SpotifyEnabled"] = value;
+                this["IsSpotifyConnected"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool LastfmEnabled {
+        public bool IsLastfmConnected {
             get {
-                return ((bool)(this["LastfmEnabled"]));
+                return ((bool)(this["IsLastfmConnected"]));
             }
             set {
-                this["LastfmEnabled"] = value;
+                this["IsLastfmConnected"] = value;
             }
         }
         
@@ -139,6 +139,30 @@ namespace VXMusicDesktop.Properties {
             }
             set {
                 this["IsAudDByoApiEnabled"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string LastfmUsername {
+            get {
+                return ((string)(this["LastfmUsername"]));
+            }
+            set {
+                this["LastfmUsername"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string LastfmPassword {
+            get {
+                return ((string)(this["LastfmPassword"]));
+            }
+            set {
+                this["LastfmPassword"] = value;
             }
         }
     }

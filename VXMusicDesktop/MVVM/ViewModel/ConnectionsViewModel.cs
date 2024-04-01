@@ -36,7 +36,7 @@ namespace VXMusicDesktop.MVVM.ViewModel
         private string _lastFmLinkButtonText;
 
         public ICommand LinkSpotifyButtonClick => linkSpotifyButtonClick ??= new RelayCommand(PerformLinkSpotifyButtonClick);
-        public ICommand LinkLastfmButtonClick => linkLastfmButtonClick ??= new RelayCommand(PerformLinkLastfmButtonClick);
+        public ICommand LinkLastfmButtonClick => linkLastfmButtonClick ??= new RelayCommand(PerformLastfmLogin);
 
         private bool _isLastFmConnected = false;
 
@@ -50,9 +50,22 @@ namespace VXMusicDesktop.MVVM.ViewModel
         {
             if (SpotifyAuthentication.CredentialFileExists)
                 IsSpotifyConnected();
+
+            if (!String.IsNullOrEmpty(App.VXMusicSession.ConnectionsSettings.LastfmSettings.Username) && 
+                !String.IsNullOrEmpty(App.VXMusicSession.ConnectionsSettings.LastfmSettings.Password))
+                IsLastFmConnected();
             
-            ShouldLastFmLinkButtonBeEnabled = VXMusicSession.ConnectionsSettings.IsLastfmConnected;
+            ShouldLastFmLinkButtonBeEnabled = App.VXMusicSession.ConnectionsSettings.IsLastfmConnected;
             LastFmLinkButtonText = DetermineLastFmLinkButtonStateContent();
+        }
+
+        public async Task IsLastFmConnected()
+        {
+            LastfmAuthentication.ClientId = App.VXMusicSession.ConnectionsSettings.LastfmSettings.ClientId;
+            LastfmAuthentication.ClientSecret = App.VXMusicSession.ConnectionsSettings.LastfmSettings.ClientSecret;
+
+            SharedViewModel.IsLastFmConnected = await LastfmAuthentication.Login(App.VXMusicSession.ConnectionsSettings.LastfmSettings.Username,
+                App.VXMusicSession.ConnectionsSettings.LastfmSettings.Password);
         }
 
         public async Task IsSpotifyConnected()
@@ -64,19 +77,6 @@ namespace VXMusicDesktop.MVVM.ViewModel
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-
-        //public bool ShouldSpotifyLinkButtonBeEnabled
-        //{
-        //    get { return true; } //!SpotifyAuthentication.IsSpotifyConnected(); }
-        //    set
-        //    {
-        //        if (_shouldSpotifyLinkButtonBeShown != value)
-        //        {
-        //            _shouldSpotifyLinkButtonBeShown = value;
-        //            OnPropertyChanged(nameof(ShouldSpotifyLinkButtonBeEnabled));
-        //        }
-        //    }
-        //}
 
         public bool ShouldLastFmLinkButtonBeEnabled
         {
@@ -116,12 +116,7 @@ namespace VXMusicDesktop.MVVM.ViewModel
                 }
             }
         }
-
-        //private string DetermineSpotifyLinkButtonStateContent()
-        //{
-        //    return ShouldSpotifyLinkButtonBeEnabled ? "Link Spotify" : "Connected!";
-        //}
-
+        
         public string SpotifyLinkButtonText
         {
             get { return SpotifyConnectionStateExtensions.ToDisplayString(SpotifyAuthentication.CurrentConnectionState); }
@@ -166,19 +161,25 @@ namespace VXMusicDesktop.MVVM.ViewModel
             }
         }
 
-        private async void PerformLinkLastfmButtonClick(object commandParameter)
+        private async void PerformLastfmLogin(object commandParameter)
         {
             if (!ShouldLastFmLinkButtonBeEnabled)
                 return;
 
-            var response = await VXMusicAPI.LinkLastfm(VXMusicSession.ConnectionsSettings.LastfmSettings.ClientId,
-                                                    VXMusicSession.ConnectionsSettings.LastfmSettings.ClientSecret,
+            if (String.IsNullOrEmpty(LastFmUsername) || String.IsNullOrEmpty(LastFmPassword))
+                return;
+
+            VXUserSettings.Connections.SetLastfmUsername(LastFmUsername);
+            VXUserSettings.Connections.SetLastfmPassword(LastFmPassword);
+
+            var response = await VXMusicAPI.LinkLastfm(App.VXMusicSession.ConnectionsSettings.LastfmSettings.ClientId,
+                                                    App.VXMusicSession.ConnectionsSettings.LastfmSettings.ClientSecret,
                                                     LastFmUsername,
                                                     LastFmPassword);
             if (response)
             {
-                _isLastFmConnected = true;
-                VXMusicSession.ConnectionsSettings.IsLastfmConnected = true;
+                SharedViewModel.IsLastFmConnected = true;
+                App.VXMusicSession.ConnectionsSettings.IsLastfmConnected = true;
                 VXMusicSession.RaiseLastFmLoggedIn();
             }
         }

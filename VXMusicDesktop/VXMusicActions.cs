@@ -70,7 +70,7 @@ public class VXMusicActions
             VXMusicSession.PlaylistFileWriter.AddLineToFileIfDateMatches(
                 $"{result.Result.Artist} - {result.Result.Title} {result.Result.Album} ({result.Result.ReleaseDate})");
 
-            if (VXMusicSession.ConnectionsSettings.IsLastfmConnected)
+            if (App.VXMusicSession.ConnectionsSettings.IsLastfmConnected)
             {
                 var lastfmResponse = await VXMusicSession.LastfmScrobbler.Scrobble(result.Result.Artist,
                     result.Result.Album, result.Result.Title);

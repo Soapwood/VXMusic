@@ -103,9 +103,24 @@ public class VXUserSettings
     
     internal class Connections
     {
-        public static bool GetLastfmEnabled()
+        public static string GetLastfmUsername()
         {
-            return VXMusicDesktop.Properties.Settings.Default.LastfmEnabled;
+            return VXMusicDesktop.Properties.Settings.Default.LastfmUsername;
+        }
+        
+        public static void SetLastfmUsername(string username)
+        {
+            VXMusicDesktop.Properties.Settings.Default.LastfmUsername = username;
+        }
+        
+        public static string GetLastfmPassword()
+        {
+            return VXMusicDesktop.Properties.Settings.Default.LastfmPassword;
+        }
+        
+        public static void SetLastfmPassword(string password)
+        {
+            VXMusicDesktop.Properties.Settings.Default.LastfmPassword = password;
         }
     }
 

@@ -33,6 +33,8 @@ namespace VXMusicDesktop.MVVM.View
         {
             InitializeComponent();
 
+            CheckLastFmConnection();
+
             ColourSchemeManager.ThemeChanged += OnThemeChanged;
             VXMusicSession.LastFmLogin += OnLastFmLogin;
             SpotifyAuthentication.SpotifyLogin += OnSpotifyLogin;
@@ -49,6 +51,16 @@ namespace VXMusicDesktop.MVVM.View
             {
                 SpotifyLoginButton.Content = SpotifyConnectionStateExtensions.ToDisplayString(SpotifyAuthentication.CurrentConnectionState);
             });
+        }
+
+        private void CheckLastFmConnection()
+        {
+            //LastFmUsernameTextBox.Text = App.VXMusicSession.ConnectionsSettings.LastfmSettings.Username;
+            //Box.Password = "*****************";
+
+            LastFmUsernameBoxHintText.Visibility = Visibility.Hidden;
+            LastFmPasswordBoxHintText.Visibility = Visibility.Hidden;
+            LastFmLoginButton.Content = "Connected!";
         }
 
         private void OnThemeChanged(object sender, EventArgs e)
@@ -71,21 +83,23 @@ namespace VXMusicDesktop.MVVM.View
         {
             if (this.DataContext is ConnectionsViewModel connectionsViewModel)
             {
+                connectionsViewModel.SharedViewModel.IsLastFmConnected = false;
                 connectionsViewModel.LastFmPassword = ((PasswordBox)e.OriginalSource).Password;
 
                 LastFmPasswordBoxHintText.Visibility = String.IsNullOrEmpty(connectionsViewModel.LastFmPassword) ? Visibility.Visible : Visibility.Hidden;
             }
         }
 
-        private void PasswordTextBox_GotFocus(object sender, RoutedEventArgs e)
+        private void LastFmPasswordTextBox_GotFocus(object sender, RoutedEventArgs e)
         {
             LastFmPasswordBoxHintText.Visibility = Visibility.Hidden;
         }
 
-        private void PasswordTextBox_LostFocus(object sender, RoutedEventArgs e)
+        private void LastFmPasswordTextBox_LostFocus(object sender, RoutedEventArgs e)
         {
             if (this.DataContext is ConnectionsViewModel connectionsViewModel)
             {
+                connectionsViewModel.LastFmPassword = ((PasswordBox)e.OriginalSource).Password;
                 LastFmPasswordBoxHintText.Visibility = String.IsNullOrEmpty(connectionsViewModel.LastFmPassword) ? Visibility.Visible : Visibility.Hidden;
             }
         }
@@ -94,20 +108,20 @@ namespace VXMusicDesktop.MVVM.View
         {
             if (this.DataContext is ConnectionsViewModel connectionsViewModel)
             {
+                connectionsViewModel.SharedViewModel.IsLastFmConnected = false;
                 connectionsViewModel.LastFmUsername = ((TextBox) e.OriginalSource).Text;
             }
         }
 
-        private void UsernameTextBox_GotFocus(object sender, RoutedEventArgs e)
+        private void LastFmUsernameTextBox_GotFocus(object sender, RoutedEventArgs e)
         {
-            TextBox textBox = (TextBox)sender;
-            if (textBox.Text == (string)textBox.Tag)
+            if (this.DataContext is ConnectionsViewModel connectionsViewModel)
             {
-                textBox.Text = string.Empty;
+                LastFmUsernameBoxHintText.Visibility = String.IsNullOrEmpty(connectionsViewModel.LastFmUsername) ? Visibility.Visible : Visibility.Hidden;
             }
         }
 
-        private void UsernameTextBox_LostFocus(object sender, RoutedEventArgs e)
+        private void LastFmUsernameTextBox_LostFocus(object sender, RoutedEventArgs e)
         {
             TextBox textBox = (TextBox)sender;
 
@@ -122,18 +136,6 @@ namespace VXMusicDesktop.MVVM.View
                     textBox.Text = UsernameBoxHintText;
                 }
             }
-
-            //TextBox textBox = (TextBox)sender;
-
-            //if (string.IsNullOrWhiteSpace(textBox.Text))
-            //{
-            //    textBox.Text = UsernameBoxHintText; //(string)textBox.Tag;
-            //} 
-            //else if(this.DataContext is ConnectionsViewModel connectionsViewModel)
-            //{
-            //    connectionsViewModel.LastFmUsername = ((TextBox)sender).Text;
-            //}
-
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

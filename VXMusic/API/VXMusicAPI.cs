@@ -46,7 +46,7 @@ namespace VXMusic.API
 
             // TODO Only do this if it hasn't already been set up
 
-            var last = await LastfmClientBuilder.CreateLastfmClient();
+            //var last = await LastfmClientBuilder.CreateLastfmClient();
             return await LastfmAuthentication.Login(username, password);
         }
 

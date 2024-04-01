@@ -91,8 +91,8 @@ namespace VXMusicDesktop
                 {
                     ClientId = configuration["Connections:Lastfm:ClientId"],
                     ClientSecret = configuration["Connections:Lastfm:ClientSecret"],
-                    Username = configuration["Connections:Lastfm:Username"],
-                    Password = configuration["Connections:Lastfm:Password"]
+                    Username = VXUserSettings.Connections.GetLastfmUsername(),
+                    Password = VXUserSettings.Connections.GetLastfmPassword()
                 }
             };
 
