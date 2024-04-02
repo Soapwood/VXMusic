@@ -251,7 +251,7 @@ namespace VXMusicDesktop.MVVM.ViewModel
 
             _isRecognitionReady = IsShazamApiEnabled || IsAudDApiEnabled;
             
-            Logger.LogInformation($"Recognition API {App.VXMusicSession.RecognitionSettings?.CurrentRecognitionApi} has connected successfully!");
+            Logger.LogDebug($"Current Recognition API is {App.VXMusicSession.RecognitionSettings?.CurrentRecognitionApi}");
         }
         
         /// ////////////////////////////////////

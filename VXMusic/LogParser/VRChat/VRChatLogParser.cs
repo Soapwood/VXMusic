@@ -160,10 +160,6 @@ namespace VXMusic.LogParser.VRChat
                     {
                         _logger.LogWarning("Adding subscription failed. Subscription already exists. Client must be running.");
                     }
-                    
-                    //IsVrChatSessionRunning = true;
-                    //IsVRChatShuttingDown = false;
-                    _logger.LogInformation("VRChat client has connected!");
                 }
         }
 

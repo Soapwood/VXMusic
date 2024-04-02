@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using VXMusic;
 using VXMusic.LogParser.VRChat;
 
 namespace VXMusicDesktop.MVVM.ViewModel;
@@ -17,6 +18,10 @@ public class SharedViewModel : INotifyPropertyChanged
     // Recognition Shared Fields
     private bool _isShazamApiConnected;
     private bool _isAudDApiConnected;
+
+    // Notification Shared Fields
+    private bool _isSteamVrNotificationServiceEnabled;
+    private bool _isXsOverlayNotificationServiceEnabled;
 
     // Connection Shared Fields
     private bool _isSpotifyConnected;
@@ -42,6 +47,26 @@ public class SharedViewModel : INotifyPropertyChanged
         {
             _isAudDApiConnected = value;
             OnPropertyChanged(nameof(IsAudDApiConnected));
+        }
+    }
+    
+    public bool IsSteamVrNotificationServiceEnabled
+    {
+        get { return _isSteamVrNotificationServiceEnabled; }
+        set
+        {
+            _isSteamVrNotificationServiceEnabled = value;
+            OnPropertyChanged(nameof(IsSteamVrNotificationServiceEnabled));
+        }
+    }
+    
+    public bool IsXsOverlayNotificationServiceEnabled
+    {
+        get { return _isXsOverlayNotificationServiceEnabled; }
+        set
+        {
+            _isXsOverlayNotificationServiceEnabled = value;
+            OnPropertyChanged(nameof(IsXsOverlayNotificationServiceEnabled));
         }
     }
     

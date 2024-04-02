@@ -49,7 +49,7 @@
                 <Run Text="Github"/>
             </Hyperlink>
             <LineBreak/>
-            <Hyperlink NavigateUri="https://discord.gg/dZc7dJx6WY" Click="Url_Click" TargetName="_blank">
+            <Hyperlink NavigateUri="https://discord.gg/acfpfHB7tU" Click="Url_Click" TargetName="_blank">
                 <Run Text="Discord"/>
             </Hyperlink>
             <LineBreak/>

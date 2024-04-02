@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,6 +17,9 @@ namespace VXMusicDesktop.MVVM.ViewModel
     {
         public static ILogger Logger = App.ServiceProvider.GetRequiredService<ILogger<App>>();
 
+        // Shared ViewModel for sharing concurrency values between certain Views.
+        public SharedViewModel SharedViewModel { get; }
+        
         public event PropertyChangedEventHandler? PropertyChanged;
 
         private RelayCommand steamVREnableButtonClick;
@@ -36,7 +40,20 @@ namespace VXMusicDesktop.MVVM.ViewModel
 
         public static bool ShazamApi = true; // WHAT???
 
+        public NotificationsViewModel(SharedViewModel sharedViewModel)
+        {
+            SharedViewModel = sharedViewModel;
+            Initialise();
+        }
+        
+        public void Initialise()
+        {
+            _isSteamVRNotificationServiceEnabled = App.VXMusicSession.NotificationSettings.CurrentNotificationService == NotificationService.SteamVR;
+            _isXSOverlayNotificationServiceEnabled = App.VXMusicSession.NotificationSettings.CurrentNotificationService == NotificationService.XSOverlay;
 
+            ProcessNotificationServiceState();
+        }
+        
         public bool IsSteamVRNotificationServiceEnabled
         {
             get { return _isSteamVRNotificationServiceEnabled; }
@@ -104,14 +121,18 @@ namespace VXMusicDesktop.MVVM.ViewModel
                 case NotificationService.SteamVR:
                     IsSteamVRNotificationServiceEnabled = true;
                     IsXSOverlayNotificationServiceEnabled = false;
+                    SharedViewModel.IsSteamVrNotificationServiceEnabled = true;
+                    SharedViewModel.IsXsOverlayNotificationServiceEnabled = false;
                     break;
                 case NotificationService.XSOverlay:
                     IsXSOverlayNotificationServiceEnabled = true;
                     IsSteamVRNotificationServiceEnabled = false;
+                    SharedViewModel.IsXsOverlayNotificationServiceEnabled = true;
+                    SharedViewModel.IsSteamVrNotificationServiceEnabled = false;
                     break;
                 default:
                     IsSteamVRNotificationServiceEnabled = false;
-                    IsSteamVRNotificationServiceEnabled = false;
+                    IsXSOverlayNotificationServiceEnabled = false;
                     break;
             }
 

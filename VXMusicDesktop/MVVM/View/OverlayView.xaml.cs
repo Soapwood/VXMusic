@@ -34,5 +34,10 @@ namespace VXMusicDesktop.MVVM.View
         {
             VXUserSettings.Overlay.SetLaunchOverlayOnStartup(false);
         }
+
+        private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

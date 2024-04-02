@@ -254,7 +254,7 @@
                                      HorizontalAlignment="Left"
                                      VerticalAlignment="Bottom">
                                 <Ellipse.Fill>
-                                    <SolidColorBrush Color="#FF0000"/>
+                                    <SolidColorBrush Color="{Binding SharedViewModel.IsSteamVrNotificationServiceEnabled, Converter={StaticResource BooleanToColorConverter}}"/>
                                 </Ellipse.Fill>
                             </Ellipse>
                             <TextBlock x:Name="Service2NotificationIntegrationsBoxHeaderText"
@@ -271,7 +271,7 @@
                                      HorizontalAlignment="Left"
                                      VerticalAlignment="Bottom">
                                 <Ellipse.Fill>
-                                    <SolidColorBrush Color="#FF0000"/>
+                                    <SolidColorBrush Color="{Binding SharedViewModel.IsXsOverlayNotificationServiceEnabled, Converter={StaticResource BooleanToColorConverter}}"/>
                                 </Ellipse.Fill>
                             </Ellipse>
                         </Grid>
