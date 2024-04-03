@@ -16,6 +16,8 @@ namespace VXMusic.Overlay
         private readonly ILogger<VXMusicOverlayInstance> _logger;
 
         private readonly VXMusicOverlay vxMusicOverlay;
+        
+        
 
         public VXMusicOverlayInstance(IServiceProvider serviceProvider)
             : base(ApplicationType.Overlay)

@@ -16,6 +16,8 @@
         <SolidColorBrush x:Key="Accent1Colour" Color="{Binding Source={x:Static custom:ColourSchemeManager.Accent1Colour}, Path=Color}" />
         <SolidColorBrush x:Key="Accent2Colour" Color="{Binding Source={x:Static custom:ColourSchemeManager.Accent2Colour}, Path=Color}" />
         <SolidColorBrush x:Key="TextBasic" Color="{Binding Source={x:Static custom:ColourSchemeManager.TextBasic}, Path=Color}" />
+        <SolidColorBrush x:Key="EnabledGreen" Color="{Binding Source={x:Static custom:ColourSchemeManager.EnabledGreen}, Path=Color}" />
+        <SolidColorBrush x:Key="DisabledRed" Color="{Binding Source={x:Static custom:ColourSchemeManager.DisabledRed}, Path=Color}" />
 
         <!-- Switch Style -->
         <Style x:Key="SwitchButtonStyle" TargetType="ToggleButton">
@@ -27,10 +29,10 @@
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsChecked" Value="True">
-                                <Setter TargetName="Border" Property="Background" Value="{StaticResource SecondaryColor}"/>
+                                <Setter TargetName="Border" Property="Background" Value="{StaticResource EnabledGreen}"/>
                             </Trigger>
                             <Trigger Property="IsChecked" Value="False">
-                                <Setter TargetName="Border" Property="Background" Value="{StaticResource TextBasic}"/>
+                                <Setter TargetName="Border" Property="Background" Value="{StaticResource DisabledRed}"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -103,7 +105,7 @@
                             </GradientStop.Color>
                         </GradientStop>
 
-                        <GradientStop Offset="0.5">
+                        <GradientStop Offset="0.7">
                             <GradientStop.Color>
                                 <Binding Source="{StaticResource Accent1Colour}" Converter="{StaticResource SolidColorBrushToColorConverter}"/>
                             </GradientStop.Color>
@@ -118,7 +120,8 @@
                                FontSize="12"
                                Margin="20,0,20,0"
                                VerticalAlignment="Center"/>
-                    <ToggleButton Style="{StaticResource SwitchButtonStyle}" 
+                    <ToggleButton x:Name="LaunchOverlayOnStartupToggleButton"
+                                  Style="{StaticResource SwitchButtonStyle}" 
                                   Width="80" Height="60"
                                   Margin="20,0,0,0"
                                   IsChecked="{Binding LaunchOverlayOnStartup}"

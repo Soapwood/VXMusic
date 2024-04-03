@@ -52,7 +52,10 @@ namespace VXMusicDesktop.Theme
         public static readonly string Lightmode1Accent1Colour = "#AED2FF";
         public static readonly string Lightmode1Accent2Colour = "#27005D";
         public static readonly string Lightmode1TextBasic = "#040D12";
-
+        
+        public static readonly string DefaultEnabledGreen = "#45BF55";
+        public static readonly string DefaultDisabledRed = "#CD0402";
+        
         public static readonly string SpotifyColour = "#1DB954";
         public static readonly string LastFmColour = "#C3000D";
 
@@ -71,6 +74,8 @@ namespace VXMusicDesktop.Theme
         public static SolidColorBrush Accent1Colour { get; set; }
         public static SolidColorBrush Accent2Colour { get; set; }
         public static SolidColorBrush TextBasic { get; set; }
+        public static SolidColorBrush EnabledGreen { get; set; }
+        public static SolidColorBrush DisabledRed { get; set; }
         public static SolidColorBrush SpotifyGreen { get; set; } = new SolidColorBrush(FromHex(SpotifyColour));
         public static SolidColorBrush LastFmRed { get; set; } = new SolidColorBrush(FromHex(LastFmColour));
         public static SolidColorBrush Transparent { get; set; }
@@ -121,6 +126,8 @@ namespace VXMusicDesktop.Theme
             Accent1Colour = new SolidColorBrush(FromHex(Darkmode1Accent1Colour));
             Accent2Colour = new SolidColorBrush(FromHex(Darkmode1Accent2Colour));
             TextBasic = new SolidColorBrush(FromHex(Darkmode1TextBasic));
+            EnabledGreen = new SolidColorBrush(FromHex(DefaultEnabledGreen));
+            DisabledRed = new SolidColorBrush(FromHex(DefaultDisabledRed));
             CloseImage = new BitmapImage(new Uri($"pack://application:,,,/VXMusicDesktop;component/{ColourSchemeManager.DarkmodeCloseButton}"));
             MinimiseImage = new BitmapImage(new Uri($"pack://application:,,,/VXMusicDesktop;component/{ColourSchemeManager.DarkmodeMinimiseButton}"));
             SaveButtonImage = new BitmapImage(new Uri($"pack://application:,,,/VXMusicDesktop;component/{ColourSchemeManager.DarkmodeSaveButton}"));
@@ -134,6 +141,8 @@ namespace VXMusicDesktop.Theme
             Accent1Colour = new SolidColorBrush(FromHex(Darkmode2Accent1Colour));
             Accent2Colour = new SolidColorBrush(FromHex(Darkmode2Accent2Colour));
             TextBasic = new SolidColorBrush(FromHex(Darkmode2TextBasic));
+            EnabledGreen = new SolidColorBrush(FromHex(DefaultEnabledGreen));
+            DisabledRed = new SolidColorBrush(FromHex(DefaultDisabledRed));
             CloseImage = new BitmapImage(new Uri($"pack://application:,,,/VXMusicDesktop;component/{ColourSchemeManager.DarkmodeCloseButton}"));
             MinimiseImage = new BitmapImage(new Uri($"pack://application:,,,/VXMusicDesktop;component/{ColourSchemeManager.DarkmodeMinimiseButton}"));
             SaveButtonImage = new BitmapImage(new Uri($"pack://application:,,,/VXMusicDesktop;component/{ColourSchemeManager.DarkmodeSaveButton}"));
@@ -147,6 +156,8 @@ namespace VXMusicDesktop.Theme
             Accent1Colour = new SolidColorBrush(FromHex(Lightmode1Accent1Colour));
             Accent2Colour = new SolidColorBrush(FromHex(Lightmode1Accent2Colour));
             TextBasic = new SolidColorBrush(FromHex(Lightmode1TextBasic));
+            EnabledGreen = new SolidColorBrush(FromHex(DefaultEnabledGreen));
+            DisabledRed = new SolidColorBrush(FromHex(DefaultDisabledRed));
             CloseImage = new BitmapImage(new Uri($"pack://application:,,,/VXMusicDesktop;component/{ColourSchemeManager.LightmodeCloseButton}"));
             MinimiseImage = new BitmapImage(new Uri($"pack://application:,,,/VXMusicDesktop;component/{ColourSchemeManager.LightmodeMinimiseButton}"));
             SaveButtonImage = new BitmapImage(new Uri($"pack://application:,,,/VXMusicDesktop;component/{ColourSchemeManager.LightmodeSaveButton}"));
@@ -188,7 +199,7 @@ namespace VXMusicDesktop.Theme
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return (bool)value ? "#45BF55" : "#CD0402";
+            return (bool)value ? ColourSchemeManager.DefaultEnabledGreen : ColourSchemeManager.DefaultDisabledRed;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

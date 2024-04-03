@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using VXMusicDesktop.Theme;
 
 namespace VXMusicDesktop.MVVM.View
 {
@@ -22,7 +23,20 @@ namespace VXMusicDesktop.MVVM.View
     {
         public OverlayView()
         {
+            ColourSchemeManager.ThemeChanged += OnThemeChanged;
+            
             InitializeComponent();
+        }
+        
+        private void OnThemeChanged(object sender, EventArgs e)
+        {
+            // Handle the theme change here for Home View
+            OverlayMenuOption2BoxBorderGradientBrush.GradientStops[0].Color = ColourSchemeManager.SecondaryColour.Color;
+            OverlayMenuOption2BoxBorderGradientBrush.GradientStops[1].Color = ColourSchemeManager.Accent1Colour.Color;
+
+            LaunchOverlayOnStartupToggleButton.BorderBrush = LaunchOverlayOnStartupToggleButton.IsChecked == true
+                ? ColourSchemeManager.SecondaryColour
+                : ColourSchemeManager.TextBasic;
         }
         
         private void SetLaunchOverlayOnStartupEnabled(object commandParameter, RoutedEventArgs routedEventArgs)
