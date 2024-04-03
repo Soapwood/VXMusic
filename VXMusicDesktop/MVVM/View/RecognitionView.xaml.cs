@@ -72,6 +72,9 @@ namespace VXMusicDesktop.MVVM.View
         {
             if (this.DataContext is RecognitionViewModel recognitionViewModel)
             {
+                if (recognitionViewModel.IsAudDApiEnabled)
+                    return;
+                
                 recognitionViewModel.SharedViewModel.IsShazamApiConnected = false;
                 recognitionViewModel.IsShazamByoApiEnabled = true;
 
@@ -87,7 +90,7 @@ namespace VXMusicDesktop.MVVM.View
                 recognitionViewModel.SharedViewModel.IsShazamApiConnected = false;
                 recognitionViewModel.IsShazamByoApiEnabled = false;
 
-                recognitionViewModel.SetApiKeyToDefaultAndTest();
+                recognitionViewModel.SetShazamApiKeyToDefaultAndTest();
             }
         }
         
@@ -146,6 +149,10 @@ namespace VXMusicDesktop.MVVM.View
         {
             if (this.DataContext is RecognitionViewModel recognitionViewModel)
             {
+                // Disable button if the other API is enabled
+                if (recognitionViewModel.IsShazamApiEnabled)
+                    return;
+                
                 recognitionViewModel.SharedViewModel.IsAudDApiConnected = false;
                 recognitionViewModel.IsAudDByoApiEnabled = true;
 
@@ -160,7 +167,15 @@ namespace VXMusicDesktop.MVVM.View
                 recognitionViewModel.SharedViewModel.IsAudDApiConnected = false;
                 recognitionViewModel.IsAudDByoApiEnabled = false;
 
-                recognitionViewModel.SetApiKeyToDefaultAndTest();
+                recognitionViewModel.SetAudDApiKeyToDefaultAndTest();
+            }
+        }
+        
+        private void PerformSaveAndTestAudDByoApi(object sender, RoutedEventArgs e)
+        {
+            if (this.DataContext is RecognitionViewModel recognitionViewModel)
+            {
+                recognitionViewModel.PerformSaveAndTestAudDByoApi();
             }
         }
     }

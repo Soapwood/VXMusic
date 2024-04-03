@@ -15,7 +15,7 @@ public class AudDResponse : IRecognitionApiClientResponse
 
 public class AudDHttpClient : IHttpClient
 {
-    private readonly string ApiEndpoint = "https://api.audd.io/recognize";
+    private readonly string ApiEndpoint = "https://api.audd.io";
     private string _audDApiKey;
 
     public AudDHttpClient()
@@ -49,7 +49,7 @@ public class AudDHttpClient : IHttpClient
             requestContent.Add(fileContent, "file", "randomaudio");
 
             // Make the POST request to the API
-            var response = await HttpClientFactory.Instance.PostAsync(ApiEndpoint, requestContent);
+            var response = await HttpClientFactory.Instance.PostAsync(ApiEndpoint + "/recognize", requestContent);
 
             if (response.IsSuccessStatusCode)
             {
@@ -88,7 +88,25 @@ public class AudDHttpClient : IHttpClient
 
     public async Task<bool> TestConnection()
     {
-        return true;
+        using (var requestContent = new MultipartFormDataContent())
+        {
+            // Add the API token and 'return' fields to the JSON body
+            var jsonBody = new
+            {
+                api_token = _audDApiKey,
+                q = "king of morter king of bricks, the river styx is a river of stones"
+            };
+
+            var jsonBodyString = Newtonsoft.Json.JsonConvert.SerializeObject(jsonBody);
+            requestContent.Add(new StringContent(jsonBodyString, Encoding.UTF8, "application/json"), "json");
+
+            // Make the POST request to the API
+            var response = await HttpClientFactory.Instance.PostAsync(ApiEndpoint + "/findLyrics", requestContent);
+
+            response.EnsureSuccessStatusCode();
+
+            return response.IsSuccessStatusCode;
+        }
     }
 
     public async Task<AudDResponse> GetArtist(string audioFilePath)

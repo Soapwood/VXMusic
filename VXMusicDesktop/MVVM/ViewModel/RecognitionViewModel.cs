@@ -291,7 +291,7 @@ namespace VXMusicDesktop.MVVM.ViewModel
             return SharedViewModel.IsAudDApiConnected;
         }
         
-        public async Task<bool> SetApiKeyToDefaultAndTest()
+        public async Task<bool> SetShazamApiKeyToDefaultAndTest()
         {
             VXMusicSession.RecognitionClient.SetDefaultApiKey();
             SharedViewModel.IsShazamApiConnected = await VXMusicSession.RecognitionClient.TestApiConnection();
@@ -299,6 +299,13 @@ namespace VXMusicDesktop.MVVM.ViewModel
             return SharedViewModel.IsShazamApiConnected;
         }
         
+        public async Task<bool> SetAudDApiKeyToDefaultAndTest()
+        {
+            VXMusicSession.RecognitionClient.SetDefaultApiKey();
+            SharedViewModel.IsAudDApiConnected = await VXMusicSession.RecognitionClient.TestApiConnection();
+
+            return SharedViewModel.IsAudDApiConnected;
+        }
 
         private void PerformShazamButtonClick(object commandParameter)
         {

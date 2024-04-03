@@ -79,7 +79,7 @@ public class VXUserSettings
             Properties.Settings.Default.IsAudDByoApiEnabled = isByoApiEnabled;
             Properties.Settings.Default.Save();
             
-            Logger.LogDebug($"User Setting IsShazamByoApiEnabled set to {Properties.Settings.Default.IsShazamByoApiEnabled}");
+            Logger.LogDebug($"User Setting IsAudDByoApiEnabled set to {Properties.Settings.Default.IsShazamByoApiEnabled}");
         }
 
         public static bool GetIsAudDByoApiEnabled()
@@ -92,7 +92,7 @@ public class VXUserSettings
             Properties.Settings.Default.AudDByoApiKey = byoApiKey;
             Properties.Settings.Default.Save();
             
-            Logger.LogDebug($"User Setting ShazamByoApiKey set to {Properties.Settings.Default.AudDByoApiKey}");
+            Logger.LogDebug($"User Setting AudDByoApiKey set to {Properties.Settings.Default.AudDByoApiKey}");
         }
 
         public static string GetAudDByoApiKey()
