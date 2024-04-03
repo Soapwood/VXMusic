@@ -211,6 +211,9 @@ namespace Plugins
 
         // Overlay instance
         private CVROverlay overlay = null;
+        
+        // Overlay instance
+        private CVRNotifications notifications = null;
 
         // Native texture to pass to overlay
         private Texture_t overlayTexture;
@@ -394,6 +397,12 @@ namespace Plugins
             _recognitionAudioSourceObject = GameObject.Find("AudioOutput");
             _recognitionAudioSource = _recognitionAudioSourceObject.GetComponent<RecognitionAudioTrigger>();
 
+            // Notifications
+            //notifications = OpenVR.Notifications;
+            
+            //uint notificationId = 0;
+            //NotificationBitmap_t finalBitmap = new NotificationBitmap_t();
+            //notifications.CreateNotification(overlayHandle, 0, EVRNotificationType.Transient, "Title", EVRNotificationStyle.Application, ref finalBitmap, ref notificationId);
 
             //IsVXMusicServerRunning();
             //SendRequestToServerAsync("VX_TRIGGER_RECOGNITION");
@@ -919,7 +928,8 @@ namespace Plugins
 
                     // Calculate direction vector tilted forward 45 degrees for controller
                     Vector3 vect = (Trans.rot * Quaternion.AngleAxis(45, Vector3.right)) * Vector3.forward;
-
+                    // Bingy this looks like where the top of the controller is set
+                    // Trans.Pos is the left hand, vect is the right
                     return ComputeOverlayIntersection(Trans.pos, vect, ref results);
                 }
             }
@@ -940,7 +950,7 @@ namespace Plugins
             // Ray launcher position
             param.vSource = new HmdVector3_t
             {
-                v0 = pos.x,
+                v0 = pos.x, // bingy change this here
                 v1 = pos.y,
                 v2 = -pos.z // right-handed to left-handed
             };

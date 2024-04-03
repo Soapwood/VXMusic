@@ -52,6 +52,7 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
+     <Compile Include="Assets\Plugins\VXSteamVRNotificationHandler.cs" />
      <Compile Include="Assets\Plugins\VXMusicInterface.cs" />
      <Compile Include="Assets\Plugins\VXMusicOverlay.cs" />
      <Compile Include="Assets\Plugins\MainThreadDispatcher.cs" />
