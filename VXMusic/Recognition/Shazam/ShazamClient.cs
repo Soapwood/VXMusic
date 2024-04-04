@@ -52,7 +52,10 @@ public class ShazamClient : IRecognitionClient
 
     public async Task<bool> TestApiConnection()
     {
-        return await _shazamHttpClient.TestConnection();
+        _logger.LogTrace("Testing Shazam API Connection");
+        bool testConnectionResult = await _shazamHttpClient.TestConnection();
+        _logger.LogTrace(testConnectionResult ? "Connected!" : "Connection Failed.");
+        return testConnectionResult;
     }
     
     public async Task<IRecognitionApiClientResponse> RunRecognition()

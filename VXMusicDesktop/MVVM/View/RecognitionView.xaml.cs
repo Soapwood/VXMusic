@@ -78,6 +78,8 @@ namespace VXMusicDesktop.MVVM.View
                 recognitionViewModel.SharedViewModel.IsShazamApiConnected = false;
                 recognitionViewModel.IsShazamByoApiEnabled = true;
 
+                ShazamByoApiCheckBox.Content = "Disable BYOAPI";
+
                 recognitionViewModel.PerformSaveAndTestShazamByoApi();
                 //LastFmPasswordBoxHintText.Visibility = String.IsNullOrEmpty(connectionsViewModel.LastFmPassword) ? Visibility.Visible : Visibility.Hidden;
             }
@@ -89,8 +91,11 @@ namespace VXMusicDesktop.MVVM.View
             {
                 recognitionViewModel.SharedViewModel.IsShazamApiConnected = false;
                 recognitionViewModel.IsShazamByoApiEnabled = false;
-
-                recognitionViewModel.SetShazamApiKeyToDefaultAndTest();
+                
+                ShazamByoApiCheckBox.Content = "Enable BYOAPI";
+    
+                if(recognitionViewModel.IsShazamApiEnabled)
+                    recognitionViewModel.SetShazamApiKeyToDefaultAndTest();
             }
         }
         
@@ -150,11 +155,13 @@ namespace VXMusicDesktop.MVVM.View
             if (this.DataContext is RecognitionViewModel recognitionViewModel)
             {
                 // Disable button if the other API is enabled
-                if (recognitionViewModel.IsShazamApiEnabled)
-                    return;
+                //if (recognitionViewModel.IsShazamApiEnabled)
+                //    return;
                 
                 recognitionViewModel.SharedViewModel.IsAudDApiConnected = false;
                 recognitionViewModel.IsAudDByoApiEnabled = true;
+
+                AudDByoApiCheckBox.Content = "Disable BYOAPI";
 
                 recognitionViewModel.PerformSaveAndTestAudDByoApi();
             }
@@ -166,8 +173,11 @@ namespace VXMusicDesktop.MVVM.View
             {
                 recognitionViewModel.SharedViewModel.IsAudDApiConnected = false;
                 recognitionViewModel.IsAudDByoApiEnabled = false;
+                
+                AudDByoApiCheckBox.Content = "Enable BYOAPI";
 
-                recognitionViewModel.SetAudDApiKeyToDefaultAndTest();
+                if(recognitionViewModel.IsAudDApiEnabled)
+                    recognitionViewModel.SetAudDApiKeyToDefaultAndTest();
             }
         }
         

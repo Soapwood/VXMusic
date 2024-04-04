@@ -137,8 +137,9 @@
 
             <!-- BYOAPI -->
             <CheckBox x:Name="ShazamByoApiCheckBox"
-                      Content="BYOAPI Key"
+                      Content="Enable BYOAPI"
                       IsChecked="{Binding IsShazamByoApiEnabled}"
+                      IsEnabled="{Binding IsShazamApiEnabled}"
                       VerticalAlignment="Center" HorizontalAlignment="Center"
                       Style="{StaticResource CustomCheckBoxStyle}"
                       Checked="ShazamByoApiCheckButtonChecked" Unchecked="ShazamByoApiCheckButtonUnchecked"/>
@@ -276,8 +277,9 @@
 
             <!-- BYOAPI -->
             <CheckBox x:Name="AudDByoApiCheckBox"
-                      Content="BYOAPI Key"
+                      Content="Enable BYOAPI"
                       IsChecked="{Binding IsAudDByoApiEnabled, Mode=TwoWay}"
+                      IsEnabled="{Binding IsAudDApiEnabled, Mode=TwoWay}"
                       VerticalAlignment="Center" HorizontalAlignment="Center"
                       Style="{StaticResource CustomCheckBoxStyle}"
                       Checked="AudDByoApiCheckButtonChecked" Unchecked="AudDByoApiCheckButtonUnchecked"/>

@@ -146,16 +146,6 @@ namespace VXMusicDesktop.MVVM.ViewModel
                 OnPropertyChanged(nameof(IsShazamByoApiEnabled));
             }
         }
-        
-        // public bool IsShazamApiConnected
-        // {
-        //     get { return _isShazamApiConnected; }
-        //     set
-        //     {
-        //         _isShazamApiConnected = value;
-        //         OnPropertyChanged(nameof(IsShazamApiConnected));
-        //     }
-        // }
 
         public bool IsAudDApiEnabled
         {
@@ -176,16 +166,6 @@ namespace VXMusicDesktop.MVVM.ViewModel
                 OnPropertyChanged(nameof(IsAudDByoApiEnabled));
             }
         }
-        
-        // public bool IsAudDApiConnected
-        // {
-        //     get { return _isAudDApiConnected; }
-        //     set
-        //     {
-        //         _isAudDApiConnected = value;
-        //         OnPropertyChanged(nameof(IsAudDApiConnected));
-        //     }
-        // }
 
         public bool IsRecognitionReady
         {
@@ -207,8 +187,8 @@ namespace VXMusicDesktop.MVVM.ViewModel
                                             !String.IsNullOrEmpty(App.VXMusicSession.RecognitionSettings.ShazamSettings.ByoApiKey);
                     
                     IsAudDApiEnabled = false;
-                    IsAudDByoApiEnabled = App.VXMusicSession.RecognitionSettings.AudDSettings.IsByoApiEnabled && 
-                                          !String.IsNullOrEmpty(App.VXMusicSession.RecognitionSettings.AudDSettings.ByoApiKey);
+                    IsAudDByoApiEnabled = false; //App.VXMusicSession.RecognitionSettings.AudDSettings.IsByoApiEnabled && 
+                                          //!String.IsNullOrEmpty(App.VXMusicSession.RecognitionSettings.AudDSettings.ByoApiKey);
                     break;
                 case RecognitionApi.AudD:
                     IsAudDApiEnabled = true;
@@ -216,8 +196,8 @@ namespace VXMusicDesktop.MVVM.ViewModel
                                           !String.IsNullOrEmpty(App.VXMusicSession.RecognitionSettings.AudDSettings.ByoApiKey);
 
                     IsShazamApiEnabled = false;
-                    IsShazamByoApiEnabled = App.VXMusicSession.RecognitionSettings.ShazamSettings.IsByoApiEnabled && 
-                                            !String.IsNullOrEmpty(App.VXMusicSession.RecognitionSettings.ShazamSettings.ByoApiKey);
+                    IsShazamByoApiEnabled = false; //App.VXMusicSession.RecognitionSettings.ShazamSettings.IsByoApiEnabled && 
+                                            //!String.IsNullOrEmpty(App.VXMusicSession.RecognitionSettings.ShazamSettings.ByoApiKey);
                     break;
                 default:
                     IsShazamApiEnabled = false;
@@ -311,6 +291,11 @@ namespace VXMusicDesktop.MVVM.ViewModel
         {
             App.VXMusicSession.SetRecognitionClient(RecognitionApi.Shazam);
             VXUserSettings.Recognition.SetRecognitionApi(RecognitionApi.Shazam);
+            
+            SharedViewModel.IsAudDApiConnected = false;
+            IsAudDApiEnabled = false;
+            IsAudDByoApiEnabled = false;
+            
             ProcessRecognitionApiState();
         }
 
@@ -318,6 +303,11 @@ namespace VXMusicDesktop.MVVM.ViewModel
         {
             App.VXMusicSession.SetRecognitionClient(RecognitionApi.AudD);
             VXUserSettings.Recognition.SetRecognitionApi(RecognitionApi.AudD);
+            
+            SharedViewModel.IsShazamApiConnected = false;
+            IsShazamApiEnabled = false;
+            IsShazamByoApiEnabled = false;
+            
             ProcessRecognitionApiState();
         }
 

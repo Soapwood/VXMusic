@@ -66,7 +66,8 @@ public class VXUserSettings
             Properties.Settings.Default.ShazamByoApiKey = byoApiKey;
             Properties.Settings.Default.Save();
             
-            Logger.LogDebug($"User Setting ShazamByoApiKey set to {Properties.Settings.Default.ShazamByoApiKey}");
+            Logger.LogDebug($"User Setting ShazamByoApiKey set to **************************");
+            //Logger.LogDebug($"User Setting ShazamByoApiKey set to {Properties.Settings.Default.ShazamByoApiKey}");
         }
 
         public static string GetShazamByoApiKey()

@@ -60,6 +60,9 @@ public class AudDClient : IRecognitionClient
 
     public async Task<bool> TestApiConnection()
     {
-        return await _audDHttpClient.TestConnection();
+        _logger.LogTrace("Testing AudD API Connection");
+        bool testConnectionResult = await _audDHttpClient.TestConnection();
+        _logger.LogTrace(testConnectionResult ? "Connected!" : "Connection Failed.");
+        return testConnectionResult;
     }
 }
