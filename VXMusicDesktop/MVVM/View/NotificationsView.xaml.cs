@@ -35,17 +35,55 @@ namespace VXMusicDesktop.MVVM.View
         {
             // Handle the theme change here for Home View
             NotificationsTextHeader.Foreground = ColourSchemeManager.TextBasic;
-
-            NotificationService1TextHeader.Foreground = ColourSchemeManager.TextBasic;
-            NotificationIntegration1BoxBorderGradientBrush.GradientStops[0].Color = ColourSchemeManager.SecondaryColour.Color;
-            NotificationIntegration1BoxBorderGradientBrush.GradientStops[1].Color = ColourSchemeManager.Accent1Colour.Color;
-
-            NotificationService2TextHeader.Foreground = ColourSchemeManager.TextBasic;
-            NotificationIntegration2BoxBorderGradientBrush.GradientStops[0].Color = ColourSchemeManager.SecondaryColour.Color;
-            NotificationIntegration2BoxBorderGradientBrush.GradientStops[1].Color = ColourSchemeManager.Accent1Colour.Color;
-
-            //EnableXsOverlayNotificationButton.Background = ColourSchemeManager.SecondaryColour;
-            //EnableSteamVRNotificationButton.Background = ColourSchemeManager.SecondaryColour;
+            
+            if (NotificationService1Button.Resources["ButtonNormalGradientBrush"] is LinearGradientBrush normalGradientBrush1)
+            {
+                if (normalGradientBrush1.GradientStops.Count >= 2)
+                {
+                    normalGradientBrush1.GradientStops[0].Color = ColourSchemeManager.SecondaryColour.Color;
+                    normalGradientBrush1.GradientStops[1].Color = ColourSchemeManager.Accent1Colour.Color;
+                }
+            }
+            
+            if (NotificationService1Button.Resources["ButtonHoverGradientBrush"] is LinearGradientBrush hoverGradientBrush1)
+            {
+                if (hoverGradientBrush1.GradientStops.Count >= 2)
+                {
+                    hoverGradientBrush1.GradientStops[0].Color = ColourSchemeManager.SecondaryColour.Color; 
+                    hoverGradientBrush1.GradientStops[1].Color = ColourSchemeManager.Accent2Colour.Color; 
+                }
+            }
+            
+            if (NotificationService2Button.Resources["ButtonNormalGradientBrush"] is LinearGradientBrush normalGradientBrush2)
+            {
+                if (normalGradientBrush2.GradientStops.Count >= 2)
+                {
+                    normalGradientBrush2.GradientStops[0].Color = ColourSchemeManager.SecondaryColour.Color; 
+                    normalGradientBrush2.GradientStops[1].Color = ColourSchemeManager.Accent1Colour.Color; 
+                }
+            }
+            
+            if (NotificationService2Button.Resources["ButtonHoverGradientBrush"] is LinearGradientBrush hoverGradientBrush2)
+            {
+                if (hoverGradientBrush2.GradientStops.Count >= 2)
+                {
+                    hoverGradientBrush2.GradientStops[0].Color = ColourSchemeManager.SecondaryColour.Color; 
+                    hoverGradientBrush2.GradientStops[1].Color = ColourSchemeManager.Accent2Colour.Color;
+                }
+            }
+            
+            var textBlock1 = FindChildControl<TextBlock>(NotificationService1Button, "NotificationService1ButtonHeaderText");
+            if (textBlock1 != null)
+            {
+                textBlock1.Foreground = new SolidColorBrush(ColourSchemeManager.TextBasic.Color); 
+            }
+            
+            
+            var textBlock2 = FindChildControl<TextBlock>(NotificationService2Button, "NotificationService2ButtonHeaderText");
+            if (textBlock2 != null)
+            {
+                textBlock2.Foreground = new SolidColorBrush(ColourSchemeManager.TextBasic.Color); 
+            }
         }
         protected virtual void OnSteamVrNotificationEnabled(object sender, EventArgs e)
         {
@@ -57,6 +95,25 @@ namespace VXMusicDesktop.MVVM.View
         {
             //EnableXsOverlayNotificationButton.Content = "Connected!";
             //EnableSteamVRNotificationButton.Content = "Use";
+        }
+        
+        private T FindChildControl<T>(DependencyObject parent, string controlName) where T : DependencyObject
+        {
+            for (int i = 0; i < VisualTreeHelper.GetChildrenCount(parent); i++)
+            {
+                var child = VisualTreeHelper.GetChild(parent, i);
+                if (child != null && child is T && (child as FrameworkElement)?.Name == controlName)
+                {
+                    return (T)child;
+                }
+                else
+                {
+                    T result = FindChildControl<T>(child, controlName);
+                    if (result != null)
+                        return result;
+                }
+            }
+            return null;
         }
     }
 }

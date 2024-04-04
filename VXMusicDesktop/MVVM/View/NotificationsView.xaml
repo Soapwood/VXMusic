@@ -35,181 +35,130 @@
                    HorizontalAlignment="Left"
                    Margin="10,0,0,10"/>
         
-        <StackPanel Orientation="Horizontal"
-                    Margin="0,0,0,10">
-
-
-            <Border Width="300"
-                    Height="150"
-                    CornerRadius="10"
-                    Margin="20,0,0,0">
-
-                <Border.Background>
-                    <LinearGradientBrush x:Name="NotificationIntegration1BoxBorderGradientBrush" StartPoint="0,0" EndPoint="1,2">
-                        <GradientStop Offset="0.0">
-                            <GradientStop.Color>
-                                <Binding Source="{StaticResource SecondaryColor}" Converter="{StaticResource SolidColorBrushToColorConverter}"/>
-                            </GradientStop.Color>
-                        </GradientStop>
-
-                        <GradientStop Offset="0.7">
-                            <GradientStop.Color>
-                                <Binding Source="{StaticResource Accent1Colour}" Converter="{StaticResource SolidColorBrushToColorConverter}"/>
-                            </GradientStop.Color>
-                        </GradientStop>
-                    </LinearGradientBrush>
-                </Border.Background>
-
-                <Grid>
-                    <StackPanel>
-                        <Image Height="80"
-                       Source="/Images/SteamVRLogo.png"
-                       RenderTransformOrigin="0,0"
-                       Margin="0,20,0,0"
-                               HorizontalAlignment="Center"/>
-                        <TextBlock Name="NotificationService1TextHeader"
-                                   Text="Use SteamVR for Notifications"
-                                   Foreground="{StaticResource TextBasic}"
-                                   FontSize="18"
-                                   Margin="0,0,0,0"
-                                   HorizontalAlignment="Center"/>
-                    </StackPanel>
-                </Grid>
-
-                <!--<StackPanel>
-                    <TextBlock Text="Version: 0.1"
-                            Foreground="Black"
-                            FontSize="18"
-                            Margin="20,10,10,0"
-                            HorizontalAlignment="Center"/>
-                    <TextBlock Text="- Added Shazam API Support&#x0a;- Added Spotify Integration&#x0a;- Added WIP Desktop Client"
-                                   Foreground="Black"
-                                   FontSize="12"
-                                   Margin="10,20,0,0"
-                                   HorizontalAlignment="Left"/>
-                </StackPanel>-->
-            </Border>
-            <Button Name="EnableSteamVRNotificationButton"
-                    Height="80"
-                    Width="80"
-                    Foreground="Black"
-                    FontSize="14"
-                    HorizontalAlignment="Center"
+        <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+            <Button x:Name="NotificationService1Button"
                     Command="{Binding SteamVREnableButtonClick}"
-                    Content=""
-                    Margin="20,0,0,0"
+                    Width="340" Height="150"
+                    Margin="0,0,0,0"
                     IsEnabled="true">
+
                 <Button.Resources>
-                    <Style TargetType="Border">
-                        <Setter Property="CornerRadius" Value="40"/>
-                    </Style>
-                </Button.Resources>
-                <Button.Style>
-                    <Style TargetType="Button">
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding IsSteamVRNotificationServiceEnabled}" Value="true">
-                                <Setter Property="Content" Value="Active"/>
-                                <Setter Property="Background" Value="{StaticResource SecondaryColor}"/>
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding IsXSOverlayNotificationServiceEnabled}" Value="false">
-                                <Setter Property="Content" Value="Inactive"/>
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </Button.Style>
-            </Button>
-        </StackPanel>
-
-        <StackPanel Orientation="Horizontal"
-                    Margin="0,0,0,10">
-
-
-            <Border Width="300"
-                    Height="150"
-                    CornerRadius="10"
-                    Margin="20,0,0,0">
-
-                <Border.Background>
-                    <LinearGradientBrush x:Name="NotificationIntegration2BoxBorderGradientBrush" StartPoint="0,0" EndPoint="1,2">
-                        <GradientStop Offset="0.0">
-                            <GradientStop.Color>
-                                <Binding Source="{StaticResource SecondaryColor}" Converter="{StaticResource SolidColorBrushToColorConverter}"/>
-                            </GradientStop.Color>
-                        </GradientStop>
-
-                        <GradientStop Offset="0.6">
-                            <GradientStop.Color>
-                                <Binding Source="{StaticResource Accent1Colour}" Converter="{StaticResource SolidColorBrushToColorConverter}"/>
-                            </GradientStop.Color>
-                        </GradientStop>
+                    <LinearGradientBrush x:Key="ButtonNormalGradientBrush" StartPoint="0,0" EndPoint="1,2">
+                        <GradientStop Offset="0.0" Color="{Binding Source={StaticResource SecondaryColor}, Converter={StaticResource SolidColorBrushToColorConverter}}"/>
+                        <GradientStop Offset="0.7" Color="{Binding Source={StaticResource Accent1Colour}, Converter={StaticResource SolidColorBrushToColorConverter}}"/>
                     </LinearGradientBrush>
-                </Border.Background>
-
-                <Grid>
-                    <StackPanel>
-                        <Image Height="60"
-                       Source="/Images/XSOverlayLogo.jpg"
-                       RenderTransformOrigin="0,0"
-                       Margin="0,25,0,0"
-                               HorizontalAlignment="Center"/>
-
-                        <TextBlock Name="NotificationService2TextHeader"
-                                   Text="Use XSOverlay for Notifications"
-                            Foreground="{StaticResource TextBasic}"
-                            FontSize="18"
-                            Margin="0,10,0,0"
-                            HorizontalAlignment="Center"/>
-
-                    </StackPanel>
-
-                </Grid>
-
-                <!--<StackPanel>
-                    <TextBlock Text="Version: 0.1"
-                            Foreground="Black"
-                            FontSize="18"
-                            Margin="20,10,10,0"
-                            HorizontalAlignment="Center"/>
-                    <TextBlock Text="- Added Shazam API Support&#x0a;- Added Spotify Integration&#x0a;- Added WIP Desktop Client"
-                                   Foreground="Black"
-                                   FontSize="12"
-                                   Margin="10,20,0,0"
-                                   HorizontalAlignment="Left"/>
-                </StackPanel>-->
-            </Border>
-
-            <Button Name="EnableXsOverlayNotificationButton"
-                    Height="80"
-                    Width="80"
-                    Foreground="Black"
-                    FontSize="14"
-                    HorizontalAlignment="Center"
-                    Command="{Binding XSOverlayEnableButtonClick}"
-                    Content=""
-                    Margin="20,0,0,0"
-                    IsEnabled="true">
-                <Button.Resources>
-                    <Style TargetType="Border">
-                        <Setter Property="CornerRadius" Value="40"/>
-                    </Style>
+                    <LinearGradientBrush x:Key="ButtonHoverGradientBrush" StartPoint="0,0" EndPoint="1,2">
+                        <!-- Modify these colors for the hover effect -->
+                        <GradientStop Offset="0.0" Color="{Binding Source={StaticResource SecondaryColor}, Converter={StaticResource SolidColorBrushToColorConverter}}"/>
+                        <GradientStop Offset="1.0" Color="{Binding Source={StaticResource Accent2Colour}, Converter={StaticResource SolidColorBrushToColorConverter}}"/>
+                    </LinearGradientBrush>
                 </Button.Resources>
-                <Button.Style>
-                    <Style TargetType="Button">
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding IsXSOverlayNotificationServiceEnabled}" Value="true">
-                                <Setter Property="Content" Value="Active"/>
-                                <Setter Property="Background" Value="{StaticResource SecondaryColor}"/>
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding IsXSOverlayNotificationServiceEnabled}" Value="false">
-                                <Setter Property="Content" Value="Inactive"/>
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </Button.Style>
+
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border Width="300" Height="150" CornerRadius="10"
+                                Background="{TemplateBinding Background}">
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState x:Name="Normal"/>
+                                    <VisualState x:Name="MouseOver">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(Border.Background)">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource ButtonHoverGradientBrush}"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                            
+                            <Grid>
+                                <StackPanel>
+                                    <Image Height="80"
+                                           Source="/Images/SteamVRLogo.png"
+                                           RenderTransformOrigin="0,0"
+                                           Margin="0,20,0,0"
+                                           HorizontalAlignment="Center"/>
+                                    <TextBlock x:Name="NotificationService1ButtonHeaderText"
+                                               Text="Use SteamVR for Notifications"
+                                               Foreground="{StaticResource TextBasic}"
+                                               FontSize="18"
+                                               Margin="0,0,0,0"
+                                               HorizontalAlignment="Center"/>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+
+                <Button.Background>
+                    <StaticResource ResourceKey="ButtonNormalGradientBrush"/>
+                </Button.Background>
             </Button>
-
-
         </StackPanel>
+            
+           <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+        <!-- Button with custom content and appearance for XSOverlay Notification -->
+        <Button x:Name="NotificationService2Button"
+                Command="{Binding XSOverlayEnableButtonClick}"
+                Width="340" Height="150"
+                Margin="0,0,0,0"
+                IsEnabled="true">
+
+            <Button.Resources>
+                <!-- Normal state gradient brush -->
+                <LinearGradientBrush x:Key="ButtonNormalGradientBrush" StartPoint="0,0" EndPoint="1,2">
+                    <GradientStop Offset="0.0" Color="{Binding Source={StaticResource SecondaryColor}, Converter={StaticResource SolidColorBrushToColorConverter}}"/>
+                    <GradientStop Offset="0.6" Color="{Binding Source={StaticResource Accent1Colour}, Converter={StaticResource SolidColorBrushToColorConverter}}"/>
+                </LinearGradientBrush>
+                <!-- Hover state gradient brush -->
+                <LinearGradientBrush x:Key="ButtonHoverGradientBrush" StartPoint="0,0" EndPoint="1,2">
+                    <!-- Modify these colors for the hover effect -->
+                    <GradientStop Offset="0.0" Color="{Binding Source={StaticResource SecondaryColor}, Converter={StaticResource SolidColorBrushToColorConverter}}"/>
+                    <GradientStop Offset="1.0" Color="{Binding Source={StaticResource Accent2Colour}, Converter={StaticResource SolidColorBrushToColorConverter}}"/>
+                </LinearGradientBrush>
+            </Button.Resources>
+
+            <Button.Template>
+                <ControlTemplate TargetType="Button">
+                    <Border Width="300" Height="150" CornerRadius="10"
+                            Background="{TemplateBinding Background}">
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal"/>
+                                <VisualState x:Name="MouseOver">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(Border.Background)">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource ButtonHoverGradientBrush}"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        
+                        <Grid>
+                            <StackPanel>
+                                <Image Height="60"
+                                       Source="/Images/XSOverlayLogo.jpg"
+                                       RenderTransformOrigin="0,0"
+                                       Margin="0,25,0,0"
+                                       HorizontalAlignment="Center"/>
+                                <TextBlock x:Name="NotificationService2ButtonHeaderText"
+                                           Text="Use XSOverlay for Notifications"
+                                           Foreground="{StaticResource TextBasic}"
+                                           FontSize="18"
+                                           Margin="0,10,0,0"
+                                           HorizontalAlignment="Center"/>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Button.Template>
+
+            <Button.Background>
+                <StaticResource ResourceKey="ButtonNormalGradientBrush"/>
+            </Button.Background>
+        </Button>
+    </StackPanel>
     </StackPanel>
 
 </UserControl>
