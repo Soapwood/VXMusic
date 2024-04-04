@@ -155,6 +155,7 @@ namespace VXMusicDesktop.MVVM.ViewModel
                 //ShouldSpotifyLinkButtonBeEnabled = false;
                 //SpotifyLinkButtonText = DetermineSpotifyLinkButtonStateContent();
                 SpotifyAuthentication.RaiseSpotifyLoggingIn();
+                SharedViewModel.IsSpotifyConnected = true;
             } else
             {
 
