@@ -19,19 +19,6 @@ namespace VXMusic.API
 
     public class VXMusicAPI
     {
-        public static INotificationClient SetNotificationClient(NotificationService notificationService)
-        {
-            switch (notificationService)
-            {
-                case NotificationService.XSOverlay:
-                    return new XSOverlay();
-                case NotificationService.SteamVR:
-                    throw new NotImplementedException("SteamVR Notification system not Implemented yet.");
-                default:
-                    throw new ArgumentException("Invalid Notification Service specified.");
-            }
-        }
-
         public async static Task<PrivateUser> LinkSpotify()
         {
             var spotify = await SpotifyClientBuilder.CreateSpotifyClient();
@@ -43,9 +30,7 @@ namespace VXMusic.API
         {
             LastfmAuthentication.ClientId = clientId;
             LastfmAuthentication.ClientSecret = clientSecret;
-
-            // TODO Only do this if it hasn't already been set up
-
+            
             //var last = await LastfmClientBuilder.CreateLastfmClient();
             return await LastfmAuthentication.Login(username, password);
         }

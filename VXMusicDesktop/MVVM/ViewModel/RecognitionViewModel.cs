@@ -240,9 +240,14 @@ namespace VXMusicDesktop.MVVM.ViewModel
 
         private async void PerformListenButtonClick(object commandParameter)
         {
-            // TODO Two recognitions can run at the same time, add check to disable button if it's already running
-            Logger.LogInformation("Running Recognition Flow from Desktop Client Trigger.");
-            VXMusicActions.PerformRecognitionFlow();
+            if (!SharedViewModel.IsRecognitionRunning)
+            {
+                Logger.LogInformation("Running Recognition Flow from Desktop Client Trigger.");
+                SharedViewModel.IsRecognitionRunning = true;
+                bool isFinished = await VXMusicActions.PerformRecognitionFlow();
+                SharedViewModel.IsRecognitionRunning = false;
+            }
+
         }
         
         public async Task<bool> PerformSaveAndTestShazamByoApi()

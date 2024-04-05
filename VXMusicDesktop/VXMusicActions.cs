@@ -33,7 +33,6 @@ public class VXMusicActions
 
         VXMusicSession.NotificationClient.SendNotification("Sounds great! Just a moment..", "", 2);
 
-        //var result = //await VXMusicAPI.RunRecognition();
         var result = await VXMusicSession.RecognitionClient.RunRecognition();
 
         if (result.Status == Status.Error)

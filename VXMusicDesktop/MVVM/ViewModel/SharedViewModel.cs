@@ -19,6 +19,8 @@ public class SharedViewModel : INotifyPropertyChanged
     private bool _isShazamApiConnected;
     private bool _isAudDApiConnected;
 
+    private bool _isRecognitionRunning;
+
     // Notification Shared Fields
     private bool _isSteamVrNotificationServiceEnabled;
     private bool _isXsOverlayNotificationServiceEnabled;
@@ -110,6 +112,16 @@ public class SharedViewModel : INotifyPropertyChanged
         {
             _isOverlayRunning = value;
             OnPropertyChanged(nameof(IsOverlayRunning));
+        }
+    }
+    
+    public bool IsRecognitionRunning
+    {
+        get { return _isRecognitionRunning; }
+        set
+        {
+            _isRecognitionRunning = value;
+            OnPropertyChanged(nameof(IsRecognitionRunning));
         }
     }
 
