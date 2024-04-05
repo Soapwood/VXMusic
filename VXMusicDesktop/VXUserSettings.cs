@@ -112,6 +112,7 @@ public class VXUserSettings
         public static void SetLastfmUsername(string username)
         {
             VXMusicDesktop.Properties.Settings.Default.LastfmUsername = username;
+            Properties.Settings.Default.Save();
         }
         
         public static string GetLastfmPassword()
@@ -122,6 +123,7 @@ public class VXUserSettings
         public static void SetLastfmPassword(string password)
         {
             VXMusicDesktop.Properties.Settings.Default.LastfmPassword = password;
+            Properties.Settings.Default.Save();
         }
     }
 

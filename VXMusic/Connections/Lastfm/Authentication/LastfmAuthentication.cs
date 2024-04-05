@@ -10,9 +10,7 @@ public class LastfmAuthentication
 {
     public static string? ClientId { get; set; } 
     public static string? ClientSecret { get; set; }
-
-    public static string EncryptionPassphrase = "Bongodrumpwankum";
-
+    
     public static string LastFmCredentialsPath = "credentials.dat";
     public static bool CredentialFileExists => File.Exists(LastFmCredentialsPath);
 

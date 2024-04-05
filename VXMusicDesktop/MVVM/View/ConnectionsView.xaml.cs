@@ -43,6 +43,7 @@ namespace VXMusicDesktop.MVVM.View
         protected virtual void OnLastFmLogin(object sender, EventArgs e)
         {
             LastFmLoginButton.Content = "Connected!";
+            
         }
 
         protected virtual void OnSpotifyLogin(object sender, EventArgs e)
@@ -55,12 +56,9 @@ namespace VXMusicDesktop.MVVM.View
 
         private void CheckLastFmConnection()
         {
-            //LastFmUsernameTextBox.Text = App.VXMusicSession.ConnectionsSettings.LastfmSettings.Username;
-            //Box.Password = "*****************";
-
-            LastFmUsernameBoxHintText.Visibility = Visibility.Hidden;
-            LastFmPasswordBoxHintText.Visibility = Visibility.Hidden;
-            LastFmLoginButton.Content = "Connected!";
+            LastFmLoginButton.Content = App.VXMusicSession.ConnectionsSettings.IsLastfmConnected ? "Connected!" : "Login";
+            LastFmUsernameBoxHintText.Visibility = App.VXMusicSession.ConnectionsSettings.IsLastfmConnected ? Visibility.Hidden : Visibility.Visible;
+            LastFmPasswordBoxHintText.Visibility = App.VXMusicSession.ConnectionsSettings.IsLastfmConnected ? Visibility.Hidden : Visibility.Visible;
         }
 
         private void OnThemeChanged(object sender, EventArgs e)
@@ -87,6 +85,7 @@ namespace VXMusicDesktop.MVVM.View
                 connectionsViewModel.LastFmPassword = ((PasswordBox)e.OriginalSource).Password;
 
                 LastFmPasswordBoxHintText.Visibility = String.IsNullOrEmpty(connectionsViewModel.LastFmPassword) ? Visibility.Visible : Visibility.Hidden;
+                LastFmLoginButton.Content = "Login";
             }
         }
 
@@ -110,6 +109,7 @@ namespace VXMusicDesktop.MVVM.View
             {
                 connectionsViewModel.SharedViewModel.IsLastFmConnected = false;
                 connectionsViewModel.LastFmUsername = ((TextBox) e.OriginalSource).Text;
+                LastFmLoginButton.Content = "Login";
             }
         }
 

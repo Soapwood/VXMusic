@@ -63,9 +63,13 @@ namespace VXMusicDesktop.MVVM.ViewModel
         {
             LastfmAuthentication.ClientId = App.VXMusicSession.ConnectionsSettings.LastfmSettings.ClientId;
             LastfmAuthentication.ClientSecret = App.VXMusicSession.ConnectionsSettings.LastfmSettings.ClientSecret;
-
-            SharedViewModel.IsLastFmConnected = await LastfmAuthentication.Login(App.VXMusicSession.ConnectionsSettings.LastfmSettings.Username,
+            
+            // TODO Check login here?
+            var isLastFmConnected = await LastfmAuthentication.Login(App.VXMusicSession.ConnectionsSettings.LastfmSettings.Username,
                 App.VXMusicSession.ConnectionsSettings.LastfmSettings.Password);
+
+            SharedViewModel.IsLastFmConnected = isLastFmConnected;
+            App.VXMusicSession.ConnectionsSettings.IsLastfmConnected = isLastFmConnected;
         }
 
         public async Task IsSpotifyConnected()
@@ -187,7 +191,7 @@ namespace VXMusicDesktop.MVVM.ViewModel
 
         private string DetermineLastFmLinkButtonStateContent()
         {
-            return ShouldLastFmLinkButtonBeEnabled ? "Login" : "Connected!";
+            return SharedViewModel.IsLastFmConnected ? "Connected!" : "Login";
         }
 
     }
