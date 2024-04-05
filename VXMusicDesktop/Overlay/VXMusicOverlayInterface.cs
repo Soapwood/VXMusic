@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using VXMusic.Recognition.AudD;
 using VXMusicDesktop;
+using VXMusicDesktop.MVVM.ViewModel;
 
 namespace VXMusic.Overlay;
 
@@ -15,6 +16,8 @@ public class VXMusicOverlayInterface
 {
     public static ILogger Logger = App.ServiceProvider.GetRequiredService<ILogger<App>>();
     private static bool _isProcessing;
+    
+    public static SharedViewModel SharedViewModel { get; set; }
 
     public static int LaunchVXMOverlayRuntime(string runtimePath)
     {
@@ -82,6 +85,7 @@ public class VXMusicOverlayInterface
                 // Send the connection ack response back to Unity
                 writer.WriteLine(VXMMessages.CONNECTION_ACKNOWLEDGE);
                 Logger.LogInformation($"Connected to Unity Overlay Client!");
+                SharedViewModel.IsOverlayRunning = true;
                 return true;
             default:
                 Logger.LogError($"UNRECOGNISED MESSAGE SENT FROM UNITY TO VXMUSIC: {incomingMessage}");
@@ -91,8 +95,12 @@ public class VXMusicOverlayInterface
 
     public static async Task RunRecognition()
     {
-        // TODO Two recognitions can run at the same time, add check to disable button if it's already running
-        Logger.LogInformation("Running Recognition Flow from Overlay Trigger.");
-        await VXMusicActions.PerformRecognitionFlow();
+        if (!SharedViewModel.IsRecognitionRunning)
+        {
+            Logger.LogInformation("Running Recognition Flow from VXMusic Overlay.");
+            SharedViewModel.IsRecognitionRunning = true;
+            bool isFinished = await VXMusicActions.PerformRecognitionFlow();
+            SharedViewModel.IsRecognitionRunning = false;
+        }
     }
 }

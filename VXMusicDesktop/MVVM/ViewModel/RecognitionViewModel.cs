@@ -247,7 +247,6 @@ namespace VXMusicDesktop.MVVM.ViewModel
                 bool isFinished = await VXMusicActions.PerformRecognitionFlow();
                 SharedViewModel.IsRecognitionRunning = false;
             }
-
         }
         
         public async Task<bool> PerformSaveAndTestShazamByoApi()

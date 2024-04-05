@@ -106,11 +106,6 @@ namespace VXMusicDesktop
             VXMusicSession.Initialise();
             
             VXMusicOverlayInterface.StartVXMusicServerStream();
-            
-//#if RELEASE || DEBUG
-            // if(overlaySettings.LaunchOverlayOnStartup)
-            //     VXMOverlayProcessId = VXMusicOverlayInterface.LaunchVXMOverlayRuntime(overlaySettings.RuntimePath);
-//#endif
         }
 
         public static void ConfigureServices()
