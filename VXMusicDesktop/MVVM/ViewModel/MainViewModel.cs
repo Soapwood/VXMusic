@@ -5,9 +5,11 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using VXMusic;
+using VXMusic.Overlay;
 using VXMusicDesktop.Core;
 using VXMusicDesktop.Theme;
 
@@ -25,6 +27,7 @@ namespace VXMusicDesktop.MVVM.ViewModel
         public RelayCommand ConnectionsViewCommand { get; set; }
         public RelayCommand OverlayViewCommand { get; set; }
         public RelayCommand AboutViewCommand { get; set; }
+        public RelayCommand LaunchVXMusicOverlay { get; set; }
 
         public SharedViewModel SharedVM { get; }
         public HomeViewModel HomeVM { get; set; }
@@ -92,7 +95,11 @@ namespace VXMusicDesktop.MVVM.ViewModel
             {
                 CurrentView = AboutVM;
             });
+            
+            LaunchVXMusicOverlay = new RelayCommand(o =>
+            {
+                VXMusicOverlayInterface.LaunchVXMOverlayRuntime(VXMusicSession.OverlaySettings.RuntimePath);
+            });
         }
-        
     }
 }

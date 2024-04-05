@@ -30,6 +30,9 @@ public class SharedViewModel : INotifyPropertyChanged
     // Game Client Shared Fields
     private bool _isVrChatConnected;
     
+    // Overlay Shared Fields
+    private bool _isOverlayRunning;
+    
     public bool IsShazamApiConnected
     {
         get { return _isShazamApiConnected; }
@@ -97,6 +100,16 @@ public class SharedViewModel : INotifyPropertyChanged
         {
             _isVrChatConnected = value;
             OnPropertyChanged(nameof(IsVrChatConnected));
+        }
+    }
+    
+    public bool IsOverlayRunning
+    {
+        get { return _isOverlayRunning; }
+        set
+        {
+            _isOverlayRunning = value;
+            OnPropertyChanged(nameof(IsOverlayRunning));
         }
     }
 

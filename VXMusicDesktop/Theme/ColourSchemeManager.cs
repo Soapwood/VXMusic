@@ -68,6 +68,8 @@ namespace VXMusicDesktop.Theme
         
         public static readonly string DarkmodeSaveButton = "Images/SaveIconWhite.png";
         public static readonly string LightmodeSaveButton = "Images/SaveIconBlack.png";
+        
+        public static readonly string VXMusicOverlayButton = "Images/VXLogoTinyButton.png";
 
         public static SolidColorBrush PrimaryColour { get; set; }
         public static SolidColorBrush SecondaryColour { get; set; }
@@ -82,6 +84,7 @@ namespace VXMusicDesktop.Theme
         public static BitmapImage CloseImage { get; set; }
         public static BitmapImage MinimiseImage { get; set; }
         public static BitmapImage SaveButtonImage { get; set; }
+        public static BitmapImage VXMusicOverlayImage { get; set; }
 
         // This is used to access the values of the DesktopTheme Enum in XAML
         public static DesktopTheme[] DesktopThemeValues
@@ -131,6 +134,7 @@ namespace VXMusicDesktop.Theme
             CloseImage = new BitmapImage(new Uri($"pack://application:,,,/VXMusicDesktop;component/{ColourSchemeManager.DarkmodeCloseButton}"));
             MinimiseImage = new BitmapImage(new Uri($"pack://application:,,,/VXMusicDesktop;component/{ColourSchemeManager.DarkmodeMinimiseButton}"));
             SaveButtonImage = new BitmapImage(new Uri($"pack://application:,,,/VXMusicDesktop;component/{ColourSchemeManager.DarkmodeSaveButton}"));
+            VXMusicOverlayImage = new BitmapImage(new Uri($"pack://application:,,,/VXMusicDesktop;component/{ColourSchemeManager.VXMusicOverlayButton}"));
             Transparent = new SolidColorBrush(FromHex(TransparentColour));
         }
 
@@ -146,6 +150,7 @@ namespace VXMusicDesktop.Theme
             CloseImage = new BitmapImage(new Uri($"pack://application:,,,/VXMusicDesktop;component/{ColourSchemeManager.DarkmodeCloseButton}"));
             MinimiseImage = new BitmapImage(new Uri($"pack://application:,,,/VXMusicDesktop;component/{ColourSchemeManager.DarkmodeMinimiseButton}"));
             SaveButtonImage = new BitmapImage(new Uri($"pack://application:,,,/VXMusicDesktop;component/{ColourSchemeManager.DarkmodeSaveButton}"));
+            VXMusicOverlayImage = new BitmapImage(new Uri($"pack://application:,,,/VXMusicDesktop;component/{ColourSchemeManager.VXMusicOverlayButton}"));
             Transparent = new SolidColorBrush(FromHex(TransparentColour));
         }
 
@@ -161,6 +166,7 @@ namespace VXMusicDesktop.Theme
             CloseImage = new BitmapImage(new Uri($"pack://application:,,,/VXMusicDesktop;component/{ColourSchemeManager.LightmodeCloseButton}"));
             MinimiseImage = new BitmapImage(new Uri($"pack://application:,,,/VXMusicDesktop;component/{ColourSchemeManager.LightmodeMinimiseButton}"));
             SaveButtonImage = new BitmapImage(new Uri($"pack://application:,,,/VXMusicDesktop;component/{ColourSchemeManager.LightmodeSaveButton}"));
+            VXMusicOverlayImage = new BitmapImage(new Uri($"pack://application:,,,/VXMusicDesktop;component/{ColourSchemeManager.VXMusicOverlayButton}"));
             Transparent = new SolidColorBrush(FromHex(TransparentColour));
         }
 

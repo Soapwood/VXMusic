@@ -95,6 +95,10 @@
     <Content Include="Images\SaveIconWhite.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Remove="Images\VXLogoTinyButton.png" />
+    <Content Include="Images\VXLogoTinyButton.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>

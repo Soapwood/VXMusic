@@ -21,6 +21,7 @@
     <Window.Resources>
         <BitmapImage x:Key="CloseButtonImage" UriSource="{Binding Source={x:Static custom:ColourSchemeManager.CloseImage}, Path=UriSource}"/>
         <BitmapImage x:Key="MinimiseButtonImage" UriSource="{Binding Source={x:Static custom:ColourSchemeManager.MinimiseImage}, Path=UriSource}"/>
+        <BitmapImage x:Key="VXMusicOverlayImage" UriSource="{Binding Source={x:Static custom:ColourSchemeManager.VXMusicOverlayImage}, Path=UriSource}"/>
 
         <SolidColorBrush x:Key="PrimaryColor" Color="{Binding Source={x:Static custom:ColourSchemeManager.PrimaryColour}, Path=Color}" />
         <SolidColorBrush x:Key="SecondaryColor" Color="{Binding Source={x:Static custom:ColourSchemeManager.SecondaryColour}, Path=Color}" />
@@ -43,6 +44,20 @@
                 <RowDefinition Height="75"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
+            
+            <Button Name="VXOverlayLaunchButton" 
+                    Grid.Column="1" 
+                    Width="30" 
+                    Height="30" 
+                    Margin="0,2,170,5"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Command="{Binding LaunchVXMusicOverlay}"
+                    BorderThickness="0">
+                <Button.Background>
+                    <ImageBrush x:Name="MainWindowVXMusicOverlayImageBrush" ImageSource="{StaticResource VXMusicOverlayImage}" Stretch="UniformToFill"/>
+                </Button.Background>
+            </Button>
             
             <ComboBox x:Name="DesktopThemeComboBox" 
                       Style="{StaticResource RoundedComboBoxTheme}"
