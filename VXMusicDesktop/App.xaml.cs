@@ -106,6 +106,8 @@ namespace VXMusicDesktop
             VXMusicSession.Initialise();
             
             VXMusicOverlayInterface.StartVXMusicServerStream();
+            
+            VXMusicSession.NotificationClient.SendNotification("Welcome to VXMusic!", "", 5);
         }
 
         public static void ConfigureServices()
@@ -138,8 +140,6 @@ namespace VXMusicDesktop
             services.AddSingleton<SteamVRNotificationClient>();
 
             services.AddSingleton<VRChatLogParser>();
-
-            //services.AddSingleton<ViewModelLocator>(serviceProvider => new ViewModelLocator(serviceProvider));
             
             ServiceProvider = services.BuildServiceProvider();
             
