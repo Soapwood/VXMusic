@@ -12,7 +12,7 @@ public class LastfmScrobbler
     private readonly IServiceProvider _serviceProvider;
     private readonly ILogger<LastfmScrobbler> _logger;
     
-    private static readonly string _databasePath = "C:\\Users\\Tam\\Desktop\\vxscrobbles.db";
+    private static readonly string _databasePath = "C:\\vxscrobbles.db";
 
     public LastfmScrobbler(IServiceProvider serviceProvider)
     {
