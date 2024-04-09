@@ -33,7 +33,7 @@ namespace VXMusicDesktop
         public static VXMusicSession VXMusicSession;
         public static Version ApplicationVersion;
 
-        private static int VXMOverlayProcessId; 
+        public static int VXMOverlayProcessId; 
         
         // TODO https://blog.elmah.io/logging-and-global-error-handling-in-net-7-wpf-applications/
         public App() : base()
@@ -41,6 +41,8 @@ namespace VXMusicDesktop
 #if DEBUG
             ConsoleHelper.AllocConsole();
 #endif
+            this.Exit += new ExitEventHandler(VXMusicOverlay_Exit);
+            
             //ConfigureServices();
             
             //Logger.LogInformation(ConsoleOutputBranding.VxMusicLogo + Environment.NewLine + ConsoleOutputBranding.CreatorInfo);
@@ -146,23 +148,31 @@ namespace VXMusicDesktop
             Logger = ServiceProvider.GetRequiredService<ILogger<App>>();
         }
 
-        protected override void OnExit(ExitEventArgs e)
+        void VXMusicOverlay_Exit(object sender, ExitEventArgs e)
         {
-            // Your cleanup logic here
-            base.OnExit(e);
-
             try
             {
-                Process process = Process.GetProcessById(VXMOverlayProcessId);
-                process.Kill();
-                process.WaitForExit(); // Optional: Wait for the process to exit
-                Logger.LogDebug($"Successfully killed process with PID {VXMOverlayProcessId}.");
+                if (VXMOverlayProcessId >= 0)
+                {
+                    Process process = Process.GetProcessById(VXMOverlayProcessId);
+                    process.Kill();
+                    process.WaitForExit(); // Optional: Wait for the process to exit
+                    Logger.LogDebug($"Successfully killed VXMusicOverlay process with PID {VXMOverlayProcessId}.");
+                }
+                else
+                {
+                    Logger.LogWarning("VXMusicOverlay Process was not found.");
+                }
             }
             catch (Exception ex)
             {
                 // Handle exceptions, if any
                 Logger.LogDebug($"Error killing process: {ex.Message}");
             }
+        }
+        protected override void OnExit(ExitEventArgs e)
+        {
+            base.OnExit(e);
         }
     }
 }

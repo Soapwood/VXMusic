@@ -78,7 +78,7 @@ public class VXMusicSession
         SpotifyAuthentication.ClientId = ConnectionsSettings.SpotifySettings.ClientId;
         
         if(OverlaySettings.LaunchOverlayOnStartup)
-            VXMusicOverlayInterface.LaunchVXMOverlayRuntime(OverlaySettings.RuntimePath);
+            App.VXMOverlayProcessId = VXMusicOverlayInterface.LaunchVXMOverlayRuntime(OverlaySettings.RuntimePath);
 
         //VXListenForOverlayMessage();
         //VXMusicOverlay = App.ServiceProvider.GetRequiredService<VXMusicOverlayInstance>();

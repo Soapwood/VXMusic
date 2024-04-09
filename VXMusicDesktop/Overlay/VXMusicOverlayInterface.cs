@@ -41,8 +41,11 @@ public class VXMusicOverlayInterface
 
         Logger.LogInformation("Starting VXMusic Overlay Runtime...");
         Logger.LogDebug($"Running {overlayProcessStartInfo.FileName} with args: [{overlayProcessStartInfo.Arguments}]");
+        
         overlayProcess.Start();
 
+        Logger.LogDebug($"VXMusicOverlay process running with PID: {overlayProcess.Id}");
+        
         return overlayProcess.Id;
     }
 

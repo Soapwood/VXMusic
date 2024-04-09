@@ -29,6 +29,8 @@
         <SolidColorBrush x:Key="Accent2Colour" Color="{Binding Source={x:Static custom:ColourSchemeManager.Accent2Colour}, Path=Color}" />
         <SolidColorBrush x:Key="TextBasic" Color="{Binding Source={x:Static custom:ColourSchemeManager.TextBasic}, Path=Color}" />
 
+        <custom:BooleanToColorConverter x:Key="BooleanToColorConverter"/>
+        
     </Window.Resources>
 
     <Border x:Name="MainWindowBorder"
@@ -58,6 +60,15 @@
                     <ImageBrush x:Name="MainWindowVXMusicOverlayImageBrush" ImageSource="{StaticResource VXMusicOverlayImage}" Stretch="UniformToFill"/>
                 </Button.Background>
             </Button>
+            <Ellipse Grid.Column="1"  Width="10" 
+                     Height="10"
+                     Margin="0,0,115,0"
+                     HorizontalAlignment="Center"
+                     VerticalAlignment="Center">
+                <Ellipse.Fill>
+                    <SolidColorBrush Color="{Binding SharedVM.IsOverlayRunning, Converter={StaticResource BooleanToColorConverter}}"/>
+                </Ellipse.Fill>
+            </Ellipse>
             
             <ComboBox x:Name="DesktopThemeComboBox" 
                       Style="{StaticResource RoundedComboBoxTheme}"

@@ -100,7 +100,7 @@ namespace VXMusicDesktop.MVVM.ViewModel
             
             LaunchVXMusicOverlay = new RelayCommand(o =>
             {
-                VXMusicOverlayInterface.LaunchVXMOverlayRuntime(VXMusicSession.OverlaySettings.RuntimePath);
+                App.VXMOverlayProcessId = VXMusicOverlayInterface.LaunchVXMOverlayRuntime(VXMusicSession.OverlaySettings.RuntimePath);
             });
         }
     }
