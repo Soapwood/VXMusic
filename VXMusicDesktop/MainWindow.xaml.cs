@@ -2,6 +2,8 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Threading;
+using VXMusic.Overlay;
 using VXMusicDesktop.Theme;
 
 namespace VXMusicDesktop
@@ -21,7 +23,7 @@ namespace VXMusicDesktop
             ColourSchemeManager.ThemeChanged += OnThemeChanged;
             ColourSchemeManager.MenuOptionChanged += OnMainWindowMenuOptionChanged;
         }
-
+        
         private void OnThemeChanged(object sender, EventArgs e)
         {
             // Handle the theme change here, e.g., update UI elements

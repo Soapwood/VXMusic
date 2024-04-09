@@ -1,14 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Input;
-using System.Windows.Media;
-using VXMusic;
+using System.Windows.Threading;
 using VXMusic.Overlay;
 using VXMusicDesktop.Core;
 using VXMusicDesktop.Theme;
@@ -17,6 +9,9 @@ namespace VXMusicDesktop.MVVM.ViewModel
 {
     public class MainViewModel : ObservableObject
     {
+        private static DispatcherTimer _checkOverlayHeartbeatMonitor;
+        private static readonly int _checkOverlayHeartbeatInterval = 5;
+        
         /*
          *  Menu Navigation
          */
@@ -29,7 +24,7 @@ namespace VXMusicDesktop.MVVM.ViewModel
         public RelayCommand AboutViewCommand { get; set; }
         public RelayCommand LaunchVXMusicOverlay { get; set; }
 
-        public SharedViewModel SharedVM { get; }
+        public static SharedViewModel SharedVM { get; set; }
         public HomeViewModel HomeVM { get; set; }
         public NotificationsViewModel NotificationsVM { get; set; }
         public RecognitionViewModel RecognitionVM { get; set; }
@@ -101,6 +96,27 @@ namespace VXMusicDesktop.MVVM.ViewModel
             LaunchVXMusicOverlay = new RelayCommand(o =>
             {
                 App.VXMOverlayProcessId = VXMusicOverlayInterface.LaunchVXMOverlayRuntime(VXMusicSession.OverlaySettings.RuntimePath);
+                VXMusicOverlayInterface.OverlayWasRunning = true;
+                InitialiseOverlayHeartbeatMonitor();
+            });
+        }
+        
+        public static void InitialiseOverlayHeartbeatMonitor()
+        {
+            _checkOverlayHeartbeatMonitor = new DispatcherTimer
+            {
+                Interval = TimeSpan.FromSeconds(_checkOverlayHeartbeatInterval)
+            };
+            _checkOverlayHeartbeatMonitor.Tick += CheckOverlayRunningState;
+            _checkOverlayHeartbeatMonitor.Start();
+        }
+        
+        private static void CheckOverlayRunningState(object sender, EventArgs e)
+        {
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                SharedVM.IsOverlayRunning = VXMusicOverlayInterface.HasNewHeartbeatMessage;
+                VXMusicOverlayInterface.HasNewHeartbeatMessage = false;
             });
         }
     }

@@ -1,13 +1,17 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using VXMusic;
 using VXMusic.LogParser.VRChat;
+using VXMusic.Overlay;
 
 namespace VXMusicDesktop.MVVM.ViewModel;
 
 public class SharedViewModel : INotifyPropertyChanged
 {
+    public static ILogger Logger = App.ServiceProvider.GetRequiredService<ILogger<App>>();
     public event PropertyChangedEventHandler? PropertyChanged;
 
     public SharedViewModel()
@@ -34,7 +38,7 @@ public class SharedViewModel : INotifyPropertyChanged
     
     // Overlay Shared Fields
     private bool _isOverlayRunning;
-    
+
     public bool IsShazamApiConnected
     {
         get { return _isShazamApiConnected; }
@@ -112,6 +116,9 @@ public class SharedViewModel : INotifyPropertyChanged
         {
             _isOverlayRunning = value;
             OnPropertyChanged(nameof(IsOverlayRunning));
+
+            // Alert system if overlay has timed out.
+            OnVXMusicOverlayRunningChanged();
         }
     }
     
@@ -128,6 +135,15 @@ public class SharedViewModel : INotifyPropertyChanged
     protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    }
+
+    private void OnVXMusicOverlayRunningChanged()
+    {
+        if (!IsOverlayRunning && VXMusicOverlayInterface.OverlayWasRunning)
+        {
+            Logger.LogError("VXMusicOverlay has timed out!");
+            VXMusicOverlayInterface.OverlayWasRunning = false;
+        }
     }
     
     private void VRChatLogParserIsVrChatSessionRunningPropertyChanged(object sender, PropertyChangedEventArgs e)

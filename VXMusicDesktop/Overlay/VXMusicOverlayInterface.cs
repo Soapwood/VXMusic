@@ -16,7 +16,10 @@ public class VXMusicOverlayInterface
 {
     public static ILogger Logger = App.ServiceProvider.GetRequiredService<ILogger<App>>();
     private static bool _isProcessing;
-    
+
+    public static bool HasNewHeartbeatMessage { get; set; }
+    public static bool OverlayWasRunning { get; set; }
+
     public static SharedViewModel SharedViewModel { get; set; }
 
     public static int LaunchVXMOverlayRuntime(string runtimePath)
@@ -58,7 +61,7 @@ public class VXMusicOverlayInterface
             using (NamedPipeServerStream serverStream =
                    new NamedPipeServerStream("VXMusicOverlayEventPipe", PipeDirection.InOut))
             {
-                Logger.LogInformation("Listening for Request from VXMusic Overlay");
+                Logger.LogTrace("Listening for Request from VXMusic Overlay");
                 await serverStream.WaitForConnectionAsync();
                 _isProcessing = true;
                 
@@ -66,7 +69,7 @@ public class VXMusicOverlayInterface
                 using (StreamWriter writer = new StreamWriter(serverStream) { AutoFlush = true })
                 {
                     string eventData = await reader.ReadLineAsync();
-                    Logger.LogDebug($"Received event from Unity Client: {eventData}");
+                    Logger.LogTrace($"Received event from Unity Client: {eventData}");
                     await ProcessIncomingUnityEventMessage(writer, eventData);
                 }
             }
@@ -77,23 +80,36 @@ public class VXMusicOverlayInterface
     {
         switch (incomingMessage)
         {
-            case "VX_RECOGNITION_REQ": 
-                Logger.LogDebug($"Sending event to Unity Client: {VXMMessages.RECOGNITION_ACKNOWLEDGE}");
-                writer.WriteLine(VXMMessages.RECOGNITION_ACKNOWLEDGE);
-                await RunRecognition();
-                Logger.LogDebug($"Sending event to Unity Client: {VXMMessages.RECOGNITION_FINISH}");
-                writer.WriteLine(VXMMessages.RECOGNITION_FINISH);
-                return true;
-            case "VX_CONNECT_REQ":
+            case VXMMessage.CONNECTION_HEARTBEAT_REQUEST:
                 // Send the connection ack response back to Unity
-                writer.WriteLine(VXMMessages.CONNECTION_ACKNOWLEDGE);
-                Logger.LogInformation($"Connected to Unity Overlay Client!");
+                writer.WriteLine(VXMMessage.CONNECTION_HEARTBEAT_ACKNOWLEDGE);
                 SharedViewModel.IsOverlayRunning = true;
+                HasNewHeartbeatMessage = true; // Flush has new HeartbeatMessage flag
+                return true;
+            case VXMMessage.RECOGNITION_REQUEST: 
+                Logger.LogDebug($"Sending event to VXMusicOverlay: {VXMMessage.RECOGNITION_ACKNOWLEDGE}");
+                writer.WriteLine(VXMMessage.RECOGNITION_ACKNOWLEDGE);
+                await RunRecognition();
+                Logger.LogDebug($"Sending event to VXMusicOverlay: {VXMMessage.RECOGNITION_FINISH}");
+                writer.WriteLine(VXMMessage.RECOGNITION_FINISH);
+                return true;
+            case VXMMessage.CONNECTION_REQUEST:
+                // Send the connection ack response back to Unity
+                writer.WriteLine(VXMMessage.CONNECTION_ACKNOWLEDGE);
+                Logger.LogInformation($"Connected to VXMusicOverlay!");
+                SharedViewModel.IsOverlayRunning = true;
+                return true;
+            case VXMMessage.CONNECTION_TERMINATION:
+                // Send the connection ack response back to Unity
+                Logger.LogInformation($"Received a Termination message from VXMusicOverlay!");
+                SharedViewModel.IsOverlayRunning = false;
                 return true;
             default:
                 Logger.LogError($"UNRECOGNISED MESSAGE SENT FROM UNITY TO VXMUSIC: {incomingMessage}");
                 return false;
         }
+
+        HasNewHeartbeatMessage = false;
     }
 
     public static async Task RunRecognition()

@@ -193,6 +193,9 @@ namespace Plugins
 
         private GameObject _recognitionAudioSourceObject;
         private RecognitionAudioTrigger _recognitionAudioSource;
+
+        private float _timeSinceLastHeartbeat = 0f;
+        private float _heartbeatInterval = 2f;
         
         // RIGHT HAND OR LEFT HAND
         enum LeftOrRight
@@ -421,6 +424,14 @@ namespace Plugins
                 return;
             }
 
+            _timeSinceLastHeartbeat += Time.deltaTime;
+
+            if (_timeSinceLastHeartbeat > _heartbeatInterval)
+            {
+                _VXMusicInterface.SendMessageToServer("VX_HEARTBEAT_REQ");
+                _timeSinceLastHeartbeat = 0f;
+            }
+
             if (show)
             {
                 // Show overlay
@@ -436,6 +447,8 @@ namespace Plugins
             if (ProcessEvent())
             {
                 Debug.Log(Tag + "VR system has been terminated");
+                _VXMusicInterface.SendMessageToServer("VX_CONNECTION_TERM"); 
+                // TODO Does the application quit before this message is received? Possible race condition
                 ApplicationQuit();
             }
 
@@ -998,7 +1011,7 @@ namespace Plugins
                 {
                     
                     _recognitionAudioSource.recognitionAudioSource.Play();
-                    _VXMusicInterface.SendRequestToServer("VX_RECOGNITION_REQ"); 
+                    _VXMusicInterface.SendMessageToServer("VX_RECOGNITION_REQ"); 
                 }
             }
         }

@@ -19,9 +19,6 @@ namespace Valve.VR
 
         private void Start()
         {
-            // // Initialize the Named Pipe client here
-            // pipeClient = new NamedPipeClientStream(".", "VXMusicOverlayEventPipe", PipeDirection.Out);
-            // pipeClient.Connect();
             IsVXMusicServerRunning();
         }
         
@@ -54,35 +51,14 @@ namespace Valve.VR
             ClientReader = null;
             ClientWriter.Close();
             ClientWriter = null;
-
-            // string eventData;
-            // // THis is likely where the connectino is failing
-            // while ((eventData = await ClientReader.ReadLineAsync()) != null)
-            // {
-            //     Console.WriteLine($"Received event from Unity: {eventData}");
-            //     
-            //     switch (response)
-            //     {
-            //         case "VX_RECOGNITION_ACK":
-            //             IsInRecognitionState = true;
-            //             //OnRecognitionStateTriggered?.Invoke(IsInRecognitionState);
-            //             continue;
-            //         case "VX_RECOGNITION_FIN":
-            //             IsInRecognitionState = false;
-            //             //OnRecognitionStateTriggered?.Invoke(IsInRecognitionState);
-            //             continue;
-            //         default:
-            //             Console.WriteLine("UNRECOGNISED MESSAGE SENT FROM VXM");
-            //             continue;
-            //     }
-            //         
-            //     //await writer.WriteLineAsync(line);
-            // }
-
-            //Task.Run(() => ListenForServerResponses());
         }
-        
-        public async Task SendRequestToServer(string request)
+
+        public void IsVXMusicOverlayRunning()
+        {
+            
+        }
+
+        public async Task SendMessageToServer(string request)
         {
             // if (ClientStream != null || ClientStream.IsConnected)
             // {
@@ -110,11 +86,7 @@ namespace Valve.VR
                 IsInRecognitionState = true;
                 OnRecognitionStateTriggered?.Invoke(IsInRecognitionState);
             }
-            
-            //SendRequestToServer("VX_TRIGGER_RECOGNITION");
-            
-            //ClientStream.
-            
+
             response = await ClientReader.ReadLineAsync();
             
             if (response == "VX_RECOGNITION_FIN")

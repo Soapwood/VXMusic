@@ -76,10 +76,13 @@ public class VXMusicSession
         ColourSchemeManager.SetTheme(VXUserSettings.Desktop.GetCurrentDesktopTheme());
 
         SpotifyAuthentication.ClientId = ConnectionsSettings.SpotifySettings.ClientId;
-        
-        if(OverlaySettings.LaunchOverlayOnStartup)
-            App.VXMOverlayProcessId = VXMusicOverlayInterface.LaunchVXMOverlayRuntime(OverlaySettings.RuntimePath);
 
+        if (OverlaySettings.LaunchOverlayOnStartup)
+        {
+            App.VXMOverlayProcessId = VXMusicOverlayInterface.LaunchVXMOverlayRuntime(OverlaySettings.RuntimePath);
+            VXMusicOverlayInterface.OverlayWasRunning = true;
+            MainViewModel.InitialiseOverlayHeartbeatMonitor();
+        }
         //VXListenForOverlayMessage();
         //VXMusicOverlay = App.ServiceProvider.GetRequiredService<VXMusicOverlayInstance>();
     }
