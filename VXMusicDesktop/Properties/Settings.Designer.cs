@@ -36,7 +36,7 @@ namespace VXMusicDesktop.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("XSOverlay")]
+        [global::System.Configuration.DefaultSettingValueAttribute("SteamVR")]
         public string NotificationService {
             get {
                 return ((string)(this["NotificationService"]));

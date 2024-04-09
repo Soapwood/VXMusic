@@ -54,7 +54,7 @@ public class SpotifyAuthentication
 
     private static void Exiting()
     {
-        Console.CursorVisible = true;
+        //Console.CursorVisible = true; // wtf??
     }
 
     public static void RaiseSpotifyLoggingIn()

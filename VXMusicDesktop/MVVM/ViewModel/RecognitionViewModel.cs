@@ -251,6 +251,7 @@ namespace VXMusicDesktop.MVVM.ViewModel
         
         public async Task<bool> PerformSaveAndTestShazamByoApi()
         {
+            Logger.LogDebug("Saving and Testing Shazam BYOAPI Key");
             if (String.IsNullOrEmpty(_shazamByoApiToken))
                 return false;
             
@@ -267,6 +268,8 @@ namespace VXMusicDesktop.MVVM.ViewModel
             if (String.IsNullOrEmpty(_audDByoApiToken))
                 return false;
             
+            Logger.LogDebug("Saving and Testing AudD BYOAPI Key");
+
             VXUserSettings.Recognition.SetAudDByoApiKey(_audDByoApiToken);
             VXUserSettings.Recognition.SetIsAudDByoApiEnabled(true);
             

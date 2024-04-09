@@ -22,10 +22,10 @@ public class AudDHttpClient : IHttpClient
     {
         string currentDirectory = Environment.CurrentDirectory;
         IConfiguration config = new ConfigurationBuilder()
-            .AddJsonFile("C:\\Users\\Tam\\RiderProjects\\VXMusic\\VXMusic\\appsettings.json", optional: false, reloadOnChange: true)
+            //.AddJsonFile("C:\\Users\\Tam\\RiderProjects\\VXMusic\\VXMusic\\appsettings.json", optional: false, reloadOnChange: true)
             .Build();
-        
-        _audDApiKey = config["AudD:ApiToken"];
+
+        _audDApiKey = "audapitoken"; //config["AudD:ApiToken"];
     }
 
     public async Task<IRecognitionApiClientResponse> GetArtist(byte[] audioBytes)
