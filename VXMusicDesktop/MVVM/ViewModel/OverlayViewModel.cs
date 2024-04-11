@@ -14,17 +14,14 @@ namespace VXMusicDesktop.MVVM.ViewModel
     {
         public event PropertyChangedEventHandler? PropertyChanged;
 
-        
-        private RelayCommand launchOverlayOnStartupButtonChecked;
-        public ICommand LaunchOverlayOnStartupButtonChecked => launchOverlayOnStartupButtonChecked ??= new RelayCommand(SetLaunchOverlayOnStartupEnabled);
-        private RelayCommand launchOverlayOnStartupButtonUnchecked;
-        public ICommand LaunchOverlayOnStartupButtonUnhecked => launchOverlayOnStartupButtonUnchecked ??= new RelayCommand(SetLaunchOverlayOnStartupDisabled);
+        private RelayCommand launchOverlayOnStartupToggleButton;
+        public ICommand LaunchOverlayOnStartupToggleButton => launchOverlayOnStartupToggleButton ??= new RelayCommand(SetLaunchOverlayOnStartup);
 
         private bool _launchOverlayOnStartup;
 
         public OverlayViewModel()
         {
-            _launchOverlayOnStartup = VXUserSettings.Overlay.GetCurrentOverlayLaunchOnStartup();
+            LaunchOverlayOnStartup = VXUserSettings.Overlay.GetCurrentOverlayLaunchOnStartup();
         }
         
         protected virtual void OnPropertyChanged(string propertyName)
@@ -45,24 +42,9 @@ namespace VXMusicDesktop.MVVM.ViewModel
             }
         }
         
-        private void SetLaunchOverlayOnStartupEnabled(object commandParameter)
+        public void SetLaunchOverlayOnStartup(object commandParameter)
         {
-            //App.VXMusicSession.SetNotificationService(NotificationService.SteamVR);
-            //NotificationSettings.SetNotificationServiceInSettings(NotificationService.SteamVR);
-            //ProcessNotificationServiceState();
-            //VXMusicSession.RaiseSteamVrNotificationEnabled();
-            //VXMusicSession.VXMusicOverlay.
-
-        }
-
-        private void SetLaunchOverlayOnStartupDisabled(object commandParameter)
-        {
-            //App.VXMusicSession.SetNotificationService(NotificationService.XSOverlay);
-            //NotificationSettings.SetNotificationServiceInSettings(NotificationService.XSOverlay);
-            //ProcessNotificationServiceState();
-            //VXMusicSession.RaiseXsOverlayNotificationEnabled();
-            //VXMusicSession.VXMusicOverlay.SetRightHandOverlayTrackedDevice();
-
+            VXUserSettings.Overlay.SetLaunchOverlayOnStartup(LaunchOverlayOnStartup);
         }
     }
 }

@@ -38,20 +38,5 @@ namespace VXMusicDesktop.MVVM.View
                 ? ColourSchemeManager.SecondaryColour
                 : ColourSchemeManager.TextBasic;
         }
-        
-        private void SetLaunchOverlayOnStartupEnabled(object commandParameter, RoutedEventArgs routedEventArgs)
-        {
-            VXUserSettings.Overlay.SetLaunchOverlayOnStartup(true);
-        }
-
-        private void SetLaunchOverlayOnStartupDisabled(object commandParameter, RoutedEventArgs routedEventArgs)
-        {
-            VXUserSettings.Overlay.SetLaunchOverlayOnStartup(false);
-        }
-
-        private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

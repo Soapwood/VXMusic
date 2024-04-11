@@ -54,43 +54,6 @@
         <StackPanel Orientation="Vertical"
                     Margin="0,0,0,10">
             
-            <!-- <Border Width="300" -->
-            <!--         Height="60" -->
-            <!--         CornerRadius="10" -->
-            <!--         HorizontalAlignment="Left" -->
-            <!--         Margin="20,0,10,20"> -->
-            <!-- -->
-            <!--     <Border.Background> -->
-            <!--         <LinearGradientBrush x:Name="OverlayMenuOption1BoxBorderGradientBrush" StartPoint="0,0" EndPoint="1,2"> -->
-            <!--             <GradientStop Offset="0.0"> -->
-            <!--                 <GradientStop.Color> -->
-            <!--                     <Binding Source="{StaticResource SecondaryColor}" Converter="{StaticResource SolidColorBrushToColorConverter}"/> -->
-            <!--                 </GradientStop.Color> -->
-            <!--             </GradientStop> -->
-            <!-- -->
-            <!--             <GradientStop Offset="0.5"> -->
-            <!--                 <GradientStop.Color> -->
-            <!--                     <Binding Source="{StaticResource Accent1Colour}" Converter="{StaticResource SolidColorBrushToColorConverter}"/> -->
-            <!--                 </GradientStop.Color> -->
-            <!--             </GradientStop> -->
-            <!--         </LinearGradientBrush> -->
-            <!--     </Border.Background> -->
-            <!--      -->
-            <!--     <StackPanel Orientation="Horizontal"> -->
-            <!--         <TextBlock x:Name="LaunchOverlayTextBlock" -->
-            <!--                    Text="Launch Overlay" -->
-            <!--                    Foreground="{StaticResource TextBasic}" -->
-            <!--                    FontSize="12" -->
-            <!--                    Margin="20,0,20,0" -->
-            <!--                    VerticalAlignment="Center"/> -->
-            <!--         <ToggleButton Style="{StaticResource SwitchButtonStyle}"  -->
-            <!--                       Width="80" Height="60" -->
-            <!--                       Margin="78,0,0,0" -->
-            <!--                       IsChecked="{Binding LaunchOverlayOnStartup}" -->
-            <!--                       Checked="SetLaunchOverlayOnStartupEnabled" Unchecked="SetLaunchOverlayOnStartupDisabled" /> -->
-            <!--     </StackPanel> -->
-            <!-- </Border> -->
-            
             <Border Width="300"
                     Height="60"
                     CornerRadius="10"
@@ -125,7 +88,7 @@
                                   Width="80" Height="60"
                                   Margin="20,0,0,0"
                                   IsChecked="{Binding LaunchOverlayOnStartup}"
-                                  Checked="SetLaunchOverlayOnStartupEnabled" Unchecked="SetLaunchOverlayOnStartupDisabled" />
+                                  Command="{Binding LaunchOverlayOnStartupToggleButton}" />
                 </StackPanel>
             </Border>
         </StackPanel>
