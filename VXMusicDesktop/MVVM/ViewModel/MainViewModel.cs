@@ -10,7 +10,7 @@ namespace VXMusicDesktop.MVVM.ViewModel
     public class MainViewModel : ObservableObject
     {
         private static DispatcherTimer _checkOverlayHeartbeatMonitor;
-        private static readonly int _checkOverlayHeartbeatInterval = 5;
+        private static readonly int _checkOverlayHeartbeatInterval = 8;
         
         /*
          *  Menu Navigation
@@ -95,8 +95,8 @@ namespace VXMusicDesktop.MVVM.ViewModel
             
             LaunchVXMusicOverlay = new RelayCommand(o =>
             {
-                App.VXMOverlayProcessId = VXMusicOverlayInterface.LaunchVXMOverlayRuntime(VXMusicSession.OverlaySettings.RuntimePath);
-                VXMusicOverlayInterface.OverlayWasRunning = true;
+                App.VXMOverlayProcessId =
+                    VXMusicOverlayInterface.LaunchVXMOverlayRuntime(VXMusicSession.OverlaySettings.RuntimePath);
                 InitialiseOverlayHeartbeatMonitor();
             });
         }

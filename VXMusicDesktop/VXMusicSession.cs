@@ -80,7 +80,6 @@ public class VXMusicSession
         if (OverlaySettings.LaunchOverlayOnStartup)
         {
             App.VXMOverlayProcessId = VXMusicOverlayInterface.LaunchVXMOverlayRuntime(OverlaySettings.RuntimePath);
-            VXMusicOverlayInterface.OverlayWasRunning = true;
             MainViewModel.InitialiseOverlayHeartbeatMonitor();
         }
         //VXListenForOverlayMessage();

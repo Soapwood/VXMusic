@@ -40,7 +40,7 @@ public class VXMusicOverlayInterface
         };
 
         overlayProcess.EnableRaisingEvents = true;
-        overlayProcess.Exited += (sender, e) => { Console.WriteLine("Closing down VXMOverlay."); };
+        overlayProcess.Exited += (sender, e) => { Logger.LogWarning("Closing down VXMusicOverlay."); };
 
         Logger.LogInformation("Starting VXMusic Overlay Runtime...");
         Logger.LogDebug($"Running {overlayProcessStartInfo.FileName} with args: [{overlayProcessStartInfo.Arguments}]");
@@ -61,7 +61,7 @@ public class VXMusicOverlayInterface
             using (NamedPipeServerStream serverStream =
                    new NamedPipeServerStream("VXMusicOverlayEventPipe", PipeDirection.InOut))
             {
-                Logger.LogTrace("Listening for Request from VXMusic Overlay");
+                //Logger.LogTrace("Listening for Request from VXMusic Overlay");
                 await serverStream.WaitForConnectionAsync();
                 _isProcessing = true;
                 
@@ -86,19 +86,10 @@ public class VXMusicOverlayInterface
                 SharedViewModel.IsOverlayRunning = true;
                 HasNewHeartbeatMessage = true; // Flush has new HeartbeatMessage flag
                 return true;
-            case VXMMessage.RECOGNITION_REQUEST: 
-                Logger.LogDebug($"Sending event to VXMusicOverlay: {VXMMessage.RECOGNITION_ACKNOWLEDGE}");
-                writer.WriteLine(VXMMessage.RECOGNITION_ACKNOWLEDGE);
-                await RunRecognition();
-                Logger.LogDebug($"Sending event to VXMusicOverlay: {VXMMessage.RECOGNITION_FINISH}");
-                writer.WriteLine(VXMMessage.RECOGNITION_FINISH);
-                return true;
+            case VXMMessage.RECOGNITION_REQUEST:
+                return await HandleRecognitionRequest(writer);
             case VXMMessage.CONNECTION_REQUEST:
-                // Send the connection ack response back to Unity
-                writer.WriteLine(VXMMessage.CONNECTION_ACKNOWLEDGE);
-                Logger.LogInformation($"Connected to VXMusicOverlay!");
-                SharedViewModel.IsOverlayRunning = true;
-                return true;
+                return await HandleOverlayConnectionRequest(writer);
             case VXMMessage.CONNECTION_TERMINATION:
                 // Send the connection ack response back to Unity
                 Logger.LogInformation($"Received a Termination message from VXMusicOverlay!");
@@ -112,14 +103,66 @@ public class VXMusicOverlayInterface
         HasNewHeartbeatMessage = false;
     }
 
-    public static async Task RunRecognition()
+    private static bool IsCurrentRecognitionClientConnected(RecognitionApi currentRecognitionApi)
     {
+        switch (currentRecognitionApi)
+        {
+            case RecognitionApi.Shazam:
+                return SharedViewModel.IsShazamApiConnected;
+            case RecognitionApi.AudD:
+                return SharedViewModel.IsAudDApiConnected;
+            case RecognitionApi.Unknown:
+                return false;
+            default:
+                return false;
+        }
+    }
+
+    public static async Task<bool> HandleRecognitionRequest(StreamWriter writer)
+    {
+        RecognitionApi currentRecognitionApi = App.VXMusicSession.RecognitionSettings.CurrentRecognitionApi;
+        
+        if (!IsCurrentRecognitionClientConnected(currentRecognitionApi))
+        {
+            Logger.LogError($"Recognition Failed. {currentRecognitionApi} is not connected.");
+            SharedViewModel.IsRecognitionRunning = false;
+            VXMusicSession.NotificationClient.SendNotification("Recognition Failed", $"{currentRecognitionApi} is not connected! Check your Recognition settings.", 8);
+            return false;
+        }
+        
         if (!SharedViewModel.IsRecognitionRunning)
         {
+            Logger.LogDebug($"Sending event to VXMusicOverlay: {VXMMessage.RECOGNITION_ACKNOWLEDGE}");
+            writer.WriteLine(VXMMessage.RECOGNITION_ACKNOWLEDGE);
+            
             Logger.LogInformation("Running Recognition Flow from VXMusic Overlay.");
             SharedViewModel.IsRecognitionRunning = true;
             bool isFinished = await VXMusicActions.PerformRecognitionFlow();
             SharedViewModel.IsRecognitionRunning = false;
+            
+            Logger.LogDebug($"Sending event to VXMusicOverlay: {VXMMessage.RECOGNITION_FINISH}");
+            writer.WriteLine(VXMMessage.RECOGNITION_FINISH);
+            
+            return true;
         }
+        
+        return false;
+    }
+
+    public static async Task<bool> HandleOverlayConnectionRequest(StreamWriter writer)
+    {
+        // Send the connection ack response back to Unity
+        if (!SharedViewModel.IsOverlayRunning)
+        {
+            writer.WriteLine(VXMMessage.CONNECTION_ACKNOWLEDGE);
+            Logger.LogInformation($"Connected to VXMusicOverlay!");
+            VXMusicSession.NotificationClient.SendNotification("VXMusic Overlay Connected!", "",4);
+            SharedViewModel.IsOverlayRunning = true;
+            OverlayWasRunning = true;
+            return true;
+        }
+
+        Logger.LogWarning("Overlay tried to connect but it is already connected.");
+        return false;
     }
 }
