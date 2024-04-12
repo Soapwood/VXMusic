@@ -426,7 +426,7 @@ namespace Plugins
 
             _timeSinceLastHeartbeat += Time.deltaTime;
 
-            if (_timeSinceLastHeartbeat > _heartbeatInterval)
+            if (!IsInRecognitionState && _timeSinceLastHeartbeat > _heartbeatInterval)
             {
                 _VXMusicInterface.SendMessageToServer("VX_HEARTBEAT_REQ");
                 _timeSinceLastHeartbeat = 0f;
