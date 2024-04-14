@@ -9,6 +9,7 @@ using Microsoft.Extensions.Logging;
 using VXMusic.API;
 using VXMusic.FileWriter;
 using System.Threading.Tasks;
+using VXMusic.Overlay;
 using VXMusic.Spotify.Authentication;
 
 namespace VXMusicDesktop.MVVM.ViewModel
@@ -246,6 +247,7 @@ namespace VXMusicDesktop.MVVM.ViewModel
                 SharedViewModel.IsRecognitionRunning = true;
                 bool isFinished = await VXMusicActions.PerformRecognitionFlow();
                 SharedViewModel.IsRecognitionRunning = false;
+                //VXMusicOverlayInterface.StartVXMusicServerStream();
             }
         }
         

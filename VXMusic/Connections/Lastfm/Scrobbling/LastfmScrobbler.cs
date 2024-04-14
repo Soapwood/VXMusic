@@ -12,7 +12,7 @@ public class LastfmScrobbler
     private readonly IServiceProvider _serviceProvider;
     private readonly ILogger<LastfmScrobbler> _logger;
     
-    private static readonly string _databasePath = "C:\\vxscrobbles.db";
+    private static readonly string _databasePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "vxscrobbles.db");
 
     public LastfmScrobbler(IServiceProvider serviceProvider)
     {
@@ -35,11 +35,6 @@ public class LastfmScrobbler
                 return new ScrobbleResponse(LastResponseStatus.BadAuth);
             }
 
-            // TODO Create DB on boot of application. May want to use it for other things.
-
-            //var result = File.Create(_databasePath);
-            //File.Create()
-            //IScrobbler scrobbler = new VXMusicScrobbler(LastfmClient.Auth, databasePath);
             IScrobbler scrobbler = new SQLiteScrobbler(lastfm.Auth, _databasePath);
 
             return await scrobbler.ScrobbleAsync(new Scrobble(artist, album, trackName, DateTimeOffset.Now));

@@ -48,6 +48,8 @@ public class VXMusicOverlayInterface
         overlayProcess.Start();
 
         Logger.LogDebug($"VXMusicOverlay process running with PID: {overlayProcess.Id}");
+
+        StartVXMusicServerStream();
         
         return overlayProcess.Id;
     }
@@ -61,7 +63,7 @@ public class VXMusicOverlayInterface
             using (NamedPipeServerStream serverStream =
                    new NamedPipeServerStream("VXMusicOverlayEventPipe", PipeDirection.InOut))
             {
-                //Logger.LogTrace("Listening for Request from VXMusic Overlay");
+                Logger.LogTrace("Listening for Request from VXMusic Overlay");
                 await serverStream.WaitForConnectionAsync();
                 _isProcessing = true;
                 

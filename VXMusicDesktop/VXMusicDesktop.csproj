@@ -162,6 +162,13 @@
     </Page>
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove="vxscrobbles.db" />
+    <AdditionalFiles Include="vxscrobbles.db">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </AdditionalFiles>
+  </ItemGroup>
+
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
     <Exec Command="xcopy &quot;$(ProjectDir)\Overlay\bin&quot; &quot;$(OutDir)\Overlay&quot; /E /H /Y" />
   </Target>
