@@ -1,10 +1,15 @@
+using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using SpotifyAPI.Web;
 using VXMusic;
 using VXMusic.API;
+using VXMusic.Spotify;
 using VXMusic.Spotify.Authentication;
+using VXMusicDesktop.MVVM.ViewModel;
 
 namespace VXMusicDesktop;
 
@@ -62,7 +67,7 @@ public class VXMusicActions
         }
 
         if (result.Result != null && SpotifyAuthentication.CurrentConnectionState == SpotifyConnectionState.Connected)
-            VXMusicAPI.ReportTrackToSpotifyPlaylist(result);
+            ReportTrackToSpotifyPlaylist(result);
 
         if (result.Result != null)
         {
@@ -88,4 +93,53 @@ public class VXMusicActions
 
         return true;
     }
+    
+    public async static void ReportTrackToSpotifyPlaylist(IRecognitionApiClientResponse result)
+        {
+            var spotify = await SpotifyClientBuilder.Instance;
+
+            var me = await spotify.UserProfile.Current();
+            Logger.LogInformation($"Welcome {me.DisplayName} ({me.Id}), you're authenticated!");
+
+            // get track name from output
+
+            var searchRequest = new SearchRequest(SearchRequest.Types.Track, $"{result.Result.Artist} {result.Result.Title}");
+            var searchResult = spotify.Search.Item(searchRequest);
+            var uri = searchResult.Result.Tracks.Items[0].Uri;
+
+            PlaylistAddItemsRequest playlistAddItemsRequest = new PlaylistAddItemsRequest(new List<string>()
+            {
+                //result.result.song_link
+                uri
+            });
+
+            var playlists = await spotify.PaginateAll(await spotify.Playlists.CurrentUsers().ConfigureAwait(false));
+
+            Logger.LogTrace($"Total Playlists in Account: {playlists.Count}");
+
+            // Prefix Playlist name with dd/MM date
+            var currentDate = DateTime.Now.ToString("dd/MM");
+            var playlistName = $"{currentDate}";
+            
+            // TODO Only run this if VRChat is running
+            var lastKnownLocationName = App.VXMusicSession.VRChatLogParser.CurrentVrChatWorld;
+
+            if (lastKnownLocationName != null)
+                playlistName += " - " + lastKnownLocationName;
+
+            var existingPlaylist = SpotifyPlaylistManager.GetPlaylistIdByNameIfExists(playlistName, playlists);
+
+            if (existingPlaylist == null)
+            {
+                var response = await SpotifyPlaylistManager.CreatePlaylist(me.Id, playlistName, false); // TODO config isPublic above
+                
+                Logger.LogInformation($"Adding Track {result.Result.Title} - {result.Result.Artist} to Playlist {playlistName}");
+                await SpotifyPlaylistManager.AddTrackToPlaylist(response.Id, playlistAddItemsRequest);
+            }
+            else
+            {
+                Logger.LogInformation($"Adding Track {result.Result.Title} - {result.Result.Artist} to Playlist {playlistName}");
+                await SpotifyPlaylistManager.AddTrackToPlaylist(existingPlaylist, playlistAddItemsRequest);
+            }
+        }
 }

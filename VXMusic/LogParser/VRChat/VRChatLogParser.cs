@@ -43,7 +43,7 @@ namespace VXMusic.LogParser.VRChat
         static Timer LogDetectionTimer { get; set; }
 
         public static string LastKnownLocationName { get; set; } // World name
-        static string LastKnownLocationID { get; set; } // World ID
+        public static string LastKnownLocationID { get; set; } // World ID
         static bool PlayerIsBetweenWorlds { get; set; }
         static bool NextJoinIsLocalUser { get; set; }
         
@@ -53,6 +53,8 @@ namespace VXMusic.LogParser.VRChat
 
         private bool IsVRChatShuttingDown;
         private bool _isVrChatSessionRunning { get; set; }
+        
+        private string _currentVrChatWorld { get; set; }
         
         public bool IsVrChatSessionRunning
         {
@@ -64,6 +66,16 @@ namespace VXMusic.LogParser.VRChat
             }
         }
         
+        public string CurrentVrChatWorld
+        {
+            get { return _currentVrChatWorld; }
+            set
+            {
+                _currentVrChatWorld = value;
+                OnPropertyChanged(nameof(CurrentVrChatWorld));
+            }
+        }
+
         public VRChatLogParser(IServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider;
@@ -311,6 +323,7 @@ namespace VXMusic.LogParser.VRChat
                             NextJoinIsLocalUser = true;
 
                             _logger.LogInformation($"World changed to {LastKnownLocationName} -> {LastKnownLocationID}");
+                            CurrentVrChatWorld = LastKnownLocationName;
                             // TODO Wtf is happening here??
                             //_logger.LogInformation($"http://vrchat.com/home/launch?worldId={LastKnownLocationID.Replace(":", "&instanceId=")}", true);
                         }

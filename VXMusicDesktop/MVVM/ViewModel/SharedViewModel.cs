@@ -17,6 +17,7 @@ public class SharedViewModel : INotifyPropertyChanged
     public SharedViewModel()
     {
         App.VXMusicSession.VRChatLogParser.PropertyChanged += VRChatLogParserIsVrChatSessionRunningPropertyChanged;
+        App.VXMusicSession.VRChatLogParser.PropertyChanged += VRChatLogParserCurrentVrChatWorldPropertyChanged;
     }
     
     // Recognition Shared Fields
@@ -35,6 +36,7 @@ public class SharedViewModel : INotifyPropertyChanged
     
     // Game Client Shared Fields
     private bool _isVrChatConnected;
+    private string _currentVrChatWorld;
     
     // Overlay Shared Fields
     private bool _isOverlayRunning;
@@ -109,6 +111,16 @@ public class SharedViewModel : INotifyPropertyChanged
         }
     }
     
+    public string CurrentVrChatWorld
+    {
+        get { return _currentVrChatWorld; }
+        set
+        {
+            _currentVrChatWorld = value;
+            OnPropertyChanged(nameof(CurrentVrChatWorld));
+        }
+    }
+    
     public bool IsOverlayRunning
     {
         get { return _isOverlayRunning; }
@@ -156,9 +168,23 @@ public class SharedViewModel : INotifyPropertyChanged
         }
     }
     
+    private void VRChatLogParserCurrentVrChatWorldPropertyChanged(object sender, PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName == nameof(App.VXMusicSession.VRChatLogParser.CurrentVrChatWorld))
+        {
+            // The IsVRChatSessionRunning property has changed
+            OnCurrentVrChatWorldChanged(App.VXMusicSession.VRChatLogParser.CurrentVrChatWorld);
+        }
+    }
+    
     private void OnVRChatSessionRunningChanged(bool isVrChatConnected)
     {
         IsVrChatConnected = isVrChatConnected;
+    }
+    
+    private void OnCurrentVrChatWorldChanged(string currentVrChatWorld)
+    {
+        CurrentVrChatWorld = currentVrChatWorld;
     }
 
 }
