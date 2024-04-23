@@ -71,7 +71,8 @@ public class VXMusicActions
 
         if (result.Result != null)
         {
-            VXMusicSession.PlaylistFileWriter.AddLineToFileIfDateMatches(
+            VXMusicSession.PlaylistFileWriter.AddLineToFileIfDateMatches(App.VXMusicSession.VRChatLogParser
+                .CurrentVrChatWorld,
                 $"{result.Result.Artist} - {result.Result.Title} {result.Result.Album} ({result.Result.ReleaseDate})");
 
             if (App.VXMusicSession.ConnectionsSettings.IsLastfmConnected)

@@ -33,9 +33,9 @@ public class PlaylistFileWriter
                Environment.NewLine + Environment.NewLine;
     }
 
-    public void AddLineToFileIfDateMatches(string textToAdd)
+    public void AddLineToFileIfDateMatches(string currentWorldName, string textToAdd)
     {
-        string fileName = GetCurrentFileName();
+        string fileName = GetCurrentFileName(currentWorldName);
 
         // Combine the file name with the VXMusic folder path
         string filePath = Path.Combine(_vxMusicFolder, fileName);
@@ -58,18 +58,16 @@ public class PlaylistFileWriter
         }
     }
 
-    private string GetCurrentFileName()
+    private string GetCurrentFileName(string currentWorldName)
     {
         string fileName = "";
         // Get the current date in MM-dd format
         string currentDate = DateTime.Now.ToString("dd-MM");
         
         // Generate the file name with MM-dd format and add location if exists
-        string lastKnownLocationName = LogParser.VRChat.VRChatLogParser.LastKnownLocationName;
-
-        if (lastKnownLocationName != null)
+        if (currentWorldName != null)
         {
-            fileName = $"{currentDate} {lastKnownLocationName}.txt";
+            fileName = $"{currentDate} {currentWorldName}.txt";
         }
         else
         {
