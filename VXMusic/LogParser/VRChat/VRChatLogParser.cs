@@ -114,7 +114,7 @@ namespace VXMusic.LogParser.VRChat
 
             try
             {
-                ApplicationMutex = new Mutex(true, "XSOVRCParser", out VRChatLogParser.HasApplicationMutex);
+                ApplicationMutex = new Mutex(true, "VXMVRCParser", out VRChatLogParser.HasApplicationMutex);
 
                 ApplicationMutex.WaitOne(1000); // Wait around for a second.
 
@@ -163,7 +163,7 @@ namespace VXMusic.LogParser.VRChat
                     {
                         Subscriptions.Add(fn,
                             new TailSubscription(fn, ParseTick, 0, Configuration.ParseFrequencyMilliseconds,
-                                RewindLogForMetadata));
+                                UnwindLogForMetadata));
                         //IsVrChatSessionRunning = true;
                         _logger.LogTrace($"A tail subscription was added to {fn}");
                         
@@ -260,6 +260,71 @@ namespace VXMusic.LogParser.VRChat
                 _logger.LogWarning($"No existing VRChat World instance found.");
             }
         }
+        
+        static void UnwindLogForMetadata(string filePath, long fromByte)
+        {
+            _logger.LogTrace($"Unwinding time to collect metadata for first time read of log at {filePath}...");
+
+            string worldName = string.Empty;
+            string instanceId = string.Empty;
+            //int instanceCap = 0;
+
+            byte[] firstNBytes = new byte[fromByte];
+
+            using (FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+                fs.Read(firstNBytes, 0, (int)fromByte);
+
+            Span<byte> asByteSpan = new Span<byte>(firstNBytes);
+            ReadOnlySpan<char> asCharSpan = Encoding.UTF8.GetString(asByteSpan).AsSpan();
+
+            int lastIdx = 0;
+            int currentIdx = 0;
+
+            while (currentIdx < asCharSpan.Length)
+            {
+                if (asCharSpan[currentIdx] == '\n' || currentIdx == asCharSpan.Length - 1)
+                {
+                    // Adjust the slice to handle the line correctly
+                    string thisLine = asCharSpan.Slice(lastIdx, currentIdx - lastIdx).ToString();
+
+                    if (thisLine.Contains("[Behaviour] Joining or"))
+                    {
+                        string[] tokens = thisLine.Split(' ');
+                        int tocLoc = Array.IndexOf(tokens, "Room:");
+                        if (tocLoc != -1 && tokens.Length > tocLoc + 1)
+                        {
+                            worldName = string.Join(" ", tokens.Skip(tocLoc + 1)).Trim();
+                        }
+                    }
+                    else if (thisLine.Contains("[Behaviour] Joining w"))
+                    {
+                        string[] tokens = thisLine.Split(' ');
+                        int tocLoc = Array.IndexOf(tokens, "Joining");
+                        if (tocLoc != -1 && tokens.Length > tocLoc + 1)
+                        {
+                            instanceId = tokens[tocLoc + 1];
+                        }
+                    }
+
+                    lastIdx = currentIdx + 1; // Move past the newline for the next iteration
+                }
+
+                currentIdx++;
+            }
+
+            if (worldName != null || instanceId != null)
+            {
+                // Read was presumably a success. Write values.
+                LastKnownLocationName = worldName;
+                LastKnownLocationID = instanceId;
+                
+                _logger.LogInformation($"Discovered instance {worldName} ({instanceId}).");
+            }
+            else
+            {
+                _logger.LogWarning($"No existing VRChat World instance found.");
+            }
+        }
 
         /// <summary>
         /// This is messy, but they've changed format on me often enough that it's difficult to care!
@@ -273,6 +338,11 @@ namespace VXMusic.LogParser.VRChat
             {
                 if(!IsVRChatShuttingDown)
                     IsVrChatSessionRunning = true;
+
+                if (!string.IsNullOrWhiteSpace(LastKnownLocationName))
+                {
+                    CurrentVrChatWorld = LastKnownLocationName;
+                }
                 
                 string[] lines = content.Split('\n');
 
@@ -403,9 +473,7 @@ namespace VXMusic.LogParser.VRChat
                 }
             }
         }
-
         
-
         static bool CurrentlySilenced()
         {
             if (Configuration.DisplayJoinLeaveSilencedOverride)

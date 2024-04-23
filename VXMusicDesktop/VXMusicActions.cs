@@ -122,7 +122,6 @@ public class VXMusicActions
             var currentDate = DateTime.Now.ToString("dd/MM");
             var playlistName = $"{currentDate}";
             
-            // TODO Only run this if VRChat is running
             var lastKnownLocationName = App.VXMusicSession.VRChatLogParser.CurrentVrChatWorld;
 
             if (lastKnownLocationName != null)
