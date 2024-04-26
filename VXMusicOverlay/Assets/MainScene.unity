@@ -435,7 +435,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 9cb59f022086406408c4d3ea0f5fa4cb,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 15
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 9cb59f022086406408c4d3ea0f5fa4cb,
         type: 3}
@@ -856,13 +856,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   error: 1
   eventLog: 0
+  spherePrefab: {fileID: 943885321328816842, guid: f19e1b8c598cff144a92f9d52a99d55e,
+    type: 3}
   renderTexture: {fileID: 8400000, guid: 2afc18014991f7e449d31a5eb09138e8, type: 2}
   Position: {x: 0.05, y: 0, z: -0.1}
   Rotation: {x: 180, y: 270, z: 0}
   Scale: {x: 1, y: 1, z: 1}
   MirrorX: 0
   MirrorY: 0
-  width: 0.1
+  width: 0.2
   alpha: 0.2
   show: 1
   SideBySide: 0
@@ -888,6 +890,12 @@ MonoBehaviour:
   RightHandU: -1
   RightHandV: -1
   RightHandDistance: -1
+  FingerOffsetX: 0.02
+  FingerOffsetY: -0.04
+  FingerOffsetZ: 0.01
+  FingerRotationOffsetX: 80
+  FingerRotationOffsetY: 0
+  FingerRotationOffsetZ: 0
   IsInRecognitionState: 0
   OverlayTrackedDevice: 0
   TrackedDeviceInputLock: 0

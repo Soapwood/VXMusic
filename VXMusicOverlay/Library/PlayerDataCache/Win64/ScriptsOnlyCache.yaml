@@ -8,6 +8,8 @@ ScriptsOnlyBuild:
     - Valve.VR.VXMusicInterface
     Unity.2D.Tilemap.Editor.dll:
     - UnityEditor.Tilemaps.GridPaintingState
+    - UnityEditor.Tilemaps.GridPaletteBrushes
+    - UnityEditor.Tilemaps.GridPalettes
     - UnityEditor.Tilemaps.SceneViewGridManager
     - UnityEditor.Tilemaps.SceneViewOpenTilePaletteHelper
     - UnityEditor.Tilemaps.TileDragAndDropManager
@@ -106,6 +108,8 @@ ScriptsOnlyBuild:
     - Class: 115
       Script: {instanceID: 0}
     - Class: 122
+      Script: {instanceID: 0}
+    - Class: 135
       Script: {instanceID: 0}
     - Class: 157
       Script: {instanceID: 0}
@@ -250,7 +254,7 @@ ScriptsOnlyBuild:
     className: VXMusicInterface
   - hash:
       serializedVersion: 2
-      Hash: 71ab13d1636cba2be1f7f5f6769390bb
+      Hash: dcdc1637a5f22343e988089d14285bcb
     assemblyName: Assembly-CSharp-firstpass.dll
     namespaceName: Plugins
     className: VXMusicOverlay

@@ -69,6 +69,10 @@ namespace Plugins
         private GameObject VXMusicLogo;
         //private Animator vxMusicLogoAnimationController = GetComponent<Animator>();
 
+        [SerializeField] private GameObject spherePrefab;
+        private GameObject LeftDebugSphere;
+        private GameObject RightDebugSphere;
+
         [Header("RenderTexture")]
         //Render Texture to get from
         public RenderTexture renderTexture;
@@ -179,6 +183,14 @@ namespace Plugins
         public float RightHandU = -1f;
         public float RightHandV = -1f;
         public float RightHandDistance = -1f;
+
+        public float FingerOffsetX = 0.05f;
+        public float FingerOffsetY = -0.01f;
+        public float FingerOffsetZ = 0.1f;
+
+        public float FingerRotationOffsetX = 15;
+        public float FingerRotationOffsetY = 0;
+        public float FingerRotationOffsetZ = 0;
 
         [Header("VXMusic State")] 
         public bool IsInRecognitionState = false;
@@ -335,6 +347,11 @@ namespace Plugins
 #pragma warning restore 0219
             Debug.Log(Tag + "Begin");
 
+            LeftDebugSphere = Instantiate(spherePrefab, Vector3.zero, Quaternion.identity);
+            LeftDebugSphere.GetComponent<Renderer>().material.color = Color.green;
+            RightDebugSphere = Instantiate(spherePrefab, Vector3.zero, Quaternion.identity);
+            RightDebugSphere.GetComponent<Renderer>().material.color = Color.green;
+            
             var openVRError = EVRInitError.None;
             var overlayError = EVROverlayError.None;
             error = false;
@@ -507,8 +524,8 @@ namespace Plugins
             
             // If overlay is tracked to left controller, make the right hand the dominant input device, and visa versa.
             var inputDeviceRelativeToOverlayDevice = OverlayTrackedDevice == ETrackedControllerRole.LeftHand
-                ? ETrackedControllerRole.RightHand
-                : ETrackedControllerRole.LeftHand;
+                ? ETrackedControllerRole.LeftHand
+                : ETrackedControllerRole.RightHand;
             
             uint currentInputDeviceId = openvr.GetTrackedDeviceIndexForControllerRole(inputDeviceRelativeToOverlayDevice);
 
@@ -855,7 +872,6 @@ namespace Plugins
 
 
         //----------Bonus (you can hit Overlay with a controller and click uGUI)-------------
-
         //Realize uGUI click
         private void updateVRTouch()
         {
@@ -863,61 +879,83 @@ namespace Plugins
             string Tag = "[" + this.GetType().Name + ":" +
                          System.Reflection.MethodBase.GetCurrentMethod(); // Automatically obtain class name and method name
 #pragma warning restore 0219
-
-            //controller index
-
+            
             // Get information for all VR connected devices
             TrackedDevicePose_t[] allDevicePose = new TrackedDevicePose_t[OpenVR.k_unMaxTrackedDeviceCount];
             openvr.GetDeviceToAbsoluteTrackingPose(ETrackingUniverseOrigin.TrackingUniverseStanding, 0f, allDevicePose);
 
             // Variable to store Overlay ray scan results
             VROverlayIntersectionResults_t results = new VROverlayIntersectionResults_t();
-
-            /*
-        // Control by line of sight
-        uint Hmdidx = OpenVR.k_unTrackedDeviceIndex_Hmd;
-        if (checkRay(Hmdidx, allDevicePose, ref results))
-        {
-            parent.setCursorPosition(results, LeftOrRight.Right, channel);
-            Debug.Log(DEBUG_TAG + "HMD u:"+results.vUVs.v0+" v:"+ results.vUVs.v1+" d:"+results.fDistance);
-        }
-        */
+            
             // Get left hand controller information
             uint Leftidx = openvr.GetTrackedDeviceIndexForControllerRole(ETrackedControllerRole.LeftHand);
-            if (checkRay(Leftidx, allDevicePose, ref results))
-            {
-                // If there is an overlay on the line, continue processing
-                CheckTapping(results, LeftOrRight.Left, ref tappedLeft);
 
-                // Updated for cursor display
-                LeftHandU = results.vUVs.v0 * renderTexture.width;
-                LeftHandV = renderTexture.height - results.vUVs.v1 * renderTexture.height;
-                LeftHandDistance = results.fDistance;
-            }
-            else
+            // Calulate origin of Ray for simulated finger
+            if (Leftidx != OpenVR.k_unTrackedDeviceIndexInvalid)
             {
-                LeftHandU = -1f;
-                LeftHandV = -1f;
-                LeftHandDistance = -1f;
+                SteamVR_Utils.RigidTransform leftControllerTransform = new SteamVR_Utils.RigidTransform(allDevicePose[Leftidx].mDeviceToAbsoluteTracking);
+
+                LeftDebugSphere.transform.position = leftControllerTransform.pos;
+
+                // Calculate finger offset from controller
+                Vector3 fingerOffset = new Vector3(FingerOffsetX, FingerOffsetY, FingerOffsetZ); // Tweak these offsets!
+                Quaternion fingerRotationOffset = Quaternion.Euler(FingerRotationOffsetX, FingerRotationOffsetY, FingerRotationOffsetZ); // Assuming the finger points slightly differently
+                Vector3 fingerPosition = leftControllerTransform.TransformPoint(fingerOffset);
+                Quaternion fingerRotation = leftControllerTransform.rot * fingerRotationOffset;
+                
+                Debug.DrawLine(fingerPosition, fingerPosition + (fingerRotation * Vector3.forward) * 2.0f, Color.blue);
+                
+                //if (checkRay(Leftidx, allDevicePose, ref results))
+                if (checkRay(Leftidx, fingerPosition, fingerRotation * Vector3.forward, ref results))
+                {
+                    // If there is an overlay on the line, continue processing
+                    CheckTapping(results, LeftOrRight.Left, ref tappedLeft);
+
+                    // Updated for cursor display
+                    LeftHandU = results.vUVs.v0 * renderTexture.width;
+                    LeftHandV = renderTexture.height - results.vUVs.v1 * renderTexture.height;
+                    LeftHandDistance = results.fDistance;
+                }
+                else
+                {
+                    LeftHandU = -1f;
+                    LeftHandV = -1f;
+                    LeftHandDistance = -1f;
+                }
             }
 
             // Get right hand controller information
             uint Rightidx = openvr.GetTrackedDeviceIndexForControllerRole(ETrackedControllerRole.RightHand);
-            if (checkRay(Rightidx, allDevicePose, ref results))
+            if (Rightidx != OpenVR.k_unTrackedDeviceIndexInvalid)
             {
-                // If there is an overlay on the line, continue processing
-                CheckTapping(results, LeftOrRight.Right, ref tappedRight);
+                SteamVR_Utils.RigidTransform rightControllerTransform = new SteamVR_Utils.RigidTransform(allDevicePose[Rightidx].mDeviceToAbsoluteTracking);
+                
+                RightDebugSphere.transform.position = rightControllerTransform.pos;
+                
+                // Calculate finger offset from controller
+                Vector3 fingerOffset = new Vector3(FingerOffsetX, FingerOffsetY, FingerOffsetZ); // Tweak these offsets!
+                Quaternion fingerRotationOffset = Quaternion.Euler(FingerRotationOffsetX, FingerRotationOffsetY, FingerRotationOffsetZ); // Assuming the finger points slightly differently
+                Vector3 fingerPosition = rightControllerTransform.TransformPoint(fingerOffset);
+                Quaternion fingerRotation = rightControllerTransform.rot * fingerRotationOffset;
+                
+                Debug.DrawLine(fingerPosition, fingerPosition + (fingerRotation * Vector3.forward) * 2.0f, Color.blue);
+                
+                if (checkRay(Rightidx, fingerPosition, fingerRotation * Vector3.forward, ref results))
+                {
+                    // If there is an overlay on the line, continue processing
+                    CheckTapping(results, LeftOrRight.Right, ref tappedRight);
 
-                // Updated for cursor display
-                RightHandU = results.vUVs.v0 * renderTexture.width;
-                RightHandV = renderTexture.height - results.vUVs.v1 * renderTexture.height;
-                RightHandDistance = results.fDistance;
-            }
-            else
-            {
-                RightHandU = -1f;
-                RightHandV = -1f;
-                RightHandDistance = -1f;
+                    // Updated for cursor display
+                    RightHandU = results.vUVs.v0 * renderTexture.width;
+                    RightHandV = renderTexture.height - results.vUVs.v1 * renderTexture.height;
+                    RightHandDistance = results.fDistance;
+                }
+                else
+                {
+                    RightHandU = -1f;
+                    RightHandV = -1f;
+                    RightHandDistance = -1f;
+                }
             }
         }
 
@@ -948,6 +986,33 @@ namespace Plugins
             }
 
             return false;
+        }
+        
+        private bool checkRay(uint idx, Vector3 pos, Vector3 dir, ref VROverlayIntersectionResults_t results)
+        {
+            if (idx != OpenVR.k_unTrackedDeviceIndexInvalid)
+            {
+                TrackedDevicePose_t[] allDevicePose = new TrackedDevicePose_t[OpenVR.k_unMaxTrackedDeviceCount];
+                openvr.GetDeviceToAbsoluteTrackingPose(ETrackingUniverseOrigin.TrackingUniverseStanding, 0f, allDevicePose);
+
+                if (allDevicePose[idx].bDeviceIsConnected && allDevicePose[idx].bPoseIsValid)
+                {
+                    // Convert the direction and position from Unity's coordinate system to OpenVR's coordinate system
+                    HmdVector3_t rayOrigin = new HmdVector3_t { v0 = pos.x, v1 = pos.y, v2 = -pos.z }; // OpenVR uses a left-handed coordinate system
+                    HmdVector3_t rayDirection = new HmdVector3_t { v0 = dir.x, v1 = dir.y, v2 = -dir.z };
+
+                    // Raycasting parameters setup
+                    VROverlayIntersectionParams_t param = new VROverlayIntersectionParams_t();
+                    param.vSource = rayOrigin;
+                    param.vDirection = rayDirection;
+                    param.eOrigin = ETrackingUniverseOrigin.TrackingUniverseStanding;
+
+                    // Check for intersection with the overlay
+                    return overlay.ComputeOverlayIntersection(overlayHandle, ref param, ref results);
+                }
+            }
+
+            return false; // Return false if device index is invalid, device is not connected, or pose is invalid
         }
 
         // Check if it has an intersection with the overlay
@@ -1096,147 +1161,5 @@ namespace Plugins
                 }
             }
         }
-
-        // public async Task IsVXMusicServerRunning()
-        // {
-        //     // Create and connect the ClientStream
-        //     ClientStream = new NamedPipeClientStream(".", "VXMusicOverlayEventPipe", PipeDirection.InOut);
-        //     ClientStream.Connect();
-        //
-        //     // Initialize ClientReader and ClientWriter
-        //     ClientReader = new StreamReader(ClientStream);
-        //     ClientWriter = new StreamWriter(ClientStream) { AutoFlush = true };
-        //
-        //     string messageToSend = "VX_CONNECT_REQ";
-        //     ClientWriter.WriteLine(messageToSend);
-        //     ClientStream.WaitForPipeDrain();
-        //
-        //     // Read the response from the .NET server
-        //     string response = ClientReader.ReadLine();
-        //
-        //     if (response == "VX_CONNECT_ACK")
-        //     {
-        //         Debug.Log("Received response from .NET: " + response);
-        //     }
-        //     
-        //     ClientStream.Close();
-        //     ClientStream = null;
-        //     
-        //     ClientReader.Close();
-        //     ClientReader = null;
-        //     ClientWriter.Close();
-        //     ClientWriter = null;
-        //
-        //     // string eventData;
-        //     // // THis is likely where the connectino is failing
-        //     // while ((eventData = await ClientReader.ReadLineAsync()) != null)
-        //     // {
-        //     //     Console.WriteLine($"Received event from Unity: {eventData}");
-        //     //     
-        //     //     switch (response)
-        //     //     {
-        //     //         case "VX_RECOGNITION_ACK":
-        //     //             IsInRecognitionState = true;
-        //     //             //OnRecognitionStateTriggered?.Invoke(IsInRecognitionState);
-        //     //             continue;
-        //     //         case "VX_RECOGNITION_FIN":
-        //     //             IsInRecognitionState = false;
-        //     //             //OnRecognitionStateTriggered?.Invoke(IsInRecognitionState);
-        //     //             continue;
-        //     //         default:
-        //     //             Console.WriteLine("UNRECOGNISED MESSAGE SENT FROM VXM");
-        //     //             continue;
-        //     //     }
-        //     //         
-        //     //     //await writer.WriteLineAsync(line);
-        //     // }
-        //
-        //     //Task.Run(() => ListenForServerResponses());
-        // }
-    
-        // private async Task ListenForServerResponses()
-        // {
-        //     while (ClientStream != null && ClientStream.IsConnected)
-        //     {
-        //         string response = ClientReader.ReadLine();
-        //
-        //         switch (response)
-        //         {
-        //             case "VX_RECOGNITION_ACK":
-        //                 IsInRecognitionState = true;
-        //                 //OnRecognitionStateTriggered?.Invoke(IsInRecognitionState);
-        //                 continue;
-        //             case "VX_RECOGNITION_FIN":
-        //                 IsInRecognitionState = false;
-        //                 //OnRecognitionStateTriggered?.Invoke(IsInRecognitionState);
-        //                 continue;
-        //             default:
-        //                 Console.WriteLine("UNRECOGNISED MESSAGE SENT FROM VXM");
-        //                 continue;
-        //         }
-        //     }
-        // }
-    
-        // public async Task SendRequestToServer(string request)
-        // {
-        //     // if (ClientStream != null || ClientStream.IsConnected)
-        //     // {
-        //     //     ClientStream.Close();
-        //     // }
-        //
-        //     ClientStream = new NamedPipeClientStream(".", "VXMusicOverlayEventPipe", PipeDirection.InOut);
-        //     ClientStream.Connect();
-        //     
-        //     //ClientStream.Connect();
-        //     // This is also fucked
-        //     ClientWriter = new StreamWriter(ClientStream) { AutoFlush = true };
-        //     ClientWriter.WriteLine(request);
-        //     //ClientWriter.Flush();
-        //     
-        //     ClientReader = new StreamReader(ClientStream);
-        //
-        //     // Read the response from the .NET server
-        //     Task<string> response = ClientReader.ReadLineAsync();
-        //
-        //     if (response.Result == "VX_RECOGNITION_ACK")
-        //     {
-        //         Debug.Log("Received REC ACK response from .NET: " + response);
-        //         // ChangeOverlayOpacity(1.0f);
-        //         IsInRecognitionState = true;
-        //         OnRecognitionStateTriggered?.Invoke(IsInRecognitionState);
-        //     }
-        //     
-        //     //ClientStream.
-        //     
-        //     response = ClientReader.ReadLineAsync();
-        //     
-        //     if (response.Result == "VX_RECOGNITION_FIN")
-        //     {
-        //         Debug.Log("Received REC FIN response from .NET: " + response);
-        //         //ChangeOverlayOpacity(0.2f);
-        //         IsInRecognitionState = false;
-        //         OnRecognitionStateTriggered?.Invoke(IsInRecognitionState);
-        //     }
-        // }
-
-        // public void SendRecognitionRequestToVXMusic()
-        // {
-        //     Debug.Log("Sending Recognition Request to VXMusic");
-        //
-        //
-        //     string messageToSend = "VX_TRIGGER_RECOGNITION";
-        //     ClientWriter.WriteLine(messageToSend);
-        //     ClientWriter.Flush();
-        //
-        //     // Read the response from the .NET server
-        //     //ClientReader.BaseStream.Seek(0, SeekOrigin.Begin);
-        //     string response = ClientReader.ReadLine();
-        //
-        //     if (response == "VX_RECOGNITION_ACK")
-        //     {
-        //         Debug.Log("Received response from .NET: " + response);
-        //
-        //     }
-        // }
     }
 }
