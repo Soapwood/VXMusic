@@ -894,7 +894,7 @@ MonoBehaviour:
   FingerOffsetY: -0.04
   FingerOffsetZ: 0.01
   FingerRotationOffsetX: 80
-  FingerRotationOffsetY: 0
+  FingerRotationOffsetY: 25
   FingerRotationOffsetZ: 0
   IsInRecognitionState: 0
   OverlayTrackedDevice: 0
