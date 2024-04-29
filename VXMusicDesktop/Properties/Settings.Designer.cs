@@ -165,5 +165,17 @@ namespace VXMusicDesktop.Properties {
                 this["LastfmPassword"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("LeftHand")]
+        public string OverlayAnchor {
+            get {
+                return ((string)(this["OverlayAnchor"]));
+            }
+            set {
+                this["OverlayAnchor"] = value;
+            }
+        }
     }
 }

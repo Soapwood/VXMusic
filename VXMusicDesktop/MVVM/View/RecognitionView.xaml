@@ -310,7 +310,41 @@
                 </Button>
         </StackPanel>
         </StackPanel>
-
+        
+        <!-- <StackPanel Margin="20,0,0,0"> -->
+        <!--     ~1~ Options  @1@ -->
+        <!--     <CheckBox x:Name="AutolistenCheckBox" -->
+        <!--               Content="Enable Autolisten" -->
+        <!--               IsChecked="{Binding IsShazamByoApiEnabled}" -->
+        <!--               IsEnabled="{Binding IsShazamApiEnabled}" -->
+        <!--               Margin="0,10,0,0" -->
+        <!--               VerticalAlignment="Center" HorizontalAlignment="Left" -->
+        <!--               Style="{StaticResource CustomCheckBoxStyle}" -->
+        <!--               Checked="ShazamByoApiCheckButtonChecked" Unchecked="ShazamByoApiCheckButtonUnchecked"/> -->
+        <!--     <StackPanel Orientation="Horizontal"> -->
+        <!--         <TextBox x:Name="AutolistenTextBox" -->
+        <!--                      Visibility="{Binding IsShazamByoApiEnabled, Converter={StaticResource BoolToVis}}" -->
+        <!--                      Style="{StaticResource ModernTextBox}" -->
+        <!--                      IsEnabled="{Binding IsShazamByoApiEnabled}" -->
+        <!--                      Width="200" Height="50" Margin="10,0,0,0" -->
+        <!--                      GotFocus="ShazamByoApiPasswordBoxGotFocus" -->
+        <!--                      LostFocus="ShazamByoApiPasswordBoxLostFocus"/> -->
+        <!--         <Button x:Name="SaveAutolistenSettingButton" -->
+        <!--                 Height="21" -->
+        <!--                 Width="20" -->
+        <!--                 FontSize="14" -->
+        <!--                 HorizontalAlignment="Center" -->
+        <!--                 Visibility="{Binding IsShazamByoApiEnabled, Converter={StaticResource BoolToVis}}" -->
+        <!--                 Click="PerformSaveAndTestShazamByoApi" -->
+        <!--                 Margin="5,0,0,0" -->
+        <!--                 IsEnabled="true"> -->
+        <!--             <Button.Background> -->
+        <!--                 <ImageBrush ImageSource="{StaticResource SaveButtonImage}" Stretch="UniformToFill"/> -->
+        <!--             </Button.Background> -->
+        <!--         </Button> -->
+        <!--     </StackPanel> -->
+        <!-- </StackPanel> -->
+        
         <StackPanel>
             <Button 
                 x:Name="RunRecognitionButton"

@@ -77,6 +77,47 @@ public class VXMusicOverlayInterface
             }
         }
     }
+    
+    public static async Task<bool> SendOverlayAnchorUpdateRequest(string overlayRequest)
+    {
+        // Create and connect the ClientStream
+        var clientStream = new NamedPipeClientStream(".", "VXMusicOverlayEventPipeHandUpdate", PipeDirection.InOut);
+        clientStream.Connect();
+    
+        // Initialize ClientReader and ClientWriter
+        var clientReader = new StreamReader(clientStream);
+        var clientWriter = new StreamWriter(clientStream) { AutoFlush = true };
+        
+        clientWriter.WriteLine(overlayRequest);
+        
+        // using (NamedPipeServerStream serverStream =
+        //        new NamedPipeServerStream("VXMusicOverlayEventPipeHandUpdate", PipeDirection.InOut))
+        // {
+        //     Logger.LogDebug("Sending Overlay Anchor change request to VXMusicOverlay");
+        //     await serverStream.WaitForConnectionAsync();
+        //     //_isProcessing = true;
+        //         
+        //     using (StreamReader reader = new StreamReader(serverStream))
+        //     using (StreamWriter writer = new StreamWriter(serverStream) { AutoFlush = true })
+        //     {
+        //         writer.WriteLine(overlayRequest);
+        //
+        //         //string eventData = await reader.ReadLineAsync();
+        //         //Logger.LogTrace($"Received event from Unity Client: {eventData}");
+        //         //await ProcessIncomingUnityEventMessage(writer, eventData);
+        //     }
+        // }
+        
+        
+        //VXMusicSession.NotificationClient.SendNotification("VXMusic Overlay Connected!", "",4);
+        //SharedViewModel.IsOverlayRunning = true;
+        //OverlayWasRunning = true;
+        return true;
+
+
+        //Logger.LogWarning("Overlay tried to connect but it is already connected.");
+        //return false;
+    }
 
     public static async Task<bool> ProcessIncomingUnityEventMessage(StreamWriter writer, string incomingMessage)
     {

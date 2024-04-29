@@ -2,6 +2,7 @@ using System;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using VXMusic;
+using VXMusic.Overlay;
 using VXMusicDesktop.Theme;
 
 namespace VXMusicDesktop;
@@ -140,6 +141,20 @@ public class VXUserSettings
         public static bool GetCurrentOverlayLaunchOnStartup()
         {
             return VXMusicDesktop.Properties.Settings.Default.LaunchOverlayOnStartup;
+        }
+        
+        public static void SetOverlayAnchor(VXMusicOverlayAnchor overlayAnchor)
+        {
+            VXMusicDesktop.Properties.Settings.Default.OverlayAnchor = overlayAnchor.ToString();
+            VXMusicDesktop.Properties.Settings.Default.Save();
+            
+            Logger.LogDebug($"User Setting OverlayAnchor set to {Properties.Settings.Default.OverlayAnchor}");
+        }
+    
+        public static VXMusicOverlayAnchor GetOverlayAnchor()
+        {
+            Enum.TryParse<VXMusicOverlayAnchor>(Properties.Settings.Default.OverlayAnchor, out var overlayAnchor);
+            return overlayAnchor;
         }
     }
 

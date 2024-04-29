@@ -9,7 +9,7 @@
     <PackageIcon>VXLogo.png</PackageIcon>
     <ApplicationIcon>Images\VXLogoIcon.ico</ApplicationIcon>
     <RunPostBuildEvent>Always</RunPostBuildEvent>
-    <Version>0.4.8</Version>
+    <Version>0.4.9</Version>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
@@ -101,6 +101,14 @@
     </Content>
     <None Remove="Images\VXLogoTinyButton.png" />
     <Content Include="Images\VXLogoTinyButton.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Remove="Images\LeftHandIcon.png" />
+    <Content Include="Images\LeftHandIcon.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Remove="Images\RightHandIcon.png" />
+    <Content Include="Images\RightHandIcon.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

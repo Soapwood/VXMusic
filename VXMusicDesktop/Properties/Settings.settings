@@ -38,6 +38,9 @@
     <Setting Name="LastfmPassword" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
+    <Setting Name="OverlayAnchor" Type="System.String" Scope="User">
+      <Value Profile="(Default)">LeftHand</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
 

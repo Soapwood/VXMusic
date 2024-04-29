@@ -147,10 +147,12 @@ public class OverlaySettings
 {
     public string RuntimePath;
     public bool LaunchOverlayOnStartup;
+    public VXMusicOverlayAnchor OverlayAnchor;
 
     public OverlaySettings()
     {
         LaunchOverlayOnStartup = VXUserSettings.Overlay.GetCurrentOverlayLaunchOnStartup();
+        OverlayAnchor = VXUserSettings.Overlay.GetOverlayAnchor();
     }
 }
 

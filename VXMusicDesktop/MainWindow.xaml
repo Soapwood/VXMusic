@@ -101,6 +101,13 @@
                        HorizontalAlignment="Right" 
                        Margin="0,30,120,0"
                        Foreground="{StaticResource TextBasic}"/>
+            
+            <!-- <TextBlock x:Name="CurrentWorldTextBlock" -->
+            <!--            Grid.Column="1"  -->
+            <!--            VerticalAlignment="Top"  -->
+            <!--            HorizontalAlignment="Right"  -->
+            <!--            Margin="0,30,120,0" -->
+            <!--            Foreground="{StaticResource TextBasic}"/> -->
 
             <Button Name="MainWindowMinimiseButton" 
                     Grid.Column="1" 

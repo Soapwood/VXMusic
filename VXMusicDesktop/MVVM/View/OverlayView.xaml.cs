@@ -33,6 +33,9 @@ namespace VXMusicDesktop.MVVM.View
             // Handle the theme change here for Home View
             OverlayMenuOption2BoxBorderGradientBrush.GradientStops[0].Color = ColourSchemeManager.SecondaryColour.Color;
             OverlayMenuOption2BoxBorderGradientBrush.GradientStops[1].Color = ColourSchemeManager.Accent1Colour.Color;
+            
+            OverlayMenuOptionOverlayHandBoxBorderGradientBrush.GradientStops[0].Color = ColourSchemeManager.SecondaryColour.Color;
+            OverlayMenuOptionOverlayHandBoxBorderGradientBrush.GradientStops[1].Color = ColourSchemeManager.Accent1Colour.Color;
 
             LaunchOverlayOnStartupToggleButton.BorderBrush = LaunchOverlayOnStartupToggleButton.IsChecked == true
                 ? ColourSchemeManager.SecondaryColour

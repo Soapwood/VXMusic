@@ -57,7 +57,8 @@ namespace VXMusicDesktop
 
             var overlaySettings = new OverlaySettings()
             {
-                RuntimePath = configuration["Overlay:RuntimePath"]
+                RuntimePath = configuration["Overlay:RuntimePath"],
+                OverlayAnchor = VXUserSettings.Overlay.GetOverlayAnchor()
             };
             
             var recognitionSettings = new RecognitionSettings()
