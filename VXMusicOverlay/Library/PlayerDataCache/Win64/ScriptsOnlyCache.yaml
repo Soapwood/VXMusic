@@ -86,25 +86,25 @@ ScriptsOnlyBuild:
     - Class: 108
       Script: {instanceID: 0}
     - Class: 114
-      Script: {instanceID: 2580}
+      Script: {instanceID: 2582}
     - Class: 114
-      Script: {instanceID: 2600}
+      Script: {instanceID: 2602}
     - Class: 114
-      Script: {instanceID: 2806}
+      Script: {instanceID: 2808}
     - Class: 114
-      Script: {instanceID: 2968}
+      Script: {instanceID: 2970}
     - Class: 114
-      Script: {instanceID: 3238}
+      Script: {instanceID: 3240}
     - Class: 114
-      Script: {instanceID: 3484}
+      Script: {instanceID: 3486}
     - Class: 114
-      Script: {instanceID: 3606}
+      Script: {instanceID: 3608}
     - Class: 114
-      Script: {instanceID: 4052}
+      Script: {instanceID: 4054}
     - Class: 114
-      Script: {instanceID: 5162}
+      Script: {instanceID: 5164}
     - Class: 114
-      Script: {instanceID: 5972}
+      Script: {instanceID: 5974}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 122
@@ -248,7 +248,7 @@ ScriptsOnlyBuild:
     className: RawImage
   - hash:
       serializedVersion: 2
-      Hash: 37c9b6a362d507f4aa5a7d787744de4b
+      Hash: 4654e4ea40b057b20dcafc3f5bb82420
     assemblyName: Assembly-CSharp-firstpass.dll
     namespaceName: Valve.VR
     className: VXMusicInterface

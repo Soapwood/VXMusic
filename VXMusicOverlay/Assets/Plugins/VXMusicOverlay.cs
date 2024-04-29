@@ -54,6 +54,7 @@ using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Purchasing;
 using Valve.VR;
 
 namespace Plugins
@@ -347,10 +348,10 @@ namespace Plugins
 #pragma warning restore 0219
             Debug.Log(Tag + "Begin");
 
-            LeftDebugSphere = Instantiate(spherePrefab, Vector3.zero, Quaternion.identity);
-            LeftDebugSphere.GetComponent<Renderer>().material.color = Color.green;
-            RightDebugSphere = Instantiate(spherePrefab, Vector3.zero, Quaternion.identity);
-            RightDebugSphere.GetComponent<Renderer>().material.color = Color.green;
+            //LeftDebugSphere = Instantiate(spherePrefab, Vector3.zero, Quaternion.identity);
+            //LeftDebugSphere.GetComponent<Renderer>().material.color = Color.green;
+            //RightDebugSphere = Instantiate(spherePrefab, Vector3.zero, Quaternion.identity);
+            //RightDebugSphere.GetComponent<Renderer>().material.color = Color.green;
             
             var openVRError = EVRInitError.None;
             var overlayError = EVROverlayError.None;
@@ -448,6 +449,10 @@ namespace Plugins
                 _VXMusicInterface.SendMessageToServer("VX_HEARTBEAT_REQ");
                 _timeSinceLastHeartbeat = 0f;
             }
+            
+            // Listen for incoming event
+            //if (!_VXMusicInterface.IsListening) 
+                //_VXMusicInterface.ListenForVXMusicDesktopEvent();
 
             if (show)
             {
@@ -895,7 +900,7 @@ namespace Plugins
             {
                 SteamVR_Utils.RigidTransform leftControllerTransform = new SteamVR_Utils.RigidTransform(allDevicePose[Leftidx].mDeviceToAbsoluteTracking);
 
-                LeftDebugSphere.transform.position = leftControllerTransform.pos;
+                //LeftDebugSphere.transform.position = leftControllerTransform.pos;
 
                 // Calculate finger offset from controller
                 Vector3 fingerOffset = new Vector3(FingerOffsetX, FingerOffsetY, FingerOffsetZ); // Tweak these offsets!
@@ -903,7 +908,7 @@ namespace Plugins
                 Vector3 fingerPosition = leftControllerTransform.TransformPoint(fingerOffset);
                 Quaternion fingerRotation = leftControllerTransform.rot * fingerRotationOffset;
                 
-                Debug.DrawLine(fingerPosition, fingerPosition + (fingerRotation * Vector3.forward) * 2.0f, Color.blue);
+                //Debug.DrawLine(fingerPosition, fingerPosition + (fingerRotation * Vector3.forward) * 2.0f, Color.blue);
                 
                 //if (checkRay(Leftidx, allDevicePose, ref results))
                 if (checkRay(Leftidx, fingerPosition, fingerRotation * Vector3.forward, ref results))
@@ -930,7 +935,7 @@ namespace Plugins
             {
                 SteamVR_Utils.RigidTransform rightControllerTransform = new SteamVR_Utils.RigidTransform(allDevicePose[Rightidx].mDeviceToAbsoluteTracking);
                 
-                RightDebugSphere.transform.position = rightControllerTransform.pos;
+                //RightDebugSphere.transform.position = rightControllerTransform.pos;
                 
                 // Calculate finger offset from controller
                 Vector3 fingerOffset = new Vector3(FingerOffsetX, FingerOffsetY, FingerOffsetZ); // Tweak these offsets!
@@ -938,7 +943,7 @@ namespace Plugins
                 Vector3 fingerPosition = rightControllerTransform.TransformPoint(fingerOffset);
                 Quaternion fingerRotation = rightControllerTransform.rot * fingerRotationOffset;
                 
-                Debug.DrawLine(fingerPosition, fingerPosition + (fingerRotation * Vector3.forward) * 2.0f, Color.blue);
+                //Debug.DrawLine(fingerPosition, fingerPosition + (fingerRotation * Vector3.forward) * 2.0f, Color.blue);
                 
                 if (checkRay(Rightidx, fingerPosition, fingerRotation * Vector3.forward, ref results))
                 {

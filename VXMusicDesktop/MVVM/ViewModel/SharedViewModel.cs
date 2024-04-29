@@ -154,7 +154,7 @@ public class SharedViewModel : INotifyPropertyChanged
         if (!IsRecognitionRunning && !IsOverlayRunning && VXMusicOverlayInterface.OverlayWasRunning)
         {
             Logger.LogError("VXMusicOverlay has timed out!");
-            VXMusicSession.NotificationClient.SendNotification("VXMusic Overlay has disconnected.", "", 4);
+            //VXMusicSession.NotificationClient.SendNotification("VXMusic Overlay has disconnected.", "", 4);
             VXMusicOverlayInterface.OverlayWasRunning = false;
         }
     }
