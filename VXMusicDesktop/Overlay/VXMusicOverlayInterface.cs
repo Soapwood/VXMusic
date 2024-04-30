@@ -15,6 +15,11 @@ namespace VXMusic.Overlay;
 public class VXMusicOverlayInterface
 {
     public static ILogger Logger = App.ServiceProvider.GetRequiredService<ILogger<App>>();
+    
+    public static NamedPipeServerStream ServerStream;
+    public static StreamReader ServerReader;
+    public static StreamWriter ServerWriter;
+
     private static bool _isProcessing;
 
     public static bool HasNewHeartbeatMessage { get; set; }
@@ -49,30 +54,30 @@ public class VXMusicOverlayInterface
 
         Logger.LogDebug($"VXMusicOverlay process running with PID: {overlayProcess.Id}");
 
-        StartVXMusicServerStream();
-        
+        StartVXMusicDesktopEventListener();
+
         return overlayProcess.Id;
     }
 
-    public static async Task StartVXMusicServerStream()
+    public static async Task StartVXMusicDesktopEventListener()
     {
         Logger.LogInformation("Waiting for Unity Runtime Client to Connect...");
         
         while (true)
         {
-            using (NamedPipeServerStream serverStream =
+            using (ServerStream =
                    new NamedPipeServerStream("VXMusicOverlayEventPipe", PipeDirection.InOut))
             {
                 Logger.LogTrace("Listening for Request from VXMusic Overlay");
-                await serverStream.WaitForConnectionAsync();
+                await ServerStream.WaitForConnectionAsync();
                 _isProcessing = true;
                 
-                using (StreamReader reader = new StreamReader(serverStream))
-                using (StreamWriter writer = new StreamWriter(serverStream) { AutoFlush = true })
+                using (ServerReader = new StreamReader(ServerStream))
+                using (ServerWriter = new StreamWriter(ServerStream) { AutoFlush = true })
                 {
-                    string eventData = await reader.ReadLineAsync();
+                    string eventData = await ServerReader.ReadLineAsync();
                     Logger.LogTrace($"Received event from Unity Client: {eventData}");
-                    await ProcessIncomingUnityEventMessage(writer, eventData);
+                    await ProcessIncomingUnityEventMessage(ServerWriter, eventData);
                 }
             }
         }
@@ -80,43 +85,45 @@ public class VXMusicOverlayInterface
     
     public static async Task<bool> SendOverlayAnchorUpdateRequest(string overlayRequest)
     {
-        // Create and connect the ClientStream
-        var clientStream = new NamedPipeClientStream(".", "VXMusicOverlayEventPipeHandUpdate", PipeDirection.InOut);
-        clientStream.Connect();
-    
-        // Initialize ClientReader and ClientWriter
-        var clientReader = new StreamReader(clientStream);
-        var clientWriter = new StreamWriter(clientStream) { AutoFlush = true };
-        
-        clientWriter.WriteLine(overlayRequest);
-        
-        // using (NamedPipeServerStream serverStream =
-        //        new NamedPipeServerStream("VXMusicOverlayEventPipeHandUpdate", PipeDirection.InOut))
-        // {
-        //     Logger.LogDebug("Sending Overlay Anchor change request to VXMusicOverlay");
-        //     await serverStream.WaitForConnectionAsync();
-        //     //_isProcessing = true;
-        //         
-        //     using (StreamReader reader = new StreamReader(serverStream))
-        //     using (StreamWriter writer = new StreamWriter(serverStream) { AutoFlush = true })
-        //     {
-        //         writer.WriteLine(overlayRequest);
-        //
-        //         //string eventData = await reader.ReadLineAsync();
-        //         //Logger.LogTrace($"Received event from Unity Client: {eventData}");
-        //         //await ProcessIncomingUnityEventMessage(writer, eventData);
-        //     }
-        // }
-        
-        
-        //VXMusicSession.NotificationClient.SendNotification("VXMusic Overlay Connected!", "",4);
-        //SharedViewModel.IsOverlayRunning = true;
-        //OverlayWasRunning = true;
+        // Encapsulate resource management with 'using' to ensure proper disposal
+        using (var clientStream = new NamedPipeClientStream(".", "VXMusicOverlayEventServerPipe", PipeDirection.InOut))
+        {
+            try
+            {
+                // Connect to the server with a timeout (optional but recommended)
+                clientStream.Connect(5000); // Timeout in milliseconds
+
+                // Initialize StreamReader and StreamWriter using 'using' to automatically dispose
+                using (var clientWriter = new StreamWriter(clientStream) { AutoFlush = true })
+                using (var clientReader = new StreamReader(clientStream))
+                {
+                    // Send a request asynchronously
+                    await clientWriter.WriteLineAsync(overlayRequest);
+
+                    // Optionally read response back if expected
+                    var response = await clientReader.ReadLineAsync();
+                    Logger.LogTrace($"Received response from server: {response}");
+                    Logger.LogDebug("Successfully sent request to VXMusic Overlay.");
+                }
+            }
+            catch (TimeoutException ex)
+            {
+                Logger.LogError($"Failed to connect: {ex.Message}");
+                return false;
+            }
+            catch (Exception ex)
+            {
+                Logger.LogError($"An error occurred: {ex.Message}");
+                return false;
+            }
+        }
+
+        // Optionally handle further actions after successful communication
+        // VXMusicSession.NotificationClient.SendNotification("VXMusic Overlay Connected!", "", 4);
+        // SharedViewModel.IsOverlayRunning = true;
+        // OverlayWasRunning = true;
+
         return true;
-
-
-        //Logger.LogWarning("Overlay tried to connect but it is already connected.");
-        //return false;
     }
 
     public static async Task<bool> ProcessIncomingUnityEventMessage(StreamWriter writer, string incomingMessage)

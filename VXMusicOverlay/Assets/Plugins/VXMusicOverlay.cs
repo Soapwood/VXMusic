@@ -55,6 +55,7 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Purchasing;
+using UnityEngine.Serialization;
 using Valve.VR;
 
 namespace Plugins
@@ -78,11 +79,11 @@ namespace Plugins
         //Render Texture to get from
         public RenderTexture renderTexture;
 
-        [Header("Transform")]
+        [FormerlySerializedAs("Position")] [Header("Transform")]
         //Unity compliant position and rotation
-        public Vector3 Position = new Vector3(0, -0.5f, 3);
+        public Vector3 OverlayPosition = new Vector3(0, -0.5f, 3);
 
-        public Vector3 Rotation = new Vector3(0, 0, 0);
+        [FormerlySerializedAs("Rotation")] public Vector3 OverlayRotation = new Vector3(0, 0, 0);
 
         public Vector3 Scale = new Vector3(1, 1, 1);
 
@@ -249,21 +250,56 @@ namespace Plugins
         }
 
         // Switching device from outside
-        public void changeToHMD()
+        public void ChangeAnchorToHmd()
         {
             DeviceIndex = TrackingDeviceSelect.HMD;
         }
 
         // Switching device from outside
-        public void changeToLeftController()
+        public void ChangeAnchorToLeftController()
         {
             DeviceIndex = TrackingDeviceSelect.LeftController;
+            OverlayTrackedDevice = ETrackedControllerRole.LeftHand;
+            TrackedDeviceInputLock = EVRButtonId.k_EButton_SteamVR_Trigger;
+            
+            
+            OverlayPosition.x = 0.05f;
+            OverlayPosition.y = 0;
+            OverlayPosition.z = -0.1f;
+            OverlayRotation.x = 180;
+            OverlayRotation.y = 270;
+            OverlayRotation.z = -0.1f;
+
+            FingerOffsetX = 0.02f;
+            FingerOffsetY = -0.04f;
+            FingerOffsetZ = 0.01f;
+
+            FingerRotationOffsetX = 80;
+            FingerRotationOffsetY = 25;
+            FingerRotationOffsetZ = 0;
         }
 
         // Switching device from outside
-        public void changeToRightController()
+        public void ChangeAnchorToRightController()
         {
             DeviceIndex = TrackingDeviceSelect.RightController;
+            OverlayTrackedDevice = ETrackedControllerRole.RightHand;
+            TrackedDeviceInputLock = EVRButtonId.k_EButton_SteamVR_Trigger;
+            
+            OverlayPosition.x = -0.05f;
+            OverlayPosition.y = 0;
+            OverlayPosition.z = -0.11f;
+            OverlayRotation.x = 180;
+            OverlayRotation.y = -270;
+            OverlayRotation.z = 0;
+            
+            FingerOffsetX = -0.02f;
+            FingerOffsetY = -0.04f;
+            FingerOffsetZ = 0.01f;
+
+            FingerRotationOffsetX = 80;
+            FingerRotationOffsetY = 25;
+            FingerRotationOffsetZ = 0;
         }
 
         //--------------------------------------------------------------------------
@@ -449,10 +485,6 @@ namespace Plugins
                 _VXMusicInterface.SendMessageToServer("VX_HEARTBEAT_REQ");
                 _timeSinceLastHeartbeat = 0f;
             }
-            
-            // Listen for incoming event
-            //if (!_VXMusicInterface.IsListening) 
-                //_VXMusicInterface.ListenForVXMusicDesktopEvent();
 
             if (show)
             {
@@ -524,20 +556,18 @@ namespace Plugins
         {
             VRControllerState_t controllerState = new VRControllerState_t();
             var sizeOfControllerState = (uint)System.Runtime.InteropServices.Marshal.SizeOf(typeof(VRControllerState_t));
-
-            OverlayTrackedDevice = ETrackedControllerRole.LeftHand;
             
             // If overlay is tracked to left controller, make the right hand the dominant input device, and visa versa.
-            var inputDeviceRelativeToOverlayDevice = OverlayTrackedDevice == ETrackedControllerRole.LeftHand
-                ? ETrackedControllerRole.LeftHand
-                : ETrackedControllerRole.RightHand;
+            // var inputDeviceRelativeToOverlayDevice = OverlayTrackedDevice == ETrackedControllerRole.LeftHand
+            //     ? ETrackedControllerRole.LeftHand
+            //     : ETrackedControllerRole.RightHand;
             
-            uint currentInputDeviceId = openvr.GetTrackedDeviceIndexForControllerRole(inputDeviceRelativeToOverlayDevice);
+            uint currentInputDeviceId = openvr.GetTrackedDeviceIndexForControllerRole(OverlayTrackedDevice);
 
             if (openvr.GetControllerState(currentInputDeviceId, ref controllerState, sizeOfControllerState))
             {
                 // Check if the system button is pressed
-                bool isPressed = (controllerState.ulButtonPressed & (1UL << (int)EVRButtonId.k_EButton_SteamVR_Trigger)) != 0;
+                bool isPressed = (controllerState.ulButtonPressed & (1UL << (int)TrackedDeviceInputLock)) != 0;
                 return isPressed;
             }
             
@@ -562,10 +592,10 @@ namespace Plugins
             }
 
             // GENERATE ROTATION
-            Quaternion quaternion = Quaternion.Euler(Rotation.x, Rotation.y, Rotation.z);
+            Quaternion quaternion = Quaternion.Euler(OverlayRotation.x, OverlayRotation.y, OverlayRotation.z);
             // Change the coordinate system (swap between right-handed and left-handed systems)
-            Vector3 position = Position;
-            position.z = -Position.z;
+            Vector3 position = OverlayPosition;
+            position.z = -OverlayPosition.z;
             // Write to HMD viewpoint position conversion matrix.
             Matrix4x4 m = Matrix4x4.TRS(position, quaternion, Scale);
 

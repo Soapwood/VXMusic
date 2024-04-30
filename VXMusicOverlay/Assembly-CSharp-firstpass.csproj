@@ -55,6 +55,7 @@
      <Compile Include="Assets\Plugins\VXSteamVRNotificationHandler.cs" />
      <Compile Include="Assets\Plugins\VXMusicInterface.cs" />
      <Compile Include="Assets\Plugins\VXMusicOverlay.cs" />
+     <Compile Include="Assets\Plugins\VXMMessage.cs" />
      <Compile Include="Assets\Plugins\MainThreadDispatcher.cs" />
      <Compile Include="Assets\Plugins\openvr_api.cs" />
      <Compile Include="Assets\Plugins\RecognitionAudioTrigger.cs" />

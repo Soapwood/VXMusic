@@ -108,7 +108,7 @@ namespace VXMusicDesktop
             
             VXMusicSession.Initialise();
             
-            VXMusicOverlayInterface.StartVXMusicServerStream();
+            VXMusicOverlayInterface.StartVXMusicDesktopEventListener();
             
             VXMusicSession.NotificationClient.SendNotification("Welcome to VXMusic!", "", 5);
         }

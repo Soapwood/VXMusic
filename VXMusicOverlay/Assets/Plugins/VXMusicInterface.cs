@@ -2,29 +2,51 @@ using System;
 using System.IO;
 using System.IO.Pipes;
 using System.Threading.Tasks;
+using Plugins;
+using UnityEditor.PackageManager;
 using UnityEngine;
 
 namespace Valve.VR
 {
     public class VXMusicInterface : MonoBehaviour
     {
-        private NamedPipeClientStream ClientStream;
-        private StreamReader ClientReader;
-        private StreamWriter ClientWriter;
+        private VXMusicOverlay _vxmOverlay;
+        
+        private static NamedPipeClientStream ClientStream;
+        private static StreamReader ClientReader;
+        private static StreamWriter ClientWriter;
+        
+        private static NamedPipeServerStream ServerStream;
+        private static StreamReader ServerReader;
+        private static StreamWriter ServerWriter;
         public event Action<string> ServerResponseReceived;
 
         public bool IsInRecognitionState = false;
         public bool IsAnimationRunning = false;
         public event Action<bool> OnRecognitionStateTriggered;
 
-        public bool IsListening = false;
+        public bool IsListening;
+        public bool IsVXMusicDesktopConnected;
 
         private void Start()
         {
-            IsVXMusicServerRunning();
+            GameObject _vxmOverlayGameObject = GameObject.Find("OverlayScriptWrapper");
+            
+            if (_vxmOverlayGameObject != null)
+            {
+                _vxmOverlay = _vxmOverlayGameObject.GetComponent<VXMusicOverlay>();
+
+                // if (_vxmOverlay != null)
+                // {
+                //     // Subscribe to the event in ScriptA
+                //     _vxmOverlay.OnRecognitionStateTriggered += HandlePublicValueChange;
+                // }
+            }
+            
+            IsVXMusicDesktopConnected = IsVXMusicDesktopClientRunning();
         }
 
-        public void IsVXMusicServerRunning()
+        public bool IsVXMusicDesktopClientRunning()
         {
             // Create and connect the ClientStream
             ClientStream = new NamedPipeClientStream(".", "VXMusicOverlayEventPipe", PipeDirection.InOut);
@@ -46,71 +68,51 @@ namespace Valve.VR
                 Debug.Log("Received response from .NET: " + response);
             }
 
-            ClientStream.Close();
-            ClientStream = null;
+            //ClientStream.Close();
+            //ClientStream = null;
 
-            ClientReader.Close();
-            ClientReader = null;
-            ClientWriter.Close();
-            ClientWriter = null;
+            //ClientReader.Close();
+            //ClientReader = null;
+            //ClientWriter.Close();
+            //ClientWriter = null;
+
+            return true;
         }
 
-        public async void ListenForVXMusicDesktopEvent()
+        public async void TickVXMusicOverlayEventListener()
         {
-            // Create and connect the ClientStream
-            //ClientStream = new NamedPipeClientStream(".", "VXMusicOverlayEventPipeHandUpdate", PipeDirection.InOut);
-            //ClientStream.Connect();
-
-            // Initialize ClientReader and ClientWriter
-            //ClientReader = new StreamReader(ClientStream);
-            //ClientWriter = new StreamWriter(ClientStream) { AutoFlush = true };
-
-            using (NamedPipeServerStream serverStream =
-                   new NamedPipeServerStream("VXMusicOverlayEventPipeHandUpdate", PipeDirection.InOut))
-            {
-                Debug.Log("Waiting for Overlay request from VXMusicDesktop");
-                IsListening = true;
-                serverStream.WaitForConnection();
-                //_isProcessing = true;
-
-                using (StreamReader reader = new StreamReader(serverStream))
-                using (StreamWriter writer = new StreamWriter(serverStream) { AutoFlush = true })
+            //while (true)
+            //{
+                using (ServerStream =
+                           new NamedPipeServerStream("VXMusicOverlayEventServerPipe", PipeDirection.InOut))
                 {
-                    writer.WriteLine("VX_CONNECT_ACK");
-                    
-                    string eventData = await reader.ReadLineAsync();
-                    Debug.Log($"Received event from VXMusic Desktop Client: {eventData}");
-                    //await ProcessIncomingUnityEventMessage(writer, eventData);
+                    Debug.Log("Listening for event from VXMusicDesktop");
+                    //IsListening = true;
+                    //ClientStream.WaitForConnection();
+                    //_isProcessing = true;
+                    IsListening = true;
+                    await ServerStream.WaitForConnectionAsync();
+
+                    using (ServerReader = new StreamReader(ServerStream))
+                    using (ServerWriter = new StreamWriter(ServerStream) { AutoFlush = true })
+                    {
+                        //ClientWriter.WriteLine("VX_CONNECT_ACK");
+                        
+                        string eventData = ServerReader.ReadLine();
+
+                        if (!string.IsNullOrEmpty(eventData))
+                        {
+                            Debug.Log($"Received event from VXMusic Desktop Client: {eventData}");
+                            //ProcessIncomingVXMusicDesktopEventMessage(ClientWriter, eventData);
+                            
+                        }
+                    }
                 }
-            }
-
-            //string messageToSend = "VX_CONNECT_REQ";
-            //ClientWriter.WriteLine(messageToSend);
-            // ClientStream.WaitForPipeDrain();
-
-            // Read the response from the .NET server
-            // string response = ClientReader.ReadLine();
-            //
-            // if (response == "VX_OVERLAY_ANCHOR_LEFTHAND_REQ")
-            // {
-            //     Debug.Log("Received response from .NET: " + response);
-            // }
-            //
-            // if (response == "VX_OVERLAY_ANCHOR_RIGHTHAND_REQ")
-            // {
-            //     Debug.Log("Received response from .NET: " + response);
-            // }
-
-            ClientStream.Close();
-            ClientStream = null;
-
-            ClientReader.Close();
-            ClientReader = null;
-            ClientWriter.Close();
-            ClientWriter = null;
-
-            IsListening = false;
+                //IsListening = true;
+           // }
         }
+
+
 
         public async Task SendMessageToServer(string request)
         {

@@ -4,6 +4,9 @@
 // This file is auto-generated, do not edit it.
 //
 //=============================================================================
+
+using System;
+using System.Runtime.InteropServices;
 #if !OPENVR_XR_API
 
 #if UNITY_5_3_OR_NEWER
