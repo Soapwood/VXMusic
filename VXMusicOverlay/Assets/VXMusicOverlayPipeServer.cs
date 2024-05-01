@@ -33,7 +33,7 @@ namespace Plugins
                     Debug.Log("Waiting for connection...");
                     serverStream.WaitForConnection();
                     Debug.Log("Connected.");
-
+                    
                     StreamReader reader = new StreamReader(serverStream);
                     StreamWriter writer = new StreamWriter(serverStream) { AutoFlush = true };
 
@@ -45,11 +45,13 @@ namespace Plugins
                             if (reader.Peek() >= 0)
                             {
                                 string message = reader.ReadLine();
-                                Debug.Log("Received: " + message);
+                                Debug.Log("Received Message from VXMusic Desktop: " + message);
                                 
                                 string responseMessage = ProcessIncomingVXMusicDesktopEventMessage(message);
                                 
+                                Debug.Log("Sending Message to VXMusic Desktop: " + responseMessage);
                                 writer.WriteLine(responseMessage);
+                                //Thread.Sleep(1000);
                                 break;
                             }
                         }
@@ -61,7 +63,7 @@ namespace Plugins
                     finally
                     {
                         if (serverStream.IsConnected)
-                            serverStream.Disconnect();
+                           serverStream.Disconnect();
                     }
                 }
             }

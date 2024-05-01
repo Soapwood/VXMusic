@@ -104,11 +104,21 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Remove="Images\LeftHandIcon.png" />
-    <Content Include="Images\LeftHandIcon.png">
+    <None Remove="Images\RightHandIcon.png" />
+    <None Remove="Images\LeftHandIconDisabled.png" />
+    <Content Include="Images\LeftHandIconDisabled.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <None Remove="Images\RightHandIcon.png" />
-    <Content Include="Images\RightHandIcon.png">
+    <None Remove="Images\LeftHandIconEnabled.png" />
+    <Content Include="Images\LeftHandIconEnabled.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Remove="Images\RightHandIconDisabled.png" />
+    <Content Include="Images\RightHandIconDisabled.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Remove="Images\RightHandIconEnabled.png" />
+    <Content Include="Images\RightHandIconEnabled.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

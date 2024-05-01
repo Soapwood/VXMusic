@@ -6,10 +6,10 @@ ScriptsOnlyBuild:
     - Plugins.VXMusicOverlay
     - RecognitionAudioTrigger
     - Valve.VR.VXMusicInterface
+    Assembly-CSharp.dll:
+    - Plugins.VXMusicOverlayPipeServer
     Unity.2D.Tilemap.Editor.dll:
     - UnityEditor.Tilemaps.GridPaintingState
-    - UnityEditor.Tilemaps.GridPaletteBrushes
-    - UnityEditor.Tilemaps.GridPalettes
     - UnityEditor.Tilemaps.SceneViewGridManager
     - UnityEditor.Tilemaps.SceneViewOpenTilePaletteHelper
     - UnityEditor.Tilemaps.TileDragAndDropManager
@@ -86,13 +86,13 @@ ScriptsOnlyBuild:
     - Class: 108
       Script: {instanceID: 0}
     - Class: 114
-      Script: {instanceID: 2582}
+      Script: {instanceID: 2580}
     - Class: 114
-      Script: {instanceID: 2602}
+      Script: {instanceID: 2600}
     - Class: 114
-      Script: {instanceID: 2808}
+      Script: {instanceID: 2806}
     - Class: 114
-      Script: {instanceID: 2970}
+      Script: {instanceID: 2968}
     - Class: 114
       Script: {instanceID: 3240}
     - Class: 114
@@ -102,9 +102,11 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 4054}
     - Class: 114
-      Script: {instanceID: 5164}
+      Script: {instanceID: 4350}
     - Class: 114
-      Script: {instanceID: 5974}
+      Script: {instanceID: 5168}
+    - Class: 114
+      Script: {instanceID: 5978}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 122
@@ -248,13 +250,13 @@ ScriptsOnlyBuild:
     className: RawImage
   - hash:
       serializedVersion: 2
-      Hash: 4654e4ea40b057b20dcafc3f5bb82420
+      Hash: 8327db7b109934badae47382b3f9c746
     assemblyName: Assembly-CSharp-firstpass.dll
     namespaceName: Valve.VR
     className: VXMusicInterface
   - hash:
       serializedVersion: 2
-      Hash: dcdc1637a5f22343e988089d14285bcb
+      Hash: 6d539209cabdafe69d3bb4b2e264420c
     assemblyName: Assembly-CSharp-firstpass.dll
     namespaceName: Plugins
     className: VXMusicOverlay
@@ -528,6 +530,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: AudioPlayableAsset
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: Plugins
+    className: VXMusicOverlayPipeServer
   - hash:
       serializedVersion: 2
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f

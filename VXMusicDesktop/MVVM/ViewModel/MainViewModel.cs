@@ -96,7 +96,7 @@ namespace VXMusicDesktop.MVVM.ViewModel
             LaunchVXMusicOverlay = new RelayCommand(o =>
             {
                 App.VXMOverlayProcessId =
-                    VXMusicOverlayInterface.LaunchVXMOverlayRuntime(VXMusicSession.OverlaySettings.RuntimePath);
+                    VXMusicOverlayInterface.LaunchVXMOverlayRuntime(App.VXMusicSession.OverlaySettings.RuntimePath);
                 InitialiseOverlayHeartbeatMonitor();
             });
         }

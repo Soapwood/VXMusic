@@ -58,6 +58,7 @@
      <Compile Include="Assets\Plugins\VXMMessage.cs" />
      <Compile Include="Assets\Plugins\MainThreadDispatcher.cs" />
      <Compile Include="Assets\Plugins\openvr_api.cs" />
+     <Compile Include="Assets\Plugins\Logging\LogConfigurator.cs" />
      <Compile Include="Assets\Plugins\RecognitionAudioTrigger.cs" />
      <Compile Include="Assets\Plugins\SteamVR_Utils.cs" />
      <Compile Include="Assets\Plugins\VXLogoAnimationController.cs" />

@@ -71,8 +71,10 @@ namespace VXMusicDesktop.Theme
         
         public static readonly string VXMusicOverlayButton = "Images/VXLogoTinyButton.png";
         
-        public static readonly string LeftHandButton = "Images/LeftHandIcon.png";
-        public static readonly string RightHandButton = "Images/RightHandIcon.png";
+        public static readonly string LeftHandButtonEnabled = "Images/LeftHandIconEnabled.png";
+        public static readonly string LeftHandButtonDisabled = "Images/LeftHandIconDisabled.png";
+        public static readonly string RightHandButtonEnabled = "Images/RightHandIconEnabled.png";
+        public static readonly string RightHandButtonDisabled = "Images/RightHandIconDisabled.png";
 
         public static SolidColorBrush PrimaryColour { get; set; }
         public static SolidColorBrush SecondaryColour { get; set; }
@@ -88,8 +90,10 @@ namespace VXMusicDesktop.Theme
         public static BitmapImage MinimiseImage { get; set; }
         public static BitmapImage SaveButtonImage { get; set; }
         public static BitmapImage VXMusicOverlayImage { get; set; }
-        public static BitmapImage LeftHandImage { get; set; }
-        public static BitmapImage RightHandImage { get; set; }
+        public static BitmapImage LeftHandEnabledImage { get; set; }
+        public static BitmapImage LeftHandDisabledImage { get; set; }
+        public static BitmapImage RightHandEnabledImage { get; set; }
+        public static BitmapImage RightHandDisabledImage { get; set; }
 
         // This is used to access the values of the DesktopTheme Enum in XAML
         public static DesktopTheme[] DesktopThemeValues
@@ -140,8 +144,10 @@ namespace VXMusicDesktop.Theme
             MinimiseImage = new BitmapImage(new Uri($"pack://application:,,,/VXMusicDesktop;component/{ColourSchemeManager.DarkmodeMinimiseButton}"));
             SaveButtonImage = new BitmapImage(new Uri($"pack://application:,,,/VXMusicDesktop;component/{ColourSchemeManager.DarkmodeSaveButton}"));
             VXMusicOverlayImage = new BitmapImage(new Uri($"pack://application:,,,/VXMusicDesktop;component/{ColourSchemeManager.VXMusicOverlayButton}"));
-            LeftHandImage = new BitmapImage(new Uri($"pack://application:,,,/VXMusicDesktop;component/{ColourSchemeManager.LeftHandButton}")); 
-            RightHandImage = new BitmapImage(new Uri($"pack://application:,,,/VXMusicDesktop;component/{ColourSchemeManager.RightHandButton}")); 
+            LeftHandEnabledImage = new BitmapImage(new Uri($"pack://application:,,,/VXMusicDesktop;component/{ColourSchemeManager.LeftHandButtonEnabled}")); 
+            LeftHandDisabledImage = new BitmapImage(new Uri($"pack://application:,,,/VXMusicDesktop;component/{ColourSchemeManager.LeftHandButtonDisabled}")); 
+            RightHandEnabledImage = new BitmapImage(new Uri($"pack://application:,,,/VXMusicDesktop;component/{ColourSchemeManager.RightHandButtonEnabled}")); 
+            RightHandDisabledImage = new BitmapImage(new Uri($"pack://application:,,,/VXMusicDesktop;component/{ColourSchemeManager.RightHandButtonDisabled}")); 
             Transparent = new SolidColorBrush(FromHex(TransparentColour));
         }
 
@@ -158,8 +164,10 @@ namespace VXMusicDesktop.Theme
             MinimiseImage = new BitmapImage(new Uri($"pack://application:,,,/VXMusicDesktop;component/{ColourSchemeManager.DarkmodeMinimiseButton}"));
             SaveButtonImage = new BitmapImage(new Uri($"pack://application:,,,/VXMusicDesktop;component/{ColourSchemeManager.DarkmodeSaveButton}"));
             VXMusicOverlayImage = new BitmapImage(new Uri($"pack://application:,,,/VXMusicDesktop;component/{ColourSchemeManager.VXMusicOverlayButton}"));
-            LeftHandImage = new BitmapImage(new Uri($"pack://application:,,,/VXMusicDesktop;component/{ColourSchemeManager.LeftHandButton}")); 
-            RightHandImage = new BitmapImage(new Uri($"pack://application:,,,/VXMusicDesktop;component/{ColourSchemeManager.RightHandButton}")); 
+            LeftHandEnabledImage = new BitmapImage(new Uri($"pack://application:,,,/VXMusicDesktop;component/{ColourSchemeManager.LeftHandButtonEnabled}")); 
+            LeftHandDisabledImage = new BitmapImage(new Uri($"pack://application:,,,/VXMusicDesktop;component/{ColourSchemeManager.LeftHandButtonDisabled}")); 
+            RightHandEnabledImage = new BitmapImage(new Uri($"pack://application:,,,/VXMusicDesktop;component/{ColourSchemeManager.RightHandButtonEnabled}")); 
+            RightHandDisabledImage = new BitmapImage(new Uri($"pack://application:,,,/VXMusicDesktop;component/{ColourSchemeManager.RightHandButtonDisabled}")); 
             Transparent = new SolidColorBrush(FromHex(TransparentColour));
         }
 
@@ -176,8 +184,10 @@ namespace VXMusicDesktop.Theme
             MinimiseImage = new BitmapImage(new Uri($"pack://application:,,,/VXMusicDesktop;component/{ColourSchemeManager.LightmodeMinimiseButton}"));
             SaveButtonImage = new BitmapImage(new Uri($"pack://application:,,,/VXMusicDesktop;component/{ColourSchemeManager.LightmodeSaveButton}"));
             VXMusicOverlayImage = new BitmapImage(new Uri($"pack://application:,,,/VXMusicDesktop;component/{ColourSchemeManager.VXMusicOverlayButton}"));
-            LeftHandImage = new BitmapImage(new Uri($"pack://application:,,,/VXMusicDesktop;component/{ColourSchemeManager.LeftHandButton}")); 
-            RightHandImage = new BitmapImage(new Uri($"pack://application:,,,/VXMusicDesktop;component/{ColourSchemeManager.RightHandButton}")); 
+            LeftHandEnabledImage = new BitmapImage(new Uri($"pack://application:,,,/VXMusicDesktop;component/{ColourSchemeManager.LeftHandButtonEnabled}")); 
+            LeftHandDisabledImage = new BitmapImage(new Uri($"pack://application:,,,/VXMusicDesktop;component/{ColourSchemeManager.LeftHandButtonDisabled}")); 
+            RightHandEnabledImage = new BitmapImage(new Uri($"pack://application:,,,/VXMusicDesktop;component/{ColourSchemeManager.RightHandButtonEnabled}")); 
+            RightHandDisabledImage = new BitmapImage(new Uri($"pack://application:,,,/VXMusicDesktop;component/{ColourSchemeManager.RightHandButtonDisabled}")); 
             Transparent = new SolidColorBrush(FromHex(TransparentColour));
         }
 
@@ -217,6 +227,25 @@ namespace VXMusicDesktop.Theme
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             return (bool)value ? ColourSchemeManager.DefaultEnabledGreen : ColourSchemeManager.DefaultDisabledRed;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+    
+    public class BooleanToHandImageConverter : IValueConverter
+    {
+        public BitmapImage TrueValue { get; set; }
+        public BitmapImage FalseValue { get; set; }
+
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value is bool && (bool)value)
+                return TrueValue;
+            else
+                return FalseValue;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

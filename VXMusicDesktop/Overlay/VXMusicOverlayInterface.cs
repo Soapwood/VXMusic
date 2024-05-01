@@ -14,13 +14,16 @@ namespace VXMusic.Overlay;
 
 public class VXMusicOverlayInterface
 {
-    public static ILogger Logger = App.ServiceProvider.GetRequiredService<ILogger<App>>();
+    public static ILogger Logger = App.ServiceProvider.GetRequiredService<ILogger<VXMusicOverlayInterface>>();
     
     public static NamedPipeServerStream ServerStream;
     public static StreamReader ServerReader;
     public static StreamWriter ServerWriter;
 
     private static bool _isProcessing;
+
+    private static readonly string VxOverlayHeartBeatPipeName = "VXMusicOverlayEventPipe";
+    private static readonly string VxOverlayServerPipeName = "VXMusicOverlayEventServerPipe";
 
     public static bool HasNewHeartbeatMessage { get; set; }
     public static bool OverlayWasRunning { get; set; }
@@ -55,6 +58,9 @@ public class VXMusicOverlayInterface
         Logger.LogDebug($"VXMusicOverlay process running with PID: {overlayProcess.Id}");
 
         StartVXMusicDesktopEventListener();
+        
+        // Need to send payload every time the overlay connects
+        //SendOverlayInitPayload();
 
         return overlayProcess.Id;
     }
@@ -66,7 +72,7 @@ public class VXMusicOverlayInterface
         while (true)
         {
             using (ServerStream =
-                   new NamedPipeServerStream("VXMusicOverlayEventPipe", PipeDirection.InOut))
+                   new NamedPipeServerStream(VxOverlayHeartBeatPipeName, PipeDirection.InOut))
             {
                 Logger.LogTrace("Listening for Request from VXMusic Overlay");
                 await ServerStream.WaitForConnectionAsync();
@@ -82,27 +88,39 @@ public class VXMusicOverlayInterface
             }
         }
     }
+
+    private static async Task<bool> SendOverlayInitPayload()
+    {
+        Logger.LogDebug($"Sending Overlay Init Payload to VXMusicOverlay: {App.VXMusicSession.OverlaySettings.ToPayload()}");
+        return await SendMessageToVxMusicOverlay(App.VXMusicSession.OverlaySettings.ToPayload());
+    }
     
-    public static async Task<bool> SendOverlayAnchorUpdateRequest(string overlayRequest)
+    public static async Task<bool> SendOverlayAnchorUpdateRequest(string messageContent)
+    {
+        return await SendMessageToVxMusicOverlay(messageContent);
+    }
+    
+    private static async Task<bool> SendMessageToVxMusicOverlay(string messageContent)
     {
         // Encapsulate resource management with 'using' to ensure proper disposal
-        using (var clientStream = new NamedPipeClientStream(".", "VXMusicOverlayEventServerPipe", PipeDirection.InOut))
+        using (var clientStream = new NamedPipeClientStream(".", VxOverlayServerPipeName, PipeDirection.InOut))
         {
             try
             {
                 // Connect to the server with a timeout (optional but recommended)
-                clientStream.Connect(5000); // Timeout in milliseconds
+                clientStream.Connect(2000); // Timeout in milliseconds
 
                 // Initialize StreamReader and StreamWriter using 'using' to automatically dispose
                 using (var clientWriter = new StreamWriter(clientStream) { AutoFlush = true })
                 using (var clientReader = new StreamReader(clientStream))
                 {
                     // Send a request asynchronously
-                    await clientWriter.WriteLineAsync(overlayRequest);
+                    Logger.LogTrace($"Sending message to VXMusic Overlay: {messageContent}");
+                    await clientWriter.WriteLineAsync(messageContent);
 
                     // Optionally read response back if expected
                     var response = await clientReader.ReadLineAsync();
-                    Logger.LogTrace($"Received response from server: {response}");
+                    Logger.LogTrace($"Received response from VXMusic Overlay: {response}");
                     Logger.LogDebug("Successfully sent request to VXMusic Overlay.");
                 }
             }
@@ -110,6 +128,11 @@ public class VXMusicOverlayInterface
             {
                 Logger.LogError($"Failed to connect: {ex.Message}");
                 return false;
+            }
+            catch (ObjectDisposedException ex)
+            {
+                //Logger.LogError($"An error occurred: {ex.Message}");
+                return true;
             }
             catch (Exception ex)
             {
@@ -209,6 +232,9 @@ public class VXMusicOverlayInterface
             VXMusicSession.NotificationClient.SendNotification("VXMusic Overlay Connected!", "",4);
             SharedViewModel.IsOverlayRunning = true;
             OverlayWasRunning = true;
+
+            SendOverlayInitPayload();
+            
             return true;
         }
 

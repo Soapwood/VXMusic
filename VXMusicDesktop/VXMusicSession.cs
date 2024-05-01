@@ -30,7 +30,7 @@ public class VXMusicSession
     
     public RecognitionSettings RecognitionSettings;
     public NotificationSettings NotificationSettings;
-    public static OverlaySettings OverlaySettings;
+    public OverlaySettings OverlaySettings;
     public ConnectionsSettings ConnectionsSettings;
     public static DesktopThemeSettings? DesktopThemeSettings;
 
@@ -153,6 +153,17 @@ public class OverlaySettings
     {
         LaunchOverlayOnStartup = VXUserSettings.Overlay.GetCurrentOverlayLaunchOnStartup();
         OverlayAnchor = VXUserSettings.Overlay.GetOverlayAnchor();
+    }
+
+    public string ToPayload()
+    {
+        string overlaySettingsPayload = "";
+
+        overlaySettingsPayload += OverlayAnchor == VXMusicOverlayAnchor.LeftHand
+            ? VXMMessage.ENABLE_OVERLAY_ANCHOR_LEFTHAND_REQUEST
+            : VXMMessage.ENABLE_OVERLAY_ANCHOR_RIGHTHAND_REQUEST;
+        
+        return overlaySettingsPayload;
     }
 }
 

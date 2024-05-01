@@ -1,67 +1,21 @@
-﻿/**
- * EasyOpenVROverlayForUnity by gpsnmeajp v0.24
- * 2019/07/15
- * 
- * v0.24 Fixed an issue where it did not work correctly in OpenGL environments.
- *       Commented out showDevices due to potential errors.
- * 
- * v0.23 Added support for Side-by-Side 3D.
- *
- * v0.22 Device updates:
- *      - Retrieve device information and log the list.
- *      - Added the ability to obtain detailed information about selected devices.
- *      - Allows overlays to be placed on trackers and base station positions.
- *      - Suppressed warnings related to Tags.
- * 
- * v0.21 Minor fixes.
- * 
- * v0.2 Major updates:
- *      - Changed debugging tags method.
- *      - Added support for uGUI clicks.
- *      - Added the ability to select controllers.
- *      - Added external error checking and display state management functions.
- *      - Modularized various processes.
- *      - Added processes for releasing resources at the end.
- *      - Added processes for releasing resources on errors.
- *      - Added mouse scaling handling.
- *      - Added catching of exit events.
- * 
- * v0.1 Released on 2018/08/25.
- * 
- * This script allows you to overlay 2D textures onto the VR space, independent of the currently running application.
- * 
- * Input functionality is currently not functioning correctly and has been omitted.
- * Dashboard overlay is also excluded.
- * 
- * These codes are licensed under CC0.
- * http://creativecommons.org/publicdomain/zero/1.0/deed.en
- */
-
-/** About uGUI Clicks
- * 
- * Usage:
- * 1. Set the LaycastRootObject to the Canvas you want to interact with (place it directly under the scene).
- * 2. Only supports Button clicks (tap the Overlay with the controller's tip to click).
- * 3. Set the Raycast Target of the Button to ON. Set the Raycast Target of the Text on the Button to OFF.
- * 4. Set the Canvas's Render Mode to "Screen Space - Camera".
- * 5. The Render Camera of the Canvas should be the same as the Camera that has the RenderTexture set.
- * 
- * Note: Setting LaycastRootObject to null (None) will disable GUI functionality.
- */
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.Purchasing;
 using UnityEngine.Serialization;
 using Valve.VR;
+//using NLog;
+//using Logger = NLog.Logger;
 
 namespace Plugins
 {
     public class VXMusicOverlay : MonoBehaviour
     {
+        //private static Logger _logger = LogManager.GetCurrentClassLogger();
+        
+        public bool EnableOverlayDebugView = false;
+        
         //ERROR FLAG
         public bool error = true; //Initialization failed
 
@@ -69,7 +23,6 @@ namespace Plugins
         public bool eventLog = false;
 
         private GameObject VXMusicLogo;
-        //private Animator vxMusicLogoAnimationController = GetComponent<Animator>();
 
         [SerializeField] private GameObject spherePrefab;
         private GameObject LeftDebugSphere;
@@ -383,11 +336,16 @@ namespace Plugins
                          System.Reflection.MethodBase.GetCurrentMethod(); // Automatically obtain class name and method name
 #pragma warning restore 0219
             Debug.Log(Tag + "Begin");
+            
+            //_logger.Debug("Bingy");
 
-            //LeftDebugSphere = Instantiate(spherePrefab, Vector3.zero, Quaternion.identity);
-            //LeftDebugSphere.GetComponent<Renderer>().material.color = Color.green;
-            //RightDebugSphere = Instantiate(spherePrefab, Vector3.zero, Quaternion.identity);
-            //RightDebugSphere.GetComponent<Renderer>().material.color = Color.green;
+            //if (EnableOverlayDebugView)
+            //{
+            LeftDebugSphere = Instantiate(spherePrefab, Vector3.zero, Quaternion.identity);
+            LeftDebugSphere.GetComponent<Renderer>().material.color = Color.green;
+            RightDebugSphere = Instantiate(spherePrefab, Vector3.zero, Quaternion.identity);
+            RightDebugSphere.GetComponent<Renderer>().material.color = Color.green;
+            //}
             
             var openVRError = EVRInitError.None;
             var overlayError = EVROverlayError.None;
@@ -930,7 +888,8 @@ namespace Plugins
             {
                 SteamVR_Utils.RigidTransform leftControllerTransform = new SteamVR_Utils.RigidTransform(allDevicePose[Leftidx].mDeviceToAbsoluteTracking);
 
-                //LeftDebugSphere.transform.position = leftControllerTransform.pos;
+                if(EnableOverlayDebugView)
+                    LeftDebugSphere.transform.position = leftControllerTransform.pos;
 
                 // Calculate finger offset from controller
                 Vector3 fingerOffset = new Vector3(FingerOffsetX, FingerOffsetY, FingerOffsetZ); // Tweak these offsets!
@@ -938,7 +897,8 @@ namespace Plugins
                 Vector3 fingerPosition = leftControllerTransform.TransformPoint(fingerOffset);
                 Quaternion fingerRotation = leftControllerTransform.rot * fingerRotationOffset;
                 
-                //Debug.DrawLine(fingerPosition, fingerPosition + (fingerRotation * Vector3.forward) * 2.0f, Color.blue);
+                if(EnableOverlayDebugView)
+                    Debug.DrawLine(fingerPosition, fingerPosition + (fingerRotation * Vector3.forward) * 2.0f, Color.blue);
                 
                 //if (checkRay(Leftidx, allDevicePose, ref results))
                 if (checkRay(Leftidx, fingerPosition, fingerRotation * Vector3.forward, ref results))
@@ -965,7 +925,8 @@ namespace Plugins
             {
                 SteamVR_Utils.RigidTransform rightControllerTransform = new SteamVR_Utils.RigidTransform(allDevicePose[Rightidx].mDeviceToAbsoluteTracking);
                 
-                //RightDebugSphere.transform.position = rightControllerTransform.pos;
+                if(EnableOverlayDebugView)
+                    RightDebugSphere.transform.position = rightControllerTransform.pos;
                 
                 // Calculate finger offset from controller
                 Vector3 fingerOffset = new Vector3(FingerOffsetX, FingerOffsetY, FingerOffsetZ); // Tweak these offsets!
@@ -973,7 +934,8 @@ namespace Plugins
                 Vector3 fingerPosition = rightControllerTransform.TransformPoint(fingerOffset);
                 Quaternion fingerRotation = rightControllerTransform.rot * fingerRotationOffset;
                 
-                //Debug.DrawLine(fingerPosition, fingerPosition + (fingerRotation * Vector3.forward) * 2.0f, Color.blue);
+                if(EnableOverlayDebugView)
+                    Debug.DrawLine(fingerPosition, fingerPosition + (fingerRotation * Vector3.forward) * 2.0f, Color.blue);
                 
                 if (checkRay(Rightidx, fingerPosition, fingerRotation * Vector3.forward, ref results))
                 {

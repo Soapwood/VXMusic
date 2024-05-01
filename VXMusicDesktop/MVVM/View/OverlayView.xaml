@@ -11,8 +11,10 @@
 
     <UserControl.Resources>
 
-        <BitmapImage x:Key="LeftHandButtonImage" UriSource="{Binding Source={x:Static custom:ColourSchemeManager.LeftHandImage}, Path=UriSource}"/>
-        <BitmapImage x:Key="RightHandButtonImage" UriSource="{Binding Source={x:Static custom:ColourSchemeManager.RightHandImage}, Path=UriSource}"/>
+        <BitmapImage x:Key="LeftHandButtonEnabledImage" UriSource="{Binding Source={x:Static custom:ColourSchemeManager.LeftHandEnabledImage}, Path=UriSource}"/>
+        <BitmapImage x:Key="LeftHandButtonDisabledImage" UriSource="{Binding Source={x:Static custom:ColourSchemeManager.LeftHandDisabledImage}, Path=UriSource}"/>
+        <BitmapImage x:Key="RightHandButtonEnabledImage" UriSource="{Binding Source={x:Static custom:ColourSchemeManager.RightHandEnabledImage}, Path=UriSource}"/>
+        <BitmapImage x:Key="RightHandButtonDisabledImage" UriSource="{Binding Source={x:Static custom:ColourSchemeManager.RightHandDisabledImage}, Path=UriSource}"/>
         
         <SolidColorBrush x:Key="PrimaryColor" Color="{Binding Source={x:Static custom:ColourSchemeManager.PrimaryColour}, Path=Color}" />
         <SolidColorBrush x:Key="SecondaryColor" Color="{Binding Source={x:Static custom:ColourSchemeManager.SecondaryColour}, Path=Color}" />
@@ -22,6 +24,52 @@
         <SolidColorBrush x:Key="EnabledGreen" Color="{Binding Source={x:Static custom:ColourSchemeManager.EnabledGreen}, Path=Color}" />
         <SolidColorBrush x:Key="DisabledRed" Color="{Binding Source={x:Static custom:ColourSchemeManager.DisabledRed}, Path=Color}" />
 
+        <custom:BooleanToHandImageConverter x:Key="BooleanToLeftHandImageConverter"
+                                            TrueValue="{StaticResource LeftHandButtonEnabledImage}"
+                                            FalseValue="{StaticResource LeftHandButtonDisabledImage}" />
+        
+        <custom:BooleanToHandImageConverter x:Key="BooleanToRightHandImageConverter"
+                                            TrueValue="{StaticResource RightHandButtonEnabledImage}"
+                                            FalseValue="{StaticResource RightHandButtonDisabledImage}" />
+        
+        <Style x:Key="ImageToggleLeftHandButtonStyle" TargetType="ToggleButton">
+            <Setter Property="Width" Value="40"/>
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ToggleButton">
+                        <Border Background="{TemplateBinding Background}"
+                                Width="{TemplateBinding Width}"
+                                Height="{TemplateBinding Height}">
+                            <Image Source="{Binding IsChecked, RelativeSource={RelativeSource TemplatedParent}, 
+                                       Converter={StaticResource BooleanToLeftHandImageConverter}}" 
+                                   Stretch="UniformToFill"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
+        <Style x:Key="ImageToggleRightHandButtonStyle" TargetType="ToggleButton">
+            <Setter Property="Width" Value="40"/>
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ToggleButton">
+                        <Border Background="{TemplateBinding Background}"
+                                Width="{TemplateBinding Width}"
+                                Height="{TemplateBinding Height}">
+                            <Image Source="{Binding IsChecked, RelativeSource={RelativeSource TemplatedParent}, 
+                                       Converter={StaticResource BooleanToRightHandImageConverter}}" 
+                                   Stretch="UniformToFill"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
         <!-- Switch Style -->
         <Style x:Key="SwitchButtonStyle" TargetType="ToggleButton">
             <Setter Property="Template">
@@ -90,21 +138,17 @@
                                   Width="40" Height="40"
                                   Margin="80,0,0,0"
                                   HorizontalAlignment="Right"
+                                  Style="{StaticResource ImageToggleLeftHandButtonStyle}"
                                   IsChecked="{Binding OverlayEnabledOnLeftHand}"
                                   Command="{Binding EnableOverlayOnLeftHand}" >
-                        <ToggleButton.Background>
-                            <ImageBrush x:Name="EnableOverlayLeftHandButtonBrush" ImageSource="{StaticResource LeftHandButtonImage}" Stretch="UniformToFill"/>
-                        </ToggleButton.Background>
                     </ToggleButton>
                     <ToggleButton x:Name="EnableOverlayOnRightHand"
                                   Width="40" Height="40"
                                   Margin="10,0,0,0"
                                   HorizontalAlignment="Right"
+                                  Style="{StaticResource ImageToggleRightHandButtonStyle}"
                                   IsChecked="{Binding OverlayEnabledOnRightHand}"
                                   Command="{Binding EnableOverlayOnRightHand}" >
-                        <ToggleButton.Background>
-                            <ImageBrush x:Name="EnableOverlayRightHandButtonBrush" ImageSource="{StaticResource RightHandButtonImage}" Stretch="UniformToFill"/>
-                        </ToggleButton.Background>
                     </ToggleButton>
                 </StackPanel>
             </Border>
@@ -143,7 +187,8 @@
                                   Width="80" Height="60"
                                   Margin="20,0,0,0"
                                   IsChecked="{Binding LaunchOverlayOnStartup}"
-                                  Command="{Binding LaunchOverlayOnStartupToggleButton}" />
+                                  Command="{Binding LaunchOverlayOnStartupToggleButton}" >
+                    </ToggleButton>
                 </StackPanel>
             </Border>
             
