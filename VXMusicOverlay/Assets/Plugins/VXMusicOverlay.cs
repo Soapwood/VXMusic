@@ -157,6 +157,10 @@ namespace Plugins
 
         private GameObject _VXMusicInterfaceObject;
         private VXMusicInterface _VXMusicInterface;
+        
+        private GameObject _VXMusicOverlayTcpServerInterfaceObject;
+        private VXMusicOverlayTcpServer _VXMusicOverlayTcpServer;
+
 
         private GameObject _recognitionAudioSourceObject;
         private RecognitionAudioTrigger _recognitionAudioSource;
@@ -216,12 +220,12 @@ namespace Plugins
             TrackedDeviceInputLock = EVRButtonId.k_EButton_SteamVR_Trigger;
             
             
-            OverlayPosition.x = 0.05f;
-            OverlayPosition.y = 0;
-            OverlayPosition.z = -0.1f;
+            OverlayPosition.x = 0.02f;
+            OverlayPosition.y = -0.01f;
+            OverlayPosition.z = -0.112f;
             OverlayRotation.x = 180;
             OverlayRotation.y = 270;
-            OverlayRotation.z = -0.1f;
+            OverlayRotation.z = 16;
 
             FingerOffsetX = 0.02f;
             FingerOffsetY = -0.04f;
@@ -239,12 +243,12 @@ namespace Plugins
             OverlayTrackedDevice = ETrackedControllerRole.RightHand;
             TrackedDeviceInputLock = EVRButtonId.k_EButton_SteamVR_Trigger;
             
-            OverlayPosition.x = -0.05f;
-            OverlayPosition.y = 0;
-            OverlayPosition.z = -0.11f;
+            OverlayPosition.x = -0.02f;
+            OverlayPosition.y = -0.01f;
+            OverlayPosition.z = -0.112f;
             OverlayRotation.x = 180;
             OverlayRotation.y = -270;
-            OverlayRotation.z = 0;
+            OverlayRotation.z = -27;
             
             FingerOffsetX = -0.02f;
             FingerOffsetY = -0.04f;
@@ -408,6 +412,9 @@ namespace Plugins
             
             _VXMusicInterfaceObject = GameObject.Find("VXMusicInterfacePipe");
             _VXMusicInterface = _VXMusicInterfaceObject.GetComponent<VXMusicInterface>();
+            
+            _VXMusicOverlayTcpServerInterfaceObject = GameObject.Find("VXMusicTcpServer");
+            _VXMusicOverlayTcpServer = _VXMusicOverlayTcpServerInterfaceObject.GetComponent<VXMusicOverlayTcpServer>();
 
             _recognitionAudioSourceObject = GameObject.Find("AudioOutput");
             _recognitionAudioSource = _recognitionAudioSourceObject.GetComponent<RecognitionAudioTrigger>();
@@ -440,7 +447,7 @@ namespace Plugins
 
             if (!IsInRecognitionState && _timeSinceLastHeartbeat > _heartbeatInterval)
             {
-                _VXMusicInterface.SendMessageToServer("VX_HEARTBEAT_REQ");
+                _VXMusicInterface.SendHeartbeatMessageToDesktopClient("VX_HEARTBEAT_REQ");
                 _timeSinceLastHeartbeat = 0f;
             }
 
@@ -459,8 +466,6 @@ namespace Plugins
             if (ProcessEvent())
             {
                 Debug.Log(Tag + "VR system has been terminated");
-                _VXMusicInterface.SendMessageToServer("VX_CONNECTION_TERM"); 
-                // TODO Does the application quit before this message is received? Possible race condition
                 ApplicationQuit();
             }
 
@@ -479,24 +484,24 @@ namespace Plugins
                     updateVRTouch();
                 }
 
-                if (_VXMusicInterface.IsInRecognitionState)
+                if (_VXMusicOverlayTcpServer.IsInRecognitionState)
                 {
                     Debug.Log("VXMusic is in a Recognition State.");
-                    if (!_VXMusicInterface.IsAnimationRunning)
+                    if (!_VXMusicOverlayTcpServer.IsAnimationRunning)
                     {
                         ChangeOverlayOpacity(1.0f);
-                        _VXMusicInterface.IsAnimationRunning = true;
-                        OnRecognitionStateTriggered?.Invoke(_VXMusicInterface.IsInRecognitionState);
+                        _VXMusicOverlayTcpServer.IsAnimationRunning = true;
+                        OnRecognitionStateTriggered?.Invoke(_VXMusicOverlayTcpServer.IsInRecognitionState);
                     }
                 }
                 else
                 {
-                    Debug.Log("VXMusic is not in a Recognition State.");
-                    if (_VXMusicInterface.IsAnimationRunning)
+                    //Debug.Log("VXMusic is not in a Recognition State.");
+                    if (_VXMusicOverlayTcpServer.IsAnimationRunning)
                     {
                         ChangeOverlayOpacity(0.2f);
-                        _VXMusicInterface.IsAnimationRunning = false;
-                        OnRecognitionStateTriggered?.Invoke(_VXMusicInterface.IsInRecognitionState);
+                        _VXMusicOverlayTcpServer.IsAnimationRunning = false;
+                        OnRecognitionStateTriggered?.Invoke(_VXMusicOverlayTcpServer.IsInRecognitionState);
                     }
                 }
                     
@@ -1069,11 +1074,10 @@ namespace Plugins
                 tapped = false;
                 PerformHapticFeedback(lr);
 
-                if (IsInputLockButtonPressed() && !_VXMusicInterface.IsInRecognitionState)
+                if (IsInputLockButtonPressed() && !_VXMusicOverlayTcpServer.IsInRecognitionState)
                 {
-                    
                     _recognitionAudioSource.recognitionAudioSource.Play();
-                    _VXMusicInterface.SendMessageToServer("VX_RECOGNITION_REQ"); 
+                    _VXMusicOverlayTcpServer.SendMessageToDesktopClient(VXMMessage.RECOGNITION_REQUEST);
                 }
             }
         }

@@ -7,7 +7,6 @@ namespace Plugins
     public class VXLogoAnimationController : MonoBehaviour
     {
         private Animator _animator;
-        // private GameObject _overlayScriptWrapper;
 
         private VXMusicOverlay _vxmOverlay;
 
@@ -34,9 +33,7 @@ namespace Plugins
             _animator = GetComponent<Animator>();
             // Make sure it doesn't run at the beginning
             _animator.enabled = false;
-        
-            // _overlayScriptWrapper = GameObject.Find("OverlayScriptWrapper");
-        
+            
             if (_animator == null)
             {
                 Debug.LogError("Animator component not found on this GameObject.");

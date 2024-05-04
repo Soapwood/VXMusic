@@ -95,17 +95,11 @@ namespace VXMusicDesktop.MVVM.ViewModel
         {
             VXMusicOverlayInterface.SendOverlayAnchorUpdateRequest(
                 VXMMessage.ENABLE_OVERLAY_ANCHOR_LEFTHAND_REQUEST);
-
-            VXUserSettings.Overlay.SetOverlayAnchor(VXMusicOverlayAnchor.LeftHand);
-            App.VXMusicSession.OverlaySettings.OverlayAnchor = VXMusicOverlayAnchor.LeftHand;
         }
 
         public void SetEnableOverlayOnRightHand(object commandParameter)
         {
             VXMusicOverlayInterface.SendOverlayAnchorUpdateRequest(VXMMessage.ENABLE_OVERLAY_ANCHOR_RIGHTHAND_REQUEST);
-
-            VXUserSettings.Overlay.SetOverlayAnchor(VXMusicOverlayAnchor.RightHand);
-            App.VXMusicSession.OverlaySettings.OverlayAnchor = VXMusicOverlayAnchor.RightHand;
         }
     }
 }

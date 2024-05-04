@@ -265,6 +265,49 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!1 &484328186
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 484328188}
+  - component: {fileID: 484328187}
+  m_Layer: 0
+  m_Name: VXMusicTcpServer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &484328187
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 484328186}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d1aadb081b74253877d6bc2773b54eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &484328188
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 484328186}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -10.435099, y: -6.8955426, z: -28.66743}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &877227980
 GameObject:
   m_ObjectHideFlags: 0
@@ -899,13 +942,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13116fc56fd3d5b44a074659ec88b76e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  EnableOverlayDebugView: 0
   error: 1
   eventLog: 0
   spherePrefab: {fileID: 943885321328816842, guid: f19e1b8c598cff144a92f9d52a99d55e,
     type: 3}
   renderTexture: {fileID: 8400000, guid: 2afc18014991f7e449d31a5eb09138e8, type: 2}
-  Position: {x: 0.05, y: 0, z: -0.1}
-  Rotation: {x: 180, y: 270, z: 0}
+  OverlayPosition: {x: 0.02, y: -0.01, z: -0.112}
+  OverlayRotation: {x: 180, y: 270, z: 16}
   Scale: {x: 1, y: 1, z: 1}
   MirrorX: 0
   MirrorY: 0

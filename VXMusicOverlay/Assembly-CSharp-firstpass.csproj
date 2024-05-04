@@ -52,11 +52,12 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Assets\Plugins\VXSteamVRNotificationHandler.cs" />
      <Compile Include="Assets\Plugins\VXMusicInterface.cs" />
      <Compile Include="Assets\Plugins\VXMusicOverlay.cs" />
      <Compile Include="Assets\Plugins\VXMMessage.cs" />
      <Compile Include="Assets\Plugins\MainThreadDispatcher.cs" />
+     <Compile Include="Assets\Plugins\Messaging\VXMessageHandler.cs" />
+     <Compile Include="Assets\Plugins\VXMusicOverlayTcpServer.cs" />
      <Compile Include="Assets\Plugins\openvr_api.cs" />
      <Compile Include="Assets\Plugins\Logging\LogConfigurator.cs" />
      <Compile Include="Assets\Plugins\RecognitionAudioTrigger.cs" />

@@ -2,6 +2,8 @@ namespace Plugins
 {
     public class VXMMessage
     {
+        public const string VxMusicHeartbeatPipeName = "VXMusicHeartbeatMessagePipe";
+
         public const string CONNECTION_HEARTBEAT_REQUEST = "VX_HEARTBEAT_REQ";
         public const string CONNECTION_HEARTBEAT_ACKNOWLEDGE = "VX_HEARTBEAT_ACK";
         

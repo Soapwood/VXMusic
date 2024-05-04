@@ -107,9 +107,7 @@ namespace VXMusicDesktop
             Logger.LogTrace($"Booting VXMusic Desktop Client...");
             
             VXMusicSession.Initialise();
-            
-            VXMusicOverlayInterface.StartVXMusicDesktopEventListener();
-            
+
             VXMusicSession.NotificationClient.SendNotification("Welcome to VXMusic!", "", 5);
         }
 

@@ -4,12 +4,13 @@ ScriptsOnlyBuild:
     - Plugins.MainThreadDispatcher
     - Plugins.VXLogoAnimationController
     - Plugins.VXMusicOverlay
+    - Plugins.VXMusicOverlayTcpServer
     - RecognitionAudioTrigger
     - Valve.VR.VXMusicInterface
-    Assembly-CSharp.dll:
-    - Plugins.VXMusicOverlayPipeServer
     Unity.2D.Tilemap.Editor.dll:
     - UnityEditor.Tilemaps.GridPaintingState
+    - UnityEditor.Tilemaps.GridPaletteBrushes
+    - UnityEditor.Tilemaps.GridPalettes
     - UnityEditor.Tilemaps.SceneViewGridManager
     - UnityEditor.Tilemaps.SceneViewOpenTilePaletteHelper
     - UnityEditor.Tilemaps.TileDragAndDropManager
@@ -96,17 +97,19 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 3240}
     - Class: 114
-      Script: {instanceID: 3486}
+      Script: {instanceID: 3484}
     - Class: 114
-      Script: {instanceID: 3608}
+      Script: {instanceID: 3606}
     - Class: 114
-      Script: {instanceID: 4054}
+      Script: {instanceID: 3808}
     - Class: 114
-      Script: {instanceID: 4350}
+      Script: {instanceID: 4056}
     - Class: 114
-      Script: {instanceID: 5168}
+      Script: {instanceID: 4352}
     - Class: 114
-      Script: {instanceID: 5978}
+      Script: {instanceID: 5170}
+    - Class: 114
+      Script: {instanceID: 5982}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 122
@@ -146,12 +149,6 @@ ScriptsOnlyBuild:
     assemblyName: UnityEngine.XR.LegacyInputHelpers.dll
     namespaceName: UnityEngine.XR.LegacyInputHelpers
     className: ArmModel
-  - hash:
-      serializedVersion: 2
-      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
-    assemblyName: Assembly-CSharp-firstpass.dll
-    namespaceName: Plugins
-    className: VXSteamVRNotificationHandler
   - hash:
       serializedVersion: 2
       Hash: 77aaaaa51f7a8d8ff333a879741e47d2
@@ -250,7 +247,7 @@ ScriptsOnlyBuild:
     className: RawImage
   - hash:
       serializedVersion: 2
-      Hash: 8327db7b109934badae47382b3f9c746
+      Hash: e1f14fc22ccf05a54af1f5afa731ca9f
     assemblyName: Assembly-CSharp-firstpass.dll
     namespaceName: Valve.VR
     className: VXMusicInterface
@@ -364,12 +361,6 @@ ScriptsOnlyBuild:
     className: TestResultRendererCallback
   - hash:
       serializedVersion: 2
-      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: VXMusicInterface
-  - hash:
-      serializedVersion: 2
       Hash: 748dd2a2a28da4e618912da5ac45684b
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.EventSystems
@@ -422,6 +413,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.TextMeshPro.dll
     namespaceName: TMPro
     className: TextContainer
+  - hash:
+      serializedVersion: 2
+      Hash: 37c9b6a362d507f4aa5a7d787744de4b
+    assemblyName: Assembly-CSharp-firstpass.dll
+    namespaceName: Plugins
+    className: VXMusicOverlayTcpServer
   - hash:
       serializedVersion: 2
       Hash: 8aa3d6ccbcb54ee8db6c1229854adaaa
@@ -530,12 +527,6 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: AudioPlayableAsset
-  - hash:
-      serializedVersion: 2
-      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: Plugins
-    className: VXMusicOverlayPipeServer
   - hash:
       serializedVersion: 2
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f

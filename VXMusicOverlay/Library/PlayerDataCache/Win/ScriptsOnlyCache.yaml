@@ -6,10 +6,10 @@ ScriptsOnlyBuild:
     - Plugins.VXMusicOverlay
     - RecognitionAudioTrigger
     - Valve.VR.VXMusicInterface
+    Assembly-CSharp.dll:
+    - Plugins.VXMusicOverlayPipeServer
     Unity.2D.Tilemap.Editor.dll:
     - UnityEditor.Tilemaps.GridPaintingState
-    - UnityEditor.Tilemaps.GridPaletteBrushes
-    - UnityEditor.Tilemaps.GridPalettes
     - UnityEditor.Tilemaps.SceneViewGridManager
     - UnityEditor.Tilemaps.SceneViewOpenTilePaletteHelper
     - UnityEditor.Tilemaps.TileDragAndDropManager
@@ -86,28 +86,32 @@ ScriptsOnlyBuild:
     - Class: 108
       Script: {instanceID: 0}
     - Class: 114
-      Script: {instanceID: 2578}
+      Script: {instanceID: 2582}
     - Class: 114
-      Script: {instanceID: 2598}
+      Script: {instanceID: 2602}
     - Class: 114
-      Script: {instanceID: 2804}
+      Script: {instanceID: 2808}
     - Class: 114
-      Script: {instanceID: 2966}
+      Script: {instanceID: 2970}
     - Class: 114
-      Script: {instanceID: 3236}
+      Script: {instanceID: 3242}
     - Class: 114
-      Script: {instanceID: 3482}
+      Script: {instanceID: 3486}
     - Class: 114
-      Script: {instanceID: 3604}
+      Script: {instanceID: 3608}
     - Class: 114
-      Script: {instanceID: 4050}
+      Script: {instanceID: 4056}
     - Class: 114
-      Script: {instanceID: 5160}
+      Script: {instanceID: 4352}
     - Class: 114
-      Script: {instanceID: 5970}
+      Script: {instanceID: 5170}
+    - Class: 114
+      Script: {instanceID: 5980}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 122
+      Script: {instanceID: 0}
+    - Class: 135
       Script: {instanceID: 0}
     - Class: 157
       Script: {instanceID: 0}
@@ -240,13 +244,13 @@ ScriptsOnlyBuild:
     className: RawImage
   - hash:
       serializedVersion: 2
-      Hash: 37c9b6a362d507f4aa5a7d787744de4b
+      Hash: 8327db7b109934badae47382b3f9c746
     assemblyName: Assembly-CSharp-firstpass.dll
     namespaceName: Valve.VR
     className: VXMusicInterface
   - hash:
       serializedVersion: 2
-      Hash: 71ab13d1636cba2be1f7f5f6769390bb
+      Hash: 6d539209cabdafe69d3bb4b2e264420c
     assemblyName: Assembly-CSharp-firstpass.dll
     namespaceName: Plugins
     className: VXMusicOverlay
@@ -352,12 +356,6 @@ ScriptsOnlyBuild:
     assemblyName: UnityEngine.TestRunner.dll
     namespaceName: UnityEngine.TestTools.TestRunner.Callbacks
     className: TestResultRendererCallback
-  - hash:
-      serializedVersion: 2
-      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: VXMusicInterface
   - hash:
       serializedVersion: 2
       Hash: 748dd2a2a28da4e618912da5ac45684b
@@ -520,6 +518,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: AudioPlayableAsset
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: Plugins
+    className: VXMusicOverlayPipeServer
   - hash:
       serializedVersion: 2
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f

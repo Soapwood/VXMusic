@@ -37,17 +37,6 @@ namespace VXMusic.Overlay
         {
             vxMusicOverlay.SendNotificationInternal(title, content, timeout, image);
         }
-        public void SetLeftOverlayTrackedDevice()
-        {
-            _logger.LogInformation("Setting Overlay tracked device to: Left Hand");
-            vxMusicOverlay.SetOverlayTrackedDeviceInternal(TrackedDeviceRole.LeftHand);
-        }
-
-        public void SetRightHandOverlayTrackedDevice()
-        {
-            _logger.LogInformation("Setting Overlay tracked device to: Right Hand");
-            vxMusicOverlay.SetOverlayTrackedDeviceInternal(TrackedDeviceRole.RightHand);
-        }
 
         public TrackedDeviceRole GetOverlayTrackedDevice()
         {
@@ -156,19 +145,6 @@ namespace VXMusic.Overlay
 
             GC.KeepAlive(finalBitmap);
             //Marshal.FreeHGlobal(finalBitmap); //TODO NEED THIS
-        }
-
-        public void SetOverlayTrackedDeviceInternal(TrackedDeviceRole trackedDeviceRole)
-        {
-            try
-            {
-                TrackedDevice = trackedDeviceRole;
-            }
-            catch (Exception e)
-            {
-                _logger.LogWarning("VR Device was not found, are any controllers turned on?");
-                return;
-            }
         }
 
         public static NotificationBitmap_t NotificationBitmapFromBitmap(Bitmap bmp, bool flipRnB = true)
