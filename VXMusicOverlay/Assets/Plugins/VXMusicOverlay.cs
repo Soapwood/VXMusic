@@ -477,9 +477,9 @@ namespace Plugins
 
             _timeSinceLastHeartbeat += Time.deltaTime;
 
-            if (!IsInRecognitionState && _timeSinceLastHeartbeat > _heartbeatInterval) // todo Does this need to check if Recognition is active?
+            if (_timeSinceLastHeartbeat > _heartbeatInterval)
             {
-                _VXMusicInterface.SendHeartbeatMessageToDesktopClient("VX_HEARTBEAT_REQ");
+                _VXMusicInterface.SendHeartbeatMessageToDesktopClient(VXMMessage.CONNECTION_HEARTBEAT_REQUEST);
                 _timeSinceLastHeartbeat = 0f;
             }
 
@@ -514,11 +514,6 @@ namespace Plugins
                 {
                     // Handling GUI touch functions
                     updateVRTouch();
-                }
-
-                if (IsInRecognitionState)
-                {
-                    Debug.Log("VXMusic is in a Recognition State.");
                 }
             }
 
