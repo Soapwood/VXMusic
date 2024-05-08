@@ -50,8 +50,11 @@ namespace Plugins
         public float width = 5.0f;
 
         //Set overlay transparency
-        [Range(0, 1)] public float alpha = 1.0f;
+        [FormerlySerializedAs("alpha")] [Range(0, 1)] public float OverlayAlpha = 1.0f;
 
+        [FormerlySerializedAs("_overlayInactiveOpacity")] [Range(0, 1)] public float InactiveOverlayOpacity = 0.2f;
+        [FormerlySerializedAs("_overlayActiveOpacity")] [Range(0, 1)] public float ActiveOverlayOpacity = 1.0f;
+        
         //Display or not
         public bool show = true;
 
@@ -153,7 +156,8 @@ namespace Plugins
         public ETrackedControllerRole OverlayTrackedDevice;
         public EVRButtonId TrackedDeviceInputLock = EVRButtonId.k_EButton_SteamVR_Trigger;
 
-        public event Action<bool> OnRecognitionStateTriggered;
+        public event Action OnRecognitionStateBegin;
+        public event Action OnRecognitionStateEnded;
 
         private GameObject _VXMusicInterfaceObject;
         private VXMusicInterface _VXMusicInterface;
@@ -163,7 +167,7 @@ namespace Plugins
 
 
         private GameObject _recognitionAudioSourceObject;
-        private RecognitionAudioTrigger _recognitionAudioSource;
+        private OverlayAudioHandler _overlayAudioSource;
 
         private float _timeSinceLastHeartbeat = 0f;
         private float _heartbeatInterval = 2f;
@@ -201,9 +205,14 @@ namespace Plugins
         //--------------------------------------------------------------------------
 
         // Switch transparency settings from outside
-        public void setAlpha(float a)
+        public void SetOverlayOpacity(float a)
         {
-            alpha = a;
+            OverlayAlpha = a;
+        }
+        
+        public void TriggerOnRecognitionStateEnded()
+        {
+            OnRecognitionStateEnded?.Invoke();
         }
 
         // Switching device from outside
@@ -319,6 +328,22 @@ namespace Plugins
             // Fully open handles
             ProcessError();
         }
+        
+        private void HandleRecognitionStateBegin()
+        {
+            Debug.Log("Begin Overlay Recognition State");
+            IsInRecognitionState = true;
+            
+            SetOverlayOpacity(ActiveOverlayOpacity);
+        }
+        
+        private void HandleRecognitionStateEnd()
+        {
+            Debug.Log("End Overlay Recognition State");
+            IsInRecognitionState = false;
+            
+            SetOverlayOpacity(InactiveOverlayOpacity);
+        }
 
         // Terminate the application
         private void ApplicationQuit()
@@ -339,12 +364,19 @@ namespace Plugins
             string Tag = "[" + this.GetType().Name + ":" +
                          System.Reflection.MethodBase.GetCurrentMethod(); // Automatically obtain class name and method name
 #pragma warning restore 0219
-            Debug.Log(Tag + "Begin");
+            Debug.Log(Tag + "VXMusic Overlay is Booting");
             
-            //_logger.Debug("Bingy");
-
-            //if (EnableOverlayDebugView)
-            //{
+            Debug.Log("Subscribing to inter-process Events");
+            // Subscribe to VX Event triggers
+            OnRecognitionStateBegin += HandleRecognitionStateBegin;
+            OnRecognitionStateEnded += HandleRecognitionStateEnd;
+            
+            // Instanciate MainThreadDispatcher
+            Debug.Log("Instanciating MainThreadDispatcher");
+            MainThreadDispatcher.Initialize();
+            
+            // Create Debug Overlay Markers
+            // These will only appear when the EnableOverlayDebugView variable is true
             LeftDebugSphere = Instantiate(spherePrefab, Vector3.zero, Quaternion.identity);
             LeftDebugSphere.GetComponent<Renderer>().material.color = Color.green;
             RightDebugSphere = Instantiate(spherePrefab, Vector3.zero, Quaternion.identity);
@@ -417,7 +449,7 @@ namespace Plugins
             _VXMusicOverlayTcpServer = _VXMusicOverlayTcpServerInterfaceObject.GetComponent<VXMusicOverlayTcpServer>();
 
             _recognitionAudioSourceObject = GameObject.Find("AudioOutput");
-            _recognitionAudioSource = _recognitionAudioSourceObject.GetComponent<RecognitionAudioTrigger>();
+            _overlayAudioSource = _recognitionAudioSourceObject.GetComponent<OverlayAudioHandler>();
 
             // Notifications
             //notifications = OpenVR.Notifications;
@@ -445,7 +477,7 @@ namespace Plugins
 
             _timeSinceLastHeartbeat += Time.deltaTime;
 
-            if (!IsInRecognitionState && _timeSinceLastHeartbeat > _heartbeatInterval)
+            if (!IsInRecognitionState && _timeSinceLastHeartbeat > _heartbeatInterval) // todo Does this need to check if Recognition is active?
             {
                 _VXMusicInterface.SendHeartbeatMessageToDesktopClient("VX_HEARTBEAT_REQ");
                 _timeSinceLastHeartbeat = 0f;
@@ -484,27 +516,10 @@ namespace Plugins
                     updateVRTouch();
                 }
 
-                if (_VXMusicOverlayTcpServer.IsInRecognitionState)
+                if (IsInRecognitionState)
                 {
                     Debug.Log("VXMusic is in a Recognition State.");
-                    if (!_VXMusicOverlayTcpServer.IsAnimationRunning)
-                    {
-                        ChangeOverlayOpacity(1.0f);
-                        _VXMusicOverlayTcpServer.IsAnimationRunning = true;
-                        OnRecognitionStateTriggered?.Invoke(_VXMusicOverlayTcpServer.IsInRecognitionState);
-                    }
                 }
-                else
-                {
-                    //Debug.Log("VXMusic is not in a Recognition State.");
-                    if (_VXMusicOverlayTcpServer.IsAnimationRunning)
-                    {
-                        ChangeOverlayOpacity(0.2f);
-                        _VXMusicOverlayTcpServer.IsAnimationRunning = false;
-                        OnRecognitionStateTriggered?.Invoke(_VXMusicOverlayTcpServer.IsInRecognitionState);
-                    }
-                }
-                    
             }
 
             if (putLogDevicesInfo)
@@ -519,23 +534,17 @@ namespace Plugins
         {
             VRControllerState_t controllerState = new VRControllerState_t();
             var sizeOfControllerState = (uint)System.Runtime.InteropServices.Marshal.SizeOf(typeof(VRControllerState_t));
-            
-            // If overlay is tracked to left controller, make the right hand the dominant input device, and visa versa.
-            // var inputDeviceRelativeToOverlayDevice = OverlayTrackedDevice == ETrackedControllerRole.LeftHand
-            //     ? ETrackedControllerRole.LeftHand
-            //     : ETrackedControllerRole.RightHand;
-            
+
             uint currentInputDeviceId = openvr.GetTrackedDeviceIndexForControllerRole(OverlayTrackedDevice);
 
             if (openvr.GetControllerState(currentInputDeviceId, ref controllerState, sizeOfControllerState))
             {
-                // Check if the system button is pressed
-                bool isPressed = (controllerState.ulButtonPressed & (1UL << (int)TrackedDeviceInputLock)) != 0;
-                return isPressed;
+                // Check if specified lock button is pressed.
+                return (controllerState.ulButtonPressed & (1UL << (int)TrackedDeviceInputLock)) != 0;
             }
             
             Debug.Log("Failed to get controller state.");
-            return false; // failed to get controller state.
+            return false; 
         }
         
 
@@ -634,7 +643,7 @@ namespace Plugins
             overlay.SetOverlayWidthInMeters(overlayHandle, width);
 
             // Set overlay transparency
-            overlay.SetOverlayAlpha(overlayHandle, alpha);
+            overlay.SetOverlayAlpha(overlayHandle, OverlayAlpha);
 
             // Set the mouse cursor scale (this also determines the size of the display area)
             try
@@ -1074,20 +1083,13 @@ namespace Plugins
                 tapped = false;
                 PerformHapticFeedback(lr);
 
-                if (IsInputLockButtonPressed() && !_VXMusicOverlayTcpServer.IsInRecognitionState)
+                if (IsInputLockButtonPressed() && !IsInRecognitionState) // Make sure Recognition isn't already running.
                 {
-                    _recognitionAudioSource.recognitionAudioSource.Play();
-                    _VXMusicOverlayTcpServer.SendMessageToDesktopClient(VXMMessage.RECOGNITION_REQUEST);
+                    // This is the definitive point where Recognition has been triggered by the user using the Overlay.
+                    OnRecognitionStateBegin?.Invoke();
                 }
             }
         }
-
-        private void ChangeOverlayOpacity(float alpha)
-        {
-            // bingy
-            setAlpha(alpha);
-        }
-
 
         // Perform vibration feedback
         private void PerformHapticFeedback(LeftOrRight lr)

@@ -20,11 +20,6 @@ namespace Plugins
         private readonly int _vxMusicDesktopTcpPort = 61820;
         private readonly int _vxMusicOverlayTcpPort = 61821;
         
-        public bool IsInRecognitionState = false;
-        public bool IsAnimationRunning = false;
-        
-        public event Action<bool> OnRecognitionStateTriggered;
-
         void Start()
         {
             GameObject _vxmOverlayGameObject = GameObject.Find("OverlayScriptWrapper");
@@ -34,9 +29,27 @@ namespace Plugins
             
             _vxmOverlay = _vxmOverlayGameObject.GetComponent<VXMusicOverlay>();
             
+            if (_vxmOverlay != null)
+            {
+                _vxmOverlay.OnRecognitionStateBegin += HandleRecognitionStateBegin;
+                _vxmOverlay.OnRecognitionStateEnded += HandleRecognitionStateEnd;
+            }
+            
             _tcpListenerThread = new Thread(new ThreadStart(ListenForInboundConnections));
             _tcpListenerThread.IsBackground = true;
             _tcpListenerThread.Start();
+        }
+        
+        private void HandleRecognitionStateBegin()
+        {
+            Debug.Log("Begin OverlayTcpServer Recognition State");
+            SendMessageToDesktopClient(VXMMessage.RECOGNITION_REQUEST);
+        }
+
+        private void HandleRecognitionStateEnd()
+        {
+            Debug.Log("End OverlayTcpServer Recognition State");
+            //SendMessageToDesktopClient(VXMMessage.fin);
         }
         
         private void ListenForInboundConnections()
@@ -155,13 +168,13 @@ namespace Plugins
             {
                 case VXMMessage.RECOGNITION_ACKNOWLEDGE:
                     Debug.Log("Received Recognition ACK from Desktop Client: " + incomingMessage);
-                    IsInRecognitionState = true;
-                    OnRecognitionStateTriggered?.Invoke(true);
                     return null;
                 case VXMMessage.RECOGNITION_FINISH:
                     Debug.Log("Received Recognition FIN response from .NET: " + incomingMessage);
-                    IsInRecognitionState = false;
-                    OnRecognitionStateTriggered?.Invoke(false);
+                    MainThreadDispatcher.Instance.Enqueue(() =>
+                    {
+                        _vxmOverlay.TriggerOnRecognitionStateEnded();
+                    });
                     return null; // TODO Maybe move these out as they don't need responses.
                 case VXMMessage.ENABLE_OVERLAY_ANCHOR_LEFTHAND_REQUEST:
                     // Send the connection ack response back to Unity

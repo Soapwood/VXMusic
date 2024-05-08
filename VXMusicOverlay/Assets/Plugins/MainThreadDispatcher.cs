@@ -1,38 +1,49 @@
 using System;
 using System.Collections;
+using System.Collections.Concurrent;
 using UnityEngine;
 
 namespace Plugins
 {
     public class MainThreadDispatcher : MonoBehaviour
     {
+        private static readonly ConcurrentQueue<Action> Queue = new ConcurrentQueue<Action>();
         private static MainThreadDispatcher _instance;
 
-        private void Awake()
+        public static MainThreadDispatcher Instance
+        {
+            get
+            {
+                if (_instance == null)
+                {
+                    Debug.LogError("MainThreadDispatcher instance is not initialized yet.");
+                }
+                return _instance;
+            }
+        }
+
+        public static void Initialize()
         {
             if (_instance == null)
             {
-                _instance = this;
-                DontDestroyOnLoad(gameObject);
-            }
-            else
-            {
-                Destroy(gameObject);
+                GameObject go = new GameObject("MainThreadDispatcher");
+                _instance = go.AddComponent<MainThreadDispatcher>();
+                DontDestroyOnLoad(go);
             }
         }
 
-        public static void ExecuteOnMainThread(Action action)
+        public void Enqueue(Action action)
         {
-            if (_instance != null)
-            {
-                _instance.StartCoroutine(_instance.ExecuteOnMainThreadCoroutine(action));
-            }
+            if (action == null) throw new ArgumentNullException(nameof(action));
+            Queue.Enqueue(action);
         }
 
-        private IEnumerator ExecuteOnMainThreadCoroutine(Action action)
+        void Update()
         {
-            yield return null; // Wait for one frame to ensure we're on the main thread
-            action?.Invoke();
+            while (Queue.TryDequeue(out Action action))
+            {
+                action.Invoke();
+            }
         }
     }
 }

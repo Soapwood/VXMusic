@@ -11,9 +11,8 @@ namespace Plugins
         private VXMusicOverlay _vxmOverlay;
 
         private string _animationName = "VXMRecognition";
+        private bool _isInProcessingState = false;
 
-        private bool _isVxInProcessingState = false;
-    
         // Start is called before the first frame update
         void Start()
         {
@@ -25,12 +24,13 @@ namespace Plugins
 
                 if (_vxmOverlay != null)
                 {
-                    // Subscribe to the event in ScriptA
-                    _vxmOverlay.OnRecognitionStateTriggered += HandlePublicValueChange;
+                    _vxmOverlay.OnRecognitionStateBegin += HandleRecognitionStateBegin;
+                    _vxmOverlay.OnRecognitionStateEnded += HandleRecognitionStateEnd;
                 }
             }
         
             _animator = GetComponent<Animator>();
+            
             // Make sure it doesn't run at the beginning
             _animator.enabled = false;
             
@@ -41,46 +41,39 @@ namespace Plugins
         }
     
         // Event handler method for value change
-        private void HandlePublicValueChange(bool newValue)
+        private void HandleRecognitionStateBegin()
         {
-            Debug.Log("Value from EasyOpenVROverlayForUnity changed to: " + newValue);
+            Debug.Log("Begin Animation Controller Recognition State");
 
-            if (newValue)
-            {
-                //MainThreadDispatcher.ExecuteOnMainThread(() =>
-                //{
-                    _isVxInProcessingState = true;
-                    
-                    _animator.enabled = true;
-                    _animator.Play(_animationName, -1, 0f);
-                    _animator.speed = 1;
-                
-                //});
-            }
-            else
-            {
-                var resetState = _animator.rootPosition;
-
-                _animator.bodyPosition = resetState;
-                
-                _isVxInProcessingState = false;
-                
-            }
+            _isInProcessingState = true;
+            
+            _animator.enabled = true;
+            _animator.Play(_animationName, -1, 0f);
+            _animator.speed = 1;
         }
 
-        // Remember to unsubscribe from the event when ScriptB is destroyed
+        private void HandleRecognitionStateEnd()
+        {
+            Debug.Log("End Animation Controller Recognition State");
+
+            _isInProcessingState = false;
+            
+            _animator.bodyPosition = _animator.rootPosition;
+        }
+        
         private void OnDestroy()
         {
             if (_vxmOverlay != null)
             {
-                _vxmOverlay.OnRecognitionStateTriggered -= HandlePublicValueChange;
+                _vxmOverlay.OnRecognitionStateBegin -= HandleRecognitionStateBegin;
+                _vxmOverlay.OnRecognitionStateEnded -= HandleRecognitionStateEnd;
             }
         }
 
         // Update is called once per frame
         void Update()
         {
-            if (_animator.GetCurrentAnimatorStateInfo(0).IsName(_animationName) && !_isVxInProcessingState )
+            if (!_isInProcessingState && _animator.enabled && _animator.GetCurrentAnimatorStateInfo(0).IsName(_animationName))
             {
                 float progress = _animator.GetCurrentAnimatorStateInfo(0).normalizedTime % 1;
                 if (progress >= 0.98f)
@@ -88,6 +81,8 @@ namespace Plugins
                     // Optionally, force animation to the last frame if not exactly finishing at the end.
                     _animator.Play(_animationName, -1, 0f);
                     _animator.speed = 0; // Stop the animation
+                    
+                    _animator.enabled = false; // Disable the animator until the next run 
                 }
             }
         }
