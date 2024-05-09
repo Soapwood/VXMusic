@@ -13,24 +13,23 @@ namespace Plugins
     public class VXMusicOverlay : MonoBehaviour
     {
         //private static Logger _logger = LogManager.GetCurrentClassLogger();
-        
+
+        #region Script Fields
+        [Header("Debug")]
         public bool EnableOverlayDebugView = false;
         
-        //ERROR FLAG
-        public bool error = true; //Initialization failed
+        [FormerlySerializedAs("error")] public bool OverlayInitialisationError = false;
 
         //Display logs related to events
-        public bool eventLog = false;
-
-        private GameObject VXMusicLogo;
-
-        [SerializeField] private GameObject spherePrefab;
+        [FormerlySerializedAs("eventLog")] public bool EventLog = false;
+        
+        [FormerlySerializedAs("SpherePrefab")] [FormerlySerializedAs("spherePrefab")] [SerializeField] private GameObject DebugSpherePrefab;
         private GameObject LeftDebugSphere;
         private GameObject RightDebugSphere;
 
-        [Header("RenderTexture")]
+        [FormerlySerializedAs("renderTexture")] [Header("Overlay Render Texture")]
         //Render Texture to get from
-        public RenderTexture renderTexture;
+        public RenderTexture RenderTexture;
 
         [FormerlySerializedAs("Position")] [Header("Transform")]
         //Unity compliant position and rotation
@@ -44,49 +43,101 @@ namespace Plugins
         public bool MirrorX = false;
         public bool MirrorY = false;
 
-        [Header("Setting")]
-        //Set the overlay size (width only.Height is automatically calculated from the texture ratio)
-        [Range(0, 100)]
-        public float width = 5.0f;
-
-        //Set overlay transparency
-        [FormerlySerializedAs("alpha")] [Range(0, 1)] public float OverlayAlpha = 1.0f;
-
+        [FormerlySerializedAs("width")]
+        [Header("Overlay Canvas Settings")]
+        [Range(0, 100)] public float Width = 0.2f;
+        [FormerlySerializedAs("alpha")] [Range(0, 1)] public float OverlayAlpha = 0.2f;
         [FormerlySerializedAs("_overlayInactiveOpacity")] [Range(0, 1)] public float InactiveOverlayOpacity = 0.2f;
         [FormerlySerializedAs("_overlayActiveOpacity")] [Range(0, 1)] public float ActiveOverlayOpacity = 1.0f;
-        
-        //Display or not
-        public bool show = true;
-
-        //side-by-side 3D
+        [FormerlySerializedAs("show")] public bool ShowOverlay = true;
         public bool SideBySide = false;
+        public int ApplicationTargetFramerate = 90;
 
 
-        [Header("Name")]
-        //Name of the overlay for the user to see
+        [Header("OpenVR Overlay Settings")]
         public string OverlayFriendlyName = "VXMusicOverlay";
-
-        //Global key (distinguished name between system overlays).
-        // Must be unique. Recommend random numbers, UUIDs, etc.
         public string OverlayKeyName = "VXMusicOverlay";
 
-        [Header("DeviceTracking")]
-        //Absolute space?
+        [Header("Device Tracking")]
         public bool DeviceTracking = true;
-
-        //Followed device. HMD=0
-        //public uint DeviceIndex = OpenVR.k_unTrackedDeviceIndex_Hmd;
-        public TrackingDeviceSelect DeviceIndex = TrackingDeviceSelect.HMD;
+        [FormerlySerializedAs("OverlayAnchorDevice")] [FormerlySerializedAs("DeviceIndex")] public TrackingDeviceSelect CurrentTrackedDevice = TrackingDeviceSelect.HMD;
         private int DeviceIndexOld = (int)TrackingDeviceSelect.None;
 
-        [Header("Absolute space")]
-        //(For absolute space) Room scale or seated state?
+        [Header("Absolute Space")]
         public bool Seated = false;
-
-        //Reset the seated camera (it will automatically return to false after resetting)
         public bool ResetSeatedCamera = false;
+        
+        [FormerlySerializedAs("putLogDevicesInfo")] [Header("Device Info")]
+        // Output the list of currently connected devices to the log (automatically returns to false)
+        public bool OutputDeviceInfoLogs = false;
+        public int ConnectedDevices = 0;
+        public int SelectedDeviceIndex = 0;
+        public string DeviceSerialNumber = null;
+        public string DeviceRenderModelName = null;
 
-        //Follow target list. Special handling because the controller changes
+        [Header("VXMusic State")] 
+        public bool IsInRecognitionState = false;
+
+        public ETrackedControllerRole OverlayTrackedDevice;
+        public EVRButtonId TrackedDeviceInputLock = EVRButtonId.k_EButton_SteamVR_Trigger;
+        [FormerlySerializedAs("_heartbeatInterval")] public float HeartbeatInterval = 2.0f;
+        
+        [Header("GUI Tap")]
+        [FormerlySerializedAs("LaycastRootObject")] public GameObject RaycastRootObject = null;
+
+        public float TapOnDistance = 0.04f;
+        public float TapOffDistance = 0.043f;
+        
+        public float FingerOffsetX = 0.02f;
+        public float FingerOffsetY = -0.04f;
+        public float FingerOffsetZ = 0.01f;
+        
+        public float FingerRotationOffsetX = 80;
+        public float FingerRotationOffsetY = 25;
+        public float FingerRotationOffsetZ = 0;
+
+        [FormerlySerializedAs("_timeSinceLastHeartbeat")] [Header("Tracked Device Debug")]
+        public float TimeSinceLastHeartbeat = 0f;
+        [FormerlySerializedAs("tappedLeft")] public bool ClickedLeft = false;
+        [FormerlySerializedAs("tappedRight")] public bool ClickedRight = false;
+        public float LeftHandU = -1f;
+        public float LeftHandV = -1f;
+        public float LeftHandDistance = -1f;
+        public float RightHandU = -1f;
+        public float RightHandV = -1f;
+        public float RightHandDistance = -1f;
+        
+        #endregion
+        
+        #region Process Events
+        public event Action OnRecognitionStateBegin;
+        public event Action OnRecognitionStateEnded;
+        #endregion
+        
+        #region Low Level Process Fields
+        private ulong _LowLevelOverlayHandle = INVALID_HANDLE;
+        // Open VR system instance
+        private CVRSystem _openVrSystemApiInstance = null;
+        // Overlay instance
+        private CVROverlay _openVROverlayInstance = null;
+        // Overlay instance
+        private CVRNotifications _notifications = null;
+        // Native texture to pass to overlay
+        private Texture_t _overlayTexture;
+        // HMD viewpoint position conversion matrix
+        private HmdMatrix34_t p;
+        // invalid handle
+        private const ulong INVALID_HANDLE = 0;
+        #endregion
+
+        #region OpenVR Enums
+        // RIGHT HAND OR LEFT HAND // TODO Deprecate this
+        enum LeftOrRight
+        {
+            Left = 0,
+            Right = 1
+        }
+
         public enum TrackingDeviceSelect
         {
             None = -99,
@@ -102,232 +153,18 @@ namespace Plugins
             Device7 = 7,
             Device8 = 8,
         }
+        #endregion
 
-        //--------------------------------------------------------------------------
-
-        [Header("Device Info")]
-        // Output the list of currently connected devices to the log (automatically returns to false)
-        public bool putLogDevicesInfo = false;
-
-        // Number of currently connected devices (at the time of device selection)
-        public int ConnectedDevices = 0;
-
-        // select device number
-        public int SelectedDeviceIndex = 0;
-
-        // serial number of selected device
-        public string DeviceSerialNumber = null;
-
-        // Model name of selected device
-        public string DeviceRenderModelName = null;
-
-
-        [Header("GUI Tap")]
-        // Root Canvas object for identifying raycast target
-        public GameObject LaycastRootObject = null;
-
-        // Tap state management
-        public bool tappedLeft = false;
-        public bool tappedRight = false;
-
-        // TAP DISTANCE
-        public float TapOnDistance = 0.04f;
-        public float TapOffDistance = 0.043f;
-
-        // Variable for displaying cursor position
-        public float LeftHandU = -1f;
-        public float LeftHandV = -1f;
-        public float LeftHandDistance = -1f;
-        public float RightHandU = -1f;
-        public float RightHandV = -1f;
-        public float RightHandDistance = -1f;
-
-        public float FingerOffsetX = 0.05f;
-        public float FingerOffsetY = -0.01f;
-        public float FingerOffsetZ = 0.1f;
-
-        public float FingerRotationOffsetX = 15;
-        public float FingerRotationOffsetY = 0;
-        public float FingerRotationOffsetZ = 0;
-
-        [Header("VXMusic State")] 
-        public bool IsInRecognitionState = false;
-
-        public ETrackedControllerRole OverlayTrackedDevice;
-        public EVRButtonId TrackedDeviceInputLock = EVRButtonId.k_EButton_SteamVR_Trigger;
-
-        public event Action OnRecognitionStateBegin;
-        public event Action OnRecognitionStateEnded;
-
+        #region Interprocess Instances
         private GameObject _VXMusicInterfaceObject;
         private VXMusicInterface _VXMusicInterface;
+        #endregion
+
+
+        // // // // // // // // // // // // // // // // // // // // // // // // 
+        // // // // // // // // // // // // // // // // // // // // // // // // 
         
-        private GameObject _VXMusicOverlayTcpServerInterfaceObject;
-        private VXMusicOverlayTcpServer _VXMusicOverlayTcpServer;
-
-
-        private GameObject _recognitionAudioSourceObject;
-        private OverlayAudioHandler _overlayAudioSource;
-
-        private float _timeSinceLastHeartbeat = 0f;
-        private float _heartbeatInterval = 2f;
-        
-        // RIGHT HAND OR LEFT HAND
-        enum LeftOrRight
-        {
-            Left = 0,
-            Right = 1
-        }
-
-        //--------------------------------------------------------------------------
-
-        // Overlay handle (integer)
-        private ulong overlayHandle = INVALID_HANDLE;
-
-        // Open VR system instance
-        private CVRSystem openvr = null;
-
-        // Overlay instance
-        private CVROverlay overlay = null;
-        
-        // Overlay instance
-        private CVRNotifications notifications = null;
-
-        // Native texture to pass to overlay
-        private Texture_t overlayTexture;
-
-        // HMD viewpoint position conversion matrix
-        private HmdMatrix34_t p;
-
-        // invalid handle
-        private const ulong INVALID_HANDLE = 0;
-
-        //--------------------------------------------------------------------------
-
-        // Switch transparency settings from outside
-        public void SetOverlayOpacity(float a)
-        {
-            OverlayAlpha = a;
-        }
-        
-        public void TriggerOnRecognitionStateEnded()
-        {
-            OnRecognitionStateEnded?.Invoke();
-        }
-
-        // Switching device from outside
-        public void ChangeAnchorToHmd()
-        {
-            DeviceIndex = TrackingDeviceSelect.HMD;
-        }
-
-        // Switching device from outside
-        public void ChangeAnchorToLeftController()
-        {
-            DeviceIndex = TrackingDeviceSelect.LeftController;
-            OverlayTrackedDevice = ETrackedControllerRole.LeftHand;
-            TrackedDeviceInputLock = EVRButtonId.k_EButton_SteamVR_Trigger;
-            
-            
-            OverlayPosition.x = 0.02f;
-            OverlayPosition.y = -0.01f;
-            OverlayPosition.z = -0.112f;
-            OverlayRotation.x = 180;
-            OverlayRotation.y = 270;
-            OverlayRotation.z = 16;
-
-            FingerOffsetX = 0.02f;
-            FingerOffsetY = -0.04f;
-            FingerOffsetZ = 0.01f;
-
-            FingerRotationOffsetX = 80;
-            FingerRotationOffsetY = 25;
-            FingerRotationOffsetZ = 0;
-        }
-
-        // Switching device from outside
-        public void ChangeAnchorToRightController()
-        {
-            DeviceIndex = TrackingDeviceSelect.RightController;
-            OverlayTrackedDevice = ETrackedControllerRole.RightHand;
-            TrackedDeviceInputLock = EVRButtonId.k_EButton_SteamVR_Trigger;
-            
-            OverlayPosition.x = -0.02f;
-            OverlayPosition.y = -0.01f;
-            OverlayPosition.z = -0.112f;
-            OverlayRotation.x = 180;
-            OverlayRotation.y = -270;
-            OverlayRotation.z = -27;
-            
-            FingerOffsetX = -0.02f;
-            FingerOffsetY = -0.04f;
-            FingerOffsetZ = 0.01f;
-
-            FingerRotationOffsetX = 80;
-            FingerRotationOffsetY = 25;
-            FingerRotationOffsetZ = 0;
-        }
-
-        //--------------------------------------------------------------------------
-
-        // Check if Overlay is displayed externally
-        public bool IsVisible()
-        {
-            return overlay.IsOverlayVisible(overlayHandle) && !IsError();
-        }
-
-        // Check for error status
-        public bool IsError()
-        {
-            return error || overlayHandle == INVALID_HANDLE || overlay == null || openvr == null;
-        }
-
-        // Error processing (release processing)
-        private void ProcessError()
-        {
-#pragma warning disable 0219
-            string Tag = "[" + this.GetType().Name + ":" +
-                         System.Reflection.MethodBase.GetCurrentMethod(); // クラス名とメソッド名を自動取得
-#pragma warning restore 0219
-            Debug.Log(Tag + "Begin");
-
-            // release the handle
-            if (overlayHandle != INVALID_HANDLE && overlay != null)
-            {
-                overlay.DestroyOverlay(overlayHandle);
-            }
-
-            overlayHandle = INVALID_HANDLE;
-            overlay = null;
-            openvr = null;
-            error = true;
-        }
-
-        // When destroying an object
-        private void OnDestroy()
-        {
-#pragma warning disable 0219
-            string Tag = "[" + this.GetType().Name + ":" +
-                         System.Reflection.MethodBase.GetCurrentMethod(); // automatically obtain class name and method name
-#pragma warning restore 0219
-            Debug.Log(Tag + "Begin");
-
-            // Fully open handles
-            ProcessError();
-        }
-
-        // When application termination is detected
-        private void OnApplicationQuit()
-        {
-#pragma warning disable 0219
-            string Tag = "[" + this.GetType().Name + ":" +
-                         System.Reflection.MethodBase.GetCurrentMethod(); // Automatically obtain class name and method name
-#pragma warning restore 0219
-            Debug.Log(Tag + "Begin");
-
-            // Fully open handles
-            ProcessError();
-        }
+        #region Events 
         
         private void HandleRecognitionStateBegin()
         {
@@ -345,29 +182,21 @@ namespace Plugins
             SetOverlayOpacity(InactiveOverlayOpacity);
         }
 
-        // Terminate the application
-        private void ApplicationQuit()
-        {
-#if UNITY_EDITOR
-            UnityEditor.EditorApplication.isPlaying = false;
-#else
-        Application.Quit();
-#endif
-        }
+        #endregion
 
-        //--------------------------------------------------------------------------
-
-        // Initialization process
-        private void Start()
+        #region Overlay Initialisation
+         private void Start()
         {
-#pragma warning disable 0219
+#pragma warning disable 0219 // TODO Deprecate this wank - use an actual logger please.
             string Tag = "[" + this.GetType().Name + ":" +
                          System.Reflection.MethodBase.GetCurrentMethod(); // Automatically obtain class name and method name
 #pragma warning restore 0219
-            Debug.Log(Tag + "VXMusic Overlay is Booting");
             
-            Debug.Log("Subscribing to inter-process Events");
+            Debug.Log(Tag + "VXMusic Overlay is Booting");
+            OverlayInitialisationError = false;
+            
             // Subscribe to VX Event triggers
+            Debug.Log("Subscribing to inter-process Events");
             OnRecognitionStateBegin += HandleRecognitionStateBegin;
             OnRecognitionStateEnded += HandleRecognitionStateEnd;
             
@@ -377,91 +206,80 @@ namespace Plugins
             
             // Create Debug Overlay Markers
             // These will only appear when the EnableOverlayDebugView variable is true
-            LeftDebugSphere = Instantiate(spherePrefab, Vector3.zero, Quaternion.identity);
+            LeftDebugSphere = Instantiate(DebugSpherePrefab, Vector3.zero, Quaternion.identity);
             LeftDebugSphere.GetComponent<Renderer>().material.color = Color.green;
-            RightDebugSphere = Instantiate(spherePrefab, Vector3.zero, Quaternion.identity);
+            RightDebugSphere = Instantiate(DebugSpherePrefab, Vector3.zero, Quaternion.identity);
             RightDebugSphere.GetComponent<Renderer>().material.color = Color.green;
-            //}
+
+            Debug.Log(Tag + $"Setting Overlay Target Framerate to {ApplicationTargetFramerate}hz.");
+            Application.targetFrameRate = ApplicationTargetFramerate;
+
+            InitialiseOpenVrSubsystemInstances();
+            InitialiseOverlayTextureBounds();
             
-            var openVRError = EVRInitError.None;
-            var overlayError = EVROverlayError.None;
-            error = false;
+            Debug.Log(Tag + "Initialising overlay");
+            
+            _VXMusicInterfaceObject = GameObject.Find("VXMusicInterfacePipe");
+            _VXMusicInterface = _VXMusicInterfaceObject.GetComponent<VXMusicInterface>();
+        }
 
-            // Set the frame rate to 90 fps. (Otherwise it can become infinitely fast)
-            Application.targetFrameRate = 90;
-            Debug.Log(Tag + "Set Frame Rate 90");
-
+        private void InitialiseOpenVrSubsystemInstances()
+        {
+            var openVrErrorContainer = EVRInitError.None;
+            var openVrOverlayErrorContainer = EVROverlayError.None;
+            
             // Open VR initialization
-            openvr = OpenVR.Init(ref openVRError, EVRApplicationType.VRApplication_Overlay);
-            if (openVRError != EVRInitError.None)
+            _openVrSystemApiInstance = OpenVR.Init(ref openVrErrorContainer, EVRApplicationType.VRApplication_Overlay);
+            
+            if (openVrErrorContainer != EVRInitError.None)
             {
-                Debug.LogError(Tag + "Open VR initialization failed." + openVRError.ToString());
+                Debug.LogError("Open VR initialization failed." + openVrErrorContainer.ToString());
                 ProcessError();
-                return;
+                throw new ApplicationException("Open VR initialization failed." + openVrErrorContainer.ToString());
             }
 
             // Initializing the overlay function
-            overlay = OpenVR.Overlay;
-            overlayError = overlay.CreateOverlay(OverlayKeyName, OverlayFriendlyName, ref overlayHandle);
-            if (overlayError != EVROverlayError.None)
+            _openVROverlayInstance = OpenVR.Overlay;
+            openVrOverlayErrorContainer = _openVROverlayInstance.CreateOverlay(OverlayKeyName, OverlayFriendlyName, ref _LowLevelOverlayHandle);
+            if (openVrOverlayErrorContainer != EVROverlayError.None)
             {
-                Debug.LogError(Tag + "Overlay initialization failed. " + overlayError.ToString());
+                Debug.LogError("Overlay initialization failed. " + openVrOverlayErrorContainer.ToString());
                 ProcessError();
-                return;
+                throw new ApplicationException("Overlay initialization failed." + openVrOverlayErrorContainer.ToString());
             }
+        }
 
+        private void InitialiseOverlayTextureBounds()
+        {
             // Setting the texture type to be passed to the overlay
-            var OverlayTextureBounds = new VRTextureBounds_t();
+            var overlayTextureBounds = new VRTextureBounds_t();
             var isOpenGL = SystemInfo.graphicsDeviceVersion.Contains("OpenGL");
             if (isOpenGL)
             {
                 //pGLuintTexture
-                overlayTexture.eType = ETextureType.OpenGL;
+                _overlayTexture.eType = ETextureType.OpenGL;
                 // Not flipped upside down
-                OverlayTextureBounds.uMin = 0;
-                OverlayTextureBounds.vMin = 0;
-                OverlayTextureBounds.uMax = 1;
-                OverlayTextureBounds.vMax = 1;
-                overlay.SetOverlayTextureBounds(overlayHandle, ref OverlayTextureBounds);
+                overlayTextureBounds.uMin = 0;
+                overlayTextureBounds.vMin = 0;
+                overlayTextureBounds.uMax = 1;
+                overlayTextureBounds.vMax = 1;
+                _openVROverlayInstance.SetOverlayTextureBounds(_LowLevelOverlayHandle, ref overlayTextureBounds);
             }
             else
             {
                 //pTexture
-                overlayTexture.eType = ETextureType.DirectX;
+                _overlayTexture.eType = ETextureType.DirectX;
                 // flip upside down
-                OverlayTextureBounds.uMin = 0;
-                OverlayTextureBounds.vMin = 1;
-                OverlayTextureBounds.uMax = 1;
-                OverlayTextureBounds.vMax = 0;
-                overlay.SetOverlayTextureBounds(overlayHandle, ref OverlayTextureBounds);
+                overlayTextureBounds.uMin = 0;
+                overlayTextureBounds.vMin = 1;
+                overlayTextureBounds.uMax = 1;
+                overlayTextureBounds.vMax = 0;
+                _openVROverlayInstance.SetOverlayTextureBounds(_LowLevelOverlayHandle, ref overlayTextureBounds);
             }
-
-            //--------
-            //showDevices();
-
-            Debug.Log(Tag + "Initialising overlay");
-            VXMusicLogo = GameObject.Find("VXMusicOverlayLogo");
-            
-            _VXMusicInterfaceObject = GameObject.Find("VXMusicInterfacePipe");
-            _VXMusicInterface = _VXMusicInterfaceObject.GetComponent<VXMusicInterface>();
-            
-            _VXMusicOverlayTcpServerInterfaceObject = GameObject.Find("VXMusicTcpServer");
-            _VXMusicOverlayTcpServer = _VXMusicOverlayTcpServerInterfaceObject.GetComponent<VXMusicOverlayTcpServer>();
-
-            _recognitionAudioSourceObject = GameObject.Find("AudioOutput");
-            _overlayAudioSource = _recognitionAudioSourceObject.GetComponent<OverlayAudioHandler>();
-
-            // Notifications
-            //notifications = OpenVR.Notifications;
-            
-            //uint notificationId = 0;
-            //NotificationBitmap_t finalBitmap = new NotificationBitmap_t();
-            //notifications.CreateNotification(overlayHandle, 0, EVRNotificationType.Transient, "Title", EVRNotificationStyle.Application, ref finalBitmap, ref notificationId);
-
-            //IsVXMusicServerRunning();
-            //SendRequestToServerAsync("VX_TRIGGER_RECOGNITION");
         }
+        #endregion
 
+        #region Main Overlay Tick Logic
         private void Update()
         {
 #pragma warning disable 0219
@@ -471,80 +289,60 @@ namespace Plugins
 
             // Do not execute if an error occurs or the handle is invalid
             if (IsError())
-            {
                 return;
-            }
 
-            _timeSinceLastHeartbeat += Time.deltaTime;
+            TimeSinceLastHeartbeat += Time.deltaTime;
 
-            if (_timeSinceLastHeartbeat > _heartbeatInterval)
+            if (TimeSinceLastHeartbeat > HeartbeatInterval)
             {
                 _VXMusicInterface.SendHeartbeatMessageToDesktopClient(VXMMessage.CONNECTION_HEARTBEAT_REQUEST);
-                _timeSinceLastHeartbeat = 0f;
+                TimeSinceLastHeartbeat = 0f;
             }
 
-            if (show)
+            if (ShowOverlay)
             {
                 // Show overlay
-                overlay.ShowOverlay(overlayHandle);
+                _openVROverlayInstance.ShowOverlay(_LowLevelOverlayHandle);
             }
             else
             {
                 // Hide overlay
-                overlay.HideOverlay(overlayHandle);
+                _openVROverlayInstance.HideOverlay(_LowLevelOverlayHandle);
             }
 
-            // Handle the event (true when terminated)
-            if (ProcessEvent())
+            // Handle termination event
+            if (IsQuitEventPresentInOpenVrSubsystem())
             {
                 Debug.Log(Tag + "VR system has been terminated");
                 ApplicationQuit();
             }
 
             // When the overlay is displayed
-            if (overlay.IsOverlayVisible(overlayHandle))
+            if (_openVROverlayInstance.IsOverlayVisible(_LowLevelOverlayHandle))
             {
                 // Update location information and various settings
-                updatePosition();
+                UpdateOverlayPosition();
                 // Update display information
-                updateTexture();
+                UpdateOverlayTexture();
 
                 // If Canvas is set
-                if (LaycastRootObject != null)
+                if (RaycastRootObject != null)
                 {
-                    // Handling GUI touch functions
-                    updateVRTouch();
+                    // Handling overlay touch functions
+                    VrInputTick();
                 }
             }
 
-            if (putLogDevicesInfo)
+            if (OutputDeviceInfoLogs)
             {
-                showDevices();
-                putLogDevicesInfo = false;
+                LogDeviceInfo();
+                OutputDeviceInfoLogs = false;
             }
         
         }
-
-        private bool IsInputLockButtonPressed()
-        {
-            VRControllerState_t controllerState = new VRControllerState_t();
-            var sizeOfControllerState = (uint)System.Runtime.InteropServices.Marshal.SizeOf(typeof(VRControllerState_t));
-
-            uint currentInputDeviceId = openvr.GetTrackedDeviceIndexForControllerRole(OverlayTrackedDevice);
-
-            if (openvr.GetControllerState(currentInputDeviceId, ref controllerState, sizeOfControllerState))
-            {
-                // Check if specified lock button is pressed.
-                return (controllerState.ulButtonPressed & (1UL << (int)TrackedDeviceInputLock)) != 0;
-            }
-            
-            Debug.Log("Failed to get controller state.");
-            return false; 
-        }
         
-
-        // Update location information
-        private void updatePosition()
+                // Update location information
+        private void UpdateOverlayPosition()
         {
 #pragma warning disable 0219
             string Tag = "[" + this.GetType().Name + ":" +
@@ -552,7 +350,7 @@ namespace Plugins
 #pragma warning restore 0219
 
             // Check if Render Texture is generated
-            if (!renderTexture.IsCreated())
+            if (!RenderTexture.IsCreated())
             {
                 Debug.Log(Tag + "Render Texture has not been generated yet");
                 return;
@@ -589,16 +387,16 @@ namespace Plugins
                 // Handle deviceindex (because controllers etc. change from time to time)
                 var idx = OpenVR.k_unTrackedDeviceIndex_Hmd;
 
-                switch (DeviceIndex)
+                switch (CurrentTrackedDevice)
                 {
                     case TrackingDeviceSelect.LeftController:
-                        idx = openvr.GetTrackedDeviceIndexForControllerRole(ETrackedControllerRole.LeftHand);
+                        idx = _openVrSystemApiInstance.GetTrackedDeviceIndexForControllerRole(ETrackedControllerRole.LeftHand);
                         break;
                     case TrackingDeviceSelect.RightController:
-                        idx = openvr.GetTrackedDeviceIndexForControllerRole(ETrackedControllerRole.RightHand);
+                        idx = _openVrSystemApiInstance.GetTrackedDeviceIndexForControllerRole(ETrackedControllerRole.RightHand);
                         break;
                     default:
-                        idx = (uint)DeviceIndex;
+                        idx = (uint)CurrentTrackedDevice;
                         break;
                 }
 
@@ -611,19 +409,19 @@ namespace Plugins
                 }
 
                 // Display the overlay relative to the HMD.
-                overlay.SetOverlayTransformTrackedDeviceRelative(overlayHandle, idx, ref p);
+                _openVROverlayInstance.SetOverlayTransformTrackedDeviceRelative(_LowLevelOverlayHandle, idx, ref p);
             }
             else
             {
                 // Display an overlay at an absolute position in space
                 if (!Seated)
                 {
-                    overlay.SetOverlayTransformAbsolute(overlayHandle, ETrackingUniverseOrigin.TrackingUniverseStanding,
+                    _openVROverlayInstance.SetOverlayTransformAbsolute(_LowLevelOverlayHandle, ETrackingUniverseOrigin.TrackingUniverseStanding,
                         ref p);
                 }
                 else
                 {
-                    overlay.SetOverlayTransformAbsolute(overlayHandle, ETrackingUniverseOrigin.TrackingUniverseSeated,
+                    _openVROverlayInstance.SetOverlayTransformAbsolute(_LowLevelOverlayHandle, ETrackingUniverseOrigin.TrackingUniverseSeated,
                         ref p);
                 }
             }
@@ -635,108 +433,135 @@ namespace Plugins
             }
 
             // Overlay size settings (width only.Height is automatically calculated from the texture ratio)
-            overlay.SetOverlayWidthInMeters(overlayHandle, width);
+            _openVROverlayInstance.SetOverlayWidthInMeters(_LowLevelOverlayHandle, Width);
 
             // Set overlay transparency
-            overlay.SetOverlayAlpha(overlayHandle, OverlayAlpha);
+            _openVROverlayInstance.SetOverlayAlpha(_LowLevelOverlayHandle, OverlayAlpha);
 
             // Set the mouse cursor scale (this also determines the size of the display area)
             try
             {
                 HmdVector2_t vecMouseScale = new HmdVector2_t
                 {
-                    v0 = renderTexture.width,
-                    v1 = renderTexture.height
+                    v0 = RenderTexture.width,
+                    v1 = RenderTexture.height
                 };
-                overlay.SetOverlayMouseScale(overlayHandle, ref vecMouseScale);
+                _openVROverlayInstance.SetOverlayMouseScale(_LowLevelOverlayHandle, ref vecMouseScale);
             }
             catch (UnassignedReferenceException e)
             {
-                Debug.LogError(Tag + "RenderTextureがセットされていません " + e.ToString());
+                Debug.LogError(Tag + "RenderTexture is not set " + e.ToString());
                 ProcessError();
                 return;
             }
         }
 
         // Update display information
-        private void updateTexture()
+        private void UpdateOverlayTexture()
         {
 #pragma warning disable 0219
             string Tag = "[" + this.GetType().Name + ":" +
-                         System.Reflection.MethodBase.GetCurrentMethod(); //クラス名とメソッド名を自動取得
+                         System.Reflection.MethodBase.GetCurrentMethod();
 #pragma warning restore 0219
 
-            overlay.SetOverlayFlag(overlayHandle, VROverlayFlags.SideBySide_Parallel, SideBySide);
+            _openVROverlayInstance.SetOverlayFlag(_LowLevelOverlayHandle, VROverlayFlags.SideBySide_Parallel, SideBySide);
 
             // Check if RenderTexture is generated
-            if (!renderTexture.IsCreated())
+            if (!RenderTexture.IsCreated())
             {
-                Debug.Log(Tag + "RenderTextureがまだ生成されていない");
+                Debug.Log(Tag + "RenderTexture has not been generated yet.");
                 return;
             }
 
             // Get native texture handle from RenderTexture
             try
             {
-                overlayTexture.handle = renderTexture.GetNativeTexturePtr();
+                _overlayTexture.handle = RenderTexture.GetNativeTexturePtr();
             }
             catch (UnassignedReferenceException e)
             {
-                Debug.LogError(Tag + "RenderTextureがセットされていません " + e.ToString());
+                Debug.LogError(Tag + "RenderTexture is not set " + e.ToString());
                 ProcessError();
                 return;
             }
 
             // Set texture on overlay
             var overlayError = EVROverlayError.None;
-            overlayError = overlay.SetOverlayTexture(overlayHandle, ref overlayTexture);
+            overlayError = _openVROverlayInstance.SetOverlayTexture(_LowLevelOverlayHandle, ref _overlayTexture);
             if (overlayError != EVROverlayError.None)
             {
-                Debug.LogError(Tag + "Overlayにテクスチャをセットできませんでした. " + overlayError.ToString());
+                Debug.LogError(Tag + "Overlay could not set texture." + overlayError.ToString());
                 // Do not treat it as a fatal error
                 return;
             }
         }
+        
+        #endregion
 
-        // Return when the end event is caught
-        private bool ProcessEvent()
+        #region High Level Overlay State
+
+        public void ChangeAnchorToLeftController()
         {
-#pragma warning disable 0219
-            string Tag = "[" + this.GetType().Name + ":" +
-                         System.Reflection.MethodBase.GetCurrentMethod(); //クラス名とメソッド名を自動取得
-#pragma warning restore 0219
+            CurrentTrackedDevice = TrackingDeviceSelect.LeftController;
+            OverlayTrackedDevice = ETrackedControllerRole.LeftHand;
+            TrackedDeviceInputLock = EVRButtonId.k_EButton_SteamVR_Trigger;
+            
+            
+            OverlayPosition.x = 0.02f;
+            OverlayPosition.y = -0.01f;
+            OverlayPosition.z = -0.112f;
+            OverlayRotation.x = 180;
+            OverlayRotation.y = 270;
+            OverlayRotation.z = 16;
 
-            // Get the size of the event structure
-            uint uncbVREvent = (uint)System.Runtime.InteropServices.Marshal.SizeOf(typeof(VREvent_t));
+            FingerOffsetX = 0.02f;
+            FingerOffsetY = -0.04f;
+            FingerOffsetZ = 0.01f;
 
-            // Event information storage structure
-            VREvent_t Event = new VREvent_t();
-            // Retrieve event
-            while (overlay.PollNextOverlayEvent(overlayHandle, ref Event, uncbVREvent))
-            {
-                // View event log
-                if (eventLog)
-                {
-                    Debug.Log(Tag + "Event:" + ((EVREventType)Event.eventType).ToString());
-                }
-
-                // Branch by event information
-                switch ((EVREventType)Event.eventType)
-                {
-                    case EVREventType.VREvent_Quit:
-                        Debug.Log(Tag + "Quit");
-                        return true;
-                }
-            }
-
-            return false;
+            FingerRotationOffsetX = 80;
+            FingerRotationOffsetY = 25;
+            FingerRotationOffsetZ = 0;
         }
 
+        // Switching device from outside
+        public void ChangeAnchorToRightController()
+        {
+            CurrentTrackedDevice = TrackingDeviceSelect.RightController;
+            OverlayTrackedDevice = ETrackedControllerRole.RightHand;
+            TrackedDeviceInputLock = EVRButtonId.k_EButton_SteamVR_Trigger;
+            
+            OverlayPosition.x = -0.02f;
+            OverlayPosition.y = -0.01f;
+            OverlayPosition.z = -0.112f;
+            OverlayRotation.x = 180;
+            OverlayRotation.y = -270;
+            OverlayRotation.z = -27;
+            
+            FingerOffsetX = -0.02f;
+            FingerOffsetY = -0.04f;
+            FingerOffsetZ = 0.01f;
 
-        //----------Bonus (device details)-------------
+            FingerRotationOffsetX = 80;
+            FingerRotationOffsetY = 25;
+            FingerRotationOffsetZ = 0;
+        }
+        
+        public void SetOverlayOpacity(float a)
+        {
+            OverlayAlpha = a;
+        }
+        
+        public void TriggerOnRecognitionStateEnded()
+        {
+            OnRecognitionStateEnded?.Invoke();
+        }
 
-        // Output all device information to log
-        private void showDevices()
+        #endregion
+        
+        #region Logging
+
+                // Output all device information to log
+        private void LogDeviceInfo()
         {
 #pragma warning disable 0219
             string Tag = "[" + this.GetType().Name + ":" +
@@ -745,7 +570,7 @@ namespace Plugins
 
             // Get connection status of all devices
             TrackedDevicePose_t[] allDevicePose = new TrackedDevicePose_t[OpenVR.k_unMaxTrackedDeviceCount];
-            openvr.GetDeviceToAbsoluteTrackingPose(ETrackingUniverseOrigin.TrackingUniverseStanding, 0f, allDevicePose);
+            _openVrSystemApiInstance.GetDeviceToAbsoluteTrackingPose(ETrackingUniverseOrigin.TrackingUniverseStanding, 0f, allDevicePose);
 
             // Count the number of connected devices
             uint connectedDeviceNum = 0;
@@ -812,70 +637,28 @@ namespace Plugins
             }
         }
 
-        // Reflect the information of the specified device in the Inspector
-        private void UpdateDeviceInfo(uint idx)
+        #endregion
+
+        #region VR Input
+        
+        private bool IsInputLockButtonPressed()
         {
-            // Get connection status of all devices
-            TrackedDevicePose_t[] allDevicePose = new TrackedDevicePose_t[OpenVR.k_unMaxTrackedDeviceCount];
-            openvr.GetDeviceToAbsoluteTrackingPose(ETrackingUniverseOrigin.TrackingUniverseStanding, 0f, allDevicePose);
+            VRControllerState_t controllerState = new VRControllerState_t();
+            var sizeOfControllerState = (uint)System.Runtime.InteropServices.Marshal.SizeOf(typeof(VRControllerState_t));
 
-            // Count the number of connected devices
-            ConnectedDevices = 0;
-            for (uint i = 0; i < OpenVR.k_unMaxTrackedDeviceCount; i++)
-            {
-                if (allDevicePose[i].bDeviceIsConnected)
-                {
-                    ConnectedDevices++;
-                }
-            }
+            uint currentInputDeviceId = _openVrSystemApiInstance.GetTrackedDeviceIndexForControllerRole(OverlayTrackedDevice);
 
-            // Reflect device information to Inspector
-            SelectedDeviceIndex = (int)idx;
-            DeviceSerialNumber = GetProperty(idx, ETrackedDeviceProperty.Prop_SerialNumber_String);
-
-            try
+            if (_openVrSystemApiInstance.GetControllerState(currentInputDeviceId, ref controllerState, sizeOfControllerState))
             {
-                DeviceRenderModelName = GetProperty(idx, ETrackedDeviceProperty.Prop_RenderModelName_String); // bingy
+                // Check if specified lock button is pressed.
+                return (controllerState.ulButtonPressed & (1UL << (int)TrackedDeviceInputLock)) != 0;
             }
-            catch (Exception e)
-            {
-                Debug.LogWarning("Maybe the device model name couldn't be found?");
-                Debug.LogWarning(e);
-            }
+            
+            Debug.Log("Failed to get controller state.");
+            return false; 
         }
-
-        // Get device information
-        private string GetProperty(uint idx, ETrackedDeviceProperty prop)
-        {
-#pragma warning disable 0219
-            string Tag = "[" + this.GetType().Name + ":" +
-                         System.Reflection.MethodBase.GetCurrentMethod(); // Automatically obtain class name and method name
-#pragma warning restore 0219
-
-            ETrackedPropertyError error = new ETrackedPropertyError();
-            // Get the number of characters required to get device information
-            uint size = openvr.GetStringTrackedDeviceProperty(idx, prop, null, 0, ref error);
-            if (error != ETrackedPropertyError.TrackedProp_BufferTooSmall)
-            {
-                return null;
-            }
-
-            StringBuilder s = new StringBuilder();
-            s.Length = (int)size; // Ensure character length
-            // Get device information
-            openvr.GetStringTrackedDeviceProperty(idx, prop, s, size, ref error);
-            if (error != ETrackedPropertyError.TrackedProp_Success)
-            {
-                return null;
-            }
-
-            return s.ToString();
-        }
-
-
-        //----------Bonus (you can hit Overlay with a controller and click uGUI)-------------
-        //Realize uGUI click
-        private void updateVRTouch()
+        
+        private void VrInputTick()
         {
 #pragma warning disable 0219
             string Tag = "[" + this.GetType().Name + ":" +
@@ -884,13 +667,13 @@ namespace Plugins
             
             // Get information for all VR connected devices
             TrackedDevicePose_t[] allDevicePose = new TrackedDevicePose_t[OpenVR.k_unMaxTrackedDeviceCount];
-            openvr.GetDeviceToAbsoluteTrackingPose(ETrackingUniverseOrigin.TrackingUniverseStanding, 0f, allDevicePose);
+            _openVrSystemApiInstance.GetDeviceToAbsoluteTrackingPose(ETrackingUniverseOrigin.TrackingUniverseStanding, 0f, allDevicePose);
 
             // Variable to store Overlay ray scan results
             VROverlayIntersectionResults_t results = new VROverlayIntersectionResults_t();
             
             // Get left hand controller information
-            uint Leftidx = openvr.GetTrackedDeviceIndexForControllerRole(ETrackedControllerRole.LeftHand);
+            uint Leftidx = _openVrSystemApiInstance.GetTrackedDeviceIndexForControllerRole(ETrackedControllerRole.LeftHand);
 
             // Calulate origin of Ray for simulated finger
             if (Leftidx != OpenVR.k_unTrackedDeviceIndexInvalid)
@@ -909,15 +692,15 @@ namespace Plugins
                 if(EnableOverlayDebugView)
                     Debug.DrawLine(fingerPosition, fingerPosition + (fingerRotation * Vector3.forward) * 2.0f, Color.blue);
                 
-                //if (checkRay(Leftidx, allDevicePose, ref results))
-                if (checkRay(Leftidx, fingerPosition, fingerRotation * Vector3.forward, ref results))
+                // Check for intersection
+                if (IsRaycastIntersectingWithOverlayCanvas(Leftidx, fingerPosition, fingerRotation * Vector3.forward, ref results))
                 {
                     // If there is an overlay on the line, continue processing
-                    CheckTapping(results, LeftOrRight.Left, ref tappedLeft);
+                    IsRaycastInClickingRange(results, LeftOrRight.Left, ref ClickedLeft);
 
                     // Updated for cursor display
-                    LeftHandU = results.vUVs.v0 * renderTexture.width;
-                    LeftHandV = renderTexture.height - results.vUVs.v1 * renderTexture.height;
+                    LeftHandU = results.vUVs.v0 * RenderTexture.width;
+                    LeftHandV = RenderTexture.height - results.vUVs.v1 * RenderTexture.height;
                     LeftHandDistance = results.fDistance;
                 }
                 else
@@ -929,7 +712,7 @@ namespace Plugins
             }
 
             // Get right hand controller information
-            uint Rightidx = openvr.GetTrackedDeviceIndexForControllerRole(ETrackedControllerRole.RightHand);
+            uint Rightidx = _openVrSystemApiInstance.GetTrackedDeviceIndexForControllerRole(ETrackedControllerRole.RightHand);
             if (Rightidx != OpenVR.k_unTrackedDeviceIndexInvalid)
             {
                 SteamVR_Utils.RigidTransform rightControllerTransform = new SteamVR_Utils.RigidTransform(allDevicePose[Rightidx].mDeviceToAbsoluteTracking);
@@ -946,14 +729,14 @@ namespace Plugins
                 if(EnableOverlayDebugView)
                     Debug.DrawLine(fingerPosition, fingerPosition + (fingerRotation * Vector3.forward) * 2.0f, Color.blue);
                 
-                if (checkRay(Rightidx, fingerPosition, fingerRotation * Vector3.forward, ref results))
+                if (IsRaycastIntersectingWithOverlayCanvas(Rightidx, fingerPosition, fingerRotation * Vector3.forward, ref results))
                 {
                     // If there is an overlay on the line, continue processing
-                    CheckTapping(results, LeftOrRight.Right, ref tappedRight);
+                    IsRaycastInClickingRange(results, LeftOrRight.Right, ref ClickedRight);
 
                     // Updated for cursor display
-                    RightHandU = results.vUVs.v0 * renderTexture.width;
-                    RightHandV = renderTexture.height - results.vUVs.v1 * renderTexture.height;
+                    RightHandU = results.vUVs.v0 * RenderTexture.width;
+                    RightHandV = RenderTexture.height - results.vUVs.v1 * RenderTexture.height;
                     RightHandDistance = results.fDistance;
                 }
                 else
@@ -964,9 +747,40 @@ namespace Plugins
                 }
             }
         }
+        
+        private bool IsRaycastIntersectingWithOverlayCanvas(uint idx, Vector3 pos, Vector3 dir, ref VROverlayIntersectionResults_t results)
+        {
+            if (idx != OpenVR.k_unTrackedDeviceIndexInvalid)
+            {
+                TrackedDevicePose_t[] allDevicePose = new TrackedDevicePose_t[OpenVR.k_unMaxTrackedDeviceCount];
+                _openVrSystemApiInstance.GetDeviceToAbsoluteTrackingPose(ETrackingUniverseOrigin.TrackingUniverseStanding, 0f, allDevicePose);
 
-        // Checks if the specified device is valid and then checks if it has an intersection with the overlay
-        private bool checkRay(uint idx, TrackedDevicePose_t[] allDevicePose, ref VROverlayIntersectionResults_t results)
+                if (allDevicePose[idx].bDeviceIsConnected && allDevicePose[idx].bPoseIsValid)
+                {
+                    // Convert the direction and position from Unity's coordinate system to OpenVR's coordinate system
+                    HmdVector3_t rayOrigin = new HmdVector3_t { v0 = pos.x, v1 = pos.y, v2 = -pos.z }; // OpenVR uses a left-handed coordinate system
+                    HmdVector3_t rayDirection = new HmdVector3_t { v0 = dir.x, v1 = dir.y, v2 = -dir.z };
+
+                    // Raycasting parameters setup
+                    VROverlayIntersectionParams_t param = new VROverlayIntersectionParams_t();
+                    param.vSource = rayOrigin;
+                    param.vDirection = rayDirection;
+                    param.eOrigin = ETrackingUniverseOrigin.TrackingUniverseStanding;
+
+                    // Check for intersection with the overlay
+                    return _openVROverlayInstance.ComputeOverlayIntersection(_LowLevelOverlayHandle, ref param, ref results);
+                }
+            }
+
+            return false; // Return false if device index is invalid, device is not connected, or pose is invalid
+        }
+
+        /*
+         * Checks if the specified device is valid and then checks if it has an intersection with the overlay
+         * This is used for the default generalised controller raycast origin
+         * Use the other method overload for specifiying augmented raycast origin positioning.
+         */
+        private bool IsRaycastIntersectingWithOverlayCanvas(uint idx, TrackedDevicePose_t[] allDevicePose, ref VROverlayIntersectionResults_t results)
         {
 #pragma warning disable 0219
             string Tag = "[" + this.GetType().Name + ":" +
@@ -994,33 +808,6 @@ namespace Plugins
             return false;
         }
         
-        private bool checkRay(uint idx, Vector3 pos, Vector3 dir, ref VROverlayIntersectionResults_t results)
-        {
-            if (idx != OpenVR.k_unTrackedDeviceIndexInvalid)
-            {
-                TrackedDevicePose_t[] allDevicePose = new TrackedDevicePose_t[OpenVR.k_unMaxTrackedDeviceCount];
-                openvr.GetDeviceToAbsoluteTrackingPose(ETrackingUniverseOrigin.TrackingUniverseStanding, 0f, allDevicePose);
-
-                if (allDevicePose[idx].bDeviceIsConnected && allDevicePose[idx].bPoseIsValid)
-                {
-                    // Convert the direction and position from Unity's coordinate system to OpenVR's coordinate system
-                    HmdVector3_t rayOrigin = new HmdVector3_t { v0 = pos.x, v1 = pos.y, v2 = -pos.z }; // OpenVR uses a left-handed coordinate system
-                    HmdVector3_t rayDirection = new HmdVector3_t { v0 = dir.x, v1 = dir.y, v2 = -dir.z };
-
-                    // Raycasting parameters setup
-                    VROverlayIntersectionParams_t param = new VROverlayIntersectionParams_t();
-                    param.vSource = rayOrigin;
-                    param.vDirection = rayDirection;
-                    param.eOrigin = ETrackingUniverseOrigin.TrackingUniverseStanding;
-
-                    // Check for intersection with the overlay
-                    return overlay.ComputeOverlayIntersection(overlayHandle, ref param, ref results);
-                }
-            }
-
-            return false; // Return false if device index is invalid, device is not connected, or pose is invalid
-        }
-
         // Check if it has an intersection with the overlay
         private bool ComputeOverlayIntersection(Vector3 pos, Vector3 rotvect, ref VROverlayIntersectionResults_t results)
         {
@@ -1049,11 +836,10 @@ namespace Plugins
             param.eOrigin = ETrackingUniverseOrigin.TrackingUniverseStanding;
 
             // True if it intersects with Overlay, false if not, detailed information is entered in results
-            return overlay.ComputeOverlayIntersection(overlayHandle, ref param, ref results);
+            return _openVROverlayInstance.ComputeOverlayIntersection(_LowLevelOverlayHandle, ref param, ref results);
         }
-
-        // Check if tapped
-        private void CheckTapping(VROverlayIntersectionResults_t results, LeftOrRight lr, ref bool tapped)
+        
+        private void IsRaycastInClickingRange(VROverlayIntersectionResults_t results, LeftOrRight lr, ref bool tapped)
         {
 #pragma warning disable 0219
             string Tag = "[" + this.GetType().Name + ":" +
@@ -1066,9 +852,7 @@ namespace Plugins
                 // Tapped
                 tapped = true;
                 PerformHapticFeedback(lr);
-
-                // Click processing
-                uGUIclick(results);
+                ProcessOverlayClick(results);
             }
 
             // If the distance between the controller and the overlay is above a certain level
@@ -1085,34 +869,9 @@ namespace Plugins
                 }
             }
         }
-
-        // Perform vibration feedback
-        private void PerformHapticFeedback(LeftOrRight lr)
-        {
-#pragma warning disable 0219
-            string Tag = "[" + this.GetType().Name + ":" +
-                         System.Reflection.MethodBase.GetCurrentMethod(); // Automatically obtain class name and method name
-#pragma warning restore 0219
-
-            // Check if left hand controller is enabled
-            uint Leftidx = openvr.GetTrackedDeviceIndexForControllerRole(ETrackedControllerRole.LeftHand);
-            if (Leftidx != OpenVR.k_unTrackedDeviceIndexInvalid && lr == LeftOrRight.Left)
-            {
-                // blut???
-                openvr.TriggerHapticPulse(Leftidx, 0, 3000);
-            }
-
-            // Check if right hand controller is enabled
-            uint Rightidx = openvr.GetTrackedDeviceIndexForControllerRole(ETrackedControllerRole.RightHand);
-            if (Rightidx != OpenVR.k_unTrackedDeviceIndexInvalid && lr == LeftOrRight.Right)
-            {
-                // blut???
-                openvr.TriggerHapticPulse(Rightidx, 0, 3000);
-            }
-        }
-
-        // Identify and click an element on Canvas
-        private void uGUIclick(VROverlayIntersectionResults_t results)
+        
+                // Identify and click an element on Canvas
+        private void ProcessOverlayClick(VROverlayIntersectionResults_t results)
         {
 #pragma warning disable 0219
             string Tag = "[" + this.GetType().Name + ":" +
@@ -1120,8 +879,8 @@ namespace Plugins
 #pragma warning restore 0219
 
             // Calculate uv coordinates for click
-            float u = results.vUVs.v0 * renderTexture.width;
-            float v = renderTexture.height - results.vUVs.v1 * renderTexture.height;
+            float u = results.vUVs.v0 * RenderTexture.width;
+            float v = RenderTexture.height - results.vUVs.v1 * RenderTexture.height;
 
             // Set coordinates for raycast on Canvas
             Vector2 ScreenPoint = new Vector2(u, v);
@@ -1151,7 +910,7 @@ namespace Plugins
                 {
                     Debug.Log(Tag + res.gameObject.name + " at " + res.gameObject.transform.root.name);
                     // Check if it is a child of the root object you want to target
-                    if (res.gameObject.transform.root.name == LaycastRootObject.name)
+                    if (res.gameObject.transform.root.name == RaycastRootObject.name)
                     {
                         ExecuteEvents.Execute(res.gameObject, pointer, ExecuteEvents.pointerClickHandler);
                         break;
@@ -1159,5 +918,201 @@ namespace Plugins
                 }
             }
         }
+        
+        #endregion
+        
+        #region OpenVR Low Level Api Wrappers
+
+        // Get device information
+        private string GetProperty(uint idx, ETrackedDeviceProperty prop)
+        {
+#pragma warning disable 0219
+            string Tag = "[" + this.GetType().Name + ":" +
+                         System.Reflection.MethodBase.GetCurrentMethod(); // Automatically obtain class name and method name
+#pragma warning restore 0219
+
+            ETrackedPropertyError error = new ETrackedPropertyError();
+            // Get the number of characters required to get device information
+            uint size = _openVrSystemApiInstance.GetStringTrackedDeviceProperty(idx, prop, null, 0, ref error);
+            if (error != ETrackedPropertyError.TrackedProp_BufferTooSmall)
+            {
+                return null;
+            }
+
+            StringBuilder s = new StringBuilder();
+            s.Length = (int)size; // Ensure character length
+            // Get device information
+            _openVrSystemApiInstance.GetStringTrackedDeviceProperty(idx, prop, s, size, ref error);
+            if (error != ETrackedPropertyError.TrackedProp_Success)
+            {
+                return null;
+            }
+
+            return s.ToString();
+        }
+        
+        // Reflect the information of the specified device in the Inspector
+        private void UpdateDeviceInfo(uint idx)
+        {
+            // Get connection status of all devices
+            TrackedDevicePose_t[] allDevicePose = new TrackedDevicePose_t[OpenVR.k_unMaxTrackedDeviceCount];
+            _openVrSystemApiInstance.GetDeviceToAbsoluteTrackingPose(ETrackingUniverseOrigin.TrackingUniverseStanding, 0f, allDevicePose);
+
+            // Count the number of connected devices
+            ConnectedDevices = 0;
+            for (uint i = 0; i < OpenVR.k_unMaxTrackedDeviceCount; i++)
+            {
+                if (allDevicePose[i].bDeviceIsConnected)
+                {
+                    ConnectedDevices++;
+                }
+            }
+
+            // Reflect device information to Inspector
+            SelectedDeviceIndex = (int)idx;
+            DeviceSerialNumber = GetProperty(idx, ETrackedDeviceProperty.Prop_SerialNumber_String);
+
+            try
+            {
+                DeviceRenderModelName = GetProperty(idx, ETrackedDeviceProperty.Prop_RenderModelName_String); // bingy
+            }
+            catch (Exception e)
+            {
+                Debug.LogWarning("Maybe the device model name couldn't be found?");
+                Debug.LogWarning(e);
+            }
+        }
+        
+        // Perform vibration feedback
+        private void PerformHapticFeedback(LeftOrRight lr)
+        {
+#pragma warning disable 0219
+            string Tag = "[" + this.GetType().Name + ":" +
+                         System.Reflection.MethodBase.GetCurrentMethod(); // Automatically obtain class name and method name
+#pragma warning restore 0219
+
+            // Check if left hand controller is enabled
+            uint Leftidx = _openVrSystemApiInstance.GetTrackedDeviceIndexForControllerRole(ETrackedControllerRole.LeftHand);
+            //OverlayTrackedDevice
+            if (Leftidx != OpenVR.k_unTrackedDeviceIndexInvalid && lr == LeftOrRight.Left)
+            {
+                _openVrSystemApiInstance.TriggerHapticPulse(Leftidx, 0, 3000);
+            }
+
+            // Check if right hand controller is enabled
+            uint Rightidx = _openVrSystemApiInstance.GetTrackedDeviceIndexForControllerRole(ETrackedControllerRole.RightHand);
+            if (Rightidx != OpenVR.k_unTrackedDeviceIndexInvalid && lr == LeftOrRight.Right)
+            {
+                _openVrSystemApiInstance.TriggerHapticPulse(Rightidx, 0, 3000);
+            }
+        }
+
+        #endregion
+        
+        #region OpenVr Low Level State Checks
+        
+        public bool IsError()
+        {
+            return OverlayInitialisationError || _LowLevelOverlayHandle == INVALID_HANDLE || _openVROverlayInstance == null || _openVrSystemApiInstance == null;
+        }
+        
+        // Return when the end event is caught
+        private bool IsQuitEventPresentInOpenVrSubsystem()
+        {
+#pragma warning disable 0219
+            string Tag = "[" + this.GetType().Name + ":" +
+                         System.Reflection.MethodBase.GetCurrentMethod();
+#pragma warning restore 0219
+
+            // Get the size of the event structure
+            uint uncbVREvent = (uint)System.Runtime.InteropServices.Marshal.SizeOf(typeof(VREvent_t));
+
+            // Event information storage structure
+            VREvent_t Event = new VREvent_t();
+            // Retrieve event
+            while (_openVROverlayInstance.PollNextOverlayEvent(_LowLevelOverlayHandle, ref Event, uncbVREvent))
+            {
+                // View event log
+                if (EventLog)
+                {
+                    Debug.Log(Tag + "Event:" + ((EVREventType)Event.eventType).ToString());
+                }
+
+                // Branch by event information
+                switch ((EVREventType)Event.eventType)
+                {
+                    case EVREventType.VREvent_Quit:
+                        Debug.Log(Tag + "Quit");
+                        return true;
+                }
+            }
+
+            return false;
+        }
+        
+        public bool IsVisible()
+        {
+            return _openVROverlayInstance.IsOverlayVisible(_LowLevelOverlayHandle) && !IsError();
+        }
+        
+
+        // Error processing (release processing)
+        private void ProcessError()
+        {
+#pragma warning disable 0219
+            string Tag = "[" + this.GetType().Name + ":" +
+                         System.Reflection.MethodBase.GetCurrentMethod(); // Automatically obtain class name and method name
+#pragma warning restore 0219
+            Debug.Log(Tag + "Begin");
+
+            // release the handle
+            if (_LowLevelOverlayHandle != INVALID_HANDLE && _openVROverlayInstance != null)
+            {
+                _openVROverlayInstance.DestroyOverlay(_LowLevelOverlayHandle);
+            }
+
+            _LowLevelOverlayHandle = INVALID_HANDLE;
+            _openVROverlayInstance = null;
+            _openVrSystemApiInstance = null;
+            OverlayInitialisationError = true;
+        }
+
+        // When destroying an object
+        private void OnDestroy()
+        {
+#pragma warning disable 0219
+            string Tag = "[" + this.GetType().Name + ":" +
+                         System.Reflection.MethodBase.GetCurrentMethod(); // automatically obtain class name and method name
+#pragma warning restore 0219
+            Debug.Log(Tag + "Begin");
+
+            // Fully open handles
+            ProcessError();
+        }
+
+        // When application termination is detected
+        private void OnApplicationQuit()
+        {
+#pragma warning disable 0219
+            string Tag = "[" + this.GetType().Name + ":" +
+                         System.Reflection.MethodBase.GetCurrentMethod(); // Automatically obtain class name and method name
+#pragma warning restore 0219
+            Debug.Log(Tag + "Begin");
+
+            // Fully open handles
+            ProcessError();
+        }
+
+        // Terminate the application
+        private void ApplicationQuit()
+        {
+#if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+#else
+        Application.Quit();
+#endif
+        }
+        
+        #endregion
     }
 }
