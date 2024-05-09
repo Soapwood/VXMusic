@@ -1,18 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using AiUnity.CLog.Core;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.Serialization;
 using Valve.VR;
-//using NLog;
-//using Logger = NLog.Logger;
 
 namespace Plugins
 {
     public class VXMusicOverlay : MonoBehaviour
     {
-        //private static Logger _logger = LogManager.GetCurrentClassLogger();
+        private CLogger _logger;
 
         #region Script Fields
         [Header("Debug")]
@@ -186,21 +184,16 @@ namespace Plugins
         #region Overlay Initialisation
          private void Start()
         {
-#pragma warning disable 0219 // TODO Deprecate this wank - use an actual logger please.
-            string Tag = "[" + this.GetType().Name + ":" +
-                         System.Reflection.MethodBase.GetCurrentMethod(); // Automatically obtain class name and method name
-#pragma warning restore 0219
-            
-            Debug.Log(Tag + "VXMusic Overlay is Booting");
+            _logger.Info("VXMusic Overlay is Booting");
             OverlayInitialisationError = false;
             
             // Subscribe to VX Event triggers
-            Debug.Log("Subscribing to inter-process Events");
+            _logger.Debug("Subscribing to inter-process Events");
             OnRecognitionStateBegin += HandleRecognitionStateBegin;
             OnRecognitionStateEnded += HandleRecognitionStateEnd;
             
             // Instanciate MainThreadDispatcher
-            Debug.Log("Instanciating MainThreadDispatcher");
+            _logger.Debug("Instanciating MainThreadDispatcher");
             MainThreadDispatcher.Initialize();
             
             // Create Debug Overlay Markers
@@ -210,13 +203,13 @@ namespace Plugins
             RightDebugSphere = Instantiate(DebugSpherePrefab, Vector3.zero, Quaternion.identity);
             RightDebugSphere.GetComponent<Renderer>().material.color = Color.green;
 
-            Debug.Log(Tag + $"Setting Overlay Target Framerate to {ApplicationTargetFramerate}hz.");
+            _logger.Debug($"Setting Overlay Target Framerate to {ApplicationTargetFramerate}hz.");
             Application.targetFrameRate = ApplicationTargetFramerate;
 
             InitialiseOpenVrSubsystemInstances();
             InitialiseOverlayTextureBounds();
             
-            Debug.Log(Tag + "Initialising overlay");
+            _logger.Debug("Initialising overlay");
             
             _VXMusicInterfaceObject = GameObject.Find("VXMusicInterfacePipe");
             _VXMusicInterface = _VXMusicInterfaceObject.GetComponent<VXMusicInterface>();
@@ -281,11 +274,6 @@ namespace Plugins
         #region Main Overlay Tick Logic
         private void Update()
         {
-#pragma warning disable 0219
-            string Tag = "[" + this.GetType().Name + ":" +
-                         System.Reflection.MethodBase.GetCurrentMethod(); // Automatically obtain class name and method name
-#pragma warning restore 0219
-
             // Do not execute if an error occurs or the handle is invalid
             if (IsError())
                 return;
@@ -312,7 +300,7 @@ namespace Plugins
             // Handle termination event
             if (IsQuitEventPresentInOpenVrSubsystem())
             {
-                Debug.Log(Tag + "VR system has been terminated");
+                _logger.Debug("VR system has been terminated");
                 ApplicationQuit();
             }
 
@@ -343,15 +331,10 @@ namespace Plugins
                 // Update location information
         private void UpdateOverlayPosition()
         {
-#pragma warning disable 0219
-            string Tag = "[" + this.GetType().Name + ":" +
-                         System.Reflection.MethodBase.GetCurrentMethod(); // Automatically obtain class name and method name
-#pragma warning restore 0219
-
             // Check if Render Texture is generated
             if (!RenderTexture.IsCreated())
             {
-                Debug.Log(Tag + "Render Texture has not been generated yet");
+                _logger.Debug("Render Texture has not been generated yet");
                 return;
             }
 
@@ -402,7 +385,7 @@ namespace Plugins
                 // If there is a change in device information, it will be reflected in the Inspector
                 if (DeviceIndexOld != (int)idx)
                 {
-                    Debug.Log(Tag + "Device Updated");
+                    _logger.Debug("Device Updated");
                     UpdateDeviceInfo(idx);
                     DeviceIndexOld = (int)idx;
                 }
@@ -449,7 +432,7 @@ namespace Plugins
             }
             catch (UnassignedReferenceException e)
             {
-                Debug.LogError(Tag + "RenderTexture is not set " + e.ToString());
+                _logger.Error("RenderTexture is not set " + e.ToString());
                 ProcessError();
                 return;
             }
@@ -458,17 +441,12 @@ namespace Plugins
         // Update display information
         private void UpdateOverlayTexture()
         {
-#pragma warning disable 0219
-            string Tag = "[" + this.GetType().Name + ":" +
-                         System.Reflection.MethodBase.GetCurrentMethod();
-#pragma warning restore 0219
-
             _openVROverlayInstance.SetOverlayFlag(_LowLevelOverlayHandle, VROverlayFlags.SideBySide_Parallel, SideBySide);
 
             // Check if RenderTexture is generated
             if (!RenderTexture.IsCreated())
             {
-                Debug.Log(Tag + "RenderTexture has not been generated yet.");
+                _logger.Debug("RenderTexture has not been generated yet.");
                 return;
             }
 
@@ -479,7 +457,7 @@ namespace Plugins
             }
             catch (UnassignedReferenceException e)
             {
-                Debug.LogError(Tag + "RenderTexture is not set " + e.ToString());
+                _logger.Debug("RenderTexture is not set " + e.ToString());
                 ProcessError();
                 return;
             }
@@ -489,7 +467,7 @@ namespace Plugins
             overlayError = _openVROverlayInstance.SetOverlayTexture(_LowLevelOverlayHandle, ref _overlayTexture);
             if (overlayError != EVROverlayError.None)
             {
-                Debug.LogError(Tag + "Overlay could not set texture." + overlayError.ToString());
+                _logger.Debug("Overlay could not set texture." + overlayError.ToString());
                 // Do not treat it as a fatal error
                 return;
             }
@@ -559,14 +537,15 @@ namespace Plugins
         
         #region Logging
 
-                // Output all device information to log
+        public void Awake()
+        {
+            _logger = CLogManager.Instance.GetLogger(this);
+            _logger.Info("Logger Instantiated for VXMusicOverlay.");
+        }
+
+        // Output all device information to log
         private void LogDeviceInfo()
         {
-#pragma warning disable 0219
-            string Tag = "[" + this.GetType().Name + ":" +
-                         System.Reflection.MethodBase.GetCurrentMethod(); //クラス名とメソッド名を自動取得
-#pragma warning restore 0219
-
             // Get connection status of all devices
             TrackedDevicePose_t[] allDevicePose = new TrackedDevicePose_t[OpenVR.k_unMaxTrackedDeviceCount];
             _openVrSystemApiInstance.GetDeviceToAbsoluteTrackingPose(ETrackingUniverseOrigin.TrackingUniverseStanding, 0f, allDevicePose);
@@ -602,11 +581,6 @@ namespace Plugins
         // Output device information to log (1 item)
         private bool GetPropertyAndPutLog(uint idx, TrackedDevicePose_t[] allDevicePose)
         {
-#pragma warning disable 0219
-            string Tag = "[" + this.GetType().Name + ":" +
-                         System.Reflection.MethodBase.GetCurrentMethod(); // Automatically obtain class name and method name
-#pragma warning restore 0219
-
             // Check if connected
             if (allDevicePose[idx].bDeviceIsConnected)
             {
@@ -617,13 +591,12 @@ namespace Plugins
                 string s2 = GetProperty(idx, ETrackedDeviceProperty.Prop_RenderModelName_String);
                 if (s1 != null && s2 != null)
                 {
-                    // Show in log
-                    Debug.Log(Tag + "Device " + idx + ":" + s1 + " : " + s2);
+                    _logger.Debug("Device " + idx + ":" + s1 + " : " + s2);
                 }
                 else
                 {
                     // Acquisition failed for some reason
-                    Debug.Log(Tag + "Device " + idx + ": Error");
+                    _logger.Debug("Device " + idx + ": Error");
                 }
 
                 return true;
@@ -631,7 +604,7 @@ namespace Plugins
             else
             {
                 // unconnected device
-                Debug.Log(Tag + "Device " + idx + ": Not connected");
+                _logger.Debug("Device " + idx + ": Not connected");
                 return false;
             }
         }
@@ -659,11 +632,6 @@ namespace Plugins
         
         private void VrInputTick()
         {
-#pragma warning disable 0219
-            string Tag = "[" + this.GetType().Name + ":" +
-                         System.Reflection.MethodBase.GetCurrentMethod(); // Automatically obtain class name and method name
-#pragma warning restore 0219
-            
             // Get information for all VR connected devices
             TrackedDevicePose_t[] allDevicePose = new TrackedDevicePose_t[OpenVR.k_unMaxTrackedDeviceCount];
             _openVrSystemApiInstance.GetDeviceToAbsoluteTrackingPose(ETrackingUniverseOrigin.TrackingUniverseStanding, 0f, allDevicePose);
@@ -781,11 +749,6 @@ namespace Plugins
          */
         private bool IsRaycastIntersectingWithOverlayCanvas(uint idx, TrackedDevicePose_t[] allDevicePose, ref VROverlayIntersectionResults_t results)
         {
-#pragma warning disable 0219
-            string Tag = "[" + this.GetType().Name + ":" +
-                         System.Reflection.MethodBase.GetCurrentMethod(); // Automatically obtain class name and method name
-#pragma warning restore 0219
-
             //device index enabled
             if (idx != OpenVR.k_unTrackedDeviceIndexInvalid)
             {
@@ -810,11 +773,6 @@ namespace Plugins
         // Check if it has an intersection with the overlay
         private bool ComputeOverlayIntersection(Vector3 pos, Vector3 rotvect, ref VROverlayIntersectionResults_t results)
         {
-#pragma warning disable 0219
-            string Tag = "[" + this.GetType().Name + ":" +
-                         System.Reflection.MethodBase.GetCurrentMethod(); // Automatically obtain class name and method name
-#pragma warning restore 0219
-
             // Ray irradiation information
             VROverlayIntersectionParams_t param = new VROverlayIntersectionParams_t();
             // Ray launcher position
@@ -840,11 +798,6 @@ namespace Plugins
         
         private void IsRaycastInClickingRange(VROverlayIntersectionResults_t results, LeftOrRight lr, ref bool tapped)
         {
-#pragma warning disable 0219
-            string Tag = "[" + this.GetType().Name + ":" +
-                         System.Reflection.MethodBase.GetCurrentMethod(); // Automatically obtain class name and method name
-#pragma warning restore 0219
-
             // If the distance between the controller and the overlay is below a certain level
             if (results.fDistance < TapOnDistance && !tapped)
             {
@@ -872,11 +825,6 @@ namespace Plugins
                 // Identify and click an element on Canvas
         private void ProcessOverlayClick(VROverlayIntersectionResults_t results)
         {
-#pragma warning disable 0219
-            string Tag = "[" + this.GetType().Name + ":" +
-                         System.Reflection.MethodBase.GetCurrentMethod(); // Automatically obtain class name and method name
-#pragma warning restore 0219
-
             // Calculate uv coordinates for click
             float u = results.vUVs.v0 * RenderTexture.width;
             float v = RenderTexture.height - results.vUVs.v1 * RenderTexture.height;
@@ -897,7 +845,7 @@ namespace Plugins
 
             // Number and coordinates of detected elements
 
-            Debug.Log(Tag + "count:" + result.Count + " u:" + u + " / v:" + v);
+            _logger.Debug("count:" + result.Count + " u:" + u + " / v:" + v);
 
             // Perform click processing on the first element found
             for (int i = 0; i < result.Count; i++)
@@ -907,7 +855,7 @@ namespace Plugins
                 // Hit the first thing you hooked (uncheck everything other than target)
                 if (res.isValid)
                 {
-                    Debug.Log(Tag + res.gameObject.name + " at " + res.gameObject.transform.root.name);
+                    _logger.Debug(res.gameObject.name + " at " + res.gameObject.transform.root.name);
                     // Check if it is a child of the root object you want to target
                     if (res.gameObject.transform.root.name == RaycastRootObject.name)
                     {
@@ -925,11 +873,6 @@ namespace Plugins
         // Get device information
         private string GetProperty(uint idx, ETrackedDeviceProperty prop)
         {
-#pragma warning disable 0219
-            string Tag = "[" + this.GetType().Name + ":" +
-                         System.Reflection.MethodBase.GetCurrentMethod(); // Automatically obtain class name and method name
-#pragma warning restore 0219
-
             ETrackedPropertyError error = new ETrackedPropertyError();
             // Get the number of characters required to get device information
             uint size = _openVrSystemApiInstance.GetStringTrackedDeviceProperty(idx, prop, null, 0, ref error);
@@ -985,11 +928,6 @@ namespace Plugins
         // Perform vibration feedback
         private void PerformHapticFeedback(LeftOrRight lr)
         {
-#pragma warning disable 0219
-            string Tag = "[" + this.GetType().Name + ":" +
-                         System.Reflection.MethodBase.GetCurrentMethod(); // Automatically obtain class name and method name
-#pragma warning restore 0219
-
             // Check if left hand controller is enabled
             uint Leftidx = _openVrSystemApiInstance.GetTrackedDeviceIndexForControllerRole(ETrackedControllerRole.LeftHand);
             //OverlayTrackedDevice
@@ -1018,11 +956,6 @@ namespace Plugins
         // Return when the end event is caught
         private bool IsQuitEventPresentInOpenVrSubsystem()
         {
-#pragma warning disable 0219
-            string Tag = "[" + this.GetType().Name + ":" +
-                         System.Reflection.MethodBase.GetCurrentMethod();
-#pragma warning restore 0219
-
             // Get the size of the event structure
             uint uncbVREvent = (uint)System.Runtime.InteropServices.Marshal.SizeOf(typeof(VREvent_t));
 
@@ -1034,14 +967,14 @@ namespace Plugins
                 // View event log
                 if (EventLog)
                 {
-                    Debug.Log(Tag + "Event:" + ((EVREventType)Event.eventType).ToString());
+                    _logger.Debug("Event:" + ((EVREventType)Event.eventType).ToString());
                 }
 
                 // Branch by event information
                 switch ((EVREventType)Event.eventType)
                 {
                     case EVREventType.VREvent_Quit:
-                        Debug.Log(Tag + "Quit");
+                        _logger.Debug("Quit");
                         return true;
                 }
             }
@@ -1058,11 +991,7 @@ namespace Plugins
         // Error processing (release processing)
         private void ProcessError()
         {
-#pragma warning disable 0219
-            string Tag = "[" + this.GetType().Name + ":" +
-                         System.Reflection.MethodBase.GetCurrentMethod(); // Automatically obtain class name and method name
-#pragma warning restore 0219
-            Debug.Log(Tag + "Begin");
+            _logger.Debug("Begin");
 
             // release the handle
             if (_LowLevelOverlayHandle != INVALID_HANDLE && _openVROverlayInstance != null)
@@ -1079,11 +1008,7 @@ namespace Plugins
         // When destroying an object
         private void OnDestroy()
         {
-#pragma warning disable 0219
-            string Tag = "[" + this.GetType().Name + ":" +
-                         System.Reflection.MethodBase.GetCurrentMethod(); // automatically obtain class name and method name
-#pragma warning restore 0219
-            Debug.Log(Tag + "Begin");
+            _logger.Debug("OnDestroy");
 
             // Fully open handles
             ProcessError();
@@ -1092,11 +1017,7 @@ namespace Plugins
         // When application termination is detected
         private void OnApplicationQuit()
         {
-#pragma warning disable 0219
-            string Tag = "[" + this.GetType().Name + ":" +
-                         System.Reflection.MethodBase.GetCurrentMethod(); // Automatically obtain class name and method name
-#pragma warning restore 0219
-            Debug.Log(Tag + "Begin");
+            _logger.Debug("OnApplicationQuit");
 
             // Fully open handles
             ProcessError();
