@@ -1,22 +1,18 @@
-using NLog;
 using System;
-using System.ComponentModel;
 using System.Diagnostics;
 using Microsoft.Extensions.DependencyInjection;
 using VXMusic;
-using VXMusic.API;
 using VXMusic.Audio;
 using VXMusic.Audio.Recording;
 using VXMusic.FileWriter;
-using VXMusic.Recognition.AudD;
-using VXMusic.Recognition.Shazam;
 using VXMusic.Lastfm.Scrobbling;
 using VXMusic.LogParser.VRChat;
 using VXMusic.Overlay;
-using System.Windows.Media;
-using VXMusicDesktop.Theme;
-using VXMusicDesktop.MVVM.ViewModel;
+using VXMusic.Recognition.AudD;
+using VXMusic.Recognition.Shazam;
 using VXMusic.Spotify.Authentication;
+using VXMusicDesktop.MVVM.ViewModel;
+using VXMusicDesktop.Theme;
 
 //using System.Windows.Forms.PropertyGridInternal;
 

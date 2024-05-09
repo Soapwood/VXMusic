@@ -1,16 +1,11 @@
 ﻿using System;
-using System.Threading;
-using System.Windows.Input;
-using VXMusic;
-using VXMusicDesktop.Core;
 using System.ComponentModel;
+using System.Threading.Tasks;
+using System.Windows.Input;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using VXMusic.API;
-using VXMusic.FileWriter;
-using System.Threading.Tasks;
-using VXMusic.Overlay;
-using VXMusic.Spotify.Authentication;
+using VXMusic;
+using VXMusicDesktop.Core;
 
 namespace VXMusicDesktop.MVVM.ViewModel
 {

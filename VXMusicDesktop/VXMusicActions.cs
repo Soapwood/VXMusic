@@ -6,10 +6,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using SpotifyAPI.Web;
 using VXMusic;
-using VXMusic.API;
 using VXMusic.Spotify;
 using VXMusic.Spotify.Authentication;
-using VXMusicDesktop.MVVM.ViewModel;
 
 namespace VXMusicDesktop;
 
