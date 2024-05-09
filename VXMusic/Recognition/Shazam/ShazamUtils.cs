@@ -1,3 +1,5 @@
+using System.Drawing;
+using System.Drawing.Imaging;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -5,7 +7,7 @@ namespace VXMusic.Recognition.Shazam;
 
 public class ShazamUtils
 {
-    public static ShazamResponse ParseShazamResponse(ShazamHttpResponse shazamHttpResponse)
+    public static async Task<ShazamResponse> ParseShazamResponse(ShazamHttpResponse shazamHttpResponse)
     {
         ShazamResponse shazamResponse = new ShazamResponse()
         {
@@ -14,6 +16,9 @@ public class ShazamUtils
 
         shazamResponse.Result.Artist = shazamHttpResponse.track.subtitle;
         shazamResponse.Result.Title = shazamHttpResponse.track.title;
+
+        if(!string.IsNullOrEmpty(shazamHttpResponse.track.images.coverart))
+            shazamResponse.Result.AlbumArt = await ConvertImgUrlToBase64(shazamHttpResponse.track.images.coverart);
 
         foreach (var section in shazamHttpResponse.track.sections)
         {
@@ -53,5 +58,30 @@ public class ShazamUtils
         }
 
         return shazamResponse;
+    }
+    
+    private static async Task<string> ConvertImgUrlToBase64(string imgUrl)
+    {
+        using (HttpClient client = new HttpClient())
+        {
+            // Get the image data from the URL
+            byte[] imageData = await client.GetByteArrayAsync(imgUrl);
+
+            // Convert the data to an Image object
+            using (MemoryStream ms = new MemoryStream(imageData))
+            {
+                using (Image image = Image.FromStream(ms))
+                {
+                    // Convert Image to Base64
+                    using (MemoryStream msOutput = new MemoryStream())
+                    {
+                        image.Save(msOutput, ImageFormat.Jpeg);
+                        byte[] imageBytes = msOutput.ToArray();
+                        string base64String = Convert.ToBase64String(imageBytes);
+                        return base64String;
+                    }
+                }
+            }
+        }
     }
 }

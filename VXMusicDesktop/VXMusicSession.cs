@@ -43,8 +43,6 @@ public class VXMusicSession
 
     public VRChatLogParser VRChatLogParser;
     
-    public static VXMusicOverlayInstance? VXMusicOverlay;
-
     public static event EventHandler LastFmLogin;
     //public static event EventHandler SpotifyLogin;
 

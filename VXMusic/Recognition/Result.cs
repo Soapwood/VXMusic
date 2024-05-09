@@ -7,10 +7,9 @@ public class Result
     public string? Album { get; set; }
     public string? ReleaseDate { get; set; }
     public string? Label { get; set; }
-    //public string? Timecode { get; set; }
     public string? SongLink { get; set; }
-    //public AppleMusic apple_music { get; set; }
-    //public Spotify spotify { get; set; }
+    public string? AlbumArt { get; set; }
+
 }
 
 public enum Status

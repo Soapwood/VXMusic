@@ -61,7 +61,7 @@ public class VXMusicActions
         else
         {
             VXMusicSession.NotificationClient.SendNotification($"{result.Result.Artist} - {result.Result.Title}",
-                $"{result.Result.Album} ({result.Result.ReleaseDate})", 8);
+                $"{result.Result.Album} ({result.Result.ReleaseDate})", 8, result.Result.AlbumArt);
             Logger.LogInformation(
                 $"{result.Result.Artist} - {result.Result.Title} {result.Result.Album} ({result.Result.ReleaseDate})");
         }

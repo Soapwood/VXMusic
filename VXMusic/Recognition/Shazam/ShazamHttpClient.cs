@@ -57,7 +57,7 @@ public class ShazamHttpClient : IHttpClient
             if(shazamHttpResponse.matches.Count == 0)
                 return new ShazamResponse() { Status = Status.NoMatches };
 
-            return ShazamUtils.ParseShazamResponse(shazamHttpResponse);
+            return await ShazamUtils.ParseShazamResponse(shazamHttpResponse);
         }
     }
     

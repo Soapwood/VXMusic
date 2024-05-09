@@ -2,5 +2,6 @@ namespace VXMusic;
 
 public interface INotificationClient
 {
-    public void SendNotification(string Title, string Content, int Timeout, string Image = "");
+    public void SendNotification(string title, string content, int timeout, string image);
+    public void SendNotification(string title, string content, int timeout);
 }
