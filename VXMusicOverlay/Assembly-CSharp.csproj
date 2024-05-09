@@ -27,7 +27,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>Temp\Bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE;UNITY_2020_3_30;UNITY_2020_3;UNITY_2020;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_2017_1_OR_NEWER;UNITY_2017_2_OR_NEWER;UNITY_2017_3_OR_NEWER;UNITY_2017_4_OR_NEWER;UNITY_2018_1_OR_NEWER;UNITY_2018_2_OR_NEWER;UNITY_2018_3_OR_NEWER;UNITY_2018_4_OR_NEWER;UNITY_2019_1_OR_NEWER;UNITY_2019_2_OR_NEWER;UNITY_2019_3_OR_NEWER;UNITY_2019_4_OR_NEWER;UNITY_2020_1_OR_NEWER;UNITY_2020_2_OR_NEWER;UNITY_2020_3_OR_NEWER;PLATFORM_ARCH_64;UNITY_64;UNITY_INCLUDE_TESTS;USE_SEARCH_ENGINE_API;SCENE_TEMPLATE_MODULE;ENABLE_AR;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_EVENT_QUEUE;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_TEXTURE_STREAMING;ENABLE_VIRTUALTEXTURING;ENABLE_UNET;ENABLE_LZMA;ENABLE_UNITYEVENTS;ENABLE_VR;ENABLE_WEBCAM;ENABLE_UNITYWEBREQUEST;ENABLE_WWW;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_COLLAB;ENABLE_CLOUD_SERVICES_COLLAB_SOFTLOCKS;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_SERVICES_USE_WEBREQUEST;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_HUB_LICENSE;ENABLE_WEBSOCKET_CLIENT;ENABLE_DIRECTOR_AUDIO;ENABLE_DIRECTOR_TEXTURE;ENABLE_MANAGED_JOBS;ENABLE_MANAGED_TRANSFORM_JOBS;ENABLE_MANAGED_ANIMATION_JOBS;ENABLE_MANAGED_AUDIO_JOBS;ENABLE_MANAGED_UNITYTLS;INCLUDE_DYNAMIC_GI;ENABLE_MONO_BDWGC;ENABLE_SCRIPTING_GC_WBARRIERS;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;ENABLE_VIDEO;PLATFORM_STANDALONE;PLATFORM_STANDALONE_WIN;UNITY_STANDALONE_WIN;UNITY_STANDALONE;ENABLE_RUNTIME_GI;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_OUT_OF_PROCESS_CRASH_HANDLER;ENABLE_CLUSTER_SYNC;ENABLE_CLUSTERINPUT;PLATFORM_UPDATES_TIME_OUTSIDE_OF_PLAYER_LOOP;GFXDEVICE_WAITFOREVENT_MESSAGEPUMP;ENABLE_WEBSOCKET_HOST;ENABLE_MONO;NET_STANDARD_2_0;ENABLE_PROFILER;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_WIN;ENABLE_UNITY_COLLECTIONS_CHECKS;ENABLE_BURST_AOT;UNITY_TEAM_LICENSE;ENABLE_CUSTOM_RENDER_TEXTURE;ENABLE_DIRECTOR;ENABLE_LOCALIZATION;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_TILEMAP;ENABLE_TIMELINE;ENABLE_LEGACY_INPUT_MANAGER;CSHARP_7_OR_LATER;CSHARP_7_3_OR_NEWER</DefineConstants>
+    <DefineConstants>DEBUG;TRACE;UNITY_2020_3_30;UNITY_2020_3;UNITY_2020;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_2017_1_OR_NEWER;UNITY_2017_2_OR_NEWER;UNITY_2017_3_OR_NEWER;UNITY_2017_4_OR_NEWER;UNITY_2018_1_OR_NEWER;UNITY_2018_2_OR_NEWER;UNITY_2018_3_OR_NEWER;UNITY_2018_4_OR_NEWER;UNITY_2019_1_OR_NEWER;UNITY_2019_2_OR_NEWER;UNITY_2019_3_OR_NEWER;UNITY_2019_4_OR_NEWER;UNITY_2020_1_OR_NEWER;UNITY_2020_2_OR_NEWER;UNITY_2020_3_OR_NEWER;PLATFORM_ARCH_64;UNITY_64;UNITY_INCLUDE_TESTS;USE_SEARCH_ENGINE_API;SCENE_TEMPLATE_MODULE;ENABLE_AR;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_EVENT_QUEUE;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_TEXTURE_STREAMING;ENABLE_VIRTUALTEXTURING;ENABLE_UNET;ENABLE_LZMA;ENABLE_UNITYEVENTS;ENABLE_VR;ENABLE_WEBCAM;ENABLE_UNITYWEBREQUEST;ENABLE_WWW;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_COLLAB;ENABLE_CLOUD_SERVICES_COLLAB_SOFTLOCKS;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_SERVICES_USE_WEBREQUEST;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_HUB_LICENSE;ENABLE_WEBSOCKET_CLIENT;ENABLE_DIRECTOR_AUDIO;ENABLE_DIRECTOR_TEXTURE;ENABLE_MANAGED_JOBS;ENABLE_MANAGED_TRANSFORM_JOBS;ENABLE_MANAGED_ANIMATION_JOBS;ENABLE_MANAGED_AUDIO_JOBS;ENABLE_MANAGED_UNITYTLS;INCLUDE_DYNAMIC_GI;ENABLE_MONO_BDWGC;ENABLE_SCRIPTING_GC_WBARRIERS;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;ENABLE_VIDEO;PLATFORM_STANDALONE;PLATFORM_STANDALONE_WIN;UNITY_STANDALONE_WIN;UNITY_STANDALONE;ENABLE_RUNTIME_GI;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_OUT_OF_PROCESS_CRASH_HANDLER;ENABLE_CLUSTER_SYNC;ENABLE_CLUSTERINPUT;PLATFORM_UPDATES_TIME_OUTSIDE_OF_PLAYER_LOOP;GFXDEVICE_WAITFOREVENT_MESSAGEPUMP;ENABLE_WEBSOCKET_HOST;ENABLE_MONO;NET_STANDARD_2_0;ENABLE_PROFILER;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_WIN;ENABLE_UNITY_COLLECTIONS_CHECKS;ENABLE_BURST_AOT;UNITY_TEAM_LICENSE;ENABLE_CUSTOM_RENDER_TEXTURE;ENABLE_DIRECTOR;ENABLE_LOCALIZATION;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_TILEMAP;ENABLE_TIMELINE;ENABLE_LEGACY_INPUT_MANAGER;CLOG_ALL;CSHARP_7_OR_LATER;CSHARP_7_3_OR_NEWER</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <NoWarn></NoWarn>
@@ -53,6 +53,95 @@
   </PropertyGroup>
   <ItemGroup>
      <Compile Include="Assets\VXMusicOverlayPipeServer.cs" />
+     <Compile Include="Assets\AiUnity\Common\Attributes\OrderAttribute.cs" />
+     <Compile Include="Assets\AiUnity\Common\LogUI\Scripts\ResizePanel.cs" />
+     <Compile Include="Assets\AiUnity\CLog\Core\Common\AdapterAttribute.cs" />
+     <Compile Include="Assets\AiUnity\Common\Attributes\ClassExtendsAttribute.cs" />
+     <Compile Include="Assets\AiUnity\Common\Log\LibSource.cs" />
+     <Compile Include="Assets\AiUnity\CLog\Core\Configuration\ConfigurationException.cs" />
+     <Compile Include="Assets\AiUnity\Common\Patterns\Singleton.cs" />
+     <Compile Include="Assets\AiUnity\CLog\Core\Loggers\NullFactoryAdapter.cs" />
+     <Compile Include="Assets\AiUnity\Common\Extensions\GenericExtensions.cs" />
+     <Compile Include="Assets\AiUnity\Common\Attributes\GeneratedTypeAttribute.cs" />
+     <Compile Include="Assets\AiUnity\Common\LogUI\Scripts\FocusPanel.cs" />
+     <Compile Include="Assets\AiUnity\Common\InternalLog\IInternalLogger.cs" />
+     <Compile Include="Assets\AiUnity\CLog\Adapters\NLog\NLogLogger.cs" />
+     <Compile Include="Assets\AiUnity\Common\Attributes\EnumSymbolAttribute.cs" />
+     <Compile Include="Assets\AiUnity\Common\LogUI\Scripts\TogglePanelButton.cs" />
+     <Compile Include="Assets\AiUnity\CLog\Examples\Scripts\CLogExample.cs" />
+     <Compile Include="Assets\AiUnity\CLog\Core\Loggers\ILoggerFactoryAdapter.cs" />
+     <Compile Include="Assets\AiUnity\CLog\Adapters\NLog\NLogLoggerFactoryAdapter.cs" />
+     <Compile Include="Assets\AiUnity\Common\LogUI\Scripts\DragPanel.cs" />
+     <Compile Include="Assets\AiUnity\Common\Serialization\ClassTypeReference\ClassTypeReference.cs" />
+     <Compile Include="Assets\AiUnity\CLog\Core\Configuration\ConfigurationSectionHandler.cs" />
+     <Compile Include="Assets\AiUnity\Common\LogUI\Scripts\LogMessage.cs" />
+     <Compile Include="Assets\AiUnity\Common\Extensions\StringExtensions.cs" />
+     <Compile Include="Assets\AiUnity\Common\Attributes\UnityReadOnlyAttribute.cs" />
+     <Compile Include="Assets\AiUnity\CLog\Core\Common\CLogConfigFile.cs" />
+     <Compile Include="Assets\AiUnity\CLog\Core\Loggers\CacheLoggerFactoryAdapter.cs" />
+     <Compile Include="Assets\AiUnity\Common\IO\UnityFileInfo.cs" />
+     <Compile Include="Assets\AiUnity\CLog\Core\Loggers\IGameConsoleLoggerSettings.cs" />
+     <Compile Include="Assets\AiUnity\CLog\Core\Configuration\IConfigurationReader.cs" />
+     <Compile Include="Assets\AiUnity\Common\Attributes\ResourceAttribute.cs" />
+     <Compile Include="Assets\AiUnity\Common\LogUI\Scripts\DoubleClickEvent.cs" />
+     <Compile Include="Assets\AiUnity\CLog\Core\Loggers\NullLogger.cs" />
+     <Compile Include="Assets\AiUnity\CLog\Core\CLogger.cs" />
+     <Compile Include="Assets\AiUnity\Common\Serialization\ClassTypeReference\IValidateTypeReference.cs" />
+     <Compile Include="Assets\AiUnity\Common\Log\IGameConsoleController.cs" />
+     <Compile Include="Assets\AiUnity\Common\LogUI\Scripts\InputFieldValidate.cs" />
+     <Compile Include="Assets\AiUnity\Common\Attributes\HideInEditorAttribute.cs" />
+     <Compile Include="Assets\AiUnity\Common\InternalLog\InternalLogger.cs" />
+     <Compile Include="Assets\AiUnity\Common\LogUI\Scripts\MaximizePanel.cs" />
+     <Compile Include="Assets\AiUnity\Common\Extensions\LinqExtensions.cs" />
+     <Compile Include="Assets\AiUnity\CLog\Core\Loggers\GameConsoleLoggerFactoryAdapter.cs" />
+     <Compile Include="Assets\AiUnity\CLog\Core\Configuration\LogSetting.cs" />
+     <Compile Include="Assets\AiUnity\CLog\Core\Loggers\SimpleLoggerFactoryAdapter.cs" />
+     <Compile Include="Assets\AiUnity\CLog\Core\Loggers\GameConsoleLogger.cs" />
+     <Compile Include="Assets\AiUnity\Common\Log\ILogger.cs" />
+     <Compile Include="Assets\AiUnity\CLog\Core\Configuration\DefaultConfigurationReader.cs" />
+     <Compile Include="Assets\AiUnity\CLog\Core\Common\CLogInternalLogger.cs" />
+     <Compile Include="Assets\AiUnity\Common\LogUI\Scripts\LongPressEvent.cs" />
+     <Compile Include="Assets\AiUnity\Common\Attributes\ClassTypeConstraintAttribute.cs" />
+     <Compile Include="Assets\AiUnity\Common\LogUI\Scripts\IButtonStateChange.cs" />
+     <Compile Include="Assets\AiUnity\Common\Types\LazyLoader.cs" />
+     <Compile Include="Assets\AiUnity\CLog\Core\Loggers\UnityConsoleLogger.cs" />
+     <Compile Include="Assets\AiUnity\CLog\Core\Loggers\ISimpleLoggerSettings.cs" />
+     <Compile Include="Assets\AiUnity\Common\Log\AssertException.cs" />
+     <Compile Include="Assets\AiUnity\Common\Attributes\RequiredParameterAttribute.cs" />
+     <Compile Include="Assets\AiUnity\CLog\Core\Loggers\NoOpVariablesContext.cs" />
+     <Compile Include="Assets\AiUnity\Common\Services\VariableService.cs" />
+     <Compile Include="Assets\AiUnity\CLog\Core\Loggers\ILoggerSettings.cs" />
+     <Compile Include="Assets\AiUnity\Common\Attributes\RequiredAttribute.cs" />
+     <Compile Include="Assets\AiUnity\Common\Extensions\ReflectionExtensions.cs" />
+     <Compile Include="Assets\AiUnity\CLog\Core\Loggers\SimpleLogger.cs" />
+     <Compile Include="Assets\AiUnity\Common\Attributes\DisplayAttribute.cs" />
+     <Compile Include="Assets\AiUnity\Common\LogUI\Scripts\GameConsoleController.cs" />
+     <Compile Include="Assets\AiUnity\Common\Serialization\ClassTypeReference\ClassGrouping.cs" />
+     <Compile Include="Assets\AiUnity\Common\Extensions\EnumExtensions.cs" />
+     <Compile Include="Assets\AiUnity\CLog\Core\Loggers\UnityConsoleLoggerFactoryAdapter.cs" />
+     <Compile Include="Assets\AiUnity\Common\Types\PlatformEnumFlagWrapper.cs" />
+     <Compile Include="Assets\AiUnity\Common\Log\LogLevels.cs" />
+     <Compile Include="Assets\AiUnity\Common\LogUI\Scripts\ButtonState.cs" />
+     <Compile Include="Assets\AiUnity\CLog\Core\Configuration\IConfigurationSectionHandler.cs" />
+     <Compile Include="Assets\AiUnity\Common\Tags\ITagAccess.cs" />
+     <Compile Include="Assets\AiUnity\Common\LogUI\Scripts\ButtonStateManager.cs" />
+     <Compile Include="Assets\AiUnity\CLog\Core\Loggers\ExternalLoggerFactoryAdapter.cs" />
+     <Compile Include="Assets\AiUnity\Common\InternalLog\CommonInternalLogger.cs" />
+     <Compile Include="Assets\AiUnity\CLog\Core\Common\ExceptionBuilder.cs" />
+     <Compile Include="Assets\AiUnity\Common\Extensions\XMLLinqExtensions.cs" />
+     <Compile Include="Assets\AiUnity\Common\Extensions\SystemExtensions.cs" />
+     <Compile Include="Assets\AiUnity\CLog\Core\LogManager.cs" />
+     <Compile Include="Assets\AiUnity\Common\Log\IVariablesContext.cs" />
+     <Compile Include="Assets\AiUnity\Common\LogUI\Scripts\RectTransformStorage.cs" />
+     <Compile Include="Assets\AiUnity\Common\Attributes\DividerAttribute.cs" />
+     <Compile Include="Assets\AiUnity\Common\Log\ILogManager.cs" />
+     <Compile Include="Assets\AiUnity\CLog\Core\Common\StringFormatFormattedMessage.cs" />
+     <Compile Include="Assets\AiUnity\Common\Utilities\EnumUtility.cs" />
+     <Compile Include="Assets\AiUnity\Common\Attributes\ClassImplementsAttribute.cs" />
+     <Compile Include="Assets\AiUnity\CLog\Core\Loggers\IUnityConsoleLoggerSettings.cs" />
+     <None Include="Assets\AiUnity\CLog\Core\LICENSE.txt" />
+     <None Include="Assets\AiUnity\UserData\CLog\Resources\CLog.xml" />
+     <None Include="Assets\AiUnity\CLog\readme.txt" />
  <Reference Include="UnityEngine">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2020.3.30f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
  </Reference>
@@ -283,6 +372,15 @@
  </Reference>
  <Reference Include="Unity.Analytics.Tracker">
  <HintPath>C:/Users/Tam/git/VXMusic/VXMusicOverlay/Library/PackageCache/com.unity.analytics@3.6.12/Unity.Analytics.Tracker.dll</HintPath>
+ </Reference>
+ <Reference Include="CLog">
+ <HintPath>C:/Users/Tam/git/VXMusic/VXMusicOverlay/Assets/AiUnity/CLog/Lib/CLog.dll</HintPath>
+ </Reference>
+ <Reference Include="CLogNLogAdapter">
+ <HintPath>C:/Users/Tam/git/VXMusic/VXMusicOverlay/Assets/AiUnity/CLog/Lib/CLogNLogAdapter.dll</HintPath>
+ </Reference>
+ <Reference Include="AiUnityCommon">
+ <HintPath>C:/Users/Tam/git/VXMusic/VXMusicOverlay/Assets/AiUnity/Common/Lib/AiUnityCommon.dll</HintPath>
  </Reference>
  <Reference Include="netstandard">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2020.3.30f1/Editor/Data/NetStandard/ref/2.0.0/netstandard.dll</HintPath>

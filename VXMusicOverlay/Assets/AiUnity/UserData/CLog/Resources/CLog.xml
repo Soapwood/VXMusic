@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<clog buildLevels="">
+  <targets>
+    <target name="UnityConsole" type="UnityConsole" headerColor="#808000FF" messageColor="#000000FF" />
+    <target name="NLogLogger" type="NLogLogger" />
+  </targets>
+</clog>
