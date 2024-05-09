@@ -18,38 +18,37 @@ namespace Plugins
         [Header("Debug")]
         public bool EnableOverlayDebugView = false;
         
-        [FormerlySerializedAs("error")] public bool OverlayInitialisationError = false;
+        public bool OverlayInitialisationError = false;
 
         //Display logs related to events
-        [FormerlySerializedAs("eventLog")] public bool EventLog = false;
+        public bool EventLog = false;
         
-        [FormerlySerializedAs("SpherePrefab")] [FormerlySerializedAs("spherePrefab")] [SerializeField] private GameObject DebugSpherePrefab;
+        [SerializeField] private GameObject DebugSpherePrefab;
         private GameObject LeftDebugSphere;
         private GameObject RightDebugSphere;
 
-        [FormerlySerializedAs("renderTexture")] [Header("Overlay Render Texture")]
+        [Header("Overlay Render Texture")]
         //Render Texture to get from
         public RenderTexture RenderTexture;
 
-        [FormerlySerializedAs("Position")] [Header("Transform")]
+        [Header("Transform")]
         //Unity compliant position and rotation
         public Vector3 OverlayPosition = new Vector3(0, -0.5f, 3);
 
-        [FormerlySerializedAs("Rotation")] public Vector3 OverlayRotation = new Vector3(0, 0, 0);
+        public Vector3 OverlayRotation = new Vector3(0, 0, 0);
 
         public Vector3 Scale = new Vector3(1, 1, 1);
 
         //Enable mirror image reversal
         public bool MirrorX = false;
         public bool MirrorY = false;
-
-        [FormerlySerializedAs("width")]
+        
         [Header("Overlay Canvas Settings")]
         [Range(0, 100)] public float Width = 0.2f;
-        [FormerlySerializedAs("alpha")] [Range(0, 1)] public float OverlayAlpha = 0.2f;
-        [FormerlySerializedAs("_overlayInactiveOpacity")] [Range(0, 1)] public float InactiveOverlayOpacity = 0.2f;
-        [FormerlySerializedAs("_overlayActiveOpacity")] [Range(0, 1)] public float ActiveOverlayOpacity = 1.0f;
-        [FormerlySerializedAs("show")] public bool ShowOverlay = true;
+        [Range(0, 1)] public float OverlayAlpha = 0.2f;
+        [Range(0, 1)] public float InactiveOverlayOpacity = 0.2f;
+        [Range(0, 1)] public float ActiveOverlayOpacity = 1.0f;
+        public bool ShowOverlay = true;
         public bool SideBySide = false;
         public int ApplicationTargetFramerate = 90;
 
@@ -60,14 +59,14 @@ namespace Plugins
 
         [Header("Device Tracking")]
         public bool DeviceTracking = true;
-        [FormerlySerializedAs("OverlayAnchorDevice")] [FormerlySerializedAs("DeviceIndex")] public TrackingDeviceSelect CurrentTrackedDevice = TrackingDeviceSelect.HMD;
+        public TrackingDeviceSelect CurrentTrackedDevice = TrackingDeviceSelect.HMD;
         private int DeviceIndexOld = (int)TrackingDeviceSelect.None;
 
         [Header("Absolute Space")]
         public bool Seated = false;
         public bool ResetSeatedCamera = false;
         
-        [FormerlySerializedAs("putLogDevicesInfo")] [Header("Device Info")]
+        [Header("Device Info")]
         // Output the list of currently connected devices to the log (automatically returns to false)
         public bool OutputDeviceInfoLogs = false;
         public int ConnectedDevices = 0;
@@ -80,10 +79,10 @@ namespace Plugins
 
         public ETrackedControllerRole OverlayTrackedDevice;
         public EVRButtonId TrackedDeviceInputLock = EVRButtonId.k_EButton_SteamVR_Trigger;
-        [FormerlySerializedAs("_heartbeatInterval")] public float HeartbeatInterval = 2.0f;
+        public float HeartbeatInterval = 2.0f;
         
         [Header("GUI Tap")]
-        [FormerlySerializedAs("LaycastRootObject")] public GameObject RaycastRootObject = null;
+        public GameObject RaycastRootObject = null;
 
         public float TapOnDistance = 0.04f;
         public float TapOffDistance = 0.043f;
@@ -96,10 +95,10 @@ namespace Plugins
         public float FingerRotationOffsetY = 25;
         public float FingerRotationOffsetZ = 0;
 
-        [FormerlySerializedAs("_timeSinceLastHeartbeat")] [Header("Tracked Device Debug")]
+        [Header("Tracked Device Debug")]
         public float TimeSinceLastHeartbeat = 0f;
-        [FormerlySerializedAs("tappedLeft")] public bool ClickedLeft = false;
-        [FormerlySerializedAs("tappedRight")] public bool ClickedRight = false;
+        public bool ClickedLeft = false;
+        public bool ClickedRight = false;
         public float LeftHandU = -1f;
         public float LeftHandV = -1f;
         public float LeftHandDistance = -1f;
