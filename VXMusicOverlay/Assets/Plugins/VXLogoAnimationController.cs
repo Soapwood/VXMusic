@@ -12,6 +12,9 @@ namespace Plugins
 
         private string _animationName = "VXMRecognition";
         private bool _isInProcessingState = false;
+        
+        private float _animationTimer = 0f;  // Timer to track animation duration
+        private float _timeoutThreshold = 25f;  // 10 seconds timeout threshold
 
         // Start is called before the first frame update
         void Start()
@@ -50,6 +53,8 @@ namespace Plugins
             _animator.enabled = true;
             _animator.Play(_animationName, -1, 0f);
             _animator.speed = 1;
+            
+            _animationTimer = 0f;  // Reset and start the timer
         }
 
         private void HandleRecognitionStateEnd()
@@ -59,6 +64,8 @@ namespace Plugins
             _isInProcessingState = false;
             
             _animator.bodyPosition = _animator.rootPosition;
+            
+            _animationTimer = 0f;  // Reset and start the timer
         }
         
         private void OnDestroy()
@@ -73,18 +80,35 @@ namespace Plugins
         // Update is called once per frame
         void Update()
         {
-            if (!_isInProcessingState && _animator.enabled && _animator.GetCurrentAnimatorStateInfo(0).IsName(_animationName))
-            {
-                float progress = _animator.GetCurrentAnimatorStateInfo(0).normalizedTime % 1;
-                if (progress >= 0.98f)
+            //if (_isInProcessingState)
+            //{
+                _animationTimer += Time.deltaTime;
+
+                if (_animator.enabled && _animationTimer >= _timeoutThreshold)
                 {
+                    Debug.LogWarning("Animation timeout exceeded. Resetting animation and controller.");
+                    HandleRecognitionStateEnd();
+                    
                     // Optionally, force animation to the last frame if not exactly finishing at the end.
                     _animator.Play(_animationName, -1, 0f);
                     _animator.speed = 0; // Stop the animation
                     
                     _animator.enabled = false; // Disable the animator until the next run 
                 }
-            }
+                
+                if (!_isInProcessingState && _animator.enabled && _animator.GetCurrentAnimatorStateInfo(0).IsName(_animationName))
+                {
+                    float progress = _animator.GetCurrentAnimatorStateInfo(0).normalizedTime % 1;
+                    if (progress >= 0.98f)
+                    {
+                        // Optionally, force animation to the last frame if not exactly finishing at the end.
+                        _animator.Play(_animationName, -1, 0f);
+                        _animator.speed = 0; // Stop the animation
+                    
+                        _animator.enabled = false; // Disable the animator until the next run 
+                    }
+                }
+            //}
         }
     }
 }
