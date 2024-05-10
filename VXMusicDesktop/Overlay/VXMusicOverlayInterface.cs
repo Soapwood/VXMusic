@@ -7,9 +7,10 @@ using System.Diagnostics;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using System.Windows;
+using System.Windows.Threading;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using VXMusic.Recognition.AudD;
 using VXMusicDesktop;
 using VXMusicDesktop.MVVM.ViewModel;
 
@@ -25,6 +26,8 @@ public class VXMusicOverlayInterface
 
     private static TcpListener _listener;
     
+    private static CancellationTokenSource _cancellationTokenSource;
+    
     private static int _vxMusicDesktopTcpPort = 61820;
     private static int _vxMusicOverlayTcpPort = 61821;
     private static string _localhost = "127.0.0.1";
@@ -33,13 +36,23 @@ public class VXMusicOverlayInterface
 
     private static readonly string VxOverlayHeartBeatPipeName = "VXMusicOverlayEventPipe";
 
+    // Overlay State
+    private static DispatcherTimer _heartbeatTimer;
+    private static readonly int _heartbeatInterval = 8; // in seconds
+    
+    private static bool _isOverlayConnected;
+    public static bool IsOverlayConnected => _isOverlayConnected;
+    
     public static bool HasNewHeartbeatMessage { get; set; }
     public static bool OverlayWasRunning { get; set; }
 
     public static SharedViewModel SharedViewModel { get; set; }
 
-    public static int LaunchVXMOverlayRuntime(string runtimePath)
+    public static Process LaunchVXMOverlayRuntime(string runtimePath)
     {
+        if(App.ToastNotification != null)
+            App.ToastNotification.SendNotification(NotificationLevel.Info, "", "Launching Overlay", 3);
+        
         ProcessStartInfo overlayProcessStartInfo = new ProcessStartInfo
         {
             FileName = runtimePath,
@@ -56,8 +69,8 @@ public class VXMusicOverlayInterface
         };
 
         overlayProcess.EnableRaisingEvents = true;
-        overlayProcess.Exited += (sender, e) => { Logger.LogWarning("Closing down VXMusicOverlay."); };
-
+        overlayProcess.Exited += RemoveExistingOverlayInstance;
+        
         Logger.LogInformation("Starting VXMusic Overlay Runtime...");
         Logger.LogDebug($"Running {overlayProcessStartInfo.FileName} with args: [{overlayProcessStartInfo.Arguments}]");
         
@@ -65,40 +78,117 @@ public class VXMusicOverlayInterface
 
         Logger.LogDebug($"VXMusicOverlay process running with PID: {overlayProcess.Id}");
 
-        StartVXMusicDesktopHeartbeatListener();
-        StartVXMusicDesktopTcpServer();
+        _cancellationTokenSource = new CancellationTokenSource();
         
-        //App.ToastNotification.send("Overlay Launched Successfully");
+        _cancellationTokenSource.Token.Register(() =>
+        {
+            // Close NamedPipeServerStream and TcpListener if they are still active
+            ServerStream?.Close();
+            _listener?.Stop();
 
+            _isOverlayConnected = false;
+            SharedViewModel.IsOverlayRunning = false;
+            OverlayWasRunning = false;
+            
+            _isProcessing = false;
+        });
+        
+        StartVXMusicDesktopHeartbeatListener(_cancellationTokenSource.Token);
+        StartHeartbeatMonitoring();
+        StartVXMusicDesktopTcpServer(_cancellationTokenSource.Token);
+
+        _isOverlayConnected = true;
+        
         // Need to send payload every time the overlay connects
-        return overlayProcess.Id;
+        return overlayProcess;
     }
 
-    public static async Task StartVXMusicDesktopHeartbeatListener()
+    private static void RemoveExistingOverlayInstance(object? sender, EventArgs e)
+    {
+        Logger.LogWarning("VXMusicOverlay has Exited. Tearing down.");
+        App.VXMOverlayProcess = null;
+        
+        VXMusicSession.NotificationClient.SendNotification(NotificationLevel.Warning,"VXMusic Overlay has Disconnected.","", 5);
+        App.ToastNotification.SendNotification(NotificationLevel.Warning,"VXMusic Overlay has Disconnected.","", 5);
+
+        _isOverlayConnected = false;
+        
+        Logger.LogDebug("Triggering Cancellation Token for Heartbeat Listener and TCP Server.");
+        _heartbeatTimer.Stop();
+        _cancellationTokenSource?.Cancel();
+    }
+    
+    public static void StartHeartbeatMonitoring()
+    {
+        _heartbeatTimer = new DispatcherTimer
+        {
+            Interval = TimeSpan.FromSeconds(_heartbeatInterval)
+        };
+        _heartbeatTimer.Tick += OnHeartbeatTick;
+        _heartbeatTimer.Start();
+    }
+    
+    private static void OnHeartbeatTick(object sender, EventArgs e)
+    {
+        Application.Current.Dispatcher.Invoke(() =>
+        {
+            if (HasNewHeartbeatMessage)
+            {
+                SharedViewModel.IsOverlayRunning = true;
+                HasNewHeartbeatMessage = false;
+            }
+            else
+            {
+                SharedViewModel.IsOverlayRunning = false;
+                Logger.LogWarning("No heartbeat received, overlay might be disconnected.");
+            }
+        });
+    }
+    
+    public static async Task StartVXMusicDesktopHeartbeatListener(CancellationToken cancellationToken)
     {
         Logger.LogInformation("Waiting for Unity Runtime Client to Connect...");
-        
-        while (true)
+
+        try
         {
-            using (ServerStream =
-                   new NamedPipeServerStream(VXMMessage.VxMusicHeartbeatPipeName, PipeDirection.InOut))
+            Logger.LogTrace("Listening for Heartbeats from VXMusic Overlay");
+            while (!cancellationToken.IsCancellationRequested)
             {
-                Logger.LogTrace("Listening for Heartbeats from VXMusic Overlay");
-                await ServerStream.WaitForConnectionAsync();
-                _isProcessing = true;
-                
-                using (ServerReader = new StreamReader(ServerStream))
-                using (ServerWriter = new StreamWriter(ServerStream) { AutoFlush = true })
+                using (ServerStream =
+                           new NamedPipeServerStream(VXMMessage.VxMusicHeartbeatPipeName, PipeDirection.InOut))
                 {
-                    string eventData = await ServerReader.ReadLineAsync();
-                    Logger.LogTrace($"Received Heartbeat from Unity Client: {eventData}");
-                    await ProcessIncomingUnityHeartbeat(ServerWriter, eventData);
+
+                    // Wait for connection, and cancel wait if cancellation token is triggered.
+                    await ServerStream.WaitForConnectionAsync(cancellationToken);
+
+                    // Ensure cancellation hasn't been triggered.
+                    if (!cancellationToken.IsCancellationRequested)
+                    {
+                        _isProcessing = true;
+
+                        using (ServerReader = new StreamReader(ServerStream))
+                        using (ServerWriter = new StreamWriter(ServerStream) { AutoFlush = true })
+                        {
+                            string eventData = await ServerReader.ReadLineAsync();
+                            Logger.LogTrace($"Received Heartbeat from Unity Client: {eventData}");
+                            await ProcessIncomingUnityHeartbeat(ServerWriter, eventData);
+                        }
+                    }
                 }
             }
         }
+        catch (OperationCanceledException oce)
+        {
+            Logger.LogDebug("VXMusicDesktopHeartbeatListener Cancellation was Requested.");
+            Logger.LogDebug(oce.Message);
+
+            _isOverlayConnected = false;
+        }
+        
+        Logger.LogDebug("VXMusicDesktopHeartbeatListener has stopped listening.");
     }
 
-    public static async Task StartVXMusicDesktopTcpServer()
+    public static async Task StartVXMusicDesktopTcpServer(CancellationToken cancellationToken)
     {
         try
         {
@@ -115,13 +205,22 @@ public class VXMusicOverlayInterface
 
         try
         {
-            while (true)
+            while (!cancellationToken.IsCancellationRequested)
             {
                 Logger.LogTrace("Waiting for Overlay Messages...");
-                TcpClient client = await _listener.AcceptTcpClientAsync();
-                Logger.LogDebug("Overlay connected for Message.");
-                ProcessClientAsync(client);
+                TcpClient client = await _listener.AcceptTcpClientAsync(cancellationToken);
+                
+                if (!cancellationToken.IsCancellationRequested)
+                {
+                    Logger.LogDebug("Overlay connected for Message.");
+                    ProcessClientAsync(client);
+                }
             }
+        }
+        catch (OperationCanceledException oce)
+        {
+            Logger.LogDebug("VXMusicDesktopTcpServer Cancellation was Requested.");
+            Logger.LogDebug(oce.Message);
         }
         catch (Exception ex)
         {
@@ -135,7 +234,7 @@ public class VXMusicOverlayInterface
                 _listener = null;
             }
         }
-        
+        Logger.LogDebug("VXMusicDesktopTcpServer has stopped listening.");
     }
     
     private static async Task ProcessClientAsync(TcpClient client)
@@ -163,7 +262,7 @@ public class VXMusicOverlayInterface
                 ReadMessage(stream, out var message);
                 if (message == null)
                 {
-                    Logger.LogWarning("Client disconnected or stream ended.");
+                    Logger.LogTrace("Client disconnected or stream ended.");
                     break;
                 }
                 Logger.LogTrace("Received from VXMusic Overlay: " + message);
@@ -310,8 +409,6 @@ public class VXMusicOverlayInterface
                 Logger.LogError($"UNRECOGNISED MESSAGE SENT FROM UNITY TO VXMUSIC: {incomingMessage}");
                 return false;
         }
-
-        HasNewHeartbeatMessage = false;
     }
 
     private static bool IsCurrentRecognitionClientConnected(RecognitionApi currentRecognitionApi)
@@ -384,55 +481,3 @@ public class VXMusicOverlayInterface
         return false;
     }
 }
-
-
-/////////////////////////
-///
-    // private static async Task<bool> SendMessageToVxMusicOverlay(string messageContent)
-    // {
-    //     // Encapsulate resource management with 'using' to ensure proper disposal
-    //     using (var clientStream = new NamedPipeClientStream(".", VXMMessage.VxMusicOverlaySettingsPipe, PipeDirection.InOut))
-    //     {
-    //         try
-    //         {
-    //             // Connect to the server with a timeout (optional but recommended)
-    //             clientStream.Connect(5000); // Timeout in milliseconds
-    //
-    //             // Initialize StreamReader and StreamWriter using 'using' to automatically dispose
-    //             using (var clientWriter = new StreamWriter(clientStream) { AutoFlush = true })
-    //             using (var clientReader = new StreamReader(clientStream))
-    //             {
-    //                 // Send a request asynchronously
-    //                 Logger.LogTrace($"Sending message to VXMusic Overlay: {messageContent}");
-    //                 await clientWriter.WriteLineAsync(messageContent);
-    //
-    //                 // Optionally read response back if expected
-    //                 var response = await clientReader.ReadLineAsync();
-    //                 Logger.LogTrace($"Received response from VXMusic Overlay: {response}");
-    //                 Logger.LogDebug("Successfully sent request to VXMusic Overlay.");
-    //             }
-    //         }
-    //         catch (TimeoutException ex)
-    //         {
-    //             Logger.LogError($"Failed to connect: {ex.Message}");
-    //             return false;
-    //         }
-    //         catch (ObjectDisposedException ex)
-    //         {
-    //             //Logger.LogError($"An error occurred: {ex.Message}");
-    //             return true;
-    //         }
-    //         catch (Exception ex)
-    //         {
-    //             Logger.LogError($"An error occurred: {ex.Message}");
-    //             return false;
-    //         }
-    //     }
-    //
-    //     // Optionally handle further actions after successful communication
-    //     // VXMusicSession.NotificationClient.SendNotification("VXMusic Overlay Connected!", "", 4);
-    //     // SharedViewModel.IsOverlayRunning = true;
-    //     // OverlayWasRunning = true;
-    //
-    //     return true;
-    // }

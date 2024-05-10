@@ -21,6 +21,8 @@ public class ToastNotificationClient : INotificationClient
         _shortNotifier = CreateNotifier(window, TimeSpan.FromSeconds(ShortNotifierTimeout));
     }
     
+    //TODO MainWindow mainWindow = Application.Current.MainWindow as MainWindow;
+    // https://github.com/rafallopatka/ToastNotifications/blob/master-v2/Docs/Configuration.md
     private Notifier CreateNotifier(Window window, TimeSpan lifeTime)
     {
         return new Notifier(cfg =>

@@ -35,8 +35,9 @@ namespace VXMusicDesktop
         public static Version ApplicationVersion;
 
         public static ToastNotificationClient ToastNotification;
-        
-        public static int VXMOverlayProcessId; 
+
+        public static Process? VXMOverlayProcess;
+        //public static int VXMOverlayProcessId; 
         
         // TODO https://blog.elmah.io/logging-and-global-error-handling-in-net-7-wpf-applications/
         public App() : base()
@@ -112,8 +113,9 @@ namespace VXMusicDesktop
             VXMusicSession.Initialise();
             
 #if DEBUG
-            VXMusicOverlayInterface.StartVXMusicDesktopHeartbeatListener();
-            VXMusicOverlayInterface.StartVXMusicDesktopTcpServer();
+            //VXMusicOverlayInterface.StartVXMusicDesktopHeartbeatListener();
+            //VXMusicOverlayInterface.StartVXMusicDesktopTcpServer();
+            //MainViewModel.InitialiseOverlayHeartbeatMonitor();
 #endif
 
             VXMusicSession.NotificationClient.SendNotification(NotificationLevel.Info, "Welcome to VXMusic!", "", 5);
@@ -166,12 +168,12 @@ namespace VXMusicDesktop
         {
             try
             {
-                if (VXMOverlayProcessId >= 0)
+                if (VXMOverlayProcess.Id >= 0)
                 {
-                    Process process = Process.GetProcessById(VXMOverlayProcessId);
+                    Process process = Process.GetProcessById(VXMOverlayProcess.Id);
                     process.Kill();
                     process.WaitForExit(); // Optional: Wait for the process to exit
-                    Logger.LogDebug($"Successfully killed VXMusicOverlay process with PID {VXMOverlayProcessId}.");
+                    Logger.LogDebug($"Successfully killed VXMusicOverlay process with PID {VXMOverlayProcess.Id}.");
                 }
                 else
                 {

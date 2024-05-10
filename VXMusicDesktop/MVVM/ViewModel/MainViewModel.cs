@@ -1,6 +1,4 @@
-﻿using System;
-using System.Windows;
-using System.Windows.Threading;
+﻿using VXMusic;
 using VXMusic.Overlay;
 using VXMusicDesktop.Core;
 using VXMusicDesktop.Theme;
@@ -9,9 +7,6 @@ namespace VXMusicDesktop.MVVM.ViewModel
 {
     public class MainViewModel : ObservableObject
     {
-        private static DispatcherTimer _checkOverlayHeartbeatMonitor;
-        private static readonly int _checkOverlayHeartbeatInterval = 8;
-        
         /*
          *  Menu Navigation
          */
@@ -95,28 +90,16 @@ namespace VXMusicDesktop.MVVM.ViewModel
             
             LaunchVXMusicOverlay = new RelayCommand(o =>
             {
-                App.VXMOverlayProcessId =
-                    VXMusicOverlayInterface.LaunchVXMOverlayRuntime(App.VXMusicSession.OverlaySettings.RuntimePath);
-                InitialiseOverlayHeartbeatMonitor();
-            });
-        }
-        
-        public static void InitialiseOverlayHeartbeatMonitor()
-        {
-            _checkOverlayHeartbeatMonitor = new DispatcherTimer
-            {
-                Interval = TimeSpan.FromSeconds(_checkOverlayHeartbeatInterval)
-            };
-            _checkOverlayHeartbeatMonitor.Tick += CheckOverlayRunningState;
-            _checkOverlayHeartbeatMonitor.Start();
-        }
-        
-        private static void CheckOverlayRunningState(object sender, EventArgs e)
-        {
-            Application.Current.Dispatcher.Invoke(() =>
-            {
-                SharedVM.IsOverlayRunning = VXMusicOverlayInterface.HasNewHeartbeatMessage;
-                VXMusicOverlayInterface.HasNewHeartbeatMessage = false;
+                if (VXMusicOverlayInterface.IsOverlayConnected)
+                {
+                    App.ToastNotification.SendNotification(NotificationLevel.Info,
+                        "Overlay is already running!","", 3);
+                }
+                else
+                {
+                    App.VXMOverlayProcess =
+                        VXMusicOverlayInterface.LaunchVXMOverlayRuntime(App.VXMusicSession.OverlaySettings.RuntimePath);
+                }
             });
         }
     }

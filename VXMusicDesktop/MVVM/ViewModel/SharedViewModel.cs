@@ -1,10 +1,8 @@
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using VXMusic;
-using VXMusic.LogParser.VRChat;
 using VXMusic.Overlay;
 
 namespace VXMusicDesktop.MVVM.ViewModel;
@@ -154,8 +152,8 @@ public class SharedViewModel : INotifyPropertyChanged
         if (!IsRecognitionRunning && !IsOverlayRunning && VXMusicOverlayInterface.OverlayWasRunning)
         {
             Logger.LogError("VXMusicOverlay has timed out!");
-            //App.ToastNotification.Error("VXMusicOverlay has timed out!");
-            //VXMusicSession.NotificationClient.SendNotification("VXMusic Overlay has disconnected.", "", 4);
+            App.ToastNotification.SendNotification(NotificationLevel.Error, "VXMusicOverlay has timed out!","", 5);
+            VXMusicSession.NotificationClient.SendNotification(NotificationLevel.Error, "VXMusicOverlay has timed out!","", 5);
             VXMusicOverlayInterface.OverlayWasRunning = false;
         }
     }

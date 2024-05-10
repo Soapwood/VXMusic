@@ -72,12 +72,7 @@ public class VXMusicSession
         SpotifyAuthentication.ClientId = ConnectionsSettings.SpotifySettings.ClientId;
 
         if (OverlaySettings.LaunchOverlayOnStartup)
-        {
-            App.VXMOverlayProcessId = VXMusicOverlayInterface.LaunchVXMOverlayRuntime(OverlaySettings.RuntimePath);
-            MainViewModel.InitialiseOverlayHeartbeatMonitor();
-        }
-        //VXListenForOverlayMessage();
-        //VXMusicOverlay = App.ServiceProvider.GetRequiredService<VXMusicOverlayInstance>();
+            App.VXMOverlayProcess = VXMusicOverlayInterface.LaunchVXMOverlayRuntime(OverlaySettings.RuntimePath);
     }
 
     public void SetRecognitionClient(RecognitionApi recognitionApi)

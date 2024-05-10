@@ -3,7 +3,6 @@ using System.IO;
 using System.IO.Pipes;
 using System.Threading.Tasks;
 using Plugins;
-//using UnityEditor.PackageManager;
 using UnityEngine;
 
 namespace Valve.VR
@@ -24,7 +23,7 @@ namespace Valve.VR
             // Create and connect the ClientStream
             using (var clientStream = new NamedPipeClientStream(".", VXMMessage.VxMusicHeartbeatPipeName, PipeDirection.InOut))
             {
-                clientStream.Connect();
+                clientStream.Connect(3000);
 
                 // Initialize ClientReader and ClientWriter
                 var clientReader = new StreamReader(clientStream);
