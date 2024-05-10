@@ -52,13 +52,13 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Assets\AiUnity\Common\Editor\Drawers\ClassTypeReferenceDrawer.cs" />
+     <Compile Include="Assets\AiUnity\Common\Editor\ModalWindow\ModalWindow.cs" />
      <Compile Include="Assets\AiUnity\Common\Editor\ModalWindow\WindowResult.cs" />
-     <Compile Include="Assets\AiUnity\Common\Editor\Styles\CustomEditorStyles.cs" />
      <Compile Include="Assets\AiUnity\Common\Editor\Drawers\ReadOnlyDrawer.cs" />
      <Compile Include="Assets\AiUnity\Common\Editor\Drawers\DividerDrawer.cs" />
-     <Compile Include="Assets\AiUnity\Common\Editor\ModalWindow\ModalWindow.cs" />
      <Compile Include="Assets\AiUnity\CLog\Editor\CLogEditor.cs" />
+     <Compile Include="Assets\AiUnity\Common\Editor\Drawers\ClassTypeReferenceDrawer.cs" />
+     <Compile Include="Assets\AiUnity\Common\Editor\Styles\CustomEditorStyles.cs" />
  <Reference Include="UnityEngine">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2020.3.30f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
  </Reference>
@@ -287,8 +287,17 @@
  <Reference Include="UnityEditor.WindowsStandalone.Extensions">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2020.3.30f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll</HintPath>
  </Reference>
+ <Reference Include="CLogNLogAdapter">
+ <HintPath>C:/Users/Tam/git/VXMusic/VXMusicOverlay/Assets/AiUnity/CLog/Lib/CLogNLogAdapter.dll</HintPath>
+ </Reference>
+ <Reference Include="AiUnityCommon">
+ <HintPath>C:/Users/Tam/git/VXMusic/VXMusicOverlay/Assets/AiUnity/Common/Lib/AiUnityCommon.dll</HintPath>
+ </Reference>
  <Reference Include="log4netPlastic">
  <HintPath>C:/Users/Tam/git/VXMusic/VXMusicOverlay/Library/PackageCache/com.unity.collab-proxy@1.15.12/Lib/Editor/PlasticSCM/log4netPlastic.dll</HintPath>
+ </Reference>
+ <Reference Include="CLog">
+ <HintPath>C:/Users/Tam/git/VXMusic/VXMusicOverlay/Assets/AiUnity/CLog/Lib/CLog.dll</HintPath>
  </Reference>
  <Reference Include="Unity.Plastic.Newtonsoft.Json">
  <HintPath>C:/Users/Tam/git/VXMusic/VXMusicOverlay/Library/PackageCache/com.unity.collab-proxy@1.15.12/Lib/Editor/PlasticSCM/Unity.Plastic.Newtonsoft.Json.dll</HintPath>
@@ -307,15 +316,6 @@
  </Reference>
  <Reference Include="Unity.Analytics.Tracker">
  <HintPath>C:/Users/Tam/git/VXMusic/VXMusicOverlay/Library/PackageCache/com.unity.analytics@3.6.12/Unity.Analytics.Tracker.dll</HintPath>
- </Reference>
- <Reference Include="CLog">
- <HintPath>C:/Users/Tam/git/VXMusic/VXMusicOverlay/Assets/AiUnity/CLog/Lib/CLog.dll</HintPath>
- </Reference>
- <Reference Include="CLogNLogAdapter">
- <HintPath>C:/Users/Tam/git/VXMusic/VXMusicOverlay/Assets/AiUnity/CLog/Lib/CLogNLogAdapter.dll</HintPath>
- </Reference>
- <Reference Include="AiUnityCommon">
- <HintPath>C:/Users/Tam/git/VXMusic/VXMusicOverlay/Assets/AiUnity/Common/Lib/AiUnityCommon.dll</HintPath>
  </Reference>
  <Reference Include="nunit.framework">
  <HintPath>C:/Users/Tam/git/VXMusic/VXMusicOverlay/Library/PackageCache/com.unity.ext.nunit@1.0.6/net35/unity-custom/nunit.framework.dll</HintPath>

@@ -68,6 +68,8 @@ public class VXMusicOverlayInterface
         StartVXMusicDesktopHeartbeatListener();
         StartVXMusicDesktopTcpServer();
         
+        //App.ToastNotification.send("Overlay Launched Successfully");
+
         // Need to send payload every time the overlay connects
         return overlayProcess.Id;
     }
@@ -335,7 +337,9 @@ public class VXMusicOverlayInterface
         {
             Logger.LogError($"Recognition Failed. {currentRecognitionApi} is not connected.");
             SharedViewModel.IsRecognitionRunning = false;
-            VXMusicSession.NotificationClient.SendNotification("Recognition Failed", $"{currentRecognitionApi} is not connected! Check your Recognition settings.", 8);
+            //App.ToastNotification.Error($"{currentRecognitionApi} is not connected! Check your Recognition settings.");
+            VXMusicSession.NotificationClient.SendNotification(NotificationLevel.Error, "Recognition Failed", $"{currentRecognitionApi} is not connected! Check your Recognition settings.", 8);
+            App.ToastNotification.SendNotification(NotificationLevel.Error, "Recognition Failed", $"{currentRecognitionApi} is not connected! Check your Recognition settings.", 8);
             return false;
         }
         
@@ -366,7 +370,8 @@ public class VXMusicOverlayInterface
             //SendMessageToVxMusicOverlayOverTcp(VXMMessage.CONNECTION_ACKNOWLEDGE);
             writer.WriteLine(VXMMessage.CONNECTION_ACKNOWLEDGE);
             Logger.LogInformation($"Connected to VXMusicOverlay!");
-            VXMusicSession.NotificationClient.SendNotification("VXMusic Overlay Connected!", "",4);
+            VXMusicSession.NotificationClient.SendNotification(NotificationLevel.Success,"VXMusic Overlay Connected!", "",4);
+            App.ToastNotification.SendNotification(NotificationLevel.Success,"VXMusic Overlay Connected!", "",4);
             SharedViewModel.IsOverlayRunning = true;
             OverlayWasRunning = true;
 

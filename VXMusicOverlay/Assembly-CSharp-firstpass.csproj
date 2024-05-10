@@ -285,6 +285,15 @@
  <Reference Include="UnityEditor.UnityConnectModule">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2020.3.30f1/Editor/Data/Managed/UnityEngine/UnityEditor.UnityConnectModule.dll</HintPath>
  </Reference>
+ <Reference Include="CLogNLogAdapter">
+ <HintPath>C:/Users/Tam/git/VXMusic/VXMusicOverlay/Assets/AiUnity/CLog/Lib/CLogNLogAdapter.dll</HintPath>
+ </Reference>
+ <Reference Include="AiUnityCommon">
+ <HintPath>C:/Users/Tam/git/VXMusic/VXMusicOverlay/Assets/AiUnity/Common/Lib/AiUnityCommon.dll</HintPath>
+ </Reference>
+ <Reference Include="CLog">
+ <HintPath>C:/Users/Tam/git/VXMusic/VXMusicOverlay/Assets/AiUnity/CLog/Lib/CLog.dll</HintPath>
+ </Reference>
  <Reference Include="Unity.Analytics.StandardEvents">
  <HintPath>C:/Users/Tam/git/VXMusic/VXMusicOverlay/Library/PackageCache/com.unity.analytics@3.6.12/AnalyticsStandardEvents/Unity.Analytics.StandardEvents.dll</HintPath>
  </Reference>
@@ -293,15 +302,6 @@
  </Reference>
  <Reference Include="Unity.Analytics.Tracker">
  <HintPath>C:/Users/Tam/git/VXMusic/VXMusicOverlay/Library/PackageCache/com.unity.analytics@3.6.12/Unity.Analytics.Tracker.dll</HintPath>
- </Reference>
- <Reference Include="CLog">
- <HintPath>C:/Users/Tam/git/VXMusic/VXMusicOverlay/Assets/AiUnity/CLog/Lib/CLog.dll</HintPath>
- </Reference>
- <Reference Include="CLogNLogAdapter">
- <HintPath>C:/Users/Tam/git/VXMusic/VXMusicOverlay/Assets/AiUnity/CLog/Lib/CLogNLogAdapter.dll</HintPath>
- </Reference>
- <Reference Include="AiUnityCommon">
- <HintPath>C:/Users/Tam/git/VXMusic/VXMusicOverlay/Assets/AiUnity/Common/Lib/AiUnityCommon.dll</HintPath>
  </Reference>
  <Reference Include="netstandard">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2020.3.30f1/Editor/Data/NetStandard/ref/2.0.0/netstandard.dll</HintPath>

@@ -52,92 +52,92 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Assets\VXMusicOverlayPipeServer.cs" />
-     <Compile Include="Assets\AiUnity\Common\Attributes\OrderAttribute.cs" />
-     <Compile Include="Assets\AiUnity\Common\LogUI\Scripts\ResizePanel.cs" />
-     <Compile Include="Assets\AiUnity\CLog\Core\Common\AdapterAttribute.cs" />
-     <Compile Include="Assets\AiUnity\Common\Attributes\ClassExtendsAttribute.cs" />
-     <Compile Include="Assets\AiUnity\Common\Log\LibSource.cs" />
-     <Compile Include="Assets\AiUnity\CLog\Core\Configuration\ConfigurationException.cs" />
-     <Compile Include="Assets\AiUnity\Common\Patterns\Singleton.cs" />
-     <Compile Include="Assets\AiUnity\CLog\Core\Loggers\NullFactoryAdapter.cs" />
-     <Compile Include="Assets\AiUnity\Common\Extensions\GenericExtensions.cs" />
      <Compile Include="Assets\AiUnity\Common\Attributes\GeneratedTypeAttribute.cs" />
-     <Compile Include="Assets\AiUnity\Common\LogUI\Scripts\FocusPanel.cs" />
-     <Compile Include="Assets\AiUnity\Common\InternalLog\IInternalLogger.cs" />
-     <Compile Include="Assets\AiUnity\CLog\Adapters\NLog\NLogLogger.cs" />
-     <Compile Include="Assets\AiUnity\Common\Attributes\EnumSymbolAttribute.cs" />
-     <Compile Include="Assets\AiUnity\Common\LogUI\Scripts\TogglePanelButton.cs" />
-     <Compile Include="Assets\AiUnity\CLog\Examples\Scripts\CLogExample.cs" />
-     <Compile Include="Assets\AiUnity\CLog\Core\Loggers\ILoggerFactoryAdapter.cs" />
      <Compile Include="Assets\AiUnity\CLog\Adapters\NLog\NLogLoggerFactoryAdapter.cs" />
-     <Compile Include="Assets\AiUnity\Common\LogUI\Scripts\DragPanel.cs" />
-     <Compile Include="Assets\AiUnity\Common\Serialization\ClassTypeReference\ClassTypeReference.cs" />
-     <Compile Include="Assets\AiUnity\CLog\Core\Configuration\ConfigurationSectionHandler.cs" />
-     <Compile Include="Assets\AiUnity\Common\LogUI\Scripts\LogMessage.cs" />
-     <Compile Include="Assets\AiUnity\Common\Extensions\StringExtensions.cs" />
-     <Compile Include="Assets\AiUnity\Common\Attributes\UnityReadOnlyAttribute.cs" />
      <Compile Include="Assets\AiUnity\CLog\Core\Common\CLogConfigFile.cs" />
-     <Compile Include="Assets\AiUnity\CLog\Core\Loggers\CacheLoggerFactoryAdapter.cs" />
-     <Compile Include="Assets\AiUnity\Common\IO\UnityFileInfo.cs" />
-     <Compile Include="Assets\AiUnity\CLog\Core\Loggers\IGameConsoleLoggerSettings.cs" />
-     <Compile Include="Assets\AiUnity\CLog\Core\Configuration\IConfigurationReader.cs" />
-     <Compile Include="Assets\AiUnity\Common\Attributes\ResourceAttribute.cs" />
-     <Compile Include="Assets\AiUnity\Common\LogUI\Scripts\DoubleClickEvent.cs" />
-     <Compile Include="Assets\AiUnity\CLog\Core\Loggers\NullLogger.cs" />
-     <Compile Include="Assets\AiUnity\CLog\Core\CLogger.cs" />
-     <Compile Include="Assets\AiUnity\Common\Serialization\ClassTypeReference\IValidateTypeReference.cs" />
-     <Compile Include="Assets\AiUnity\Common\Log\IGameConsoleController.cs" />
-     <Compile Include="Assets\AiUnity\Common\LogUI\Scripts\InputFieldValidate.cs" />
-     <Compile Include="Assets\AiUnity\Common\Attributes\HideInEditorAttribute.cs" />
-     <Compile Include="Assets\AiUnity\Common\InternalLog\InternalLogger.cs" />
-     <Compile Include="Assets\AiUnity\Common\LogUI\Scripts\MaximizePanel.cs" />
-     <Compile Include="Assets\AiUnity\Common\Extensions\LinqExtensions.cs" />
-     <Compile Include="Assets\AiUnity\CLog\Core\Loggers\GameConsoleLoggerFactoryAdapter.cs" />
      <Compile Include="Assets\AiUnity\CLog\Core\Configuration\LogSetting.cs" />
-     <Compile Include="Assets\AiUnity\CLog\Core\Loggers\SimpleLoggerFactoryAdapter.cs" />
-     <Compile Include="Assets\AiUnity\CLog\Core\Loggers\GameConsoleLogger.cs" />
-     <Compile Include="Assets\AiUnity\Common\Log\ILogger.cs" />
-     <Compile Include="Assets\AiUnity\CLog\Core\Configuration\DefaultConfigurationReader.cs" />
-     <Compile Include="Assets\AiUnity\CLog\Core\Common\CLogInternalLogger.cs" />
-     <Compile Include="Assets\AiUnity\Common\LogUI\Scripts\LongPressEvent.cs" />
-     <Compile Include="Assets\AiUnity\Common\Attributes\ClassTypeConstraintAttribute.cs" />
-     <Compile Include="Assets\AiUnity\Common\LogUI\Scripts\IButtonStateChange.cs" />
-     <Compile Include="Assets\AiUnity\Common\Types\LazyLoader.cs" />
-     <Compile Include="Assets\AiUnity\CLog\Core\Loggers\UnityConsoleLogger.cs" />
-     <Compile Include="Assets\AiUnity\CLog\Core\Loggers\ISimpleLoggerSettings.cs" />
-     <Compile Include="Assets\AiUnity\Common\Log\AssertException.cs" />
-     <Compile Include="Assets\AiUnity\Common\Attributes\RequiredParameterAttribute.cs" />
-     <Compile Include="Assets\AiUnity\CLog\Core\Loggers\NoOpVariablesContext.cs" />
-     <Compile Include="Assets\AiUnity\Common\Services\VariableService.cs" />
      <Compile Include="Assets\AiUnity\CLog\Core\Loggers\ILoggerSettings.cs" />
-     <Compile Include="Assets\AiUnity\Common\Attributes\RequiredAttribute.cs" />
-     <Compile Include="Assets\AiUnity\Common\Extensions\ReflectionExtensions.cs" />
-     <Compile Include="Assets\AiUnity\CLog\Core\Loggers\SimpleLogger.cs" />
-     <Compile Include="Assets\AiUnity\Common\Attributes\DisplayAttribute.cs" />
-     <Compile Include="Assets\AiUnity\Common\LogUI\Scripts\GameConsoleController.cs" />
-     <Compile Include="Assets\AiUnity\Common\Serialization\ClassTypeReference\ClassGrouping.cs" />
-     <Compile Include="Assets\AiUnity\Common\Extensions\EnumExtensions.cs" />
-     <Compile Include="Assets\AiUnity\CLog\Core\Loggers\UnityConsoleLoggerFactoryAdapter.cs" />
-     <Compile Include="Assets\AiUnity\Common\Types\PlatformEnumFlagWrapper.cs" />
-     <Compile Include="Assets\AiUnity\Common\Log\LogLevels.cs" />
-     <Compile Include="Assets\AiUnity\Common\LogUI\Scripts\ButtonState.cs" />
-     <Compile Include="Assets\AiUnity\CLog\Core\Configuration\IConfigurationSectionHandler.cs" />
-     <Compile Include="Assets\AiUnity\Common\Tags\ITagAccess.cs" />
-     <Compile Include="Assets\AiUnity\Common\LogUI\Scripts\ButtonStateManager.cs" />
-     <Compile Include="Assets\AiUnity\CLog\Core\Loggers\ExternalLoggerFactoryAdapter.cs" />
-     <Compile Include="Assets\AiUnity\Common\InternalLog\CommonInternalLogger.cs" />
      <Compile Include="Assets\AiUnity\CLog\Core\Common\ExceptionBuilder.cs" />
-     <Compile Include="Assets\AiUnity\Common\Extensions\XMLLinqExtensions.cs" />
-     <Compile Include="Assets\AiUnity\Common\Extensions\SystemExtensions.cs" />
-     <Compile Include="Assets\AiUnity\CLog\Core\LogManager.cs" />
+     <Compile Include="Assets\AiUnity\Common\Serialization\ClassTypeReference\ClassTypeReference.cs" />
+     <Compile Include="Assets\AiUnity\Common\Serialization\ClassTypeReference\IValidateTypeReference.cs" />
      <Compile Include="Assets\AiUnity\Common\Log\IVariablesContext.cs" />
-     <Compile Include="Assets\AiUnity\Common\LogUI\Scripts\RectTransformStorage.cs" />
-     <Compile Include="Assets\AiUnity\Common\Attributes\DividerAttribute.cs" />
      <Compile Include="Assets\AiUnity\Common\Log\ILogManager.cs" />
      <Compile Include="Assets\AiUnity\CLog\Core\Common\StringFormatFormattedMessage.cs" />
      <Compile Include="Assets\AiUnity\Common\Utilities\EnumUtility.cs" />
+     <Compile Include="Assets\AiUnity\Common\Attributes\ClassExtendsAttribute.cs" />
+     <Compile Include="Assets\AiUnity\Common\Extensions\StringExtensions.cs" />
+     <Compile Include="Assets\AiUnity\CLog\Core\Loggers\NoOpVariablesContext.cs" />
+     <Compile Include="Assets\AiUnity\CLog\Core\Loggers\ExternalLoggerFactoryAdapter.cs" />
+     <Compile Include="Assets\AiUnity\Common\Log\LibSource.cs" />
+     <Compile Include="Assets\AiUnity\CLog\Core\Configuration\ConfigurationException.cs" />
+     <Compile Include="Assets\AiUnity\Common\Extensions\GenericExtensions.cs" />
+     <Compile Include="Assets\AiUnity\Common\LogUI\Scripts\FocusPanel.cs" />
+     <Compile Include="Assets\AiUnity\CLog\Core\Loggers\NullFactoryAdapter.cs" />
+     <Compile Include="Assets\AiUnity\CLog\Core\Loggers\ILoggerFactoryAdapter.cs" />
+     <Compile Include="Assets\AiUnity\Common\LogUI\Scripts\LogMessage.cs" />
+     <Compile Include="Assets\AiUnity\Common\InternalLog\IInternalLogger.cs" />
+     <Compile Include="Assets\AiUnity\Common\Attributes\ClassTypeConstraintAttribute.cs" />
+     <Compile Include="Assets\AiUnity\Common\Services\VariableService.cs" />
+     <Compile Include="Assets\AiUnity\Common\Attributes\DisplayAttribute.cs" />
+     <Compile Include="Assets\AiUnity\CLog\Core\Configuration\IConfigurationSectionHandler.cs" />
+     <Compile Include="Assets\AiUnity\Common\LogUI\Scripts\ButtonStateManager.cs" />
+     <Compile Include="Assets\AiUnity\Common\InternalLog\CommonInternalLogger.cs" />
+     <Compile Include="Assets\AiUnity\Common\LogUI\Scripts\ResizePanel.cs" />
+     <Compile Include="Assets\AiUnity\CLog\Core\Loggers\CacheLoggerFactoryAdapter.cs" />
+     <Compile Include="Assets\AiUnity\Common\Attributes\UnityReadOnlyAttribute.cs" />
+     <Compile Include="Assets\AiUnity\Common\Log\IGameConsoleController.cs" />
+     <Compile Include="Assets\AiUnity\Common\InternalLog\InternalLogger.cs" />
+     <Compile Include="Assets\AiUnity\CLog\Core\Loggers\ISimpleLoggerSettings.cs" />
+     <Compile Include="Assets\AiUnity\Common\Log\AssertException.cs" />
+     <Compile Include="Assets\AiUnity\Common\Extensions\ReflectionExtensions.cs" />
+     <Compile Include="Assets\AiUnity\Common\LogUI\Scripts\GameConsoleController.cs" />
+     <Compile Include="Assets\AiUnity\Common\LogUI\Scripts\DragPanel.cs" />
+     <Compile Include="Assets\AiUnity\CLog\Core\Loggers\GameConsoleLogger.cs" />
+     <Compile Include="Assets\AiUnity\CLog\Core\Loggers\SimpleLogger.cs" />
+     <Compile Include="Assets\AiUnity\Common\Attributes\DividerAttribute.cs" />
+     <Compile Include="Assets\AiUnity\Common\Patterns\Singleton.cs" />
+     <Compile Include="Assets\AiUnity\Common\LogUI\Scripts\TogglePanelButton.cs" />
+     <Compile Include="Assets\AiUnity\Common\Attributes\ResourceAttribute.cs" />
+     <Compile Include="Assets\AiUnity\CLog\Core\Loggers\SimpleLoggerFactoryAdapter.cs" />
+     <Compile Include="Assets\AiUnity\Common\Log\ILogger.cs" />
+     <Compile Include="Assets\AiUnity\Common\LogUI\Scripts\IButtonStateChange.cs" />
+     <Compile Include="Assets\AiUnity\Common\Serialization\ClassTypeReference\ClassGrouping.cs" />
+     <Compile Include="Assets\AiUnity\Common\Extensions\EnumExtensions.cs" />
+     <Compile Include="Assets\AiUnity\Common\Extensions\XMLLinqExtensions.cs" />
+     <Compile Include="Assets\AiUnity\CLog\Adapters\NLog\NLogLogger.cs" />
+     <Compile Include="Assets\AiUnity\Common\Attributes\EnumSymbolAttribute.cs" />
+     <Compile Include="Assets\AiUnity\Common\Attributes\HideInEditorAttribute.cs" />
+     <Compile Include="Assets\AiUnity\Common\Attributes\RequiredAttribute.cs" />
+     <Compile Include="Assets\AiUnity\CLog\Core\Configuration\IConfigurationReader.cs" />
+     <Compile Include="Assets\AiUnity\Common\LogUI\Scripts\DoubleClickEvent.cs" />
+     <Compile Include="Assets\AiUnity\CLog\Core\Loggers\GameConsoleLoggerFactoryAdapter.cs" />
+     <Compile Include="Assets\AiUnity\CLog\Core\Loggers\UnityConsoleLogger.cs" />
+     <Compile Include="Assets\AiUnity\Common\Types\PlatformEnumFlagWrapper.cs" />
+     <Compile Include="Assets\AiUnity\Common\Log\LogLevels.cs" />
+     <Compile Include="Assets\AiUnity\Common\Tags\ITagAccess.cs" />
+     <Compile Include="Assets\AiUnity\CLog\Examples\Scripts\CLogExample.cs" />
+     <Compile Include="Assets\AiUnity\CLog\Core\Configuration\ConfigurationSectionHandler.cs" />
+     <Compile Include="Assets\AiUnity\Common\LogUI\Scripts\MaximizePanel.cs" />
+     <Compile Include="Assets\AiUnity\CLog\Core\Loggers\UnityConsoleLoggerFactoryAdapter.cs" />
+     <Compile Include="Assets\AiUnity\CLog\Core\LogManager.cs" />
+     <Compile Include="Assets\VXMusicOverlayPipeServer.cs" />
+     <Compile Include="Assets\AiUnity\Common\IO\UnityFileInfo.cs" />
+     <Compile Include="Assets\AiUnity\CLog\Core\Configuration\DefaultConfigurationReader.cs" />
+     <Compile Include="Assets\AiUnity\Common\LogUI\Scripts\ButtonState.cs" />
+     <Compile Include="Assets\AiUnity\Common\Extensions\LinqExtensions.cs" />
+     <Compile Include="Assets\AiUnity\Common\LogUI\Scripts\LongPressEvent.cs" />
      <Compile Include="Assets\AiUnity\Common\Attributes\ClassImplementsAttribute.cs" />
+     <Compile Include="Assets\AiUnity\CLog\Core\Loggers\IGameConsoleLoggerSettings.cs" />
+     <Compile Include="Assets\AiUnity\Common\LogUI\Scripts\InputFieldValidate.cs" />
+     <Compile Include="Assets\AiUnity\Common\Attributes\RequiredParameterAttribute.cs" />
+     <Compile Include="Assets\AiUnity\Common\Attributes\OrderAttribute.cs" />
+     <Compile Include="Assets\AiUnity\Common\LogUI\Scripts\RectTransformStorage.cs" />
+     <Compile Include="Assets\AiUnity\Common\Extensions\SystemExtensions.cs" />
+     <Compile Include="Assets\AiUnity\Common\Types\LazyLoader.cs" />
+     <Compile Include="Assets\AiUnity\CLog\Core\Common\AdapterAttribute.cs" />
+     <Compile Include="Assets\AiUnity\CLog\Core\Loggers\NullLogger.cs" />
+     <Compile Include="Assets\AiUnity\CLog\Core\CLogger.cs" />
+     <Compile Include="Assets\AiUnity\CLog\Core\Common\CLogInternalLogger.cs" />
      <Compile Include="Assets\AiUnity\CLog\Core\Loggers\IUnityConsoleLoggerSettings.cs" />
      <None Include="Assets\AiUnity\CLog\Core\LICENSE.txt" />
      <None Include="Assets\AiUnity\UserData\CLog\Resources\CLog.xml" />
@@ -364,6 +364,15 @@
  <Reference Include="UnityEditor.UnityConnectModule">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2020.3.30f1/Editor/Data/Managed/UnityEngine/UnityEditor.UnityConnectModule.dll</HintPath>
  </Reference>
+ <Reference Include="CLogNLogAdapter">
+ <HintPath>C:/Users/Tam/git/VXMusic/VXMusicOverlay/Assets/AiUnity/CLog/Lib/CLogNLogAdapter.dll</HintPath>
+ </Reference>
+ <Reference Include="AiUnityCommon">
+ <HintPath>C:/Users/Tam/git/VXMusic/VXMusicOverlay/Assets/AiUnity/Common/Lib/AiUnityCommon.dll</HintPath>
+ </Reference>
+ <Reference Include="CLog">
+ <HintPath>C:/Users/Tam/git/VXMusic/VXMusicOverlay/Assets/AiUnity/CLog/Lib/CLog.dll</HintPath>
+ </Reference>
  <Reference Include="Unity.Analytics.StandardEvents">
  <HintPath>C:/Users/Tam/git/VXMusic/VXMusicOverlay/Library/PackageCache/com.unity.analytics@3.6.12/AnalyticsStandardEvents/Unity.Analytics.StandardEvents.dll</HintPath>
  </Reference>
@@ -372,15 +381,6 @@
  </Reference>
  <Reference Include="Unity.Analytics.Tracker">
  <HintPath>C:/Users/Tam/git/VXMusic/VXMusicOverlay/Library/PackageCache/com.unity.analytics@3.6.12/Unity.Analytics.Tracker.dll</HintPath>
- </Reference>
- <Reference Include="CLog">
- <HintPath>C:/Users/Tam/git/VXMusic/VXMusicOverlay/Assets/AiUnity/CLog/Lib/CLog.dll</HintPath>
- </Reference>
- <Reference Include="CLogNLogAdapter">
- <HintPath>C:/Users/Tam/git/VXMusic/VXMusicOverlay/Assets/AiUnity/CLog/Lib/CLogNLogAdapter.dll</HintPath>
- </Reference>
- <Reference Include="AiUnityCommon">
- <HintPath>C:/Users/Tam/git/VXMusic/VXMusicOverlay/Assets/AiUnity/Common/Lib/AiUnityCommon.dll</HintPath>
  </Reference>
  <Reference Include="netstandard">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2020.3.30f1/Editor/Data/NetStandard/ref/2.0.0/netstandard.dll</HintPath>
