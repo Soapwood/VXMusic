@@ -19,6 +19,7 @@ using VXMusic.Overlay;
 using VXMusic;
 using System.Diagnostics;
 using System.Reflection;
+using VXMusic.Windows;
 using VXMusicDesktop.MVVM.ViewModel;
 
 namespace VXMusicDesktop
@@ -33,6 +34,8 @@ namespace VXMusicDesktop
         public static VXMusicSession VXMusicSession;
         public static Version ApplicationVersion;
 
+        public static ToastNotificationClient ToastNotification;
+        
         public static int VXMOverlayProcessId; 
         
         // TODO https://blog.elmah.io/logging-and-global-error-handling-in-net-7-wpf-applications/
@@ -113,7 +116,7 @@ namespace VXMusicDesktop
             VXMusicOverlayInterface.StartVXMusicDesktopTcpServer();
 #endif
 
-            VXMusicSession.NotificationClient.SendNotification("Welcome to VXMusic!", "", 5);
+            VXMusicSession.NotificationClient.SendNotification(NotificationLevel.Info, "Welcome to VXMusic!", "", 5);
         }
 
         public static void ConfigureServices()
@@ -142,9 +145,16 @@ namespace VXMusicDesktop
             services.AddSingleton<WindowsAudioDeviceListener>();
             services.AddSingleton<LastfmScrobbler>();
             services.AddSingleton<PlaylistFileWriter>();
-            services.AddSingleton<XSOverlay>();
+            services.AddSingleton<XsOverlayNotificationClient>();
             services.AddSingleton<SteamVRNotificationClient>();
-
+            
+            // services.AddSingleton<INotificationClient>(provider =>
+            // {
+            //     var selectedClient = new XsOverlayNotificationClient();
+            //     var toastService = new ToastNotificationClient(w);
+            //     return new ToastNotificationDecorator(selectedClient, toastService);
+            // });
+            
             services.AddSingleton<VRChatLogParser>();
             
             ServiceProvider = services.BuildServiceProvider();

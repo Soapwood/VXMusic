@@ -27,7 +27,7 @@ namespace VXMusic.Overlay
                           as ILogger<SteamVRNotificationClient> ??
                       throw new ApplicationException("A logger must be created in service provider.");
 
-            _logger.LogInformation("Creating VXMusicOverlayInstance.");
+            _logger.LogDebug("Creating SteamVRNotificationClient.");
 
             _steamVrNotificationClient = new SteamVRNotificationOverlay(serviceProvider);
             _steamVrNotificationClient.Show();
@@ -36,12 +36,12 @@ namespace VXMusic.Overlay
                 Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Img", "VXLogo", "VXLogoSmallBase64.txt"));
         }
 
-        public void SendNotification(string title, string content, int timeout)
+        public void SendNotification(NotificationLevel level, string title, string content, int timeout)
         {
             _steamVrNotificationClient.SendNotificationInternal(title, content, timeout, DefaultVxLogo);
         }
 
-        public void SendNotification(string title, string content, int timeout, string image)
+        public void SendNotification(NotificationLevel level, string title, string content, int timeout, string image)
         {
             _steamVrNotificationClient.SendNotificationInternal(title, content, timeout, image);
         }
@@ -75,7 +75,9 @@ namespace VXMusic.Overlay
 
             uint notificationId = 0;
 
-            OpenVR.Notifications.CreateNotification(Handle, 0, EVRNotificationType.Transient, title,
+            string fullContent = $"{title} {content}";
+            
+            OpenVR.Notifications.CreateNotification(Handle, 0, EVRNotificationType.Transient, fullContent,
                 EVRNotificationStyle.Application, ref finalBitmap, ref notificationId);
 
             GC.KeepAlive(finalBitmap);

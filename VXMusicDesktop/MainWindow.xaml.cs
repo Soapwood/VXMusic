@@ -4,6 +4,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Threading;
 using VXMusic.Overlay;
+using VXMusic.Windows;
 using VXMusicDesktop.Theme;
 
 namespace VXMusicDesktop
@@ -22,6 +23,9 @@ namespace VXMusicDesktop
 
             ColourSchemeManager.ThemeChanged += OnThemeChanged;
             ColourSchemeManager.MenuOptionChanged += OnMainWindowMenuOptionChanged;
+            
+            // Anchor toast notifications to Main window instance
+            App.ToastNotification = new ToastNotificationClient(this);
         }
         
         private void OnThemeChanged(object sender, EventArgs e)
@@ -53,7 +57,6 @@ namespace VXMusicDesktop
 
             MainWindowMinimiseButtonImageBrush.ImageSource = ColourSchemeManager.MinimiseImage;
             MainWindowCloseButtonImageBrush.ImageSource = ColourSchemeManager.CloseImage;
-
         }
 
         private void OnMainWindowMenuOptionChanged(object sender, EventArgs e)

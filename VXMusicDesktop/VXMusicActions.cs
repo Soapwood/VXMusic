@@ -8,6 +8,7 @@ using SpotifyAPI.Web;
 using VXMusic;
 using VXMusic.Spotify;
 using VXMusic.Spotify.Authentication;
+using VXMusicDesktop.Images;
 
 namespace VXMusicDesktop;
 
@@ -21,9 +22,11 @@ public class VXMusicActions
         {
             VXMusicSession.RecordingClient.StartRecording();
 
-            VXMusicSession.NotificationClient.SendNotification("VXMusic is Listening...", "",
+            VXMusicSession.NotificationClient.SendNotification(NotificationLevel.Info,"VXMusic is Listening...", "",
                 VXMusicSession.RecordingClient.GetRecordingTimeSeconds());
-            App.ToastNotification.Info("VXMusic is Listening...");
+            
+            App.ToastNotification.SendNotification(NotificationLevel.Info,"VXMusic is Listening...", "",
+                VXMusicSession.RecordingClient.GetRecordingTimeSeconds());
 
             while (!VXMusicSession.RecordingClient.IsCaptureStateStopped())
             {
@@ -33,37 +36,40 @@ public class VXMusicActions
             VXMusicSession.RecordingClient.StopRecording();
         });
 
-        VXMusicSession.NotificationClient.SendNotification("Sounds great! Just a moment..", "", 2);
-        App.ToastNotification.Info("Sounds great! Just a moment..");
+        VXMusicSession.NotificationClient.SendNotification(NotificationLevel.Info, "Sounds great! Just a moment..", "", 2);
+        App.ToastNotification.SendNotification(NotificationLevel.Info, "Sounds great! Just a moment..", "", 2);
 
         var result = await VXMusicSession.RecognitionClient.RunRecognition();
 
         if (result.Status == Status.Error)
         {
-            VXMusicSession.NotificationClient.SendNotification("Recognition failed! Oh jaysus", "", 5);
-            App.ToastNotification.Error("Recognition failed! Oh jaysus");
+            VXMusicSession.NotificationClient.SendNotification(NotificationLevel.Error,"Recognition failed! Oh jaysus", "", 5);
+            App.ToastNotification.SendNotification(NotificationLevel.Error,"Recognition failed! Oh jaysus", "", 5);
             Logger.LogError("Recognition failed! Oh jaysus");
         }
         else if (result.Status == Status.NoMatches || result.Result == null)
         {
-            VXMusicSession.NotificationClient.SendNotification("Oops, couldn't get that.",
+            VXMusicSession.NotificationClient.SendNotification(NotificationLevel.Warning,"Oops, couldn't get that.",
+                "Tech Tip: Have you tried turning up your World Volume?", 5);            
+            App.ToastNotification.SendNotification(NotificationLevel.Warning,"Oops, couldn't get that.",
                 "Tech Tip: Have you tried turning up your World Volume?", 5);
-            App.ToastNotification.Warn("Could not recognise track.");
             Logger.LogWarning("Oops, couldn't get that. Tech Tip: Have you tried turning up your World Volume?");
         }
         else if (result.Status == Status.RecordingError)
         {
-            VXMusicSession.NotificationClient.SendNotification("I couldn't hear anything!",
+            VXMusicSession.NotificationClient.SendNotification(NotificationLevel.Error,"I couldn't hear anything!",
                 "Something messed up when recording audio. Check your audio device.", 10);
-            App.ToastNotification.Error("Recording Error. Check your audio device.");
+            App.ToastNotification.SendNotification(NotificationLevel.Error,"I couldn't hear anything!",
+                "Something messed up when recording audio. Check your audio device.", 10);
             Logger.LogError(
                 "I couldn't hear anything! Something messed up when recording audio. Check your audio device.");
         }
         else
         {
-            VXMusicSession.NotificationClient.SendNotification($"{result.Result.Artist} - {result.Result.Title}",
+            VXMusicSession.NotificationClient.SendNotification(NotificationLevel.Success,$"{result.Result.Artist} - {result.Result.Title}",
                 $"{result.Result.Album} ({result.Result.ReleaseDate})", 8, result.Result.AlbumArt);
-            App.ToastNotification.Success($"{result.Result.Artist} - {result.Result.Title} {result.Result.Album} ({result.Result.ReleaseDate})");
+            App.ToastNotification.SendNotification(NotificationLevel.Success,$"{result.Result.Artist} - {result.Result.Title}",
+                $"{result.Result.Album} ({result.Result.ReleaseDate})", 8, result.Result.AlbumArt);
             Logger.LogInformation(
                 $"{result.Result.Artist} - {result.Result.Title} {result.Result.Album} ({result.Result.ReleaseDate})");
         }
@@ -71,7 +77,8 @@ public class VXMusicActions
         if (result.Result != null && SpotifyAuthentication.CurrentConnectionState == SpotifyConnectionState.Connected)
         {
             ReportTrackToSpotifyPlaylist(result);
-            App.ToastNotification.Success($"Successfully stored to Spotify.");
+            VXMusicSession.NotificationClient.SendNotification(NotificationLevel.Success,"Spotify","Tracking Successful!", 1, IconImages.SpotifyLogo);
+            App.ToastNotification.SendNotification(NotificationLevel.Success,"Spotify","Tracking Successful!", 3);
         }
         
 
@@ -88,14 +95,14 @@ public class VXMusicActions
                 if (lastfmResponse.Success)
                 {
                     Logger.LogInformation($"Successfully Scrobbled to Last.fm!");
-                    App.ToastNotification.Success($"Successfully Scrobbled to Last.fm");
-                    VXMusicSession.NotificationClient.SendNotification("Last.fm", "Successfully Scrobbled!", 2);
+                    VXMusicSession.NotificationClient.SendNotification(NotificationLevel.Success, "Last.fm", "Successfully Scrobbled!", 1, IconImages.LastFmLogo);
+                    App.ToastNotification.SendNotification(NotificationLevel.Success, "Last.fm", "Successfully Scrobbled!", 3);
                 }
                 else
                 {
                     Logger.LogWarning($"Scrobbling to Last.fm was not successful.");
-                    App.ToastNotification.Error($"Scrobbling to Last.fm was not successful.");
-                    VXMusicSession.NotificationClient.SendNotification("Last.fm", "Scrobbling was not successful.", 2);
+                    VXMusicSession.NotificationClient.SendNotification(NotificationLevel.Success, "Last.fm", "Scrobbling Failed. Check your connection.", 3, IconImages.LastFmLogo);
+                    App.ToastNotification.SendNotification(NotificationLevel.Error, "Last.fm", "Scrobbling Failed. Check your connection.", 3);
                 }
             }
         }

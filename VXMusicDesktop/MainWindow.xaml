@@ -72,18 +72,18 @@
             
             <ComboBox x:Name="DesktopThemeComboBox" 
                       Style="{StaticResource RoundedComboBoxTheme}"
-                      Grid.Column="1"
+                      Grid.Column="0"
                       Grid.Row="1"
-                      Width="200" 
+                      Width="180" 
                       Height="25"
                       Panel.ZIndex="3"
-                      Margin="500,470,0,0"
+                      Margin="5,480,0,0"
                       ItemsSource="{x:Static custom:ColourSchemeManager.DesktopThemeValues}"
                       SelectionChanged="ThemeDropdownSelection">
             </ComboBox>
 
             <TextBlock x:Name="DesktopThemeComboBoxHintText"
-                       Grid.Column="1"
+                       Grid.Column="0"
                        Grid.Row="1"
                        Text="Select Theme"
                        Foreground="{StaticResource TextBasic}"
@@ -92,7 +92,8 @@
                        Width="100"
                        Height="20"
                        Panel.ZIndex="3"
-                       Margin="410,473,0,0" />
+                       HorizontalAlignment="Left"
+                       Margin="25,483,0,0" />
             
             <!-- Version Text -->
             <TextBlock x:Name="VersionTextBlock"

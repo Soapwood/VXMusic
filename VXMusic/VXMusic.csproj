@@ -28,6 +28,8 @@
         <PackageReference Include="SharpDX.Direct3D11" Version="4.2.0" />
         <PackageReference Include="SpotifyAPI.Web" Version="7.0.0" />
         <PackageReference Include="SpotifyAPI.Web.Auth" Version="7.0.0" />
+        <PackageReference Include="ToastNotifications" Version="2.5.1" />
+        <PackageReference Include="ToastNotifications.Messages" Version="2.5.1" />
     </ItemGroup>
 
     <ItemGroup>
@@ -44,6 +46,12 @@
       <Content Include="Overlay\Resources\VXLogo.png">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Content>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Reference Include="PresentationFramework">
+        <HintPath>..\..\..\..\..\Program Files\dotnet\shared\Microsoft.WindowsDesktop.App\7.0.15\PresentationFramework.dll</HintPath>
+      </Reference>
     </ItemGroup>
 
 

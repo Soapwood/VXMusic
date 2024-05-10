@@ -108,7 +108,7 @@ public class VXMusicSession
                 NotificationClient = App.ServiceProvider.GetRequiredService<SteamVRNotificationClient>();
                 return;
             case NotificationService.XSOverlay:
-                NotificationClient = App.ServiceProvider.GetRequiredService<XSOverlay>();
+                NotificationClient = App.ServiceProvider.GetRequiredService<XsOverlayNotificationClient>();
                 return;
             default:
                 Trace.WriteLine("Notification service type not found!");
@@ -215,14 +215,14 @@ public class NotificationSettings
         CurrentNotificationService = VXUserSettings.Notifications.GetCurrentNotificationService();
     }
 
-    public static INotificationClient GetNotificationServiceFromSetConfiguration()
+    public static INotificationClient? GetNotificationServiceFromSetConfiguration()
     {
         switch (VXUserSettings.Notifications.GetCurrentNotificationService())
         {
             case NotificationService.SteamVR:
                 return App.ServiceProvider.GetRequiredService<SteamVRNotificationClient>();
             case NotificationService.XSOverlay:
-                return App.ServiceProvider.GetRequiredService<XSOverlay>();
+                return App.ServiceProvider.GetRequiredService<XsOverlayNotificationClient>();
             default:
                 return null;
         }
