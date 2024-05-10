@@ -11,7 +11,7 @@ namespace VXMusicDesktop.MVVM.ViewModel;
 
 public class SharedViewModel : INotifyPropertyChanged
 {
-    public static ILogger Logger = App.ServiceProvider.GetRequiredService<ILogger<App>>();
+    public static ILogger Logger = App.ServiceProvider.GetRequiredService<ILogger<SharedViewModel>>();
     public event PropertyChangedEventHandler? PropertyChanged;
 
     public SharedViewModel()
@@ -154,6 +154,7 @@ public class SharedViewModel : INotifyPropertyChanged
         if (!IsRecognitionRunning && !IsOverlayRunning && VXMusicOverlayInterface.OverlayWasRunning)
         {
             Logger.LogError("VXMusicOverlay has timed out!");
+            App.ToastNotification.Error("VXMusicOverlay has timed out!");
             //VXMusicSession.NotificationClient.SendNotification("VXMusic Overlay has disconnected.", "", 4);
             VXMusicOverlayInterface.OverlayWasRunning = false;
         }

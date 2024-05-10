@@ -9,7 +9,7 @@ namespace VXMusicDesktop;
 
 public class VXUserSettings
 {
-    public static ILogger Logger = App.ServiceProvider.GetRequiredService<ILogger<App>>();
+    public static ILogger Logger = App.ServiceProvider.GetRequiredService<ILogger<VXUserSettings>>();
 
     internal class Notifications
     {

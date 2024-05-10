@@ -13,7 +13,7 @@ namespace VXMusicDesktop.MVVM.ViewModel
 {
     public class HomeViewModel : INotifyPropertyChanged
     {
-        public static ILogger Logger = App.ServiceProvider.GetRequiredService<ILogger<App>>();
+        public static ILogger Logger = App.ServiceProvider.GetRequiredService<ILogger<HomeViewModel>>();
         public event PropertyChangedEventHandler? PropertyChanged;
         public HomeViewModel(SharedViewModel sharedViewModel)
         {

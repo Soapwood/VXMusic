@@ -11,7 +11,7 @@ namespace VXMusicDesktop.MVVM.ViewModel
 {
     public class RecognitionViewModel : INotifyPropertyChanged
     {
-        public static ILogger Logger = App.ServiceProvider.GetRequiredService<ILogger<App>>();
+        public static ILogger Logger = App.ServiceProvider.GetRequiredService<ILogger<RecognitionViewModel>>();
 
         // Shared ViewModel for sharing concurrency values between certain Views.
         public SharedViewModel SharedViewModel { get; }
