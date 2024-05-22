@@ -336,7 +336,7 @@ namespace VXMusic.LogParser.VRChat
 
             if (!string.IsNullOrWhiteSpace(content))
             {
-                if(!IsVRChatShuttingDown)
+                if(!IsVrChatSessionRunning && !IsVRChatShuttingDown)
                     IsVrChatSessionRunning = true;
 
                 if (!string.IsNullOrWhiteSpace(LastKnownLocationName))
@@ -386,6 +386,9 @@ namespace VXMusic.LogParser.VRChat
                         // Get Current World/Room
                         else if (line.Contains("Successfully joined room"))
                         {
+                            // IsVrChatSessionRunning = true;
+                            // IsVRChatShuttingDown = false;
+                            
                             SilencedUntil = DateTime.Now.AddSeconds(Configuration.WorldJoinSilenceSeconds);
 
                             ToSend.Add(EventType.WorldChange);
@@ -405,15 +408,18 @@ namespace VXMusic.LogParser.VRChat
                         }
                         else if (line.Contains("[Behaviour] Client invoked disconnect."))
                         {
-                            IsVrChatSessionRunning = false;
                             IsVRChatShuttingDown = true;
                             _logger.LogWarning($"VRChat Client is disconnecting.");
                         }
                         else if (line.Contains("VRCApplication: OnApplicationQuit"))
                         {
                             IsVrChatSessionRunning = false;
-                            IsVRChatShuttingDown = true;
                             _logger.LogWarning($"VRChat Client has shutdown.");
+                        }
+                        else if (line.Contains("[EOSManager] PlatformInterface.ShutDown"))
+                        {
+                            IsVRChatShuttingDown = false;
+                            _logger.LogWarning($"EOS Manager has shutdown.");
                         }
                         // Get player leaves
                         else if (line.Contains("[Behaviour] OnPlayerLeft "))
