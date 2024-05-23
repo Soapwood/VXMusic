@@ -1,4 +1,6 @@
-namespace VXMusic.Windows;
+using VXMusic;
+
+namespace VXMusicDesktop.Toast;
 
 public class ToastNotificationDecorator
 {

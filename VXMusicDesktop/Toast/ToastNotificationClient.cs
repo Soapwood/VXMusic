@@ -1,14 +1,18 @@
+using System;
 using System.Windows;
-using System.Xml;
 using ToastNotifications;
 using ToastNotifications.Lifetime;
 using ToastNotifications.Position;
 using ToastNotifications.Messages;
+using VXMusic;
 
-namespace VXMusic.Windows;
+namespace VXMusicDesktop.Toast;
 
 public class ToastNotificationClient : INotificationClient
 {
+    private readonly Window _window;
+    public bool ShouldToastNotificationsBeShown;
+    
     private readonly Notifier _longNotifier;
     private readonly Notifier _shortNotifier;
     
@@ -17,6 +21,7 @@ public class ToastNotificationClient : INotificationClient
 
     public ToastNotificationClient(Window window)
     {
+        _window = window;
         _longNotifier = CreateNotifier(window, TimeSpan.FromSeconds(LongNotifierTimeout));
         _shortNotifier = CreateNotifier(window, TimeSpan.FromSeconds(ShortNotifierTimeout));
     }
@@ -41,18 +46,20 @@ public class ToastNotificationClient : INotificationClient
 
     public void SendNotification(NotificationLevel level, string title, string content, int timeout, string image)
     {
-        GetToastCall(level, title, content, timeout);
+        if(ShouldToastNotificationsBeShown)
+            GetToastCall(level, title, content, timeout);
     }
 
     public void SendNotification(NotificationLevel level, string title, string content, int timeout)
     {
-        GetToastCall(level, title, content, timeout);
+        if(ShouldToastNotificationsBeShown)
+            GetToastCall(level, title, content, timeout);
     }
 
     private void GetToastCall(NotificationLevel level, string title, string content, int timeout)
     {
         Notifier toastNotifier = timeout <= ShortNotifierTimeout ? _shortNotifier : _longNotifier;
-        
+
         switch (level)
         {
             case NotificationLevel.Warning:

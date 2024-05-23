@@ -9,7 +9,7 @@
     <PackageIcon>VXLogo.png</PackageIcon>
     <ApplicationIcon>Images\VXLogoIcon.ico</ApplicationIcon>
     <RunPostBuildEvent>Always</RunPostBuildEvent>
-    <Version>0.5.1</Version>
+    <Version>0.5.3</Version>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
@@ -134,14 +134,16 @@
 
   <ItemGroup>
     <PackageReference Include="Inflatable.Lastfm.SQLite" Version="1.1.0.351" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="9.0.0-preview.4.24266.19" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="9.0.0-preview.4.24266.19" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="9.0.0-preview.4.24266.19" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="9.0.0-preview.4.24266.19" />
     <PackageReference Include="NLog" Version="5.2.3" />
     <PackageReference Include="NLog.Extensions.Logging" Version="5.3.3" />
-    <PackageReference Include="System.Configuration.ConfigurationManager" Version="7.0.0" />
+    <PackageReference Include="SpotifyAPI.Web" Version="7.1.1" />
     <PackageReference Include="System.Windows.Interactivity.WPF" Version="2.0.20525" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\VXMusic\VXMusic.csproj" />
+    <PackageReference Include="ToastNotifications" Version="2.5.1" />
+    <PackageReference Include="ToastNotifications.Messages" Version="2.5.1" />
   </ItemGroup>
 
   <ItemGroup>
@@ -194,6 +196,16 @@
     <AdditionalFiles Include="vxscrobbles.db">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </AdditionalFiles>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="VXMusic">
+      <HintPath>bin\Debug\net7.0-windows\VXMusic.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\VXMusic\VXMusic.csproj" />
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">

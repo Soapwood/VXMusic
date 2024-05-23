@@ -51,7 +51,7 @@ public class SpotifyPlaylistManager
         return SpotifyPlaylistReponse.TrackAdded;
     }
 
-    public static string GetPlaylistIdByNameIfExists(string playlistName, IList<SimplePlaylist> playlists)
+    public static string GetPlaylistIdByNameIfExists(string playlistName, IList<FullPlaylist> playlists)
     {
         if (SpotifyClientBuilder.Instance == null)
             throw new Exception("Not authenticated with Spotify API."); // TODO Handle this, and output to UI
