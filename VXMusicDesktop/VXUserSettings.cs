@@ -26,6 +26,19 @@ public class VXUserSettings
             Enum.TryParse<NotificationService>(Properties.Settings.Default.NotificationService, out var currentNotificationService);
             return currentNotificationService;
         }
+        
+        public static void SetIsVRChatNotificationsEnabled(bool isEnabled)
+        {
+            Properties.Settings.Default.IsVRChatNotificationsEnabled = isEnabled;
+            Properties.Settings.Default.Save();
+            
+            Logger.LogDebug($"User Setting IsVRChatNotificationsEnabled set to {Properties.Settings.Default.IsVRChatNotificationsEnabled}");
+        }
+        
+        public static bool GetIsVRChatNotificationsEnabled()
+        {
+            return Properties.Settings.Default.IsVRChatNotificationsEnabled;
+        }
     }
 
     internal class Recognition

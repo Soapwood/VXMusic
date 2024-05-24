@@ -6,7 +6,7 @@
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="NotificationService" Type="System.String" Scope="User">
-      <Value Profile="(Default)">SteamVR</Value>
+      <Value Profile="(Default)">XSOverlay</Value>
     </Setting>
     <Setting Name="IsSpotifyConnected" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
@@ -40,6 +40,9 @@
     </Setting>
     <Setting Name="OverlayAnchor" Type="System.String" Scope="User">
       <Value Profile="(Default)">LeftHand</Value>
+    </Setting>
+    <Setting Name="IsVRChatNotificationsEnabled" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
     </Setting>
   </Settings>
 </SettingsFile>

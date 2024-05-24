@@ -11,8 +11,9 @@ using VXMusic.Overlay;
 using VXMusic.Recognition.AudD;
 using VXMusic.Recognition.Shazam;
 using VXMusic.Spotify.Authentication;
-using VXMusicDesktop.MVVM.ViewModel;
+using VXMusic.VRChat;
 using VXMusicDesktop.Theme;
+using VXMusicDesktop.Toast;
 
 //using System.Windows.Forms.PropertyGridInternal;
 
@@ -33,6 +34,9 @@ public class VXMusicSession
     public static IRecognitionClient? RecognitionClient;
     public static INotificationClient? NotificationClient;
     public static IAudioRecordingClient? RecordingClient;
+    
+    public VrChatOscNotificationClient? VrChatNotification;
+    public ToastNotificationClient? ToastNotification;
     
     public static PlaylistFileWriter? PlaylistFileWriter;
     public static LastfmScrobbler? LastfmScrobbler;
@@ -62,6 +66,9 @@ public class VXMusicSession
 
         NotificationClient = NotificationSettings.GetNotificationServiceFromSetConfiguration(); //VXMusicAPI.SetNotificationClient(notificationSettings.CurrentNotificationService);
 
+
+        VrChatNotification = NotificationSettings.GetVRChatNotificationClient();
+        
         PlaylistFileWriter = App.ServiceProvider.GetRequiredService<PlaylistFileWriter>();
         LastfmScrobbler = App.ServiceProvider.GetRequiredService<LastfmScrobbler>();
         
@@ -95,7 +102,7 @@ public class VXMusicSession
 
     public void SetNotificationService(NotificationService recognitionApi)
     {
-        NotificationSettings.CurrentNotificationService = recognitionApi;
+        NotificationSettings.CurrentVRNotificationService = recognitionApi;
 
         switch (recognitionApi)
         {
@@ -189,25 +196,24 @@ public class ConnectionsSettings
     // App Settings
     public SpotifySettings SpotifySettings { get; set; }
     public LastfmSettings LastfmSettings { get; set; }
-
-    // User Settings
-    //public bool IsSpotifyConnected { get; set; }
     public bool IsLastfmConnected { get; set; }
+    public bool IsVrChatConnected { get; set; }
 
     public ConnectionsSettings()
     {
-        //IsSpotifyConnected = VXMusicDesktop.Properties.Settings.Default.SpotifyEnabled;
-        //IsLastfmConnected = VXUserSettings.Connections.GetLastfmConnected();
+
     }
 }
 
 public class NotificationSettings
 {
-    public NotificationService CurrentNotificationService;
+    public NotificationService CurrentVRNotificationService;
+    public bool IsVRChatNotificationServiceEnabled;
 
     public NotificationSettings()
     {
-        CurrentNotificationService = VXUserSettings.Notifications.GetCurrentNotificationService();
+        CurrentVRNotificationService = VXUserSettings.Notifications.GetCurrentNotificationService();
+        IsVRChatNotificationServiceEnabled = VXUserSettings.Notifications.GetIsVRChatNotificationsEnabled();
     }
 
     public static INotificationClient? GetNotificationServiceFromSetConfiguration()
@@ -221,6 +227,11 @@ public class NotificationSettings
             default:
                 return null;
         }
+    }
+    
+    public static VrChatOscNotificationClient GetVRChatNotificationClient()
+    {
+        return App.ServiceProvider.GetRequiredService<VrChatOscNotificationClient>();
     }
 }
 

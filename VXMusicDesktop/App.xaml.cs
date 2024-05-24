@@ -19,8 +19,9 @@ using VXMusic.Overlay;
 using VXMusic;
 using System.Diagnostics;
 using System.Reflection;
-using VXMusic.Windows;
-using VXMusicDesktop.MVVM.ViewModel;
+using System.Threading;
+using VXMusic.VRChat;
+using VXMusicDesktop.Toast;
 
 namespace VXMusicDesktop
 {
@@ -33,9 +34,7 @@ namespace VXMusicDesktop
         public static ServiceProvider ServiceProvider;
         public static VXMusicSession VXMusicSession;
         public static Version ApplicationVersion;
-
-        public static ToastNotificationClient ToastNotification;
-
+        
         public static Process? VXMOverlayProcess;
         //public static int VXMOverlayProcessId; 
         
@@ -113,9 +112,10 @@ namespace VXMusicDesktop
             VXMusicSession.Initialise();
             
 #if DEBUG
-            //VXMusicOverlayInterface.StartVXMusicDesktopHeartbeatListener();
-            //VXMusicOverlayInterface.StartVXMusicDesktopTcpServer();
-            //MainViewModel.InitialiseOverlayHeartbeatMonitor();
+            var _cancellationTokenSource = new CancellationTokenSource();
+            VXMusicOverlayInterface.StartVXMusicDesktopHeartbeatListener(_cancellationTokenSource.Token);
+            VXMusicOverlayInterface.StartVXMusicDesktopTcpServer(_cancellationTokenSource.Token);
+            VXMusicOverlayInterface.StartHeartbeatMonitoring();
 #endif
 
             VXMusicSession.NotificationClient.SendNotification(NotificationLevel.Info, "Welcome to VXMusic!", "", 5);
@@ -149,6 +149,7 @@ namespace VXMusicDesktop
             services.AddSingleton<PlaylistFileWriter>();
             services.AddSingleton<XsOverlayNotificationClient>();
             services.AddSingleton<SteamVRNotificationClient>();
+            services.AddSingleton<VrChatOscNotificationClient>();
             
             // services.AddSingleton<INotificationClient>(provider =>
             // {

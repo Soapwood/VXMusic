@@ -130,6 +130,14 @@
     <Content Include="Images\LastFmIconBase64.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Remove="Images\VRChatLogoBlack.png" />
+    <Content Include="Images\VRChatLogoBlack.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Remove="Images\VRChatLogoWhite.png" />
+    <Content Include="Images\VRChatLogoWhite.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>

@@ -21,17 +21,19 @@ namespace VXMusicDesktop.MVVM.ViewModel
         public SharedViewModel SharedViewModel { get; }
         
         public event PropertyChangedEventHandler? PropertyChanged;
-
-        private RelayCommand steamVREnableButtonClick;
-        private RelayCommand xsOverlayEnableButtonClick;
-
+        
         private RelayCommand notificationViewLoaded;
 
+        private RelayCommand steamVREnableButtonClick;
         public ICommand SteamVREnableButtonClick => steamVREnableButtonClick ??= new RelayCommand(PerformSteamVREnableButtonClick);
-        private bool _isSteamVRNotificationServiceEnabled;
-
+        
+        private RelayCommand xsOverlayEnableButtonClick;
         public ICommand XSOverlayEnableButtonClick => xsOverlayEnableButtonClick ??= new RelayCommand(PerformXSOverlayEnableButtonClick);
-        private bool _isXSOverlayNotificationServiceEnabled;
+        
+        private RelayCommand vrChatEnableButtonClick;
+        public ICommand VRChatEnableButtonClick => vrChatEnableButtonClick ??= new RelayCommand(PerformVRChatButtonClick);
+        
+        private bool _isVRChatNotificationServiceEnabled;
 
         public ICommand NotificationViewLoaded => notificationViewLoaded ??= new RelayCommand(OnNotificationViewLoaded);
 
@@ -48,30 +50,11 @@ namespace VXMusicDesktop.MVVM.ViewModel
         
         public void Initialise()
         {
-            _isSteamVRNotificationServiceEnabled = App.VXMusicSession.NotificationSettings.CurrentNotificationService == NotificationService.SteamVR;
-            _isXSOverlayNotificationServiceEnabled = App.VXMusicSession.NotificationSettings.CurrentNotificationService == NotificationService.XSOverlay;
+            SharedViewModel.IsSteamVrNotificationServiceEnabled = App.VXMusicSession.NotificationSettings.CurrentVRNotificationService == NotificationService.SteamVR;
+            SharedViewModel.IsXsOverlayNotificationServiceEnabled = App.VXMusicSession.NotificationSettings.CurrentVRNotificationService == NotificationService.XSOverlay;
+            SharedViewModel.IsVRChatNotificationServiceEnabled = App.VXMusicSession.NotificationSettings.IsVRChatNotificationServiceEnabled;
 
             ProcessNotificationServiceState();
-        }
-        
-        public bool IsSteamVRNotificationServiceEnabled
-        {
-            get { return _isSteamVRNotificationServiceEnabled; }
-            set
-            {
-                _isSteamVRNotificationServiceEnabled = value;
-                OnPropertyChanged(nameof(IsSteamVRNotificationServiceEnabled));
-            }
-        }
-
-        public bool IsXSOverlayNotificationServiceEnabled
-        {
-            get { return _isXSOverlayNotificationServiceEnabled; }
-            set
-            {
-                _isXSOverlayNotificationServiceEnabled = value;
-                OnPropertyChanged(nameof(IsXSOverlayNotificationServiceEnabled));
-            }
         }
 
         public bool IsNotificationServiceReady
@@ -101,7 +84,7 @@ namespace VXMusicDesktop.MVVM.ViewModel
             ProcessNotificationServiceState();
             VXMusicSession.RaiseSteamVrNotificationEnabled();
             
-            Logger.LogInformation($"Notification Service set to {App.VXMusicSession.NotificationSettings.CurrentNotificationService}");
+            Logger.LogInformation($"Notification Service set to {App.VXMusicSession.NotificationSettings.CurrentVRNotificationService}");
         }
 
         private void PerformXSOverlayEnableButtonClick(object commandParameter)
@@ -111,32 +94,49 @@ namespace VXMusicDesktop.MVVM.ViewModel
             ProcessNotificationServiceState();
             VXMusicSession.RaiseXsOverlayNotificationEnabled();
             
-            Logger.LogInformation($"Notification Service set to {App.VXMusicSession.NotificationSettings.CurrentNotificationService}");
+            Logger.LogInformation($"Notification Service set to {App.VXMusicSession.NotificationSettings.CurrentVRNotificationService}");
+        }
+        
+        private void PerformVRChatButtonClick(object commandParameter)
+        {
+            bool isVrChatNotificationsEnabled = VXUserSettings.Notifications.GetIsVRChatNotificationsEnabled();
+            
+            VXUserSettings.Notifications.SetIsVRChatNotificationsEnabled(!isVrChatNotificationsEnabled);
+            App.VXMusicSession.NotificationSettings.IsVRChatNotificationServiceEnabled = !isVrChatNotificationsEnabled;
+            SharedViewModel.IsVRChatNotificationServiceEnabled = !isVrChatNotificationsEnabled;
+
+            // TODO Move this out from here by triggering event and disconnecting there
+            if (SharedViewModel.IsVRChatNotificationServiceEnabled)
+            {
+                App.VXMusicSession.VrChatNotification.Connect();
+            }
+            else
+            {
+                App.VXMusicSession.VrChatNotification.Disconnect();
+            }
+
+            Logger.LogInformation($"VRChat Notification Service Enabled set to {App.VXMusicSession.NotificationSettings.IsVRChatNotificationServiceEnabled}");
         }
 
         private void ProcessNotificationServiceState()
         {
-            switch (App.VXMusicSession.NotificationSettings.CurrentNotificationService)
+            switch (App.VXMusicSession.NotificationSettings.CurrentVRNotificationService)
             {
                 case NotificationService.SteamVR:
-                    IsSteamVRNotificationServiceEnabled = true;
-                    IsXSOverlayNotificationServiceEnabled = false;
                     SharedViewModel.IsSteamVrNotificationServiceEnabled = true;
                     SharedViewModel.IsXsOverlayNotificationServiceEnabled = false;
                     break;
                 case NotificationService.XSOverlay:
-                    IsXSOverlayNotificationServiceEnabled = true;
-                    IsSteamVRNotificationServiceEnabled = false;
                     SharedViewModel.IsXsOverlayNotificationServiceEnabled = true;
                     SharedViewModel.IsSteamVrNotificationServiceEnabled = false;
                     break;
                 default:
-                    IsSteamVRNotificationServiceEnabled = false;
-                    IsXSOverlayNotificationServiceEnabled = false;
+                    SharedViewModel.IsXsOverlayNotificationServiceEnabled = false;
+                    SharedViewModel.IsSteamVrNotificationServiceEnabled = false;
                     break;
             }
 
-            _isNotificationServiceReady = IsSteamVRNotificationServiceEnabled || IsXSOverlayNotificationServiceEnabled;
+            _isNotificationServiceReady = SharedViewModel.IsSteamVrNotificationServiceEnabled || SharedViewModel.IsXsOverlayNotificationServiceEnabled;
         }
 
     }

@@ -92,7 +92,7 @@ namespace VXMusicDesktop.MVVM.ViewModel
             {
                 if (VXMusicOverlayInterface.IsOverlayConnected)
                 {
-                    App.ToastNotification.SendNotification(NotificationLevel.Info,
+                    App.VXMusicSession.ToastNotification.SendNotification(NotificationLevel.Info,
                         "Overlay is already running!","", 3);
                 }
                 else

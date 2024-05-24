@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using VXMusic;
 using VXMusic.Overlay;
+using VXMusic.VRChat;
 
 namespace VXMusicDesktop.MVVM.ViewModel;
 
@@ -27,6 +28,7 @@ public class SharedViewModel : INotifyPropertyChanged
     // Notification Shared Fields
     private bool _isSteamVrNotificationServiceEnabled;
     private bool _isXsOverlayNotificationServiceEnabled;
+    private bool _isVRChatNotificationServiceEnabled;
 
     // Connection Shared Fields
     private bool _isSpotifyConnected;
@@ -76,6 +78,16 @@ public class SharedViewModel : INotifyPropertyChanged
         {
             _isXsOverlayNotificationServiceEnabled = value;
             OnPropertyChanged(nameof(IsXsOverlayNotificationServiceEnabled));
+        }
+    }
+    
+    public bool IsVRChatNotificationServiceEnabled
+    {
+        get { return _isVRChatNotificationServiceEnabled; }
+        set
+        {
+            _isVRChatNotificationServiceEnabled = value;
+            OnPropertyChanged(nameof(IsVRChatNotificationServiceEnabled));
         }
     }
     
@@ -152,7 +164,7 @@ public class SharedViewModel : INotifyPropertyChanged
         if (!IsRecognitionRunning && !IsOverlayRunning && VXMusicOverlayInterface.OverlayWasRunning)
         {
             Logger.LogError("VXMusicOverlay has timed out!");
-            App.ToastNotification.SendNotification(NotificationLevel.Error, "VXMusicOverlay has timed out!","", 5);
+            App.VXMusicSession.ToastNotification.SendNotification(NotificationLevel.Error, "VXMusicOverlay has timed out!","", 5);
             VXMusicSession.NotificationClient.SendNotification(NotificationLevel.Error, "VXMusicOverlay has timed out!","", 5);
             VXMusicOverlayInterface.OverlayWasRunning = false;
         }
@@ -179,6 +191,19 @@ public class SharedViewModel : INotifyPropertyChanged
     private void OnVRChatSessionRunningChanged(bool isVrChatConnected)
     {
         IsVrChatConnected = isVrChatConnected;
+        App.VXMusicSession.ConnectionsSettings.IsVrChatConnected = isVrChatConnected;
+
+        if (IsVrChatConnected)
+        {
+            App.VXMusicSession.ToastNotification.SendNotification(NotificationLevel.Info,"VRChat Connected","", 3);
+            VXMusicSession.NotificationClient.SendNotification(NotificationLevel.Info, "VRChat Connected to VXMusic", "", 3);
+
+            if (App.VXMusicSession.NotificationSettings.IsVRChatNotificationServiceEnabled)
+            {
+                App.VXMusicSession.VrChatNotification.Connect();
+                App.VXMusicSession.VrChatNotification.SendNotificationAsync(NotificationLevel.Info, "VXMusic is Running", "", 3000);
+            }
+        }
     }
     
     private void OnCurrentVrChatWorldChanged(string currentVrChatWorld)

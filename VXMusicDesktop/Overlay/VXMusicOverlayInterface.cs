@@ -50,8 +50,8 @@ public class VXMusicOverlayInterface
 
     public static Process LaunchVXMOverlayRuntime(string runtimePath)
     {
-        if(App.ToastNotification != null)
-            App.ToastNotification.SendNotification(NotificationLevel.Info, "", "Launching Overlay", 3);
+        if(App.VXMusicSession.ToastNotification != null)
+            App.VXMusicSession.ToastNotification.SendNotification(NotificationLevel.Info, "", "Launching Overlay", 3);
         
         ProcessStartInfo overlayProcessStartInfo = new ProcessStartInfo
         {
@@ -109,7 +109,7 @@ public class VXMusicOverlayInterface
         App.VXMOverlayProcess = null;
         
         VXMusicSession.NotificationClient.SendNotification(NotificationLevel.Warning,"VXMusic Overlay has Disconnected.","", 5);
-        App.ToastNotification.SendNotification(NotificationLevel.Warning,"VXMusic Overlay has Disconnected.","", 5);
+        App.VXMusicSession.ToastNotification.SendNotification(NotificationLevel.Warning,"VXMusic Overlay has Disconnected.","", 5);
 
         _isOverlayConnected = false;
         
@@ -140,7 +140,7 @@ public class VXMusicOverlayInterface
             else
             {
                 SharedViewModel.IsOverlayRunning = false;
-                Logger.LogWarning("No heartbeat received, overlay might be disconnected.");
+                //Logger.LogWarning("No heartbeat received, overlay might be disconnected.");
             }
         });
     }
@@ -436,7 +436,7 @@ public class VXMusicOverlayInterface
             SharedViewModel.IsRecognitionRunning = false;
             //App.ToastNotification.Error($"{currentRecognitionApi} is not connected! Check your Recognition settings.");
             VXMusicSession.NotificationClient.SendNotification(NotificationLevel.Error, "Recognition Failed", $"{currentRecognitionApi} is not connected! Check your Recognition settings.", 8);
-            App.ToastNotification.SendNotification(NotificationLevel.Error, "Recognition Failed", $"{currentRecognitionApi} is not connected! Check your Recognition settings.", 8);
+            App.VXMusicSession.ToastNotification.SendNotification(NotificationLevel.Error, "Recognition Failed", $"{currentRecognitionApi} is not connected! Check your Recognition settings.", 8);
             return false;
         }
         
@@ -468,7 +468,7 @@ public class VXMusicOverlayInterface
             writer.WriteLine(VXMMessage.CONNECTION_ACKNOWLEDGE);
             Logger.LogInformation($"Connected to VXMusicOverlay!");
             VXMusicSession.NotificationClient.SendNotification(NotificationLevel.Success,"VXMusic Overlay Connected!", "",4);
-            App.ToastNotification.SendNotification(NotificationLevel.Success,"VXMusic Overlay Connected!", "",4);
+            App.VXMusicSession.ToastNotification.SendNotification(NotificationLevel.Success,"VXMusic Overlay Connected!", "",4);
             SharedViewModel.IsOverlayRunning = true;
             OverlayWasRunning = true;
 
