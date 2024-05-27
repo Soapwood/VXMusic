@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
 using System.Windows.Input;
-using ICSharpCode.SharpZipLib.Zip;
-using VXMusic;
 using VXMusic.Overlay;
 using VXMusicDesktop.Core;
 

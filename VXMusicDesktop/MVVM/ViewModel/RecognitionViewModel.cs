@@ -233,7 +233,6 @@ namespace VXMusicDesktop.MVVM.ViewModel
         /// ////////////////////////////////////
         /// UI Interactive Update Functions
         /// ////////////////////////////////////
-
         private async void PerformListenButtonClick(object commandParameter)
         {
             if (!SharedViewModel.IsRecognitionRunning)
@@ -245,7 +244,7 @@ namespace VXMusicDesktop.MVVM.ViewModel
                 //VXMusicOverlayInterface.StartVXMusicServerStream();
             }
         }
-        
+
         public async Task<bool> PerformSaveAndTestShazamByoApi()
         {
             Logger.LogDebug("Saving and Testing Shazam BYOAPI Key");

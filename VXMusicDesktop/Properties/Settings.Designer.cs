@@ -36,7 +36,7 @@ namespace VXMusicDesktop.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("SteamVR")]
+        [global::System.Configuration.DefaultSettingValueAttribute("XSOverlay")]
         public string NotificationService {
             get {
                 return ((string)(this["NotificationService"]));
@@ -175,6 +175,18 @@ namespace VXMusicDesktop.Properties {
             }
             set {
                 this["OverlayAnchor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool IsVRChatNotificationsEnabled {
+            get {
+                return ((bool)(this["IsVRChatNotificationsEnabled"]));
+            }
+            set {
+                this["IsVRChatNotificationsEnabled"] = value;
             }
         }
     }

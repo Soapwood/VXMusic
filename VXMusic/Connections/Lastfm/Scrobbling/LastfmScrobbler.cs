@@ -3,7 +3,6 @@ using IF.Lastfm.Core.Objects;
 using IF.Lastfm.Core.Scrobblers;
 using IF.Lastfm.SQLite;
 using Microsoft.Extensions.Logging;
-using VXMusic.Recognition.Shazam;
 
 namespace VXMusic.Lastfm.Scrobbling;
 

@@ -164,7 +164,6 @@ namespace VXMusic.LogParser.VRChat
                         Subscriptions.Add(fn,
                             new TailSubscription(fn, ParseTick, 0, Configuration.ParseFrequencyMilliseconds,
                                 UnwindLogForMetadata));
-                        //IsVrChatSessionRunning = true;
                         _logger.LogTrace($"A tail subscription was added to {fn}");
                         
                     }
