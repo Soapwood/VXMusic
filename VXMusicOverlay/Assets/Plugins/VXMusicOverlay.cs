@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using AiUnity.CLog.Core;
+using Plugins.Core;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using Valve.VR;
@@ -66,11 +67,13 @@ namespace Plugins
         
         [Header("Device Info")]
         // Output the list of currently connected devices to the log (automatically returns to false)
-        public bool OutputDeviceInfoLogs = false;
+        public bool OutputDeviceInfoLogs = true;
         public int ConnectedDevices = 0;
         public int SelectedDeviceIndex = 0;
         public string DeviceSerialNumber = null;
         public string DeviceRenderModelName = null;
+
+        public Dictionary<string, OpenVrDevice> PresentVrDevices;
 
         [Header("VXMusic State")] 
         public bool IsInRecognitionState = false;
@@ -187,6 +190,8 @@ namespace Plugins
             _logger.Info("VXMusic Overlay is Booting");
             OverlayInitialisationError = false;
             
+            //GetSteamVrHardwareInfo();
+            
             // Subscribe to VX Event triggers
             _logger.Debug("Subscribing to inter-process Events");
             OnRecognitionStateBegin += HandleRecognitionStateBegin;
@@ -203,6 +208,8 @@ namespace Plugins
             RightDebugSphere = Instantiate(DebugSpherePrefab, Vector3.zero, Quaternion.identity);
             RightDebugSphere.GetComponent<Renderer>().material.color = Color.green;
 
+            PresentVrDevices = new Dictionary<string, OpenVrDevice>();
+                            
             _logger.Debug($"Setting Overlay Target Framerate to {ApplicationTargetFramerate}hz.");
             Application.targetFrameRate = ApplicationTargetFramerate;
 
@@ -210,10 +217,39 @@ namespace Plugins
             InitialiseOverlayTextureBounds();
             
             _logger.Debug("Initialising overlay");
-            
+
             _VXMusicInterfaceObject = GameObject.Find("VXMusicInterfacePipe");
             _VXMusicInterface = _VXMusicInterfaceObject.GetComponent<VXMusicInterface>();
         }
+
+         private void GetSteamVrHardwareInfo()
+         {
+             // Query information about the HMD and controllers
+             for (uint i = 0; i < 64; i++)
+             {
+                 if (_openVrSystemApiInstance.IsTrackedDeviceConnected(i))
+                 {
+                     ETrackedDeviceClass deviceClass = _openVrSystemApiInstance.GetTrackedDeviceClass(i);
+                     string deviceType = deviceClass.ToString();
+                     string deviceModel = GetTrackedDeviceString(i, ETrackedDeviceProperty.Prop_ModelNumber_String);
+
+                     Console.WriteLine($"Device Index: {i}, Type: {deviceType}, Model: {deviceModel}");
+                 }
+             }
+         }
+         
+         private string GetTrackedDeviceString(uint deviceIndex, ETrackedDeviceProperty prop)
+         {
+             var error = ETrackedPropertyError.TrackedProp_Success;
+             uint capacity = _openVrSystemApiInstance.GetStringTrackedDeviceProperty(deviceIndex, prop, null, 0, ref error);
+             if (capacity > 0)
+             {
+                 StringBuilder result = new StringBuilder((int)capacity);
+                 _openVrSystemApiInstance.GetStringTrackedDeviceProperty(deviceIndex, prop, result, capacity, ref error);
+                 return result.ToString();
+             }
+             return string.Empty;
+         }
 
         private void InitialiseOpenVrSubsystemInstances()
         {
@@ -319,6 +355,8 @@ namespace Plugins
                     VrInputTick();
                 }
             }
+
+            LogDeviceInfo();
 
             if (OutputDeviceInfoLogs)
             {
@@ -585,18 +623,48 @@ namespace Plugins
             if (allDevicePose[idx].bDeviceIsConnected)
             {
                 // connected device
-
                 // Obtain the device serial number (often used to identify Tracker) and device model name (device type)
-                string s1 = GetProperty(idx, ETrackedDeviceProperty.Prop_SerialNumber_String);
-                string s2 = GetProperty(idx, ETrackedDeviceProperty.Prop_RenderModelName_String);
-                if (s1 != null && s2 != null)
+                string serialNumber = GetProperty(idx, ETrackedDeviceProperty.Prop_SerialNumber_String);
+                string renderModelName = GetProperty(idx, ETrackedDeviceProperty.Prop_RenderModelName_String);
+                string controllerType = GetProperty(idx, ETrackedDeviceProperty.Prop_ControllerType_String);
+                string manufacturerName = GetProperty(idx, ETrackedDeviceProperty.Prop_ManufacturerName_String);
+                string modelNumber = GetProperty(idx, ETrackedDeviceProperty.Prop_ModelNumber_String);
+                string defaultPlaybackDeviceId = GetProperty(idx, ETrackedDeviceProperty.Prop_Audio_DefaultPlaybackDeviceId_String);
+                string defaultRecordingDeviceId = GetProperty(idx, ETrackedDeviceProperty.Prop_Audio_DefaultRecordingDeviceId_String);
+                string registeredDeviceType = GetProperty(idx, ETrackedDeviceProperty.Prop_RegisteredDeviceType_String);
+                
+                // string s4 = GetProperty(idx, ETrackedDeviceProperty.Prop_DeviceBatteryPercentage_Float);
+                // string s6 = GetProperty(idx, ETrackedDeviceProperty.Prop_DeviceIsWireless_Bool);
+                // string s8 = GetProperty(idx, ETrackedDeviceProperty.Prop_DeviceIsCharging_Bool);
+                // string s10 = GetProperty(idx, ETrackedDeviceProperty.Prop_Audio_DefaultPlaybackDeviceVolume_Float);
+                // string s12 = GetProperty(idx, ETrackedDeviceProperty.Prop_UserIpdMeters_Float);
+                // string s14 = GetProperty(idx, ETrackedDeviceProperty.Prop_IsOnDesktop_Bool);
+                // string s15 = GetProperty(idx, ETrackedDeviceProperty.Prop_DisplayFrequency_Float);
+
+                if (serialNumber != null && renderModelName != null)
                 {
-                    _logger.Debug("Device " + idx + ":" + s1 + " : " + s2);
+                    //_logger.Debug("Device " + idx + ":" + serialNumber + " : " + renderModelName);
+                    if (!PresentVrDevices.ContainsKey(serialNumber))
+                    {
+                        _logger.Debug($"Adding Device {serialNumber} to known devices.");
+                        PresentVrDevices.Add(serialNumber, new OpenVrDevice
+                        {
+                            SerialNumber = serialNumber,
+                            RenderModelName = renderModelName,
+                            ControllerType = controllerType,
+                            ManufacturerName = manufacturerName,
+                            ModelNumber = modelNumber,
+                            DefaultPlaybackDeviceId = defaultPlaybackDeviceId,
+                            DefaultRecordingDeviceId = defaultRecordingDeviceId,
+                            RegisteredDeviceType = registeredDeviceType
+                        });
+                        _logger.Debug(PresentVrDevices[serialNumber].ToString());
+                    }
                 }
                 else
                 {
                     // Acquisition failed for some reason
-                    _logger.Debug("Device " + idx + ": Error");
+                    //_logger.Debug("Device " + idx + ": Error");
                 }
 
                 return true;
@@ -604,7 +672,7 @@ namespace Plugins
             else
             {
                 // unconnected device
-                _logger.Debug("Device " + idx + ": Not connected");
+                //_logger.Debug("Device " + idx + ": Not connected");
                 return false;
             }
         }
@@ -871,20 +939,45 @@ namespace Plugins
         #region OpenVR Low Level Api Wrappers
 
         // Get device information
+        // private string GetProperty(uint idx, ETrackedDeviceProperty prop)
+        // {
+        //     ETrackedPropertyError error = new ETrackedPropertyError();
+        //     // Get the number of characters required to get device information
+        //     uint size = _openVrSystemApiInstance.GetStringTrackedDeviceProperty(idx, prop, null, 0, ref error);
+        //     if (error != ETrackedPropertyError.TrackedProp_BufferTooSmall)
+        //     {
+        //         return null;
+        //     }
+        //
+        //     StringBuilder s = new StringBuilder();
+        //     s.Length = (int)size; // Ensure character length
+        //     // Get device information
+        //     _openVrSystemApiInstance.GetStringTrackedDeviceProperty(idx, prop, s, size, ref error);
+        //     if (error != ETrackedPropertyError.TrackedProp_Success)
+        //     {
+        //         return null;
+        //     }
+        //
+        //     return s.ToString();
+        // }
+        
         private string GetProperty(uint idx, ETrackedDeviceProperty prop)
         {
-            ETrackedPropertyError error = new ETrackedPropertyError();
+            ETrackedPropertyError error = ETrackedPropertyError.TrackedProp_Success;
             // Get the number of characters required to get device information
             uint size = _openVrSystemApiInstance.GetStringTrackedDeviceProperty(idx, prop, null, 0, ref error);
-            if (error != ETrackedPropertyError.TrackedProp_BufferTooSmall)
+
+            if (error != ETrackedPropertyError.TrackedProp_Success && error != ETrackedPropertyError.TrackedProp_BufferTooSmall)
             {
+                // Handle different error (if any)
                 return null;
             }
 
-            StringBuilder s = new StringBuilder();
-            s.Length = (int)size; // Ensure character length
+            // Create a StringBuilder with the size retrieved + 1 for null terminator which might be needed
+            StringBuilder s = new StringBuilder((int)size + 1);
+    
             // Get device information
-            _openVrSystemApiInstance.GetStringTrackedDeviceProperty(idx, prop, s, size, ref error);
+            _openVrSystemApiInstance.GetStringTrackedDeviceProperty(idx, prop, s, size + 1, ref error);
             if (error != ETrackedPropertyError.TrackedProp_Success)
             {
                 return null;

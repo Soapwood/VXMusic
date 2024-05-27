@@ -617,7 +617,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 702fbaf603306ad4c8e692e37a6afffa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  recognitionAudioSource: {fileID: 0}
+  OverlayAudioSource: {fileID: 0}
 --- !u!82 &1761480574
 AudioSource:
   m_ObjectHideFlags: 0
@@ -897,51 +897,56 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   EnableOverlayDebugView: 0
-  error: 1
-  eventLog: 0
-  spherePrefab: {fileID: 943885321328816842, guid: f19e1b8c598cff144a92f9d52a99d55e,
+  OverlayInitialisationError: 0
+  EventLog: 0
+  DebugSpherePrefab: {fileID: 943885321328816842, guid: f19e1b8c598cff144a92f9d52a99d55e,
     type: 3}
-  renderTexture: {fileID: 8400000, guid: 2afc18014991f7e449d31a5eb09138e8, type: 2}
+  RenderTexture: {fileID: 8400000, guid: 2afc18014991f7e449d31a5eb09138e8, type: 2}
   OverlayPosition: {x: 0.02, y: -0.01, z: -0.112}
   OverlayRotation: {x: 180, y: 270, z: 16}
   Scale: {x: 1, y: 1, z: 1}
   MirrorX: 0
   MirrorY: 0
-  width: 0.2
-  alpha: 0.2
-  show: 1
+  Width: 0.2
+  OverlayAlpha: 0.2
+  InactiveOverlayOpacity: 0.2
+  ActiveOverlayOpacity: 1
+  ShowOverlay: 1
   SideBySide: 0
+  ApplicationTargetFramerate: 90
   OverlayFriendlyName: VXMusicOverlay
   OverlayKeyName: VXMusicOverlay
   DeviceTracking: 1
-  DeviceIndex: -1
+  CurrentTrackedDevice: 0
   Seated: 0
   ResetSeatedCamera: 0
-  putLogDevicesInfo: 0
+  OutputDeviceInfoLogs: 0
   ConnectedDevices: 0
   SelectedDeviceIndex: 0
   DeviceSerialNumber: 
   DeviceRenderModelName: 
-  LaycastRootObject: {fileID: 1945720208}
-  tappedLeft: 0
-  tappedRight: 0
+  IsInRecognitionState: 0
+  OverlayTrackedDevice: 1
+  TrackedDeviceInputLock: 0
+  HeartbeatInterval: 2
+  RaycastRootObject: {fileID: 123499283}
   TapOnDistance: 0.04
   TapOffDistance: 0.043
-  LeftHandU: -1
-  LeftHandV: -1
-  LeftHandDistance: -1
-  RightHandU: -1
-  RightHandV: -1
-  RightHandDistance: -1
   FingerOffsetX: 0.02
   FingerOffsetY: -0.04
   FingerOffsetZ: 0.01
   FingerRotationOffsetX: 80
   FingerRotationOffsetY: 25
   FingerRotationOffsetZ: 0
-  IsInRecognitionState: 0
-  OverlayTrackedDevice: 0
-  TrackedDeviceInputLock: 0
+  TimeSinceLastHeartbeat: 0
+  ClickedLeft: 0
+  ClickedRight: 0
+  LeftHandU: -1
+  LeftHandV: -1
+  LeftHandDistance: -1
+  RightHandU: -1
+  RightHandV: -1
+  RightHandDistance: -1
 --- !u!4 &2039080593
 Transform:
   m_ObjectHideFlags: 0
@@ -1018,7 +1023,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ddf07c33bc0b0844a907d5418bae0a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isAnimationRunning: 0
 --- !u!1 &2143010929
 GameObject:
   m_ObjectHideFlags: 0

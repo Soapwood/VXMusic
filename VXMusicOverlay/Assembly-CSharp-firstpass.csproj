@@ -52,6 +52,7 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
+     <Compile Include="Assets\Plugins\Core\OpenVrHardwareCodes.cs" />
      <Compile Include="Assets\Plugins\VXMusicInterface.cs" />
      <Compile Include="Assets\Plugins\VXMusicOverlay.cs" />
      <Compile Include="Assets\Plugins\VXMMessage.cs" />
@@ -60,6 +61,7 @@
      <Compile Include="Assets\Plugins\VXMusicOverlayTcpServer.cs" />
      <Compile Include="Assets\Plugins\openvr_api.cs" />
      <Compile Include="Assets\Plugins\Logging\LogConfigurator.cs" />
+     <Compile Include="Assets\Plugins\Core\OpenVrDevice.cs" />
      <Compile Include="Assets\Plugins\OverlayAudioHandler.cs" />
      <Compile Include="Assets\Plugins\SteamVR_Utils.cs" />
      <Compile Include="Assets\Plugins\VXLogoAnimationController.cs" />

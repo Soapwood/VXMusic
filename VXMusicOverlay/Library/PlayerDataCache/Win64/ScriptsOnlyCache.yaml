@@ -89,27 +89,27 @@ ScriptsOnlyBuild:
     - Class: 108
       Script: {instanceID: 0}
     - Class: 114
-      Script: {instanceID: 2580}
+      Script: {instanceID: 2642}
     - Class: 114
-      Script: {instanceID: 2600}
+      Script: {instanceID: 2664}
     - Class: 114
-      Script: {instanceID: 2806}
+      Script: {instanceID: 2884}
     - Class: 114
-      Script: {instanceID: 2968}
+      Script: {instanceID: 3056}
     - Class: 114
-      Script: {instanceID: 3240}
+      Script: {instanceID: 3336}
     - Class: 114
-      Script: {instanceID: 3484}
+      Script: {instanceID: 3600}
     - Class: 114
-      Script: {instanceID: 3606}
+      Script: {instanceID: 3726}
     - Class: 114
-      Script: {instanceID: 3808}
+      Script: {instanceID: 3934}
     - Class: 114
-      Script: {instanceID: 4056}
+      Script: {instanceID: 4196}
     - Class: 114
-      Script: {instanceID: 5170}
+      Script: {instanceID: 5346}
     - Class: 114
-      Script: {instanceID: 5982}
+      Script: {instanceID: 6180}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 122
@@ -125,6 +125,12 @@ ScriptsOnlyBuild:
     - Class: 224
       Script: {instanceID: 0}
   scriptHashData:
+  - hash:
+      serializedVersion: 2
+      Hash: bcaee4c2a83047257b5f47d6ed264b75
+    assemblyName: UnityEngine.UI.dll
+    namespaceName: UnityEngine.UI
+    className: Toggle
   - hash:
       serializedVersion: 2
       Hash: a6e561615949734e9f12f9b61661f43e
@@ -167,12 +173,6 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: SignalAsset
-  - hash:
-      serializedVersion: 2
-      Hash: bcaee4c2a83047257b5f47d6ed264b75
-    assemblyName: UnityEngine.UI.dll
-    namespaceName: UnityEngine.UI
-    className: Toggle
   - hash:
       serializedVersion: 2
       Hash: 0dbc3be398b4869a5c8d0d8481ee402c
@@ -241,6 +241,12 @@ ScriptsOnlyBuild:
     className: PlaymodeTestsController
   - hash:
       serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: AiUnity.Common.LogUI.Scripts
+    className: FocusPanel
+  - hash:
+      serializedVersion: 2
       Hash: c1d728126ff1918728036c59106d32b2
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
@@ -259,6 +265,18 @@ ScriptsOnlyBuild:
     className: VXMusicOverlay
   - hash:
       serializedVersion: 2
+      Hash: 7d7e0b770995b42886f82059c0ba8b80
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: AiUnity.Common.LogUI.Scripts
+    className: ButtonStateManager
+  - hash:
+      serializedVersion: 2
+      Hash: 4f10ab932c6dc7c45b334bfccccfff9c
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: AiUnity.Common.LogUI.Scripts
+    className: ResizePanel
+  - hash:
+      serializedVersion: 2
       Hash: a325152ad9563ed900af221c132fea36
     assemblyName: UnityEngine.Advertisements.dll
     namespaceName: UnityEngine.Advertisements.Utilities
@@ -269,6 +287,12 @@ ScriptsOnlyBuild:
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
     className: CanvasScaler
+  - hash:
+      serializedVersion: 2
+      Hash: 87495af55dedcf5d4dbe48c54a6711f2
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: AiUnity.Common.LogUI.Scripts
+    className: GameConsoleController
   - hash:
       serializedVersion: 2
       Hash: cf9f5cf2c3145a37ac07f00e50e460f9
@@ -313,6 +337,12 @@ ScriptsOnlyBuild:
     className: TextMeshProUGUI
   - hash:
       serializedVersion: 2
+      Hash: dae608fd153f6fc422cb67b10519f2d1
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: AiUnity.Common.LogUI.Scripts
+    className: DragPanel
+  - hash:
+      serializedVersion: 2
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
     assemblyName: UnityEngine.Advertisements.dll
     namespaceName: UnityEngine.Advertisements
@@ -347,6 +377,12 @@ ScriptsOnlyBuild:
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
     className: InputField
+  - hash:
+      serializedVersion: 2
+      Hash: 923ca480a5afed1695c8a79df2f7b2ba
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: AiUnity.Common.LogUI.Scripts
+    className: TogglePanelButton
   - hash:
       serializedVersion: 2
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
@@ -427,6 +463,12 @@ ScriptsOnlyBuild:
     className: ContentSizeFitter
   - hash:
       serializedVersion: 2
+      Hash: eeb4fdb1d7072b7b2551a9cf5cb6a03b
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: AiUnity.Common.LogUI.Scripts
+    className: DoubleClickEvent
+  - hash:
+      serializedVersion: 2
       Hash: caa533b001ae39b864ba8425019e2268
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
@@ -469,6 +511,12 @@ ScriptsOnlyBuild:
     className: TrackedPoseDriver
   - hash:
       serializedVersion: 2
+      Hash: 926ae8b337233f5267719ed502d97baf
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: AiUnity.CLog.Examples.Scripts
+    className: CLogExample
+  - hash:
+      serializedVersion: 2
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.EventSystems
@@ -479,6 +527,12 @@ ScriptsOnlyBuild:
     assemblyName: UnityEngine.Advertisements.dll
     namespaceName: UnityEngine.Advertisements.Platform.Editor
     className: BannerPlaceholder
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: AiUnity.Common.LogUI.Scripts
+    className: MaximizePanel
   - hash:
       serializedVersion: 2
       Hash: 18c222bef9ae745ce69ddde9b74337ca
@@ -565,6 +619,12 @@ ScriptsOnlyBuild:
     className: Mask
   - hash:
       serializedVersion: 2
+      Hash: 26b1b998e4e6db6763a05747e150a406
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: LongPressEvent
+  - hash:
+      serializedVersion: 2
       Hash: c3d3430df9e3ea95e3e3d587961390fb
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
@@ -599,6 +659,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: ControlPlayableAsset
+  - hash:
+      serializedVersion: 2
+      Hash: 06bd7ed13de3e068002e804119937247
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: AiUnity.Common.LogUI.Scripts
+    className: InputFieldValidate
   - hash:
       serializedVersion: 2
       Hash: ef5c43f921427d03730f6ea4c848f07d
@@ -695,72 +761,6 @@ ScriptsOnlyBuild:
     assemblyName: Assembly-CSharp-firstpass.dll
     namespaceName: Plugins
     className: VXLogoAnimationController
-  - hash:
-      serializedVersion: 2
-      Hash: 4f10ab932c6dc7c45b334bfccccfff9c
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: AiUnity.Common.LogUI.Scripts
-    className: ResizePanel
-  - hash:
-      serializedVersion: 2
-      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: AiUnity.Common.LogUI.Scripts
-    className: FocusPanel
-  - hash:
-      serializedVersion: 2
-      Hash: 923ca480a5afed1695c8a79df2f7b2ba
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: AiUnity.Common.LogUI.Scripts
-    className: TogglePanelButton
-  - hash:
-      serializedVersion: 2
-      Hash: 926ae8b337233f5267719ed502d97baf
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: AiUnity.CLog.Examples.Scripts
-    className: CLogExample
-  - hash:
-      serializedVersion: 2
-      Hash: dae608fd153f6fc422cb67b10519f2d1
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: AiUnity.Common.LogUI.Scripts
-    className: DragPanel
-  - hash:
-      serializedVersion: 2
-      Hash: eeb4fdb1d7072b7b2551a9cf5cb6a03b
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: AiUnity.Common.LogUI.Scripts
-    className: DoubleClickEvent
-  - hash:
-      serializedVersion: 2
-      Hash: 06bd7ed13de3e068002e804119937247
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: AiUnity.Common.LogUI.Scripts
-    className: InputFieldValidate
-  - hash:
-      serializedVersion: 2
-      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: AiUnity.Common.LogUI.Scripts
-    className: MaximizePanel
-  - hash:
-      serializedVersion: 2
-      Hash: 26b1b998e4e6db6763a05747e150a406
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: LongPressEvent
-  - hash:
-      serializedVersion: 2
-      Hash: 87495af55dedcf5d4dbe48c54a6711f2
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: AiUnity.Common.LogUI.Scripts
-    className: GameConsoleController
-  - hash:
-      serializedVersion: 2
-      Hash: 7d7e0b770995b42886f82059c0ba8b80
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: AiUnity.Common.LogUI.Scripts
-    className: ButtonStateManager
   platform: 19
   scenePathNames:
   - Assets/MainScene.unity
