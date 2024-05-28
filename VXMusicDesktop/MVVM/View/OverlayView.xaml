@@ -1,96 +1,126 @@
 ﻿<UserControl x:Class="VXMusicDesktop.MVVM.View.OverlayView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:VXMusicDesktop.MVVM.View"
              xmlns:custom="clr-namespace:VXMusicDesktop.Theme"
-             mc:Ignorable="d" 
+             mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800"
              Background="Transparent">
 
     <UserControl.Resources>
 
-        <BitmapImage x:Key="LeftHandButtonEnabledImage" UriSource="{Binding Source={x:Static custom:ColourSchemeManager.LeftHandEnabledImage}, Path=UriSource}"/>
-        <BitmapImage x:Key="LeftHandButtonDisabledImage" UriSource="{Binding Source={x:Static custom:ColourSchemeManager.LeftHandDisabledImage}, Path=UriSource}"/>
-        <BitmapImage x:Key="RightHandButtonEnabledImage" UriSource="{Binding Source={x:Static custom:ColourSchemeManager.RightHandEnabledImage}, Path=UriSource}"/>
-        <BitmapImage x:Key="RightHandButtonDisabledImage" UriSource="{Binding Source={x:Static custom:ColourSchemeManager.RightHandDisabledImage}, Path=UriSource}"/>
-        
-        <SolidColorBrush x:Key="PrimaryColor" Color="{Binding Source={x:Static custom:ColourSchemeManager.PrimaryColour}, Path=Color}" />
-        <SolidColorBrush x:Key="SecondaryColor" Color="{Binding Source={x:Static custom:ColourSchemeManager.SecondaryColour}, Path=Color}" />
-        <SolidColorBrush x:Key="Accent1Colour" Color="{Binding Source={x:Static custom:ColourSchemeManager.Accent1Colour}, Path=Color}" />
-        <SolidColorBrush x:Key="Accent2Colour" Color="{Binding Source={x:Static custom:ColourSchemeManager.Accent2Colour}, Path=Color}" />
-        <SolidColorBrush x:Key="TextBasic" Color="{Binding Source={x:Static custom:ColourSchemeManager.TextBasic}, Path=Color}" />
-        <SolidColorBrush x:Key="EnabledGreen" Color="{Binding Source={x:Static custom:ColourSchemeManager.EnabledGreen}, Path=Color}" />
-        <SolidColorBrush x:Key="DisabledRed" Color="{Binding Source={x:Static custom:ColourSchemeManager.DisabledRed}, Path=Color}" />
+        <BitmapImage x:Key="LeftHandButtonEnabledImage"
+                     UriSource="{Binding Source={x:Static custom:ColourSchemeManager.LeftHandEnabledImage}, Path=UriSource}" />
+        <BitmapImage x:Key="LeftHandButtonDisabledImage"
+                     UriSource="{Binding Source={x:Static custom:ColourSchemeManager.LeftHandDisabledImage}, Path=UriSource}" />
+        <BitmapImage x:Key="RightHandButtonEnabledImage"
+                     UriSource="{Binding Source={x:Static custom:ColourSchemeManager.RightHandEnabledImage}, Path=UriSource}" />
+        <BitmapImage x:Key="RightHandButtonDisabledImage"
+                     UriSource="{Binding Source={x:Static custom:ColourSchemeManager.RightHandDisabledImage}, Path=UriSource}" />
+
+        <SolidColorBrush x:Key="PrimaryColor"
+                         Color="{Binding Source={x:Static custom:ColourSchemeManager.PrimaryColour}, Path=Color}" />
+        <SolidColorBrush x:Key="SecondaryColor"
+                         Color="{Binding Source={x:Static custom:ColourSchemeManager.SecondaryColour}, Path=Color}" />
+        <SolidColorBrush x:Key="Accent1Colour"
+                         Color="{Binding Source={x:Static custom:ColourSchemeManager.Accent1Colour}, Path=Color}" />
+        <SolidColorBrush x:Key="Accent2Colour"
+                         Color="{Binding Source={x:Static custom:ColourSchemeManager.Accent2Colour}, Path=Color}" />
+        <SolidColorBrush x:Key="TextBasic"
+                         Color="{Binding Source={x:Static custom:ColourSchemeManager.TextBasic}, Path=Color}" />
+        <SolidColorBrush x:Key="EnabledGreen"
+                         Color="{Binding Source={x:Static custom:ColourSchemeManager.EnabledGreen}, Path=Color}" />
+        <SolidColorBrush x:Key="DisabledRed"
+                         Color="{Binding Source={x:Static custom:ColourSchemeManager.DisabledRed}, Path=Color}" />
+        <SolidColorBrush x:Key="DisabledGrey"
+                         Color="{Binding Source={x:Static custom:ColourSchemeManager.DisabledGrey}, Path=Color}" />
 
         <custom:BooleanToHandImageConverter x:Key="BooleanToLeftHandImageConverter"
                                             TrueValue="{StaticResource LeftHandButtonEnabledImage}"
                                             FalseValue="{StaticResource LeftHandButtonDisabledImage}" />
-        
+
         <custom:BooleanToHandImageConverter x:Key="BooleanToRightHandImageConverter"
                                             TrueValue="{StaticResource RightHandButtonEnabledImage}"
                                             FalseValue="{StaticResource RightHandButtonDisabledImage}" />
-        
+
         <Style x:Key="ImageToggleLeftHandButtonStyle" TargetType="ToggleButton">
-            <Setter Property="Width" Value="40"/>
-            <Setter Property="Height" Value="40"/>
-            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Width" Value="40" />
+            <Setter Property="Height" Value="40" />
+            <Setter Property="Background" Value="Transparent" />
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="ToggleButton">
                         <Border Background="{TemplateBinding Background}"
                                 Width="{TemplateBinding Width}"
                                 Height="{TemplateBinding Height}">
-                            <Image Source="{Binding IsChecked, RelativeSource={RelativeSource TemplatedParent}, 
-                            Converter={StaticResource BooleanToLeftHandImageConverter}}" RenderOptions.BitmapScalingMode="HighQuality"
-                                   Stretch="UniformToFill"/>
+                            <Image
+                                Source="{Binding IsChecked, RelativeSource={RelativeSource TemplatedParent}, 
+                            Converter={StaticResource BooleanToLeftHandImageConverter}}"
+                                RenderOptions.BitmapScalingMode="HighQuality"
+                                Stretch="UniformToFill" />
                         </Border>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
         </Style>
-        
+
         <Style x:Key="ImageToggleRightHandButtonStyle" TargetType="ToggleButton">
-            <Setter Property="Width" Value="40"/>
-            <Setter Property="Height" Value="40"/>
-            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Width" Value="40" />
+            <Setter Property="Height" Value="40" />
+            <Setter Property="Background" Value="Transparent" />
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="ToggleButton">
                         <Border Background="{TemplateBinding Background}"
                                 Width="{TemplateBinding Width}"
                                 Height="{TemplateBinding Height}">
-                            <Image Source="{Binding IsChecked, RelativeSource={RelativeSource TemplatedParent}, 
-                                       Converter={StaticResource BooleanToRightHandImageConverter}}" RenderOptions.BitmapScalingMode="HighQuality"
-                                   Stretch="UniformToFill"/>
+                            <Image
+                                Source="{Binding IsChecked, RelativeSource={RelativeSource TemplatedParent}, 
+                                       Converter={StaticResource BooleanToRightHandImageConverter}}"
+                                RenderOptions.BitmapScalingMode="HighQuality"
+                                Stretch="UniformToFill" />
                         </Border>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
         </Style>
-        
+
         <!-- Switch Style -->
         <Style x:Key="SwitchButtonStyle" TargetType="ToggleButton">
+            <Setter Property="Width" Value="80" />
+            <Setter Property="Height" Value="30" />
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="ToggleButton">
-                        <Border x:Name="Border" CornerRadius="10" BorderBrush="Gray" BorderThickness="1" Width="80" Height="30">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        </Border>
+                        <Grid>
+                            <Border x:Name="SwitchBorder" CornerRadius="15" BorderBrush="Gray" BorderThickness="1"
+                                    Background="{StaticResource DisabledRed}" />
+                            <Border x:Name="SwitchKnob" CornerRadius="15" Background="White" Width="28" Height="28"
+                                    Margin="1,1,1,1" HorizontalAlignment="Left" />
+                        </Grid>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsChecked" Value="True">
-                                <Setter TargetName="Border" Property="Background" Value="{StaticResource EnabledGreen}"/>
+                                <Setter TargetName="SwitchBorder" Property="Background"
+                                        Value="{StaticResource EnabledGreen}" />
+                                <Setter TargetName="SwitchKnob" Property="HorizontalAlignment" Value="Right" />
                             </Trigger>
                             <Trigger Property="IsChecked" Value="False">
-                                <Setter TargetName="Border" Property="Background" Value="{StaticResource DisabledRed}"/>
+                                <Setter TargetName="SwitchBorder" Property="Background"
+                                        Value="{StaticResource DisabledGrey}" />
+                                <Setter TargetName="SwitchKnob" Property="HorizontalAlignment" Value="Left" />
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="SwitchBorder" Property="Background" Value="LightGray" />
+                                <Setter TargetName="SwitchKnob" Property="Background" Value="Gray" />
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
         </Style>
-        
+
         <custom:SolidColorBrushToColorConverter x:Key="SolidColorBrushToColorConverter" />
     </UserControl.Resources>
 
@@ -100,47 +130,50 @@
                    Foreground="{StaticResource TextBasic}"
                    FontSize="28"
                    HorizontalAlignment="Left"
-                   Margin="10,0,0,10"/>
+                   Margin="10,0,0,10" />
 
         <StackPanel Orientation="Vertical"
                     Margin="0,0,0,10">
-            
-                        <Border Width="300"
+
+            <Border Width="300"
                     Height="60"
                     CornerRadius="10"
                     HorizontalAlignment="Left"
                     Margin="20,10,10,0">
 
                 <Border.Background>
-                    <LinearGradientBrush x:Name="OverlayMenuOptionOverlayHandBoxBorderGradientBrush" StartPoint="0,0" EndPoint="1,2">
+                    <LinearGradientBrush x:Name="OverlayMenuOptionOverlayHandBoxBorderGradientBrush" StartPoint="0,0"
+                                         EndPoint="1,2">
                         <GradientStop Offset="0.0">
                             <GradientStop.Color>
-                                <Binding Source="{StaticResource SecondaryColor}" Converter="{StaticResource SolidColorBrushToColorConverter}"/>
+                                <Binding Source="{StaticResource SecondaryColor}"
+                                         Converter="{StaticResource SolidColorBrushToColorConverter}" />
                             </GradientStop.Color>
                         </GradientStop>
 
                         <GradientStop Offset="0.7">
                             <GradientStop.Color>
-                                <Binding Source="{StaticResource Accent1Colour}" Converter="{StaticResource SolidColorBrushToColorConverter}"/>
+                                <Binding Source="{StaticResource Accent1Colour}"
+                                         Converter="{StaticResource SolidColorBrushToColorConverter}" />
                             </GradientStop.Color>
                         </GradientStop>
                     </LinearGradientBrush>
                 </Border.Background>
-                
+
                 <StackPanel Orientation="Horizontal">
                     <TextBlock x:Name="EnableOverlayHandOption"
                                Text="Overlay Hand"
                                Foreground="{StaticResource TextBasic}"
                                FontSize="12"
                                Margin="20,0,20,0"
-                               VerticalAlignment="Center"/>
+                               VerticalAlignment="Center" />
                     <ToggleButton x:Name="EnableOverlayOnLeftHand"
                                   Width="40" Height="40"
                                   Margin="80,0,0,0"
                                   HorizontalAlignment="Right"
                                   Style="{StaticResource ImageToggleLeftHandButtonStyle}"
                                   IsChecked="{Binding OverlayEnabledOnLeftHand}"
-                                  Command="{Binding EnableOverlayOnLeftHand}" >
+                                  Command="{Binding EnableOverlayOnLeftHand}">
                     </ToggleButton>
                     <ToggleButton x:Name="EnableOverlayOnRightHand"
                                   Width="40" Height="40"
@@ -148,11 +181,11 @@
                                   HorizontalAlignment="Right"
                                   Style="{StaticResource ImageToggleRightHandButtonStyle}"
                                   IsChecked="{Binding OverlayEnabledOnRightHand}"
-                                  Command="{Binding EnableOverlayOnRightHand}" >
+                                  Command="{Binding EnableOverlayOnRightHand}">
                     </ToggleButton>
                 </StackPanel>
             </Border>
-            
+
             <Border Width="300"
                     Height="60"
                     CornerRadius="10"
@@ -160,38 +193,40 @@
                     Margin="20,10,0,0">
 
                 <Border.Background>
-                    <LinearGradientBrush x:Name="OverlayMenuOption2BoxBorderGradientBrush" StartPoint="0,0" EndPoint="1,2">
+                    <LinearGradientBrush x:Name="OverlayMenuOption2BoxBorderGradientBrush" StartPoint="0,0"
+                                         EndPoint="1,2">
                         <GradientStop Offset="0.0">
                             <GradientStop.Color>
-                                <Binding Source="{StaticResource SecondaryColor}" Converter="{StaticResource SolidColorBrushToColorConverter}"/>
+                                <Binding Source="{StaticResource SecondaryColor}"
+                                         Converter="{StaticResource SolidColorBrushToColorConverter}" />
                             </GradientStop.Color>
                         </GradientStop>
 
                         <GradientStop Offset="0.7">
                             <GradientStop.Color>
-                                <Binding Source="{StaticResource Accent1Colour}" Converter="{StaticResource SolidColorBrushToColorConverter}"/>
+                                <Binding Source="{StaticResource Accent1Colour}"
+                                         Converter="{StaticResource SolidColorBrushToColorConverter}" />
                             </GradientStop.Color>
                         </GradientStop>
                     </LinearGradientBrush>
                 </Border.Background>
-                
+
                 <StackPanel Orientation="Horizontal">
                     <TextBlock x:Name="LaunchOverlayOnStartupTextBlock"
                                Text="Launch Overlay on Startup"
                                Foreground="{StaticResource TextBasic}"
                                FontSize="12"
                                Margin="20,0,20,0"
-                               VerticalAlignment="Center"/>
+                               VerticalAlignment="Center" />
                     <ToggleButton x:Name="LaunchOverlayOnStartupToggleButton"
-                                  Style="{StaticResource SwitchButtonStyle}" 
-                                  Width="80" Height="60"
-                                  Margin="20,0,0,0"
+                                  Style="{StaticResource SwitchButtonStyle}"
+                                  Margin="18,0,0,0"
                                   IsChecked="{Binding LaunchOverlayOnStartup}"
-                                  Command="{Binding LaunchOverlayOnStartupToggleButton}" >
+                                  Command="{Binding LaunchOverlayOnStartupToggleButton}">
                     </ToggleButton>
                 </StackPanel>
             </Border>
-            
+
         </StackPanel>
     </StackPanel>
 </UserControl>
