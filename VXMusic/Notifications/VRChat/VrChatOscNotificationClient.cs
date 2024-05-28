@@ -34,14 +34,16 @@ public class VrChatOscNotificationClient : INotificationClient
     {
         try
         {
-            Instance.Dispose();
+            if (Instance != null)
+            {
+                Instance.Dispose();
+                IsConnectedToVrChatRuntime = false;
+            }
         }
         catch (Exception e)
         {
             _logger.LogWarning("Tried to dispose of OSC Client instance but it was not created.");
         }
-        Instance.Dispose();
-        IsConnectedToVrChatRuntime = false;
     }
     
     public void SendNotification(NotificationLevel level, string title, string content, int timeout, string image)

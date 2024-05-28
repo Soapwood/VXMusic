@@ -1,24 +1,29 @@
 ﻿<UserControl x:Class="VXMusicDesktop.MVVM.View.HomeView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:VXMusicDesktop.MVVM.View"
              xmlns:custom="clr-namespace:VXMusicDesktop.Theme"
              xmlns:vm="clr-namespace:VXMusicDesktop.MVVM.ViewModel"
-             mc:Ignorable="d" 
+             mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800">
-             <!-- DataContext="{Binding RecognitionViewModel, Source={StaticResource ViewModelLocator}}"> -->
+    <!-- DataContext="{Binding RecognitionViewModel, Source={StaticResource ViewModelLocator}}"> -->
 
     <UserControl.Resources>
 
-        <SolidColorBrush x:Key="PrimaryColor" Color="{Binding Source={x:Static custom:ColourSchemeManager.PrimaryColour}, Path=Color}" />
-        <SolidColorBrush x:Key="SecondaryColor" Color="{Binding Source={x:Static custom:ColourSchemeManager.SecondaryColour}, Path=Color}" />
-        <SolidColorBrush x:Key="Accent1Colour" Color="{Binding Source={x:Static custom:ColourSchemeManager.Accent1Colour}, Path=Color}" />
-        <SolidColorBrush x:Key="Accent2Colour" Color="{Binding Source={x:Static custom:ColourSchemeManager.Accent2Colour}, Path=Color}" />
-        <SolidColorBrush x:Key="TextBasic" Color="{Binding Source={x:Static custom:ColourSchemeManager.TextBasic}, Path=Color}" />
-        
-        <custom:BooleanToColorConverter x:Key="BooleanToColorConverter"/>
+        <SolidColorBrush x:Key="PrimaryColor"
+                         Color="{Binding Source={x:Static custom:ColourSchemeManager.PrimaryColour}, Path=Color}" />
+        <SolidColorBrush x:Key="SecondaryColor"
+                         Color="{Binding Source={x:Static custom:ColourSchemeManager.SecondaryColour}, Path=Color}" />
+        <SolidColorBrush x:Key="Accent1Colour"
+                         Color="{Binding Source={x:Static custom:ColourSchemeManager.Accent1Colour}, Path=Color}" />
+        <SolidColorBrush x:Key="Accent2Colour"
+                         Color="{Binding Source={x:Static custom:ColourSchemeManager.Accent2Colour}, Path=Color}" />
+        <SolidColorBrush x:Key="TextBasic"
+                         Color="{Binding Source={x:Static custom:ColourSchemeManager.TextBasic}, Path=Color}" />
+
+        <custom:BooleanToColorConverter x:Key="BooleanToColorConverter" />
         <custom:SolidColorBrushToColorConverter x:Key="SolidColorBrushToColorConverter" />
 
     </UserControl.Resources>
@@ -29,7 +34,7 @@
                    Foreground="{StaticResource TextBasic}"
                    FontSize="28"
                    HorizontalAlignment="Left"
-                   Margin="0,0,0,20"/>
+                   Margin="0,0,0,20" />
 
         <StackPanel Orientation="Horizontal"
                     Margin="0,0,0,10">
@@ -41,13 +46,15 @@
                     <LinearGradientBrush x:Name="MainBoxBorderGradientBrush" StartPoint="0,0" EndPoint="1,2">
                         <GradientStop Offset="0.0">
                             <GradientStop.Color>
-                                <Binding Source="{StaticResource SecondaryColor}" Converter="{StaticResource SolidColorBrushToColorConverter}"/>
+                                <Binding Source="{StaticResource SecondaryColor}"
+                                         Converter="{StaticResource SolidColorBrushToColorConverter}" />
                             </GradientStop.Color>
                         </GradientStop>
 
                         <GradientStop Offset="0.6">
                             <GradientStop.Color>
-                                <Binding Source="{StaticResource Accent1Colour}" Converter="{StaticResource SolidColorBrushToColorConverter}"/>
+                                <Binding Source="{StaticResource Accent1Colour}"
+                                         Converter="{StaticResource SolidColorBrushToColorConverter}" />
                             </GradientStop.Color>
                         </GradientStop>
                     </LinearGradientBrush>
@@ -56,22 +63,22 @@
                 <Border.Clip>
                     <RectangleGeometry RadiusX="10"
                                        RadiusY="10"
-                                       Rect="0,0,400,200"/>
+                                       Rect="0,0,400,200" />
                 </Border.Clip>
 
                 <Grid>
                     <StackPanel>
                         <TextBlock x:Name="MainBoxBorderHeaderText"
-                                   Text="Virtual Xtension Music"
+                                   Text="Virtual Xtensions Music"
                                    Foreground="{StaticResource TextBasic}"
                                    FontSize="28"
-                                   Margin="20,10,10,0"/>
+                                   Margin="20,10,10,0" />
 
                         <TextBlock x:Name="MainBoxBorderParagraphText"
                                    Text="Music Companion for Social VR."
                                    Foreground="{StaticResource TextBasic}"
                                    FontSize="18"
-                                   Margin="20,10,10,0"/>
+                                   Margin="20,10,10,0" />
                     </StackPanel>
                 </Grid>
             </Border>
@@ -85,13 +92,15 @@
                     <LinearGradientBrush x:Name="ReleaseNotesBoxBorderGradientBrush" StartPoint="0,0" EndPoint="1,2">
                         <GradientStop Offset="0.0">
                             <GradientStop.Color>
-                                <Binding Source="{StaticResource SecondaryColor}" Converter="{StaticResource SolidColorBrushToColorConverter}"/>
+                                <Binding Source="{StaticResource SecondaryColor}"
+                                         Converter="{StaticResource SolidColorBrushToColorConverter}" />
                             </GradientStop.Color>
                         </GradientStop>
 
                         <GradientStop Offset="0.5">
                             <GradientStop.Color>
-                                <Binding Source="{StaticResource Accent1Colour}" Converter="{StaticResource SolidColorBrushToColorConverter}"/>
+                                <Binding Source="{StaticResource Accent1Colour}"
+                                         Converter="{StaticResource SolidColorBrushToColorConverter}" />
                             </GradientStop.Color>
                         </GradientStop>
                     </LinearGradientBrush>
@@ -103,14 +112,14 @@
                                Foreground="{StaticResource TextBasic}"
                                FontSize="18"
                                Margin="20,10,10,0"
-                               HorizontalAlignment="Center"/>
+                               HorizontalAlignment="Center" />
                     <TextBlock x:Name="VxMusicNewsBoxParagraphText"
                                Text="{Binding VxNewsGistText}"
                                TextWrapping="Wrap"
                                Foreground="{StaticResource TextBasic}"
                                FontSize="12"
                                Margin="10,10,0,0"
-                               HorizontalAlignment="Left"/>
+                               HorizontalAlignment="Left" />
                 </StackPanel>
             </Border>
         </StackPanel>
@@ -118,7 +127,7 @@
         <StackPanel>
             <StackPanel.Resources>
                 <Style TargetType="{x:Type Border}">
-                    <Setter Property="Margin" Value="0,0,0,0"/>
+                    <Setter Property="Margin" Value="0,0,0,0" />
                 </Style>
             </StackPanel.Resources>
 
@@ -127,76 +136,86 @@
                        Foreground="{StaticResource TextBasic}"
                        FontSize="20"
                        HorizontalAlignment="Left"
-                       Margin="0,0,0,10"/>
+                       Margin="0,0,0,10" />
 
             <StackPanel Orientation="Horizontal">
                 <Border Width="150"
                         Height="150"
                         CornerRadius="10">
                     <Border.Background>
-                        <LinearGradientBrush x:Name="RecognitionIntegrationsBoxBorderGradientBrush" StartPoint="0,0" EndPoint="1,2">
+                        <LinearGradientBrush x:Name="RecognitionIntegrationsBoxBorderGradientBrush" StartPoint="0,0"
+                                             EndPoint="1,2">
                             <GradientStop Offset="0.0">
                                 <GradientStop.Color>
-                                    <Binding Source="{StaticResource SecondaryColor}" Converter="{StaticResource SolidColorBrushToColorConverter}"/>
+                                    <Binding Source="{StaticResource SecondaryColor}"
+                                             Converter="{StaticResource SolidColorBrushToColorConverter}" />
                                 </GradientStop.Color>
                             </GradientStop>
 
                             <GradientStop Offset="0.5">
                                 <GradientStop.Color>
-                                    <Binding Source="{StaticResource Accent1Colour}" Converter="{StaticResource SolidColorBrushToColorConverter}"/>
+                                    <Binding Source="{StaticResource Accent1Colour}"
+                                             Converter="{StaticResource SolidColorBrushToColorConverter}" />
                                 </GradientStop.Color>
                             </GradientStop>
                         </LinearGradientBrush>
                     </Border.Background>
 
                     <StackPanel>
+                        <TextBlock x:Name="RecognitionIntegrationsBoxHeaderText"
+                                   Text="Recognition API"
+                                   Foreground="{StaticResource TextBasic}"
+                                   FontSize="12"
+                                   Margin="0,5,0,0"
+                                   HorizontalAlignment="Center"/>
                         <Grid>
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="30"/>
-                                <RowDefinition/>
-                                <RowDefinition Height="40"/>
-                                <RowDefinition/>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition />
                             </Grid.RowDefinitions>
-
-                            <TextBlock x:Name="RecognitionIntegrationsBoxHeaderText"
-                                       Text="Recognition API"
-                                       Foreground="{StaticResource TextBasic}"
-                                       FontSize="12"
-                                       Margin="0,5,0,0"
-                                       HorizontalAlignment="Center"
-                                       Grid.Row="0"/>
-                            <TextBlock x:Name="API1RecognitionIntegrationsBoxHeaderText"
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            
+                            <TextBlock Grid.Row="1" Grid.Column="0" x:Name="API1RecognitionIntegrationsBoxHeaderText"
                                        Text="Shazam"
                                        Foreground="{StaticResource TextBasic}"
                                        FontSize="12"
                                        Margin="10,20,0,0"
                                        HorizontalAlignment="Left"
-                                       Grid.Row="1"/>
-                            <Ellipse Grid.Row="1"
-                                     Width="10" 
+                                       VerticalAlignment="Center"/>
+                            <Ellipse Grid.Row="1" Grid.Column="1"
+                                     Width="10"
                                      Height="10"
-                                     Margin="72,0,0,5"
+                                     Margin="10,20,0,0"
                                      HorizontalAlignment="Left"
-                                     VerticalAlignment="Bottom">
+                                     VerticalAlignment="Center">
                                 <Ellipse.Fill>
-                                    <SolidColorBrush Color="{Binding SharedViewModel.IsShazamApiConnected, Converter={StaticResource BooleanToColorConverter}}"/>
+                                    <SolidColorBrush
+                                        Color="{Binding SharedViewModel.IsShazamApiConnected, Converter={StaticResource BooleanToColorConverter}}" />
                                 </Ellipse.Fill>
                             </Ellipse>
-                            <TextBlock x:Name="API2RecognitionIntegrationsBoxHeaderText"
+                            <TextBlock Grid.Row="2" Grid.Column="0" x:Name="API2RecognitionIntegrationsBoxHeaderText"
                                        Text="AudD"
                                        Foreground="{StaticResource TextBasic}"
                                        FontSize="12"
                                        Margin="10,20,0,0"
                                        HorizontalAlignment="Left"
-                                       Grid.Row="2"/>
-                            <Ellipse Grid.Row="2"
-                                     Width="10" 
+                                       VerticalAlignment="Center"/>
+                            <Ellipse Grid.Row="2" Grid.Column="1"
+                                     Width="10"
                                      Height="10"
-                                     Margin="72,0,0,5"
+                                     Margin="10,20,0,0"
                                      HorizontalAlignment="Left"
-                                     VerticalAlignment="Bottom">
+                                     VerticalAlignment="Center">
                                 <Ellipse.Fill>
-                                    <SolidColorBrush Color="{Binding SharedViewModel.IsAudDApiConnected, Converter={StaticResource BooleanToColorConverter}}"/>
+                                    <SolidColorBrush
+                                        Color="{Binding SharedViewModel.IsAudDApiConnected, Converter={StaticResource BooleanToColorConverter}}" />
                                 </Ellipse.Fill>
                             </Ellipse>
                         </Grid>
@@ -205,75 +224,107 @@
 
                 <Border Width="150"
                         Height="150"
-                        CornerRadius="10"  
+                        CornerRadius="10"
                         Margin="15,0,0,0">
 
                     <Border.Background>
-                        <LinearGradientBrush x:Name="NotificationIntegrationsBoxBorderGradientBrush" StartPoint="0,0" EndPoint="1,2">
+                        <LinearGradientBrush x:Name="NotificationIntegrationsBoxBorderGradientBrush" StartPoint="0,0"
+                                             EndPoint="1,2">
                             <GradientStop Offset="0.0">
                                 <GradientStop.Color>
-                                    <Binding Source="{StaticResource SecondaryColor}" Converter="{StaticResource SolidColorBrushToColorConverter}"/>
+                                    <Binding Source="{StaticResource SecondaryColor}"
+                                             Converter="{StaticResource SolidColorBrushToColorConverter}" />
                                 </GradientStop.Color>
                             </GradientStop>
 
                             <GradientStop Offset="0.5">
                                 <GradientStop.Color>
-                                    <Binding Source="{StaticResource Accent1Colour}" Converter="{StaticResource SolidColorBrushToColorConverter}"/>
+                                    <Binding Source="{StaticResource Accent1Colour}"
+                                             Converter="{StaticResource SolidColorBrushToColorConverter}" />
                                 </GradientStop.Color>
                             </GradientStop>
                         </LinearGradientBrush>
                     </Border.Background>
 
                     <StackPanel>
+                        <TextBlock x:Name="NotificationIntegrationsBoxHeaderText"
+                                   Text="Notification Service"
+                                   Foreground="{StaticResource TextBasic}"
+                                   FontSize="12"
+                                   Margin="0,5,0,0"
+                                   HorizontalAlignment="Center"/>
                         <Grid>
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="30"/>
-                                <RowDefinition/>
-                                <RowDefinition Height="40"/>
-                                <RowDefinition/>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition />
                             </Grid.RowDefinitions>
-
-                            <TextBlock x:Name="NotificationIntegrationsBoxHeaderText"
-                                       Text="Notification Service"
-                                       Foreground="{StaticResource TextBasic}"
-                                       FontSize="12"
-                                       Margin="0,5,0,0"
-                                       HorizontalAlignment="Center"
-                                       Grid.Row="0"/>
-                            <TextBlock x:Name="Service1NotificationIntegrationsBoxHeaderText"
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            
+                            <TextBlock Grid.Row="1" Grid.Column="0" x:Name="Service1NotificationIntegrationsBoxHeaderText"
                                        Text="SteamVR"
                                        Foreground="{StaticResource TextBasic}"
                                        FontSize="12"
                                        Margin="10,20,0,0"
                                        HorizontalAlignment="Left"
-                                       Grid.Row="1"/>
-                            <Ellipse Grid.Row="1"
-                                     Width="10" 
-                                     Height="10"
-                                     Margin="72,0,0,5"
-                                     HorizontalAlignment="Left"
-                                     VerticalAlignment="Bottom">
-                                <Ellipse.Fill>
-                                    <SolidColorBrush Color="{Binding SharedViewModel.IsSteamVrNotificationServiceEnabled, Converter={StaticResource BooleanToColorConverter}}"/>
-                                </Ellipse.Fill>
-                            </Ellipse>
-                            <TextBlock x:Name="Service2NotificationIntegrationsBoxHeaderText"
-                                       Text="XSOverlay"
-                                       Foreground="{StaticResource TextBasic}"
-                                       FontSize="12"
-                                       Margin="10,20,0,0"
-                                       HorizontalAlignment="Left"
-                                       Grid.Row="2"/>
-                            <Ellipse Grid.Row="2"
-                                     Width="10" 
-                                     Height="10"
-                                     Margin="72,0,0,5"
-                                     HorizontalAlignment="Left"
-                                     VerticalAlignment="Bottom">
-                                <Ellipse.Fill>
-                                    <SolidColorBrush Color="{Binding SharedViewModel.IsXsOverlayNotificationServiceEnabled, Converter={StaticResource BooleanToColorConverter}}"/>
-                                </Ellipse.Fill>
-                            </Ellipse>
+                                       VerticalAlignment="Center"/>
+                                <Ellipse Grid.Row="1" Grid.Column="1"
+                                         Width="10"
+                                         Height="10"
+                                         Margin="10,20,0,0"
+                                         HorizontalAlignment="Left"
+                                         VerticalAlignment="Center">
+                                    <Ellipse.Fill>
+                                        <SolidColorBrush
+                                            Color="{Binding SharedViewModel.IsSteamVrNotificationServiceEnabled, Converter={StaticResource BooleanToColorConverter}}" />
+                                    </Ellipse.Fill>
+                                </Ellipse>
+
+                                <TextBlock Grid.Row="2" Grid.Column="0" x:Name="Service2NotificationIntegrationsBoxHeaderText"
+                                           Text="XSOverlay"
+                                           Foreground="{StaticResource TextBasic}"
+                                           FontSize="12"
+                                           Margin="10,20,0,0"
+                                           HorizontalAlignment="Left"
+                                           VerticalAlignment="Center"/>
+                                <Ellipse Grid.Row="2" Grid.Column="1" 
+                                         Width="10"
+                                         Height="10"
+                                         Margin="10,20,0,0"
+                                         HorizontalAlignment="Left"
+                                         VerticalAlignment="Center">
+                                    <Ellipse.Fill>
+                                        <SolidColorBrush
+                                            Color="{Binding SharedViewModel.IsXsOverlayNotificationServiceEnabled, Converter={StaticResource BooleanToColorConverter}}" />
+                                    </Ellipse.Fill>
+                                </Ellipse>
+
+                                <TextBlock Grid.Row="3" Grid.Column="0" x:Name="Service3NotificationIntegrationsBoxHeaderText"
+                                           Text="VRChat"
+                                           Foreground="{StaticResource TextBasic}"
+                                           FontSize="12"
+                                           Margin="10,20,0,0"
+                                           HorizontalAlignment="Left"
+                                           VerticalAlignment="Center" />
+                                <Ellipse Grid.Row="3" Grid.Column="1" 
+                                         Width="10"
+                                         Height="10"
+                                         Margin="10,20,0,0"
+                                         HorizontalAlignment="Left"
+                                         VerticalAlignment="Center">
+                                    <Ellipse.Fill>
+                                        <SolidColorBrush
+                                            Color="{Binding SharedViewModel.IsVRChatNotificationServiceEnabled, Converter={StaticResource BooleanToColorConverter}}" />
+                                    </Ellipse.Fill>
+                                </Ellipse>
                         </Grid>
                     </StackPanel>
 
@@ -284,69 +335,79 @@
                         CornerRadius="10"
                         Margin="15,0,0,0">
                     <Border.Background>
-                        <LinearGradientBrush x:Name="ConnectionIntegrationsBoxBorderGradientBrush" StartPoint="0,0" EndPoint="1,2">
+                        <LinearGradientBrush x:Name="ConnectionIntegrationsBoxBorderGradientBrush" StartPoint="0,0"
+                                             EndPoint="1,2">
                             <GradientStop Offset="0.0">
                                 <GradientStop.Color>
-                                    <Binding Source="{StaticResource SecondaryColor}" Converter="{StaticResource SolidColorBrushToColorConverter}"/>
+                                    <Binding Source="{StaticResource SecondaryColor}"
+                                             Converter="{StaticResource SolidColorBrushToColorConverter}" />
                                 </GradientStop.Color>
                             </GradientStop>
 
                             <GradientStop Offset="0.5">
                                 <GradientStop.Color>
-                                    <Binding Source="{StaticResource Accent1Colour}" Converter="{StaticResource SolidColorBrushToColorConverter}"/>
+                                    <Binding Source="{StaticResource Accent1Colour}"
+                                             Converter="{StaticResource SolidColorBrushToColorConverter}" />
                                 </GradientStop.Color>
                             </GradientStop>
                         </LinearGradientBrush>
                     </Border.Background>
 
                     <StackPanel>
+                        <TextBlock x:Name="ConnectionIntegrationsBoxHeaderText"
+                                   Text="Connections"
+                                   Foreground="{StaticResource TextBasic}"
+                                   FontSize="12"
+                                   Margin="0,5,0,0"
+                                   HorizontalAlignment="Center"/>
                         <Grid>
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="30"/>
-                                <RowDefinition/>
-                                <RowDefinition Height="40"/>
-                                <RowDefinition/>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition />
                             </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
 
-                            <TextBlock x:Name="ConnectionIntegrationsBoxHeaderText"
-                                       Text="Connections"
-                                       Foreground="{StaticResource TextBasic}"
-                                       FontSize="12"
-                                       Margin="0,5,0,0"
-                                       HorizontalAlignment="Center"
-                                       Grid.Row="0"/>
-                            <TextBlock x:Name="Connection1NotificationIntegrationsBoxHeaderText"
+                            <TextBlock Grid.Row="1" Grid.Column="0" x:Name="Connection1NotificationIntegrationsBoxHeaderText"
                                        Text="Spotify"
                                        Foreground="{StaticResource TextBasic}"
                                        FontSize="12"
                                        Margin="10,20,0,0"
                                        HorizontalAlignment="Left"
-                                       Grid.Row="1"/>
-                            <Ellipse Grid.Row="1"
-                                     Width="10" 
+                                       VerticalAlignment="Center"/>
+                            <Ellipse Grid.Row="1" Grid.Column="1"
+                                     Width="10"
                                      Height="10"
-                                     Margin="72,0,0,5"
+                                     Margin="10,20,0,0"
                                      HorizontalAlignment="Left"
-                                     VerticalAlignment="Bottom">
+                                     VerticalAlignment="Center">
                                 <Ellipse.Fill>
-                                    <SolidColorBrush Color="{Binding SharedViewModel.IsSpotifyConnected, Converter={StaticResource BooleanToColorConverter}}"/>
+                                    <SolidColorBrush
+                                        Color="{Binding SharedViewModel.IsSpotifyConnected, Converter={StaticResource BooleanToColorConverter}}" />
                                 </Ellipse.Fill>
                             </Ellipse>
-                            <TextBlock x:Name="Connection2NotificationIntegrationsBoxHeaderText"
+                            
+                            <TextBlock Grid.Row="2" Grid.Column="0" x:Name="Connection2NotificationIntegrationsBoxHeaderText"
                                        Text="Last.fm"
                                        Foreground="{StaticResource TextBasic}"
                                        FontSize="12"
                                        Margin="10,20,0,0"
-                                       HorizontalAlignment="Left"
-                                       Grid.Row="2"/>
-                            <Ellipse Grid.Row="2"
-                                     Width="10" 
+                                       HorizontalAlignment="Left"/>
+                            <Ellipse Grid.Row="2" Grid.Column="1"
+                                     Width="10"
                                      Height="10"
-                                     Margin="72,0,0,5"
+                                     Margin="10,20,0,0"
                                      HorizontalAlignment="Left"
-                                     VerticalAlignment="Bottom">
+                                     VerticalAlignment="Center">
                                 <Ellipse.Fill>
-                                    <SolidColorBrush Color="{Binding SharedViewModel.IsLastFmConnected, Converter={StaticResource BooleanToColorConverter}}"/>
+                                    <SolidColorBrush
+                                        Color="{Binding SharedViewModel.IsLastFmConnected, Converter={StaticResource BooleanToColorConverter}}" />
                                 </Ellipse.Fill>
                             </Ellipse>
                         </Grid>
@@ -358,71 +419,59 @@
                         CornerRadius="10"
                         Margin="15,0,0,0">
                     <Border.Background>
-                        <LinearGradientBrush x:Name="GameClientIntegrationsBoxBorderGradientBrush" StartPoint="0,0" EndPoint="1,2">
+                        <LinearGradientBrush x:Name="GameClientIntegrationsBoxBorderGradientBrush" StartPoint="0,0"
+                                             EndPoint="1,2">
                             <GradientStop Offset="0.0">
                                 <GradientStop.Color>
-                                    <Binding Source="{StaticResource SecondaryColor}" Converter="{StaticResource SolidColorBrushToColorConverter}"/>
+                                    <Binding Source="{StaticResource SecondaryColor}"
+                                             Converter="{StaticResource SolidColorBrushToColorConverter}" />
                                 </GradientStop.Color>
                             </GradientStop>
 
                             <GradientStop Offset="0.5">
                                 <GradientStop.Color>
-                                    <Binding Source="{StaticResource Accent1Colour}" Converter="{StaticResource SolidColorBrushToColorConverter}"/>
+                                    <Binding Source="{StaticResource Accent1Colour}"
+                                             Converter="{StaticResource SolidColorBrushToColorConverter}" />
                                 </GradientStop.Color>
                             </GradientStop>
                         </LinearGradientBrush>
                     </Border.Background>
 
                     <StackPanel>
+                        <TextBlock x:Name="GameClientIntegrationsBoxHeaderText"
+                                   Text="Connected Game Clients"
+                                   Foreground="{StaticResource TextBasic}"
+                                   FontSize="12"
+                                   Margin="0,5,0,0"
+                                   HorizontalAlignment="Center"/>
                         <Grid>
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="30"/>
-                                <RowDefinition/>
-                                <RowDefinition Height="40"/>
-                                <RowDefinition/>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition />
                             </Grid.RowDefinitions>
-
-                            <TextBlock x:Name="GameClientIntegrationsBoxHeaderText"
-                                       Text="Connected Game Clients"
-                                       Foreground="{StaticResource TextBasic}"
-                                       FontSize="12"
-                                       Margin="0,5,0,0"
-                                       HorizontalAlignment="Center"
-                                       Grid.Row="0"/>
-                            <TextBlock x:Name="GameClient1NotificationIntegrationsBoxHeaderText"
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            
+                            <TextBlock Grid.Row="1" Grid.Column="0" x:Name="GameClient1NotificationIntegrationsBoxHeaderText"
                                        Text="VRChat"
                                        Foreground="{StaticResource TextBasic}"
                                        FontSize="12"
                                        Margin="10,20,0,0"
                                        HorizontalAlignment="Left"
-                                       Grid.Row="1"/>
-                            <Ellipse Grid.Row="1"
-                                     Width="10" 
+                                       VerticalAlignment="Center"/>
+                            <Ellipse Grid.Row="1" Grid.Column="1"
+                                     Width="10"
                                      Height="10"
-                                     Margin="72,0,0,3"
+                                     Margin="10,20,0,0"
                                      HorizontalAlignment="Left"
-                                     VerticalAlignment="Bottom">
+                                     VerticalAlignment="Center">
                                 <Ellipse.Fill>
-                                    <SolidColorBrush Color="{Binding SharedViewModel.IsVrChatConnected, Converter={StaticResource BooleanToColorConverter}}"/>
+                                    <SolidColorBrush
+                                        Color="{Binding SharedViewModel.IsVrChatConnected, Converter={StaticResource BooleanToColorConverter}}" />
                                 </Ellipse.Fill>
                             </Ellipse>
-                            <!-- <TextBlock x:Name="GameClient2NotificationIntegrationsBoxHeaderText" -->
-                            <!--            Text="Resonite" -->
-                            <!--            Foreground="{StaticResource TextBasic}" -->
-                            <!--            FontSize="12" -->
-                            <!--            Margin="10,20,0,0" -->
-                            <!--            HorizontalAlignment="Left" -->
-                            <!--            Grid.Row="2"/> -->
-                            <!-- <Ellipse Grid.Row="2" -->
-                            <!--          Width="10"  -->
-                            <!--          Height="10" -->
-                            <!--          Margin="72,0,0,5" -->
-                            <!--          HorizontalAlignment="Left" -->
-                            <!--          VerticalAlignment="Bottom"> -->
-                            <!--     <Ellipse.Fill> -->
-                            <!--         <SolidColorBrush Color="#FF0000"/> -->
-                            <!--     </Ellipse.Fill> -->
-                            <!-- </Ellipse> -->
                         </Grid>
                     </StackPanel>
                 </Border>
