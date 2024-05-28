@@ -17,6 +17,7 @@ public enum Status
     Success,
     Error,
     NoMatches,
+    ApiError,
     RecordingError
 }
 
