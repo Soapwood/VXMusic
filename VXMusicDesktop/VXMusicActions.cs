@@ -56,6 +56,14 @@ public class VXMusicActions
             App.VXMusicSession.ToastNotification.SendNotification(NotificationLevel.Error,"Recognition failed! Oh jaysus", "", 5);
             Logger.LogError("Recognition failed! Oh jaysus");
         }
+        else if (result.Status == Status.ApiError)
+        {
+            Logger.LogWarning("API Error. API Key is likely expired.");
+            VXMusicSession.NotificationClient.SendNotification(NotificationLevel.Warning,"API Error",
+                "API Requests have Expired.", 5); 
+            App.VXMusicSession.ToastNotification.SendNotification(NotificationLevel.Warning,"API Error: ",
+                "API Requests have Expired.", 5);
+        }
         else if (result.Status == Status.NoMatches || result.Result == null)
         {
             Logger.LogWarning("Oops, couldn't get that. Tech Tip: Have you tried turning up your World Volume?");

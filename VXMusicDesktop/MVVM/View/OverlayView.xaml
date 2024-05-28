@@ -43,7 +43,7 @@
                                 Width="{TemplateBinding Width}"
                                 Height="{TemplateBinding Height}">
                             <Image Source="{Binding IsChecked, RelativeSource={RelativeSource TemplatedParent}, 
-                                       Converter={StaticResource BooleanToLeftHandImageConverter}}" 
+                            Converter={StaticResource BooleanToLeftHandImageConverter}}" RenderOptions.BitmapScalingMode="HighQuality"
                                    Stretch="UniformToFill"/>
                         </Border>
                     </ControlTemplate>
@@ -62,7 +62,7 @@
                                 Width="{TemplateBinding Width}"
                                 Height="{TemplateBinding Height}">
                             <Image Source="{Binding IsChecked, RelativeSource={RelativeSource TemplatedParent}, 
-                                       Converter={StaticResource BooleanToRightHandImageConverter}}" 
+                                       Converter={StaticResource BooleanToRightHandImageConverter}}" RenderOptions.BitmapScalingMode="HighQuality"
                                    Stretch="UniformToFill"/>
                         </Border>
                     </ControlTemplate>

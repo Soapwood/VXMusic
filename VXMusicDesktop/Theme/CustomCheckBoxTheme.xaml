@@ -21,7 +21,8 @@
                 <ControlTemplate TargetType="CheckBox">
                     <Border Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}">
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="4">
                         <Grid Margin="4">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"/>
@@ -36,9 +37,9 @@
                                               ContentTemplate="{TemplateBinding ContentTemplate}"/>
                             <Path x:Name="CheckMark"
                                   Grid.Column="0"
-                                  Width="16"
-                                  Height="16"
-                                  Margin="0,0,4,0"
+                                  Width="20"
+                                  Height="20"
+                                  Margin="0,0,0,0"
                                   Stretch="Fill"
                                   Stroke="{TemplateBinding Foreground}"
                                   StrokeThickness="2"

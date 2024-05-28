@@ -61,8 +61,9 @@
                         <Image Height="80"
                        Source="/Images/Spotify_Logo_RGB_Green.png"
                        RenderTransformOrigin="0,0"
+                       RenderOptions.BitmapScalingMode="HighQuality"
                        Margin="0,35,0,0"
-                               HorizontalAlignment="Center"/>
+                       HorizontalAlignment="Center"/>
                         <TextBlock Name="ConnectionService1TextHeader"
                             Text="Link VXMusic to Spotify"
                             Foreground="{StaticResource TextBasic}"
@@ -131,6 +132,7 @@
                     <StackPanel>
                         <Image Height="60"
                        Source="/Images/LastfmLogo.png"
+                       RenderOptions.BitmapScalingMode="HighQuality"
                        RenderTransformOrigin="0,0"
                        Margin="0,50,0,0"
                                HorizontalAlignment="Center"/>
@@ -207,7 +209,7 @@
                         Width="100"
                         Height="20"
                         Panel.ZIndex="6"
-                        Margin="50,0,0,0" Grid.Row="1" />
+                        Margin="50,2,0,0" Grid.Row="1" />
       
                 </Grid>
             </Border>

@@ -49,7 +49,19 @@ public class ShazamHttpClient : IHttpClient
         
         using (var response = await _shazamHttpClient.SendAsync(request))
         {
-            response.EnsureSuccessStatusCode();
+            try
+            {
+                response.EnsureSuccessStatusCode();
+            }
+            catch (HttpRequestException hre)
+            {
+                return new ShazamResponse
+                {
+                    Status = Status.ApiError,
+                    Result = null
+                };
+            }
+            
             var body = await response.Content.ReadAsStringAsync();
             // Log response message!
             ShazamHttpResponse shazamHttpResponse = JsonConvert.DeserializeObject<ShazamHttpResponse>(body);

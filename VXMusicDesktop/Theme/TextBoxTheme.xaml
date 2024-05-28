@@ -101,13 +101,13 @@
         </Setter>
     </Style>
 
-    <Style TargetType="{x:Type PasswordBox}" x:Key="ModernApiKeyBox">
+    <Style TargetType="{x:Type PasswordBox}" x:Key="ModernApiBox">
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type PasswordBox}">
-                    <Border CornerRadius="10"
+                    <Border CornerRadius="5"
                         Background="{StaticResource SecondaryColor}"
-                        Width="460" Height="40">
+                        Width="260" Height="30">
 
                         <Grid>
                             <Rectangle StrokeThickness="1"/>

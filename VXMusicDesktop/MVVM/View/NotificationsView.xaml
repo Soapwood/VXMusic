@@ -89,6 +89,7 @@
                                     <StackPanel>
                                         <Image Height="80"
                                                Source="/Images/SteamVRLogo.png"
+                                               RenderOptions.BitmapScalingMode="HighQuality"
                                                RenderTransformOrigin="0,0"
                                                Margin="0,20,0,0"
                                                HorizontalAlignment="Center" />
@@ -168,6 +169,7 @@
                                     <StackPanel>
                                         <Image Height="60"
                                                Source="/Images/XSOverlayLogo.jpg"
+                                               RenderOptions.BitmapScalingMode="HighQuality"
                                                RenderTransformOrigin="0,0"
                                                Margin="0,25,0,0"
                                                HorizontalAlignment="Center" />
@@ -253,6 +255,7 @@
                                     <StackPanel>
                                         <Image Height="80"
                                                Source="/Images/VRChatLogoBlack.png"
+                                               RenderOptions.BitmapScalingMode="HighQuality"
                                                RenderTransformOrigin="0,0"
                                                Margin="0,20,0,0"
                                                HorizontalAlignment="Center" />

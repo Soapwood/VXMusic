@@ -37,13 +37,13 @@ namespace VXMusicDesktop.MVVM.View
             // Handle the theme change here for Home View
             RecognitionTextHeader.Foreground = ColourSchemeManager.TextBasic;
 
-            RecognitionIntegration1BoxBorderGradientBrush.GradientStops[0].Color = ColourSchemeManager.SecondaryColour.Color;
-            RecognitionIntegration1BoxBorderGradientBrush.GradientStops[1].Color = ColourSchemeManager.Accent1Colour.Color;
-            RecognitionIntegration1HeaderText.Foreground = ColourSchemeManager.TextBasic;
+            //RecognitionIntegration1BoxBorderGradientBrush.GradientStops[0].Color = ColourSchemeManager.SecondaryColour.Color;
+            //RecognitionIntegration1BoxBorderGradientBrush.GradientStops[1].Color = ColourSchemeManager.Accent1Colour.Color;
+            //RecognitionIntegration1HeaderText.Foreground = ColourSchemeManager.TextBasic;
 
-            RecognitionIntegration2BoxBorderGradientBrush.GradientStops[0].Color = ColourSchemeManager.SecondaryColour.Color;
-            RecognitionIntegration2BoxBorderGradientBrush.GradientStops[1].Color = ColourSchemeManager.Accent1Colour.Color;
-            RecognitionIntegration2HeaderText.Foreground = ColourSchemeManager.TextBasic;
+            //RecognitionIntegration2BoxBorderGradientBrush.GradientStops[0].Color = ColourSchemeManager.SecondaryColour.Color;
+            //RecognitionIntegration2BoxBorderGradientBrush.GradientStops[1].Color = ColourSchemeManager.Accent1Colour.Color;
+            //RecognitionIntegration2HeaderText.Foreground = ColourSchemeManager.TextBasic;
 
             RunRecognitionButton.Background = ColourSchemeManager.SecondaryColour;
             RunRecognitionButton.Foreground = ColourSchemeManager.TextBasic;
@@ -78,7 +78,8 @@ namespace VXMusicDesktop.MVVM.View
                 recognitionViewModel.SharedViewModel.IsShazamApiConnected = false;
                 recognitionViewModel.IsShazamByoApiEnabled = true;
 
-                ShazamByoApiCheckBox.Content = "Disable BYOAPI";
+                //ShazamByoApiCheckBox.Content = "Disable BYOAPI";
+                ShazamByoApiCheckBox.Content = "";
 
                 recognitionViewModel.PerformSaveAndTestShazamByoApi();
                 //LastFmPasswordBoxHintText.Visibility = String.IsNullOrEmpty(connectionsViewModel.LastFmPassword) ? Visibility.Visible : Visibility.Hidden;
@@ -106,6 +107,8 @@ namespace VXMusicDesktop.MVVM.View
             {
                 recognitionViewModel.SharedViewModel.IsShazamApiConnected = false;
                 recognitionViewModel.ShazamByoApiToken = ((PasswordBox)e.OriginalSource).Password;
+                
+                recognitionViewModel.PerformSaveAndTestShazamByoApi();
             }
         }
 
@@ -135,6 +138,8 @@ namespace VXMusicDesktop.MVVM.View
             {
                 recognitionViewModel.SharedViewModel.IsAudDApiConnected = false;
                 recognitionViewModel.AudDByoApiToken = ((PasswordBox)e.OriginalSource).Password;
+                
+                recognitionViewModel.PerformSaveAndTestShazamByoApi();
             }
         }
 
@@ -161,7 +166,8 @@ namespace VXMusicDesktop.MVVM.View
                 recognitionViewModel.SharedViewModel.IsAudDApiConnected = false;
                 recognitionViewModel.IsAudDByoApiEnabled = true;
 
-                AudDByoApiCheckBox.Content = "Disable BYOAPI";
+                //AudDByoApiCheckBox.Content = "Disable BYOAPI";
+                AudDByoApiCheckBox.Content = "";
 
                 recognitionViewModel.PerformSaveAndTestAudDByoApi();
             }

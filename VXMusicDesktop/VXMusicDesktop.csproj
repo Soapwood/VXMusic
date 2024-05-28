@@ -138,6 +138,10 @@
     <Content Include="Images\VRChatLogoWhite.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Remove="Images\Record.png" />
+    <Content Include="Images\Record.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>

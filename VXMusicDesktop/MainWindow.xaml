@@ -57,7 +57,7 @@
                     Command="{Binding LaunchVXMusicOverlay}"
                     BorderThickness="0">
                 <Button.Background>
-                    <ImageBrush x:Name="MainWindowVXMusicOverlayImageBrush" ImageSource="{StaticResource VXMusicOverlayImage}" Stretch="UniformToFill"/>
+                    <ImageBrush x:Name="MainWindowVXMusicOverlayImageBrush" ImageSource="{StaticResource VXMusicOverlayImage}" Stretch="UniformToFill" RenderOptions.BitmapScalingMode="HighQuality"/>
                 </Button.Background>
             </Button>
             <Ellipse Grid.Column="1"  Width="10" 
@@ -119,7 +119,7 @@
                     Click="MinimizeButton_Click"
                     BorderThickness="0">
                 <Button.Background>
-                    <ImageBrush x:Name="MainWindowMinimiseButtonImageBrush" ImageSource="{StaticResource MinimiseButtonImage}" Stretch="UniformToFill"/>
+                    <ImageBrush x:Name="MainWindowMinimiseButtonImageBrush" ImageSource="{StaticResource MinimiseButtonImage}" Stretch="UniformToFill" RenderOptions.BitmapScalingMode="HighQuality"/>
                 </Button.Background>
             </Button>
 
@@ -132,7 +132,7 @@
                     Click="CloseButton_Click"
                     BorderThickness="0">
                 <Button.Background>
-                    <ImageBrush x:Name="MainWindowCloseButtonImageBrush" ImageSource="{StaticResource CloseButtonImage}" Stretch="UniformToFill"/>
+                    <ImageBrush x:Name="MainWindowCloseButtonImageBrush" ImageSource="{StaticResource CloseButtonImage}" Stretch="UniformToFill" RenderOptions.BitmapScalingMode="HighQuality"/>
                 </Button.Background>
             </Button>
 
