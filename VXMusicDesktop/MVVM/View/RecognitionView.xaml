@@ -157,14 +157,30 @@
                               Style="{StaticResource CustomCheckBoxStyle}"
                               Checked="ShazamByoApiCheckButtonChecked" Unchecked="ShazamByoApiCheckButtonUnchecked" />
                     <StackPanel Orientation="Horizontal">
-                        <PasswordBox x:Name="ShazamByoApiPasswordBox"
-                                     Visibility="{Binding IsShazamByoApiEnabled, Converter={StaticResource BoolToVis}}"
-                                     Style="{StaticResource ModernApiBox}"
-                                     IsEnabled="{Binding IsShazamByoApiEnabled}"
-                                     Margin="10,0,0,0"
-                                     PasswordChanged="ShazamByoApiPasswordBoxChanged"
-                                     GotFocus="ShazamByoApiPasswordBoxGotFocus"
-                                     LostFocus="ShazamByoApiPasswordBoxLostFocus" />
+                        <Grid>
+                            <PasswordBox x:Name="ShazamByoApiPasswordBox"
+                                         Visibility="{Binding IsShazamByoApiEnabled, Converter={StaticResource BoolToVis}}"
+                                         Style="{StaticResource ModernApiBox}"
+                                         IsEnabled="{Binding IsShazamByoApiEnabled}"
+                                         Margin="10,0,0,0"
+                                         PasswordChanged="ShazamByoApiPasswordBoxChanged"
+                                         GotFocus="ShazamByoApiPasswordBoxGotFocus"
+                                         LostFocus="ShazamByoApiPasswordBoxLostFocus" />
+                            <Canvas>
+                                <TextBlock x:Name="ShazamByoApiPasswordBoxHintText"
+                                           Text="•••••••••••••••••••••••••••••••••••"
+                                           Foreground="{StaticResource TextBasic}"
+                                           Visibility="{Binding IsShazamByoApiEnabled, Converter={StaticResource BoolToVis}}"
+                                           IsHitTestVisible="False"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"
+                                           FontSize="20"
+                                           Width="260"
+                                           Height="30"
+                                           Panel.ZIndex="6"
+                                           Margin="17,0,0,0" />
+                            </Canvas>
+                        </Grid>
                     </StackPanel>
                 </StackPanel>
             </StackPanel>
@@ -273,15 +289,31 @@
                               Style="{StaticResource CustomCheckBoxStyle}"
                               Checked="AudDByoApiCheckButtonChecked" Unchecked="AudDByoApiCheckButtonUnchecked" />
                     <StackPanel Orientation="Horizontal">
-                        <PasswordBox x:Name="AudDByoApiPasswordBox"
-                                     Visibility="{Binding IsAudDByoApiEnabled, Converter={StaticResource BoolToVis}}"
-                                     IsEnabled="{Binding IsAudDByoApiEnabled}"
-                                     Margin="10,0,0,0"
-                                     Style="{StaticResource ModernApiBox}"
-                                     VerticalAlignment="Center" HorizontalAlignment="Center"
-                                     GotFocus="AudDByoApiPasswordBoxGotFocus"
-                                     LostFocus="AudDByoApiPasswordBoxLostFocus"
-                                     PasswordChanged="AudDByoApiPasswordBoxChanged" />
+                        <Grid>
+                            <PasswordBox x:Name="AudDByoApiPasswordBox"
+                                         Visibility="{Binding IsAudDByoApiEnabled, Converter={StaticResource BoolToVis}}"
+                                         IsEnabled="{Binding IsAudDByoApiEnabled}"
+                                         Margin="10,0,0,0"
+                                         Style="{StaticResource ModernApiBox}"
+                                         VerticalAlignment="Center" HorizontalAlignment="Center"
+                                         GotFocus="AudDByoApiPasswordBoxGotFocus"
+                                         LostFocus="AudDByoApiPasswordBoxLostFocus"
+                                         PasswordChanged="AudDByoApiPasswordBoxChanged" />
+                            <Canvas>
+                                <TextBlock x:Name="AudDByoApiPasswordBoxHintText"
+                                           Text="••••••••••••••••••••••••••••••••••"
+                                           Foreground="{StaticResource TextBasic}"
+                                           Visibility="{Binding IsAudDByoApiEnabled, Converter={StaticResource BoolToVis}}"
+                                           IsHitTestVisible="False"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"
+                                           FontSize="20"
+                                           Width="260"
+                                           Height="30"
+                                           Panel.ZIndex="6"
+                                           Margin="17,0,0,0" />
+                            </Canvas>
+                        </Grid>
                     </StackPanel>
                 </StackPanel>
             </StackPanel>
