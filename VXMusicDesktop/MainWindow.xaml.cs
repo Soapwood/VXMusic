@@ -2,10 +2,8 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Threading;
-using VXMusic.Overlay;
-using VXMusic.Windows;
 using VXMusicDesktop.Theme;
+using VXMusicDesktop.Toast;
 
 namespace VXMusicDesktop
 {
@@ -25,9 +23,28 @@ namespace VXMusicDesktop
             ColourSchemeManager.MenuOptionChanged += OnMainWindowMenuOptionChanged;
             
             // Anchor toast notifications to Main window instance
-            App.ToastNotification = new ToastNotificationClient(this);
+            App.VXMusicSession.ToastNotification = new ToastNotificationClient(this);
+
+            //this.StateChanged += MainWindow_StateChanged;
+            //this.Activated += MainWindow_Activated;
+            //this.Deactivated += MainWindow_Deactivated;
         }
         
+        private void MainWindow_StateChanged(object? sender, EventArgs eventArgs)
+        {
+            App.VXMusicSession.ToastNotification.ShouldToastNotificationsBeShown = this.WindowState == WindowState.Minimized;
+        }
+        
+        private void MainWindow_Activated(object? sender, EventArgs eventArgs)
+        {
+            App.VXMusicSession.ToastNotification.ShouldToastNotificationsBeShown = this.WindowState == WindowState.Normal;
+        }
+        
+        private void MainWindow_Deactivated(object? sender, EventArgs eventArgs)
+        {
+            App.VXMusicSession.ToastNotification.ShouldToastNotificationsBeShown = this.WindowState == WindowState.Normal;
+        }
+
         private void OnThemeChanged(object sender, EventArgs e)
         {
             // Handle the theme change here, e.g., update UI elements
@@ -89,7 +106,6 @@ namespace VXMusicDesktop
         {
             // Show Hint Text above combo box if Dropdown isn't open
             CheckThemeComboBoxVisibility();
-
 
             if (sender is ComboBox comboBox)
             {
