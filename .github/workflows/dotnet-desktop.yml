@@ -1,103 +1,56 @@
-# Copyright (c) Microsoft Corporation.
-# Licensed under the MIT license.
+name: VXMusic Desktop Build/Release
 
-# This continuous integration pipeline is triggered anytime a user pushes code to the repo.
-# This pipeline builds the Wpf project, runs unit tests, then saves the MSIX build artifact.
-name:  Wpf Continuous Integration
-
-# Trigger on every master branch push and pull request
 on:
   push:
-    branches:
-      - master
-      - 'maintenence/*'
+    branches: [ main ]
   pull_request:
-    branches:
-      - master
+    branches: [ main ]
 
 jobs:
-
   build:
-
-    strategy:
-      matrix:
-        targetplatform: [x86, x64]
 
     runs-on: windows-latest
 
-    env:
-      App_Packages_Directory: AppPackages
-      SigningCertificate: GitHubActionsDemo.pfx
-      Solution_Path: VXMusic.sln
-      #Test_Project_Path: MyWpfApp.Tests\MyWpfApp.Tests.csproj
-      Wpf_Project_Path: VXMusicDesktop\VXMusicDesktop.csproj
-      #Wap_Project_Directory: MyWpfApp.Package
-      #Wap_Project_Name: MyWpfApp.Package.wapproj
-      Actions_Allow_Unsecure_Commands: true # Allows AddPAth and SetEnv commands
-
     steps:
-    - name: Checkout
-      uses: actions/checkout@v2
-      with:
-        fetch-depth: 0 # avoid shallow clone so nbgv can do its work.
+    - name: Checkout code
+      uses: actions/checkout@v3
 
-    # Use Nerdbank.GitVersioning to set version variables: https://github.com/AArnott/nbgv
-    - name: Use Nerdbank.GitVersioning to set version variables
-      uses: dotnet/nbgv@master
-      id: nbgv
-
-    # Install the .NET Core workload
-    - name: Install .NET Core
+    - name: Set up .NET
       uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: '7.0.x'
+        dotnet-version: '7.x'
 
-    # Add  MsBuild to the PATH: https://github.com/microsoft/setup-msbuild
-    - name: Setup MSBuild.exe
-      uses: microsoft/setup-msbuild@v1.1
+    - name: Install dependencies
+      run: dotnet restore
 
-    # Update the version before build
-    # - name: Update manifest version
-    #   run: |
-    #     [xml]$manifest = get-content ".\$env:Wap_Project_Directory\Package.appxmanifest"
-    #     $manifest.Package.Identity.Version = "${{ steps.nbgv.outputs.SimpleVersion }}.0"
-    #     $manifest.save(".\$env:Wap_Project_Directory\Package.appxmanifest")
+    - name: Build solution
+      run: dotnet build --configuration Release --no-restore
 
-    # Test
-    #- name: Execute Unit Tests
-    #  run: dotnet test $env:Test_Project_Path
+    - name: Publish application
+      run: dotnet publish -c Release -o ${{ github.workspace }}/output
 
-    # Restore the application
-    - name:  Restore the Wpf application to populate the obj folder
-      run: msbuild $env:Solution_Path /t:Restore /p:Configuration=$env:Configuration /p:RuntimeIdentifier=$env:RuntimeIdentifier
+    - name: Create release
+      id: create_release
+      uses: actions/create-release@v1
       env:
-        Configuration: Debug
-        RuntimeIdentifier: win-${{ matrix.targetplatform }}
-
-    # Decode the Base64 encoded Pfx
-    - name: Decode the Pfx
-      run: |
-        $pfx_cert_byte = [System.Convert]::FromBase64String("${{ secrets.Base64_Encoded_Pfx }}")
-        $currentDirectory = Get-Location
-        $certificatePath = Join-Path -Path $currentDirectory -ChildPath $env:Wap_Project_Directory -AdditionalChildPath $env:SigningCertificate
-        [IO.File]::WriteAllBytes("$certificatePath", $pfx_cert_byte)
-
-    # Build the Windows Application Packaging project
-    - name: Build the Windows Application Packaging Project (wapproj)
-      run: msbuild $env:Solution_Path /p:Platform=$env:TargetPlatform /p:Configuration=$env:Configuration /p:UapAppxPackageBuildMode=$env:BuildMode /p:AppxBundle=$env:AppxBundle /p:PackageCertificateKeyFile=$env:SigningCertificate /p:PackageCertificatePassword=${{ secrets.Pfx_Key }}
-      env:
-        AppxBundle: Never
-        BuildMode: SideloadOnly
-        Configuration: Debug
-        TargetPlatform: ${{ matrix.targetplatform }}
-
-    # Remove the .pfx
-    - name: Remove the .pfx
-      run: Remove-Item -path $env:Wap_Project_Directory\$env:SigningCertificate
-
-    # Upload the MSIX package: https://github.com/marketplace/actions/upload-artifact
-    - name: Upload build artifacts
-      uses: actions/upload-artifact@v1
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        name: MSIX Package
-        path: ${{ env.Wap_Project_Directory }}\${{ env.App_Packages_Directory }}
+        tag_name: v1.0.0
+        release_name: Release v1.0.0
+        draft: false
+        prerelease: false
+
+    - name: Upload Release Asset
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ${{ github.workspace }}/output
+        asset_name: VXMusic.zip
+        asset_content_type: application/zip
+
+    - name: Package the application
+      run: |
+        cd ${{ github.workspace }}/output
+        Compress-Archive -Path * -DestinationPath ../VXMusic.zip
