@@ -6,6 +6,9 @@ on:
   pull_request:
     branches: [ main ]
 
+permissions:
+  contents: write
+
 jobs:
   build:
 
@@ -20,6 +23,12 @@ jobs:
       with:
         dotnet-version: '7.x'
 
+    - name: Get Project Version
+      uses: kzrnm/get-net-sdk-project-versions-action@v2
+      id: get-project-version
+      with:
+        proj-path: VXMusicDesktop/VXMusicDesktop.csproj
+
     - name: Install dependencies
       run: dotnet restore
 
@@ -29,16 +38,21 @@ jobs:
     - name: Publish application
       run: dotnet publish -c Release -o ${{ github.workspace }}/output
 
+    - name: Package the application
+      run: |
+        cd ${{ github.workspace }}/output
+        Compress-Archive -Path * -DestinationPath ../VXMusic.zip
+
     - name: Create release
       id: create_release
       uses: actions/create-release@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: v1.0.0
-        release_name: Release v1.0.0
-        draft: false
-        prerelease: false
+        tag_name: v${{steps.get-project-version.outputs.version}}
+        release_name: VXMusic Release v${{steps.get-project-version.outputs.version}}
+        draft: true
+        prerelease: true
 
     - name: Upload Release Asset
       uses: actions/upload-release-asset@v1
@@ -46,11 +60,6 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ${{ github.workspace }}/output
+        asset_path: ${{ github.workspace }}/VXMusic.zip
         asset_name: VXMusic.zip
         asset_content_type: application/zip
-
-    - name: Package the application
-      run: |
-        cd ${{ github.workspace }}/output
-        Compress-Archive -Path * -DestinationPath ../VXMusic.zip
