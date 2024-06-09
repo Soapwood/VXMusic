@@ -57,9 +57,9 @@
                                 Height="{TemplateBinding Height}">
                             <Image
                                 Source="{Binding IsChecked, RelativeSource={RelativeSource TemplatedParent}, 
-                            Converter={StaticResource BooleanToLeftHandImageConverter}}"
+                                Converter={StaticResource BooleanToLeftHandImageConverter}}"
                                 RenderOptions.BitmapScalingMode="HighQuality"
-                                Stretch="UniformToFill" />
+                                Stretch="Fill" />
                         </Border>
                     </ControlTemplate>
                 </Setter.Value>

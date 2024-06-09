@@ -14,11 +14,13 @@
         Background="Transparent"
         AllowsTransparency="True">
 
-    <Window.DataContext>
+    <Window.DataContext> 
         <viewModel:MainViewModel/>
     </Window.DataContext>
 
     <Window.Resources>
+        <FontFamily x:Key="BrushStrike">pack://application:,,,/Fonts/#Brushstrike trial.ttf</FontFamily>
+        
         <BitmapImage x:Key="CloseButtonImage" UriSource="{Binding Source={x:Static custom:ColourSchemeManager.CloseImage}, Path=UriSource}"/>
         <BitmapImage x:Key="MinimiseButtonImage" UriSource="{Binding Source={x:Static custom:ColourSchemeManager.MinimiseImage}, Path=UriSource}"/>
         <BitmapImage x:Key="VXMusicOverlayImage" UriSource="{Binding Source={x:Static custom:ColourSchemeManager.VXMusicOverlayImage}, Path=UriSource}"/>
@@ -144,7 +146,7 @@
                        Foreground="{StaticResource TextBasic}"
                        FontSize="32"
                        Margin="0,16,0,0"
-                       FontFamily="/Fonts/#Brushstrike"/>
+                       FontFamily="{StaticResource BrushStrike}"/>
             </StackPanel>
 
             <StackPanel Grid.Row="1">

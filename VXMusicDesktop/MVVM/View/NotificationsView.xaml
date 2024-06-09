@@ -12,6 +12,14 @@
              d:DataContext="{d:DesignInstance}">
 
     <UserControl.Resources>
+        <BitmapImage x:Key="XSOverlayLogo"
+                     UriSource="{Binding Source={x:Static custom:UIImageManager.XSOverlayLogo}, Path=UriSource}" />
+        
+        <BitmapImage x:Key="SteamVRLogo"
+                     UriSource="{Binding Source={x:Static custom:UIImageManager.SteamVRLogo}, Path=UriSource}" />
+        
+        <BitmapImage x:Key="VRChatLogoBlack"
+                     UriSource="{Binding Source={x:Static custom:UIImageManager.VRChatLogoBlack}, Path=UriSource}" />
 
         <SolidColorBrush x:Key="PrimaryColor"
                          Color="{Binding Source={x:Static custom:ColourSchemeManager.PrimaryColour}, Path=Color}" />
@@ -88,7 +96,7 @@
                                 <Grid>
                                     <StackPanel>
                                         <Image Height="80"
-                                               Source="/Images/SteamVRLogo.png"
+                                               Source="{StaticResource SteamVRLogo}"
                                                RenderOptions.BitmapScalingMode="HighQuality"
                                                RenderTransformOrigin="0,0"
                                                Margin="0,20,0,0"
@@ -168,7 +176,7 @@
                                 <Grid>
                                     <StackPanel>
                                         <Image Height="60"
-                                               Source="/Images/XSOverlayLogo.jpg"
+                                               Source="{StaticResource XSOverlayLogo}"
                                                RenderOptions.BitmapScalingMode="HighQuality"
                                                RenderTransformOrigin="0,0"
                                                Margin="0,25,0,0"
@@ -254,7 +262,7 @@
                                 <Grid>
                                     <StackPanel>
                                         <Image Height="80"
-                                               Source="/Images/VRChatLogoBlack.png"
+                                               Source="{StaticResource VRChatLogoBlack}"
                                                RenderOptions.BitmapScalingMode="HighQuality"
                                                RenderTransformOrigin="0,0"
                                                Margin="0,20,0,0"

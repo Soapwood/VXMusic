@@ -33,7 +33,7 @@ namespace VXMusic.Overlay
             _steamVrNotificationClient.Show();
             
             DefaultVxLogo = File.ReadAllText(
-                Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Img", "VXLogo", "VXLogoSmallBase64.txt"));
+                Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Images", "VXLogoSmallBase64.txt"));
         }
 
         public void SendNotification(NotificationLevel level, string title, string content, int timeout)

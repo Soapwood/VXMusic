@@ -12,8 +12,14 @@
              d:DataContext="{d:DesignInstance}">
 
     <UserControl.Resources>
-        <BitmapImage x:Key="SaveButtonImage"
-                     UriSource="{Binding Source={x:Static custom:ColourSchemeManager.SaveButtonImage}, Path=UriSource}" />
+        <BitmapImage x:Key="ShazamLogo"
+                     UriSource="{Binding Source={x:Static custom:UIImageManager.ShazamLogo}, Path=UriSource}" />
+        
+        <BitmapImage x:Key="AudDLogo"
+                     UriSource="{Binding Source={x:Static custom:UIImageManager.AudDLogo}, Path=UriSource}" />
+        
+        <BitmapImage x:Key="RecordIcon"
+                     UriSource="{Binding Source={x:Static custom:UIImageManager.RecordIcon}, Path=UriSource}" />
 
         <SolidColorBrush x:Key="PrimaryColor"
                          Color="{Binding Source={x:Static custom:ColourSchemeManager.PrimaryColour}, Path=Color}" />
@@ -110,7 +116,7 @@
                                     <Image Grid.Column="0"
                                            Width="80"
                                            Height="80"
-                                           Source="/Images/ShazamLogo.png"
+                                           Source="{StaticResource ShazamLogo}"
                                            RenderOptions.BitmapScalingMode="HighQuality"
                                            RenderTransformOrigin="0.5,0.5"
                                            Margin="15,0,0,0" />
@@ -242,7 +248,7 @@
                                     <Image Grid.Column="0"
                                            Width="80"
                                            Height="80"
-                                           Source="/Images/AudD.jpg"
+                                           Source="{StaticResource AudDLogo}"
                                            RenderOptions.BitmapScalingMode="HighQuality"
                                            RenderTransformOrigin="0.5,0.5"
                                            Margin="15,0,0,0" />
@@ -368,7 +374,7 @@
                             <Grid>
                                 <StackPanel>
                                     <Image Height="80"
-                                           Source="/Images/Record.png"
+                                           Source="{StaticResource RecordIcon}"
                                            RenderOptions.BitmapScalingMode="HighQuality"
                                            RenderTransformOrigin="0,0"
                                            Margin="0,20,0,0"

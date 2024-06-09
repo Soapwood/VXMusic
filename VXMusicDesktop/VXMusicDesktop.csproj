@@ -43,103 +43,108 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Remove="Overlay\bin\MonoBleedingEdge\etc\**" />
+    <None Update="Overlay\Images\VXLogoSmallBase64.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Overlay\Images\SpotifyIconBase64.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Overlay\Images\LastFmIconBase64.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Fonts\Brushstrike trial.ttf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\AudD.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\CloseIconBlack.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\CloseIconWhite.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\DiscordLogoBlue.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\GitHub_Logo.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\GitHub_Logo_White.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\LastfmLogo.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\MinimiseIconBlack.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\MinimiseIconWhite.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\ShazamLogo.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\Spotify_Logo_RGB_Green.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\SteamVRLogo.png">
+    <Resource Include="Fonts\Brushstrike trial.ttf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\VXLogo.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\XSOverlayLogo.jpg">
+    </Resource>
+    <Resource Include="Images\CloseIconBlack.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    </Resource>
+    <Resource Include="Images\CloseIconWhite.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\LastfmLogo.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\MinimiseIconBlack.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\MinimiseIconWhite.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\ShazamLogo.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\SteamVRLogo.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\VXLogo.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\XSOverlayLogo.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
     <Content Include="Images\VXLogoIcon.ico" />
     <None Remove="Images\SaveIconBlack.png" />
-    <Content Include="Images\SaveIconBlack.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <None Remove="Images\SaveIconWhite.png" />
-    <Content Include="Images\SaveIconWhite.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <None Remove="Images\VXLogoTinyButton.png" />
-    <Content Include="Images\VXLogoTinyButton.png">
+    <Resource Include="Images\VXLogoTinyButton.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    </Resource>
     <None Remove="Images\LeftHandIcon.png" />
     <None Remove="Images\RightHandIcon.png" />
     <None Remove="Images\LeftHandIconDisabled.png" />
-    <Content Include="Images\LeftHandIconDisabled.png">
+    <Resource Include="Images\LeftHandIconDisabled.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    </Resource>
     <None Remove="Images\LeftHandIconEnabled.png" />
-    <Content Include="Images\LeftHandIconEnabled.png">
+    <Resource Include="Images\LeftHandIconEnabled.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    </Resource>
     <None Remove="Images\RightHandIconDisabled.png" />
-    <Content Include="Images\RightHandIconDisabled.png">
+    <Resource Include="Images\RightHandIconDisabled.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    </Resource>
     <None Remove="Images\RightHandIconEnabled.png" />
-    <Content Include="Images\RightHandIconEnabled.png">
+    <Resource Include="Images\RightHandIconEnabled.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    </Resource>
     <None Remove="Images\SpotifyIconBase64.txt" />
-    <Content Include="Images\SpotifyIconBase64.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <None Remove="Images\LastFmIconBase64.txt" />
-    <Content Include="Images\LastFmIconBase64.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <None Remove="Images\VRChatLogoBlack.png" />
-    <Content Include="Images\VRChatLogoBlack.png">
+    <Resource Include="Images\VRChatLogoBlack.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    </Resource>
     <None Remove="Images\VRChatLogoWhite.png" />
-    <Content Include="Images\VRChatLogoWhite.png">
+    <Resource Include="Images\VRChatLogoWhite.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <None Remove="Images\Record.png" />
+    <None Remove="Images\RecordIcon.png" />
+    <Resource Include="Images\RecordIcon.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <None Remove="Images\AudDLogo.jpg" />
+    <Resource Include="Images\AudDLogo.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <None Remove="Images\SpotifyLogo.png" />
+    <Resource Include="Images\SpotifyLogo.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <None Remove="Images\LastfmIcon.png" />
+    <Resource Include="Images\LastfmIcon.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Content Update="Overlay\Images\LastFmIconBase64.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <None Remove="Images\Record.png" />
-    <Content Include="Images\Record.png">
+    <Content Update="Overlay\Images\SpotifyIconBase64.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Remove="Overlay\Images\VXLogoBase64.txt" />
+    <Content Include="Overlay\Images\VXLogoBase64.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
@@ -231,5 +236,11 @@
     <Message Text="Publish Directory: $(PublishDir)" Importance="high" />
     <Exec Command="xcopy &quot;$(ProjectDir)\Overlay\bin&quot; &quot;$(PublishDir)\Overlay&quot; /E /H /Y" />
   </Target>
+
+<!--  <ItemGroup>-->
+<!--    <PackageReference Update="Microsoft.Windows.Compatibility" ExcludeAssets="runtime" />-->
+<!--    <PackageReference Update="Microsoft.NETCore.App.Runtime.win-x64" ExcludeAssets="runtime" />-->
+<!--    <PackageReference Update="Microsoft.NETCore.App.Runtime.win-x86" ExcludeAssets="runtime" />-->
+<!--  </ItemGroup>-->
 
 </Project>

@@ -41,6 +41,17 @@ namespace VXMusicDesktop.MVVM.View
                 SpotifyLoginButton.Content = SpotifyConnectionStateExtensions.ToDisplayString(SpotifyAuthentication.CurrentConnectionState);
             });
         }
+        
+        private void PerformSetSpotifyPlaylistSaveSetting(object commandParameter)
+        {
+
+            // if (String.IsNullOrEmpty(LastFmUsername) || String.IsNullOrEmpty(LastFmPassword))
+            //     return;
+
+            //VXUserSettings.Connections.SetSpotifyPlaylistSaveSetting(LastFmUsername);
+            //App.VXMusicSession.ConnectionsSettings.LastfmSettings.ClientSecret;
+            
+        }
 
         private void CheckLastFmConnection()
         {

@@ -10,6 +10,7 @@
              Background="Transparent">
 
     <UserControl.Resources>
+        <FontFamily x:Key="BrushStrike">pack://application:,,,/Fonts/#Brushstrike trial.ttf</FontFamily>
 
         <SolidColorBrush x:Key="PrimaryColor" Color="{Binding Source={x:Static custom:ColourSchemeManager.PrimaryColour}, Path=Color}" />
         <SolidColorBrush x:Key="SecondaryColor" Color="{Binding Source={x:Static custom:ColourSchemeManager.SecondaryColour}, Path=Color}" />
@@ -32,7 +33,7 @@
             Grid.Row="0"
             VerticalAlignment="Center"
             TextAlignment="Center"
-            FontFamily="/Fonts/#Brushstrike"
+            FontFamily="{StaticResource BrushStrike}"
             Foreground="{StaticResource TextBasic}"
             FontSize="80">
             VXMusic

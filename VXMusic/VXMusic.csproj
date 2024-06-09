@@ -33,11 +33,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <None Update="Img\VXLogo\VXLogoBase64.txt">
+      <None Update="Images\VXLogoBase64.txt">
         <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-      </None>
-      <None Update="Img\VXLogo\VXLogoSmallBase64.txt">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
     </ItemGroup>
 
@@ -46,6 +43,8 @@
       <Content Include="Overlay\Resources\VXLogo.png">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Content>
+      <None Remove="Images\VXLogoSmallBase64.txt" />
+      <Content Include="Images\VXLogoSmallBase64.txt" />
     </ItemGroup>
 
     <ItemGroup>

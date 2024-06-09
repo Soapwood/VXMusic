@@ -32,7 +32,7 @@ public class XsOverlayNotificationClient : INotificationClient
         IsInitialising = false;
         
         DefaultVxLogo = File.ReadAllText(
-            Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Img", "VXLogo", "VXLogoSmallBase64.txt"));
+            Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Overlay", "Images", "VXLogoSmallBase64.txt"));
     }
 
     /// <summary>
