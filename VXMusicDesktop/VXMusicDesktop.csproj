@@ -220,8 +220,16 @@
     <ProjectReference Include="..\VXMusic\VXMusic.csproj" />
   </ItemGroup>
 
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+  <Target Name="PostBuild" AfterTargets="Build;PostBuildEvent">
+    <Message Text="Project Directory: $(ProjectDir)" Importance="high" />
+    <Message Text="Publish Directory: $(OutDir)" Importance="high" />
     <Exec Command="xcopy &quot;$(ProjectDir)\Overlay\bin&quot; &quot;$(OutDir)\Overlay&quot; /E /H /Y" />
+  </Target>
+
+  <Target Name="PostPublishStep" AfterTargets="Publish">
+    <Message Text="Project Directory: $(ProjectDir)" Importance="high" />
+    <Message Text="Publish Directory: $(PublishDir)" Importance="high" />
+    <Exec Command="xcopy &quot;$(ProjectDir)\Overlay\bin&quot; &quot;$(PublishDir)\Overlay&quot; /E /H /Y" />
   </Target>
 
 </Project>
