@@ -35,13 +35,21 @@ jobs:
     - name: Build solution
       run: dotnet build --configuration Release --no-restore
 
-    - name: Publish application
-      run: dotnet publish -c Release -o ${{ github.workspace }}/output
+    - name: Publish x64
+      run: dotnet publish -r win-x64 -c Release -o ${{ github.workspace }}/output_x64
 
-    - name: Package the application
+    - name: Publish x86
+      run: dotnet publish -r win-x86 -c Release -o ${{ github.workspace }}/output_x86
+
+    - name: Package x64
       run: |
-        cd ${{ github.workspace }}/output
-        Compress-Archive -Path * -DestinationPath ../VXMusic.zip
+        cd ${{ github.workspace }}/output_x64
+        Compress-Archive -Path * -DestinationPath ../VXMusic_x64_v${{steps.get-project-version.outputs.version}}.zip
+
+    - name: Package x86
+      run: |
+        cd ${{ github.workspace }}/output_x86
+        Compress-Archive -Path * -DestinationPath ../VXMusic_x86_v${{steps.get-project-version.outputs.version}}.zip
 
     - name: Create release
       id: create_release
@@ -54,12 +62,22 @@ jobs:
         draft: true
         prerelease: true
 
-    - name: Upload Release Asset
+    - name: Upload x64 Release Asset
       uses: actions/upload-release-asset@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ${{ github.workspace }}/VXMusic.zip
-        asset_name: VXMusic.zip
+        asset_path: ${{ github.workspace }}/VXMusic_x64_v${{steps.get-project-version.outputs.version}}.zip
+        asset_name: VXMusic_x64_v${{steps.get-project-version.outputs.version}}.zip
+        asset_content_type: application/zip
+
+    - name: Upload x86 Release Asset
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ${{ github.workspace }}/VXMusic_x86_v${{steps.get-project-version.outputs.version}}.zip
+        asset_name: VXMusic_x86_v${{steps.get-project-version.outputs.version}}.zip
         asset_content_type: application/zip
