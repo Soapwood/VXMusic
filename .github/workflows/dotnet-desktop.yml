@@ -40,29 +40,34 @@ jobs:
     - name: Determine next version
       id: nextversion
       run: |
-        current_version=${{ steps.previoustag.outputs.tag }}
-        base_version=${{ steps.get-project-version.outputs.version }}
+        $current_version = '${{ steps.previoustag.outputs.tag }}'
+        $base_version = '${{ steps.get-project-version.outputs.version }}'
 
-        if [[ "$current_version" == *.*.* ]]; then
-          IFS='.' read -r -a version_parts <<< "$current_version"
-          major=${version_parts[0]}
-          minor=${version_parts[1]}
-          patch=${version_parts[2]}
-          patch=$((patch + 1))
-          new_version="$major.$minor.$patch"
-        else
-          new_version="$base_version.0"
-        fi
+        if ($current_version -match '(\d+)\.(\d+)\.(\d+)') {
+          $major = [int]$matches[1]
+          $minor = [int]$matches[2]
+          $patch = [int]$matches[3] + 1
+          $new_version = "$major.$minor.$patch"
+        } else {
+          $new_version = "$base_version.0"
+        }
 
-        echo "##[set-output name=version;]$new_version"
-      shell: bash
+        echo "VERSION=$new_version" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8
+      shell: pwsh
 
-    - name: Update .csproj with Patch version
-      run: | # ${{steps.get-project-version.outputs.version}}
-        csproj_path="VXMusicDesktop/VXMusicDesktop.csproj"
-        version_with_patch=${{ steps.nextversion.outputs.version }}
-        sed -i 's|<Version>.*</Version>|<Version>'$version_with_patch'</Version>|' $csproj_path
-      shell: bash
+    - name: Set dynamic version
+      id: set_dynamic_version
+      run: |
+        $dynamic_version = $env:VERSION
+        echo "Dynamic Version: $dynamic_version"
+      shell: pwsh
+
+    - name: Update CSPROJ with dynamic version
+      run: |
+        $csproj_path = "VXMusicDesktop/VXMusicDesktop.csproj"
+        $dynamic_version = $env:VERSION
+        (Get-Content $csproj_path) -replace '<Version>.*</Version>', "<Version>$dynamic_version</Version>" | Set-Content $csproj_path
+      shell: pwsh
 
     - name: Install dependencies
       run: dotnet restore
