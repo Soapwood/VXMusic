@@ -24,6 +24,8 @@ public class ToastNotificationClient : INotificationClient
         _window = window;
         _longNotifier = CreateNotifier(window, TimeSpan.FromSeconds(LongNotifierTimeout));
         _shortNotifier = CreateNotifier(window, TimeSpan.FromSeconds(ShortNotifierTimeout));
+
+        ShouldToastNotificationsBeShown = true;
     }
     
     //TODO MainWindow mainWindow = Application.Current.MainWindow as MainWindow;
