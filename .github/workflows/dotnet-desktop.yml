@@ -5,13 +5,13 @@ on:
     branches: [ main ]
   pull_request:
     branches: [ main ]
+  workflow_dispatch: # Add this to manually trigger the workflow
 
 permissions:
   contents: write
 
 jobs:
   build:
-
     runs-on: windows-latest
 
     steps:
@@ -85,13 +85,13 @@ jobs:
     - name: Package x64
       run: |
         cd ${{ github.workspace }}/output_x64
-        Compress-Archive -Path * -DestinationPath ../VXMusic_x64_v${{ env:new_version }}.zip
+        Compress-Archive -Path * -DestinationPath ../VXMusic_x64_v${{ env.new_version }}.zip
       shell: pwsh
 
     - name: Package x86
       run: |
         cd ${{ github.workspace }}/output_x86
-        Compress-Archive -Path * -DestinationPath ../VXMusic_x86_v${{ env:new_version }}.zip
+        Compress-Archive -Path * -DestinationPath ../VXMusic_x86_v${{ env.new_version }}.zip
       shell: pwsh
 
     - name: Create release
@@ -100,8 +100,8 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: v${{ env:new_version }}
-        release_name: VXMusic Release v${{ env:new_version }}
+        tag_name: v${{ env.new_version }}
+        release_name: VXMusic Release v${{ env.new_version }}
         draft: true
         prerelease: false
 
@@ -111,8 +111,8 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ${{ github.workspace }}/VXMusic_x64_v${{ env:new_version }}.zip
-        asset_name: VXMusic_x64_v${{ env:new_version }}.zip
+        asset_path: ${{ github.workspace }}/VXMusic_x64_v${{ env.new_version }}.zip
+        asset_name: VXMusic_x64_v${{ env.new_version }}.zip
         asset_content_type: application/zip
 
     - name: Upload x86 Release Asset
@@ -121,6 +121,6 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ${{ github.workspace }}/VXMusic_x86_v${{ env:new_version }}.zip
-        asset_name: VXMusic_x86_v${{ env:new_version }}.zip
+        asset_path: ${{ github.workspace }}/VXMusic_x86_v${{ env.new_version }}.zip
+        asset_name: VXMusic_x86_v${{ env.new_version }}.zip
         asset_content_type: application/zip
