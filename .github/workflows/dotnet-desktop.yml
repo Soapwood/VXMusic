@@ -33,10 +33,10 @@ jobs:
       id: previoustag
       uses: 'WyriHaximus/github-action-get-previous-tag@v1'
       with:
-          fallback: ${{steps.get-project-version.outputs.version}}
+        fallback: ${{ steps.get-project-version.outputs.version }}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          
+
     - name: Determine next version
       id: nextversion
       run: |
@@ -60,6 +60,7 @@ jobs:
       run: |
         $new_version = $env:VERSION
         echo "Dynamic Version: $new_version"
+        echo "new_version=$new_version" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8
       shell: pwsh
 
     - name: Update CSPROJ with dynamic version
@@ -85,11 +86,13 @@ jobs:
       run: |
         cd ${{ github.workspace }}/output_x64
         Compress-Archive -Path * -DestinationPath ../VXMusic_x64_v${{ env:new_version }}.zip
+      shell: pwsh
 
     - name: Package x86
       run: |
         cd ${{ github.workspace }}/output_x86
         Compress-Archive -Path * -DestinationPath ../VXMusic_x86_v${{ env:new_version }}.zip
+      shell: pwsh
 
     - name: Create release
       id: create_release
@@ -97,8 +100,8 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: v${{ env:VERSION }}
-        release_name: VXMusic Release v${{ env:VERSION }}
+        tag_name: v${{ env:new_version }}
+        release_name: VXMusic Release v${{ env:new_version }}
         draft: true
         prerelease: false
 
