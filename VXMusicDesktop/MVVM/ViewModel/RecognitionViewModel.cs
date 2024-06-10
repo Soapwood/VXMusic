@@ -142,6 +142,16 @@ namespace VXMusicDesktop.MVVM.ViewModel
                 OnPropertyChanged(nameof(IsShazamByoApiEnabled));
             }
         }
+        
+        public bool IsShazamByoApiKeySet
+        {
+            get { return !string.IsNullOrEmpty(ShazamByoApiToken); }
+        }
+        
+        public bool ShouldShazamByoApiPlaceholderBeShown
+        {
+            get { return IsShazamApiEnabled && IsShazamByoApiKeySet; }
+        }
 
         public bool IsAudDApiEnabled
         {
@@ -151,6 +161,16 @@ namespace VXMusicDesktop.MVVM.ViewModel
                 _isAudDApiEnabled = value;
                 OnPropertyChanged(nameof(IsAudDApiEnabled)); 
             }
+        }
+        
+        public bool IsAudDApiKeySet
+        {
+            get { return !string.IsNullOrEmpty(AudDByoApiToken); }
+        }
+        
+        public bool ShouldAudDByoApiPlaceholderBeShown
+        {
+            get { return IsAudDApiEnabled && IsAudDApiKeySet; }
         }
 
         public bool IsAudDByoApiEnabled
