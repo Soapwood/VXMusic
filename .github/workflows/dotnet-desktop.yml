@@ -33,20 +33,34 @@ jobs:
       id: previoustag
       uses: 'WyriHaximus/github-action-get-previous-tag@v1'
       with:
-          fallback: 1.0.0 # Optional fallback tag to use when no tag can be found
+          fallback: ${{steps.get-project-version.outputs.version}}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           
-    - name: Generate Next Minor Version
-      id: semvers # ${{ steps.next.outputs.version }}
-      uses: 'WyriHaximus/github-action-next-semvers@v1'
-      with:
-        version: ${{ steps.previoustag.outputs.tag }}
+    - name: Determine next version
+      id: nextversion
+      run: |
+        current_version=${{ steps.previoustag.outputs.tag }}
+        base_version=${{ steps.get-project-version.outputs.version }}
+
+        if [[ "$current_version" == *.*.* ]]; then
+          IFS='.' read -r -a version_parts <<< "$current_version"
+          major=${version_parts[0]}
+          minor=${version_parts[1]}
+          patch=${version_parts[2]}
+          patch=$((patch + 1))
+          new_version="$major.$minor.$patch"
+        else
+          new_version="$base_version.0"
+        fi
+
+        echo "##[set-output name=version;]$new_version"
+      shell: bash
 
     - name: Update .csproj with Patch version
       run: | # ${{steps.get-project-version.outputs.version}}
         csproj_path="VXMusicDesktop/VXMusicDesktop.csproj"
-        version_with_patch=${{ steps.semvers.outputs.patch }}
+        version_with_patch=${{ steps.nextversion.outputs.version }}
         sed -i 's|<Version>.*</Version>|<Version>'$version_with_patch'</Version>|' $csproj_path
       shell: bash
 
@@ -65,12 +79,12 @@ jobs:
     - name: Package x64
       run: |
         cd ${{ github.workspace }}/output_x64
-        Compress-Archive -Path * -DestinationPath ../VXMusic_x64_v${{ steps.semvers.outputs.patch }}.zip
+        Compress-Archive -Path * -DestinationPath ../VXMusic_x64_v${{ steps.nextversion.outputs.version }}.zip
 
     - name: Package x86
       run: |
         cd ${{ github.workspace }}/output_x86
-        Compress-Archive -Path * -DestinationPath ../VXMusic_x86_v${{ steps.semvers.outputs.patch }}.zip
+        Compress-Archive -Path * -DestinationPath ../VXMusic_x86_v${{ steps.nextversion.outputs.version }}.zip
 
     - name: Create release
       id: create_release
@@ -78,8 +92,8 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: v${{ steps.previoustag.outputs.tag }}
-        release_name: VXMusic Release v${{ steps.semvers.outputs.patch }}
+        tag_name: v${{ steps.nextversion.outputs.version }}
+        release_name: VXMusic Release v${{ steps.nextversion.outputs.version }}
         draft: false
         prerelease: false
 
@@ -89,8 +103,8 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ${{ github.workspace }}/VXMusic_x64_v${{ steps.semvers.outputs.patch }}.zip
-        asset_name: VXMusic_x64_v${{ steps.semvers.outputs.patch }}.zip
+        asset_path: ${{ github.workspace }}/VXMusic_x64_v${{ steps.nextversion.outputs.version }}.zip
+        asset_name: VXMusic_x64_v${{ steps.nextversion.outputs.version }}.zip
         asset_content_type: application/zip
 
     - name: Upload x86 Release Asset
@@ -99,6 +113,6 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ${{ github.workspace }}/VXMusic_x86_v${{ steps.semvers.outputs.patch }}.zip
-        asset_name: VXMusic_x86_v${{ steps.semvers.outputs.patch }}.zip
+        asset_path: ${{ github.workspace }}/VXMusic_x86_v${{ steps.nextversion.outputs.version }}.zip
+        asset_name: VXMusic_x86_v${{ steps.nextversion.outputs.version }}.zip
         asset_content_type: application/zip
