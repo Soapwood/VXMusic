@@ -10,6 +10,7 @@
     <ApplicationIcon>Images\VXLogoIcon.ico</ApplicationIcon>
     <RunPostBuildEvent>Always</RunPostBuildEvent>
     <Version>0.6.0</Version>
+    <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
@@ -156,6 +157,7 @@
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="9.0.0-preview.4.24266.19" />
     <PackageReference Include="NLog" Version="5.2.3" />
     <PackageReference Include="NLog.Extensions.Logging" Version="5.3.3" />
+    <PackageReference Include="Octokit" Version="13.0.0" />
     <PackageReference Include="SpotifyAPI.Web" Version="7.1.1" />
     <PackageReference Include="System.Windows.Interactivity.WPF" Version="2.0.20525" />
     <PackageReference Include="ToastNotifications" Version="2.5.1" />
@@ -228,12 +230,14 @@
     <Message Text="Project Directory: $(ProjectDir)" Importance="high" />
     <Message Text="Publish Directory: $(OutDir)" Importance="high" />
     <Exec Command="xcopy &quot;$(ProjectDir)\Overlay\bin&quot; &quot;$(OutDir)\Overlay&quot; /E /H /Y" />
+    <Exec Command="xcopy &quot;$(ProjectDir)..\VXAutoUpdater\bin\$(Configuration)\net7.0-windows\*&quot; &quot;$(OutDir)VXAutoUpdater\&quot; /E /H /Y"/>
   </Target>
 
   <Target Name="PostPublishStep" AfterTargets="Publish">
     <Message Text="Project Directory: $(ProjectDir)" Importance="high" />
     <Message Text="Publish Directory: $(PublishDir)" Importance="high" />
     <Exec Command="xcopy &quot;$(ProjectDir)\Overlay\bin&quot; &quot;$(PublishDir)\Overlay&quot; /E /H /Y" />
+    <Exec Command="xcopy &quot;$(ProjectDir)..\VXAutoUpdater\bin\$(Configuration)\net7.0-windows\*&quot; &quot;$(PublishDir)VXAutoUpdater\&quot; /E /H /Y" />
   </Target>
 
 <!--  <ItemGroup>-->
