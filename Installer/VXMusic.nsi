@@ -19,6 +19,13 @@ Section "MainSection" SEC01
   File /r "${SOURCE_PATH}\Publish\x64\*.*"
   # Create a shortcut on the Desktop
   CreateShortcut "$DESKTOP\VXMusic.lnk" "$INSTDIR\VXMusicDesktop.exe"
+
+  # Write registry entries for Launching and Branding
+  WriteRegStr HKLM "Software\VirtualXtensions\VXMusic" "InstallPath" "$INSTDIR"
+  WriteRegStr HKLM "Software\VirtualXtensions\VXMusic" "Executable" "$INSTDIR\VXMusicDesktop.exe"
+  WriteRegStr HKLM "Software\VirtualXtensions\VXMusic" "Version" "${PRODUCT_VERSION}"
+  WriteRegStr HKLM "Software\VirtualXtensions\VXMusic" "Publisher" "${PRODUCT_PUBLISHER}"
+  WriteRegStr HKLM "Software\VirtualXtensions\VXMusic" "Website" "${PRODUCT_WEB_SITE}"
   
    # Write registry entries for Add/Remove Programs
    WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}" "DisplayName" "${PRODUCT_NAME}"
@@ -59,21 +66,19 @@ Caption "VXMusic Installer"
 !define MUI_UNICON "${SOURCE_PATH}\VXMusicDesktop\Images\VXLogoIcon.ico"
 
 !define MUI_HEADERIMAGE
-!define MUI_HEADERIMAGE_BITMAP "${SOURCE_PATH}\VXMusicDesktop\Images\InstallerBranding.bmp"
-!define MUI_HEADERIMAGE_UNBITMAP "${SOURCE_PATH}\VXMusicDesktop\Images\InstallerBranding.bmp"
+!define MUI_HEADERIMAGE_BITMAP "${SOURCE_PATH}\VXMusicDesktop\Images\Installer\HeaderBranding.bmp"
+!define MUI_HEADERIMAGE_UNBITMAP "${SOURCE_PATH}\VXMusicDesktop\Images\Installer\HeaderBranding.bmp"
 !define MUI_HEADERIMAGE_BITMAP_STRETCH AspectFitHeight
 !define MUI_HEADERIMAGE_UNBITMAP_STRETCH AspectFitHeight
 
-!define MUI_BGCOLOR 1F212D
+!define MUI_BGCOLOR E8E9EB
 !define MUI_TEXTCOLOR FFFFFF
-!define MUI_INSTFILESPAGE_COLORS "FFFFFF 1F212D"
-!define MUI_FINISHPAGE_LINK_COLOR FFFFFF
+!define MUI_INSTFILESPAGE_COLORS "FFFFFF E8E9EB"
 
 # Welcome page settings
-!define MUI_WELCOMEPAGE_TITLE ""
-!define MUI_WELCOMEFINISHPAGE_TITLE "Welcome to the VXMusic Setup Wizard"
-!define MUI_WELCOMEFINISHPAGE_TEXT "This wizard will guide you through the installation of VXMusic. Click Next to continue."
-!define MUI_WELCOMEFINISHPAGE_BITMAP "${SOURCE_PATH}\VXMusicDesktop\Images\InstallerBranding.bmp"
+!define MUI_WELCOMEPAGE_TITLE "Welcome to the VXMusic Installation Wizard"
+!define MUI_WELCOMEPAGE_TEXT "Thank you for using VXMusic! This installer will guide you through installation.$\r$\n$\r$\nVXMusic Version ${PRODUCT_VERSION}$\r$\n$\r$\nIf you need any assistance, please reach out on Discord.$\r$\n$\r$\nClick Next to continue."
+!define MUI_WELCOMEFINISHPAGE_BITMAP "${SOURCE_PATH}\VXMusicDesktop\Images\Installer\LeftBarBranding.bmp"
 !define MUI_WELCOMEFINISHPAGE_BITMAP_NOSTRETCH
 
 # Welcome page settings
@@ -84,9 +89,13 @@ Caption "VXMusic Installer"
 !define MUI_FINISHPAGE_TITLE "Installation Complete"
 !define MUI_UNWELCOMEFINISHPAGE_TITLE "Installation Complete"
 !define MUI_UNWELCOMEFINISHPAGE_TEXT "VXMusic has been successfully installed on your computer. Click Finish to exit the installer."
-!define MUI_UNWELCOMEFINISHPAGE_BITMAP "${SOURCE_PATH}\VXMusicDesktop\Images\InstallerBranding.bmp"
-!define MUI_UNWELCOMEFINISHPAGE_UNBITMAP "${SOURCE_PATH}\VXMusicDesktop\Images\InstallerBranding.bmp"
+!define MUI_UNWELCOMEFINISHPAGE_BITMAP "${SOURCE_PATH}\VXMusicDesktop\Images\Installer\LeftBarBranding.bmp"
+!define MUI_UNWELCOMEFINISHPAGE_UNBITMAP "${SOURCE_PATH}\VXMusicDesktop\Images\Installer\LeftBarBranding.bmp"
 !define MUI_UNWELCOMEFINISHPAGE_BITMAP_NOSTRETCH
+
+!define MUI_FINISHPAGE_LINK "Follow me on Twitter!"
+!define MUI_FINISHPAGE_LINK_LOCATION "https://twitter.com/Soapwood_"
+!define MUI_FINISHPAGE_LINK_COLOR 0000FF
 
 !define MUI_PRODUCT "VXMusic"
 !insertmacro MUI_PAGE_WELCOME
