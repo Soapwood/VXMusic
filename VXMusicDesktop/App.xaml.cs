@@ -20,7 +20,6 @@ using VXMusic;
 using System.Diagnostics;
 using System.Reflection;
 using System.Threading;
-using System.Windows.Forms;
 using VXMusic.VRChat;
 using VXMusicDesktop.Toast;
 using VXMusicDesktop.Update;

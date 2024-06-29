@@ -141,7 +141,7 @@ public class VXMusicActions
         var spotify = await SpotifyClientBuilder.Instance;
 
         var me = await spotify.UserProfile.Current();
-        Logger.LogInformation($"Welcome {me.DisplayName} ({me.Id}), you're authenticated!");
+        Logger.LogInformation($"Spotify account {me.DisplayName} ({me.Id}) authenticated successfully.");
 
         // get track name from output
 
@@ -151,7 +151,6 @@ public class VXMusicActions
 
         PlaylistAddItemsRequest playlistAddItemsRequest = new PlaylistAddItemsRequest(new List<string>()
         {
-            //result.result.song_link
             uri
         });
 

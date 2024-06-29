@@ -257,6 +257,7 @@ public class AudDSettings
 public class SpotifySettings
 {
     public required string ClientId { get; set; }
+    public PlaylistSaveSettings PlaylistSavingSaveSetting { get; set; }
 }
 
 public class LastfmSettings

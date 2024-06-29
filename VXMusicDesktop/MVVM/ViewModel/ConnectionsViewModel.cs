@@ -31,6 +31,8 @@ namespace VXMusicDesktop.MVVM.ViewModel
 
         public ICommand LinkSpotifyButtonClick => linkSpotifyButtonClick ??= new RelayCommand(PerformLinkSpotifyButtonClick);
         public ICommand LinkLastfmButtonClick => linkLastfmButtonClick ??= new RelayCommand(PerformLastfmLogin);
+        
+        public ICommand SetSpotifyPlaylistTrackingSetting => linkLastfmButtonClick ??= new RelayCommand(PerformSetSpotifyPlaylistSaveSetting);
 
         private bool _isLastFmConnected = false;
 
@@ -183,6 +185,17 @@ namespace VXMusicDesktop.MVVM.ViewModel
                 App.VXMusicSession.ConnectionsSettings.IsLastfmConnected = true;
                 VXMusicSession.RaiseLastFmLoggedIn();
             }
+        }
+        
+        private async void PerformSetSpotifyPlaylistSaveSetting(object commandParameter)
+        {
+
+            if (String.IsNullOrEmpty(LastFmUsername) || String.IsNullOrEmpty(LastFmPassword))
+                return;
+
+            //VXUserSettings.Connections.SetSpotifyPlaylistSaveSetting(LastFmUsername);
+            //App.VXMusicSession.ConnectionsSettings.LastfmSettings.ClientSecret;
+            
         }
 
         private string DetermineLastFmLinkButtonStateContent()

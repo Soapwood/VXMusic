@@ -189,5 +189,17 @@ namespace VXMusicDesktop.Properties {
                 this["IsVRChatNotificationsEnabled"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Use_VRChat_World_Name")]
+        public string SpotifyPlaylistSaveSetting {
+            get {
+                return ((string)(this["SpotifyPlaylistSaveSetting"]));
+            }
+            set {
+                this["SpotifyPlaylistSaveSetting"] = value;
+            }
+        }
     }
 }

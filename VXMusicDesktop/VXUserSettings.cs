@@ -139,6 +139,18 @@ public class VXUserSettings
             VXMusicDesktop.Properties.Settings.Default.LastfmPassword = password;
             Properties.Settings.Default.Save();
         }
+        
+        public static PlaylistSaveSettings GetSpotifyPlaylistSaveSetting()
+        {
+            Enum.TryParse<PlaylistSaveSettings>(Properties.Settings.Default.SpotifyPlaylistSaveSetting, out var saveSetting);
+            return saveSetting;
+        }
+        
+        public static void SetSpotifyPlaylistSaveSetting(PlaylistSaveSettings playlistSaveSetting)
+        {
+            VXMusicDesktop.Properties.Settings.Default.SpotifyPlaylistSaveSetting = playlistSaveSetting.ToString();
+            Properties.Settings.Default.Save();
+        }
     }
 
     internal class Overlay

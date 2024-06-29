@@ -54,7 +54,6 @@ public class SpotifyAuthentication
 
     private static void Exiting()
     {
-        //Console.CursorVisible = true; // wtf??
     }
 
     public static void RaiseSpotifyLoggingIn()
@@ -65,9 +64,6 @@ public class SpotifyAuthentication
         } catch (Exception e) {
             Trace.TraceError("SpotifyLogin delegate has not been created.");
         }
-        
-        //SpotifyAuthentication.SpotifyLogin?.Invoke(null, EventArgs.Empty);
-        //SpotifyLogin?.Invoke(null, EventArgs.Empty);
     }
 
     public static async Task<int> GetSpotifyUserAuthentication()
