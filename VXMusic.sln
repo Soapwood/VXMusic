@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VXMusic", "VXMusic\VXMusic.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VXMusicDesktop", "VXMusicDesktop\VXMusicDesktop.csproj", "{F1809D99-06D4-4E9E-8FAD-27AE88AE92DD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VXAutoUpdater", "VXAutoUpdater\VXAutoUpdater.csproj", "{4105C969-2E23-4D62-BFCB-77C008389FE1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{F1809D99-06D4-4E9E-8FAD-27AE88AE92DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F1809D99-06D4-4E9E-8FAD-27AE88AE92DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F1809D99-06D4-4E9E-8FAD-27AE88AE92DD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4105C969-2E23-4D62-BFCB-77C008389FE1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4105C969-2E23-4D62-BFCB-77C008389FE1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4105C969-2E23-4D62-BFCB-77C008389FE1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4105C969-2E23-4D62-BFCB-77C008389FE1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
