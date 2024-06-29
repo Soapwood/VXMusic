@@ -217,12 +217,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="VXMusic">
-      <HintPath>bin\Debug\net7.0-windows\VXMusic.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\VXMusic\VXMusic.csproj" />
   </ItemGroup>
 
@@ -230,7 +224,7 @@
     <Message Text="Project Directory: $(ProjectDir)" Importance="high" />
     <Message Text="Publish Directory: $(OutDir)" Importance="high" />
     <Exec Command="xcopy &quot;$(ProjectDir)\Overlay\bin&quot; &quot;$(OutDir)\Overlay&quot; /E /H /Y" />
-    <Exec Command="xcopy &quot;$(ProjectDir)..\VXAutoUpdater\bin\$(Configuration)\net7.0-windows\*&quot; &quot;$(OutDir)VXAutoUpdater\&quot; /E /H /Y"/>
+    <Exec Command="xcopy &quot;$(ProjectDir)..\VXAutoUpdater\bin\$(Configuration)\net7.0-windows\*&quot; &quot;$(OutDir)VXAutoUpdater\&quot; /E /H /Y" />
   </Target>
 
   <Target Name="PostPublishStep" AfterTargets="Publish">
