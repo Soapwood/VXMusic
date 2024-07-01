@@ -93,7 +93,7 @@
                       Width="180" 
                       Height="25"
                       Panel.ZIndex="3"
-                      Margin="0,0,0,0">
+                      Margin="20,0,0,0">
                       <!-- SelectionChanged="ThemeDropdownSelection"> -->
             </ComboBox>
             
@@ -244,8 +244,10 @@
             <ProgressBar x:Name="ReleaseUpdateProgressBar"
                          Grid.Row="2" 
                          Grid.Column="2" 
+                         Margin="0,0,0,15"
                          Width="180" Height="15" 
-                         Minimum="0" Maximum="100" />
+                         Minimum="0" Maximum="100"
+                         VerticalAlignment="Bottom" />
                          <!-- Value="{Binding Progress}" /> -->
         </Grid>
     </Border>

@@ -16,24 +16,40 @@ namespace VXMusicDesktop.MVVM.ViewModel
     {
         public event PropertyChangedEventHandler? PropertyChanged;
 
-        //private RelayCommand _openUrlInBrowserClick;
+        private RelayCommand askForUpdatesToggleButton;
 
-        //public ICommand OpenUrlInBrowserClick => _openUrlInBrowserClick ??= new RelayCommand(PerformOpenUrlInBrowserClick);
+        public ICommand AskForUpdatesOnStartupToggleButton =>
+            askForUpdatesToggleButton ??= new RelayCommand(SetAskForUpdatesOnStartup);
+        
+        private bool _askForUpdatesOnStartup;
 
+        public AboutViewModel()
+        {
+            AskForUpdatesOnStartup = VXUserSettings.Settings.GetAskForUpdatesOnStartup();
+        }
+        
+        public bool AskForUpdatesOnStartup
+        {
+            get { return _askForUpdatesOnStartup; }
+            set
+            {
+                if (_askForUpdatesOnStartup != value)
+                {
+                    _askForUpdatesOnStartup = value;
+                    OnPropertyChanged(nameof(AskForUpdatesOnStartup));
+                }
+            }
+        }
+        
         protected virtual void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-
-        //private void PerformOpenUrlInBrowserClick(object commandParameter)
-        //{
-        //    var link = (Hyperlink)commandParameter;
-
-        //    Process.Start(new ProcessStartInfo
-        //    {
-        //        FileName = link.NavigateUri.ToString(),
-        //        UseShellExecute = true
-        //    });
-        //}
+        
+        public void SetAskForUpdatesOnStartup(object commandParameter)
+        {
+            VXUserSettings.Settings.SetAskForUpdatesOnStartup(_askForUpdatesOnStartup);
+        }
+        
     }
 }

@@ -24,6 +24,7 @@
         <BitmapImage x:Key="CloseButtonImage" UriSource="{Binding Source={x:Static custom:ColourSchemeManager.CloseImage}, Path=UriSource}"/>
         <BitmapImage x:Key="MinimiseButtonImage" UriSource="{Binding Source={x:Static custom:ColourSchemeManager.MinimiseImage}, Path=UriSource}"/>
         <BitmapImage x:Key="VXMusicOverlayImage" UriSource="{Binding Source={x:Static custom:ColourSchemeManager.VXMusicOverlayImage}, Path=UriSource}"/>
+        <BitmapImage x:Key="DownloadButtonImage" UriSource="{Binding Source={x:Static custom:ColourSchemeManager.DownloadButtonImage}, Path=UriSource}"/>
 
         <SolidColorBrush x:Key="PrimaryColor" Color="{Binding Source={x:Static custom:ColourSchemeManager.PrimaryColour}, Path=Color}" />
         <SolidColorBrush x:Key="SecondaryColor" Color="{Binding Source={x:Static custom:ColourSchemeManager.SecondaryColour}, Path=Color}" />
@@ -96,6 +97,33 @@
                        Panel.ZIndex="3"
                        HorizontalAlignment="Left"
                        Margin="25,483,0,0" />
+            
+            <StackPanel Grid.Row="1" 
+                        Grid.Column="1"
+                        Orientation="Horizontal">
+                <TextBlock x:Name="MessageTextBlock" 
+                           Margin="20,0,0,2"
+                           Foreground="{StaticResource TextBasic}"
+                           Width="Auto" Height="30" 
+                           TextWrapping="Wrap"
+                           DockPanel.Dock="Bottom"
+                           HorizontalAlignment="Right"
+                           VerticalAlignment="Bottom" />
+            
+                <Button Name="LaunchUpdaterButton" 
+                        Height="20" 
+                        Width="20"
+                        Margin="5,0,0,14"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Bottom"
+                        Command="{Binding LaunchVXUpdater}"
+                        BorderThickness="0">
+                    <Button.Background>
+                        <ImageBrush x:Name="LaunchUpdaterImage" ImageSource="{StaticResource DownloadButtonImage}" Stretch="UniformToFill" RenderOptions.BitmapScalingMode="HighQuality"/>
+                    </Button.Background>
+                </Button>
+                
+            </StackPanel>
             
             <!-- Version Text -->
             <TextBlock x:Name="VersionTextBlock"

@@ -147,6 +147,14 @@
     <Content Include="Overlay\Images\VXLogoBase64.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Remove="Images\DownloadBlack.png" />
+    <Resource Include="Images\DownloadBlack.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <None Remove="Images\DownloadWhite.png" />
+    <Resource Include="Images\DownloadWhite.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
   <ItemGroup>

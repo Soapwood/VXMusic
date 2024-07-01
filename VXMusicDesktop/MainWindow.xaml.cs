@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Diagnostics;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using VXMusicDesktop.Theme;
 using VXMusicDesktop.Toast;
+using VXMusicDesktop.Update;
 
 namespace VXMusicDesktop
 {
@@ -24,6 +27,9 @@ namespace VXMusicDesktop
             
             // Anchor toast notifications to Main window instance
             App.VXMusicSession.ToastNotification = new ToastNotificationClient(this);
+            
+            CheckForUpdates();
+            
 
             //this.StateChanged += MainWindow_StateChanged;
             //this.Activated += MainWindow_Activated;
@@ -85,6 +91,11 @@ namespace VXMusicDesktop
             MainWindowRadioButtonOverlay.Background = (bool)MainWindowRadioButtonOverlay.IsChecked ? ColourSchemeManager.SecondaryColour : ColourSchemeManager.PrimaryColour;
             MainWindowRadioButtonAbout.Background = (bool)MainWindowRadioButtonAbout.IsChecked ? ColourSchemeManager.SecondaryColour : ColourSchemeManager.PrimaryColour;
         }
+        
+        public void FocusMainWindow()
+        {
+            this.WindowState = WindowState.Normal;
+        }
 
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -131,6 +142,37 @@ namespace VXMusicDesktop
             else
             {
                 DesktopThemeComboBoxHintText.Visibility = DesktopThemeComboBox.SelectedItem == null ? Visibility.Visible : Visibility.Collapsed;
+            }
+        }
+
+        private void SetMessageTextBox(string messageContent)
+        {
+            MessageTextBlock.Text = messageContent;
+        }
+        
+        async void CheckForUpdates()
+        {
+            var vxMusicUpdater = new VXMusicUpdate("Soapwood", "VXMusic", "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");
+            
+            bool isUpdateAvailable = await vxMusicUpdater.CheckForUpdates(App.ApplicationVersion.ToString());
+
+            if (isUpdateAvailable)
+            {
+                SetMessageTextBox("An update is available!");
+
+                if (VXUserSettings.Settings.GetAskForUpdatesOnStartup())
+                {
+                    var updateRequested = MessageBox.Show($"An update for VXMusic is available!{Environment.NewLine}Would you like to update now?", "VXMusic Update Available", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            
+                    if (updateRequested == MessageBoxResult.Yes)
+                    {
+                        VXMusicUpdate.LaunchVXMusicUpdater();
+                    }
+                    else
+                    {
+                        FocusMainWindow();
+                    }
+                }
             }
         }
     }

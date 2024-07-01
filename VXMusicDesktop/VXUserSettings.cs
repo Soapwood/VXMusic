@@ -183,6 +183,22 @@ public class VXUserSettings
         }
     }
 
+    internal class Settings
+    {
+        public static void SetAskForUpdatesOnStartup(bool askForUpdatesOnStartup)
+        {
+            VXMusicDesktop.Properties.Settings.Default.AskForUpdatesOnStartupEnabled = askForUpdatesOnStartup;
+            VXMusicDesktop.Properties.Settings.Default.Save();
+            
+            Logger.LogDebug($"User Setting AskForUpdatesOnStartup set to {Properties.Settings.Default.AskForUpdatesOnStartupEnabled}");
+        }
+    
+        public static bool GetAskForUpdatesOnStartup()
+        {
+            return VXMusicDesktop.Properties.Settings.Default.AskForUpdatesOnStartupEnabled;
+        }
+    }
+
     internal class Desktop
     {
         public static DesktopTheme GetCurrentDesktopTheme()

@@ -40,6 +40,9 @@ public class SharedViewModel : INotifyPropertyChanged
     
     // Overlay Shared Fields
     private bool _isOverlayRunning;
+    
+    // Update Shared Fields
+    private bool _isUpdateAvailable;
 
     public bool IsShazamApiConnected
     {
@@ -151,6 +154,16 @@ public class SharedViewModel : INotifyPropertyChanged
         {
             _isRecognitionRunning = value;
             OnPropertyChanged(nameof(IsRecognitionRunning));
+        }
+    }
+    
+    public bool IsUpdateAvailable
+    {
+        get { return _isUpdateAvailable; }
+        set
+        {
+            _isUpdateAvailable = value;
+            OnPropertyChanged(nameof(IsUpdateAvailable));
         }
     }
 

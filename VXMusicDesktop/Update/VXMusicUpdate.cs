@@ -1,6 +1,9 @@
 using System;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows;
 using Octokit;
 
 namespace VXMusicDesktop.Update;
@@ -40,6 +43,8 @@ public class VXMusicUpdate
             // Get the latest release from GitHub
             var releases = await _gitHubClient.Repository.Release.GetAll(_repositoryOwner, _repositoryName);
             var latestRelease = releases.FirstOrDefault();
+            
+            // TODO Compare against current version
 
             if (latestRelease != null && latestRelease.TagName != currentVersion)
             {
@@ -54,5 +59,35 @@ public class VXMusicUpdate
 
         // No new update available or error occurred
         return false;
+    }
+
+    public static async Task LaunchVXMusicUpdater()
+    {
+        string currentDirectory = Directory.GetCurrentDirectory();
+        string executableName = "VXAutoUpdater.exe"; // Replace with your executable's name
+        string executablePath = Path.Combine(currentDirectory, "VXAutoUpdater", executableName);
+                
+        try
+        {
+            ProcessStartInfo startInfo = new ProcessStartInfo
+            {
+                FileName = executablePath,
+                UseShellExecute = false
+                // Optionally, you can set other properties like Arguments, WorkingDirectory, etc.
+            };
+            
+            Process process = Process.Start(startInfo);
+            
+            if (process != null)
+            {
+                //Console.WriteLine($"Started process {process.ProcessName} with ID {process.Id}");
+            }
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"Failed to start new application: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+                
+        Environment.Exit(0); // Exit the current application
     }
 }

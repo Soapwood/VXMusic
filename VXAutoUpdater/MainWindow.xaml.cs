@@ -39,7 +39,9 @@ namespace VXAutoUpdaterDesktop
             GetLatestSupportedVersions();
             LoadComboBoxItems();
 
-            UpdateTextBlockMessage("An update is ready");
+            UpdateTextBlockMessage("");
+
+            FocusMainWindow();
         }
         
         private void UpdateButton_Click(object sender, RoutedEventArgs e)
@@ -68,6 +70,11 @@ namespace VXAutoUpdaterDesktop
             {
                 ReleaseUpdateProgressBar.Value = progressPercent;
             }
+        }
+        
+        public void FocusMainWindow()
+        {
+            this.WindowState = WindowState.Normal;
         }
         
         private void LoadComboBoxItems()
@@ -99,33 +106,7 @@ namespace VXAutoUpdaterDesktop
         {
             this.Close(); // TODO Close down services gracfully
         }
-
-        // private void LaunchUpdatedVXMusicDesktop()
-        // {
-        //     string executableName = "VXMusicDesktop.exe"; 
-        //     string executablePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86), "VXMusic", executableName); // TODO Make this more generic
-        //     
-        //     try
-        //     {
-        //         ProcessStartInfo startInfo = new ProcessStartInfo
-        //         {
-        //             FileName = executablePath
-        //         };
-        //     
-        //         Process process = Process.Start(startInfo);
-        //     
-        //         if (process != null)
-        //         {
-        //         }
-        //     }
-        //     catch (Exception ex)
-        //     {
-        //         MessageBox.Show($"Failed to start new application: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-        //     }
-        //
-        //     UpdateTextBlockMessage("Launching VXMusic...");
-        //     //Environment.Exit(0); // Exit the current application
-        // }
+        
         private void LaunchUpdatedVXMusicDesktop()
         {
             UpdateTextBlockMessage("Launching VXMusic...");

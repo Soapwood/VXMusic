@@ -47,6 +47,9 @@
     <Setting Name="SpotifyPlaylistSaveSetting" Type="System.String" Scope="User">
       <Value Profile="(Default)">Use_VRChat_World_Name</Value>
     </Setting>
+    <Setting Name="AskForUpdatesOnStartupEnabled" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
 

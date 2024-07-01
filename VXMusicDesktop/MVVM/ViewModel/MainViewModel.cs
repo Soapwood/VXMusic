@@ -2,6 +2,7 @@
 using VXMusic.Overlay;
 using VXMusicDesktop.Core;
 using VXMusicDesktop.Theme;
+using VXMusicDesktop.Update;
 
 namespace VXMusicDesktop.MVVM.ViewModel
 {
@@ -18,6 +19,7 @@ namespace VXMusicDesktop.MVVM.ViewModel
         public RelayCommand OverlayViewCommand { get; set; }
         public RelayCommand AboutViewCommand { get; set; }
         public RelayCommand LaunchVXMusicOverlay { get; set; }
+        public RelayCommand LaunchVXUpdater { get; set; }
 
         public static SharedViewModel SharedVM { get; set; }
         public HomeViewModel HomeVM { get; set; }
@@ -100,6 +102,11 @@ namespace VXMusicDesktop.MVVM.ViewModel
                     App.VXMOverlayProcess =
                         VXMusicOverlayInterface.LaunchVXMOverlayRuntime(App.VXMusicSession.OverlaySettings.RuntimePath);
                 }
+            });
+            
+            LaunchVXUpdater = new RelayCommand(o =>
+            {
+                VXMusicUpdate.LaunchVXMusicUpdater();
             });
         }
     }

@@ -55,9 +55,7 @@ namespace VXMusicDesktop
             //Logger.LogTrace($"Booting VXMusic Desktop Client...");
             var thingy = Assembly.GetExecutingAssembly().GetName().Version.ToString();
             ApplicationVersion = Assembly.GetExecutingAssembly().GetName().Version;
-
-            CheckForUpdates();
-
+            
             IConfiguration configuration = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
@@ -169,44 +167,6 @@ namespace VXMusicDesktop
             ServiceProvider = services.BuildServiceProvider();
             
             Logger = ServiceProvider.GetRequiredService<ILogger<App>>();
-        }
-        
-        async void CheckForUpdates()
-        {
-            var vxMusicUpdater = new VXMusicUpdate("Soapwood", "VXMusic", "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");
-            bool isUpdateAvailable = await vxMusicUpdater.CheckForUpdates(ApplicationVersion.ToString());
-            
-            var updateRequested = MessageBox.Show($"An update for VXMusic is available!{Environment.NewLine}Would you like to update now?", "VXMusic Update Available", MessageBoxButton.YesNo, MessageBoxImage.Question);
-            
-            if (updateRequested == MessageBoxResult.Yes)
-            {
-                string currentDirectory = Directory.GetCurrentDirectory();
-                string executableName = "VXAutoUpdater.exe"; // Replace with your executable's name
-                string executablePath = Path.Combine(currentDirectory, "VXAutoUpdater", executableName);
-                
-                try
-                {
-                    ProcessStartInfo startInfo = new ProcessStartInfo
-                    {
-                        FileName = executablePath,
-                        UseShellExecute = false
-                        // Optionally, you can set other properties like Arguments, WorkingDirectory, etc.
-                    };
-            
-                    Process process = Process.Start(startInfo);
-            
-                    if (process != null)
-                    {
-                        //Console.WriteLine($"Started process {process.ProcessName} with ID {process.Id}");
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Failed to start new application: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
-                
-                Environment.Exit(0); // Exit the current application
-            }
         }
 
         void VXMusicOverlay_Exit(object sender, ExitEventArgs e)

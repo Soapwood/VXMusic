@@ -82,6 +82,8 @@ namespace VXMusicDesktop.Theme
         public static readonly string LeftHandButtonDisabled = "Images/LeftHandIconDisabled.png";
         public static readonly string RightHandButtonEnabled = "Images/RightHandIconEnabled.png";
         public static readonly string RightHandButtonDisabled = "Images/RightHandIconDisabled.png";
+        public static readonly string DarkmodeDownloadButton = "Images/DownloadWhite.png";
+        public static readonly string LightmodeDownloadButton = "Images/DownloadBlack.png";
 
         public static SolidColorBrush PrimaryColour { get; set; }
         public static SolidColorBrush SecondaryColour { get; set; }
@@ -101,6 +103,7 @@ namespace VXMusicDesktop.Theme
         public static BitmapImage LeftHandDisabledImage { get; set; }
         public static BitmapImage RightHandEnabledImage { get; set; }
         public static BitmapImage RightHandDisabledImage { get; set; }
+        public static BitmapImage DownloadButtonImage { get; set; }
 
         // This is used to access the values of the DesktopTheme Enum in XAML
         public static DesktopTheme[] DesktopThemeValues
@@ -165,6 +168,7 @@ namespace VXMusicDesktop.Theme
             LeftHandDisabledImage = new BitmapImage(new Uri($"pack://application:,,,/{ColourSchemeManager.LeftHandButtonDisabled}")); 
             RightHandEnabledImage = new BitmapImage(new Uri($"pack://application:,,,/{ColourSchemeManager.RightHandButtonEnabled}")); 
             RightHandDisabledImage = new BitmapImage(new Uri($"pack://application:,,,/{ColourSchemeManager.RightHandButtonDisabled}")); 
+            DownloadButtonImage = new BitmapImage(new Uri($"pack://application:,,,/{ColourSchemeManager.DarkmodeDownloadButton}")); 
             Transparent = new SolidColorBrush(FromHex(TransparentColour));
         }
 
@@ -185,6 +189,7 @@ namespace VXMusicDesktop.Theme
             LeftHandDisabledImage = new BitmapImage(new Uri($"pack://application:,,,/{ColourSchemeManager.LeftHandButtonDisabled}")); 
             RightHandEnabledImage = new BitmapImage(new Uri($"pack://application:,,,/{ColourSchemeManager.RightHandButtonEnabled}")); 
             RightHandDisabledImage = new BitmapImage(new Uri($"pack://application:,,,/{ColourSchemeManager.RightHandButtonDisabled}")); 
+            DownloadButtonImage = new BitmapImage(new Uri($"pack://application:,,,/{ColourSchemeManager.DarkmodeDownloadButton}"));
             Transparent = new SolidColorBrush(FromHex(TransparentColour));
         }
 
@@ -205,6 +210,7 @@ namespace VXMusicDesktop.Theme
             LeftHandDisabledImage = new BitmapImage(new Uri($"pack://application:,,,/{ColourSchemeManager.LeftHandButtonDisabled}")); 
             RightHandEnabledImage = new BitmapImage(new Uri($"pack://application:,,,/{ColourSchemeManager.RightHandButtonEnabled}")); 
             RightHandDisabledImage = new BitmapImage(new Uri($"pack://application:,,,/{ColourSchemeManager.RightHandButtonDisabled}")); 
+            DownloadButtonImage = new BitmapImage(new Uri($"pack://application:,,,/{ColourSchemeManager.LightmodeDownloadButton}"));
             Transparent = new SolidColorBrush(FromHex(TransparentColour));
         }
 

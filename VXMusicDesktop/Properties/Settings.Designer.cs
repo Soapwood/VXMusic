@@ -201,5 +201,17 @@ namespace VXMusicDesktop.Properties {
                 this["SpotifyPlaylistSaveSetting"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool AskForUpdatesOnStartupEnabled {
+            get {
+                return ((bool)(this["AskForUpdatesOnStartupEnabled"]));
+            }
+            set {
+                this["AskForUpdatesOnStartupEnabled"] = value;
+            }
+        }
     }
 }
