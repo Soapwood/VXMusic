@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
@@ -37,7 +38,7 @@ public class VXMusicAutoUpdater
         _repositoryName = repositoryName;
         _personalAccessToken = personalAccessToken;
 
-        AppDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "VXMusic", "AutoUpdater");
+        AppDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "VXMusic", "AutoUpdater");
         if (!Path.Exists(AppDataPath))
             Directory.CreateDirectory(AppDataPath);
 
@@ -328,5 +329,17 @@ public class VXMusicAutoUpdater
                 DirectoryCopy(subdir.FullName, temppath, copySubDirs);
             }
         }
+    }
+    
+    static void ScheduleSelfDelete(string filePath)
+    {
+        ProcessStartInfo info = new ProcessStartInfo
+        {
+            Arguments = $"/C choice /C Y /N /D Y /T 3 & Del \"{filePath}\"",
+            WindowStyle = ProcessWindowStyle.Hidden,
+            CreateNoWindow = true,
+            FileName = "cmd.exe"
+        };
+        Process.Start(info);
     }
 }

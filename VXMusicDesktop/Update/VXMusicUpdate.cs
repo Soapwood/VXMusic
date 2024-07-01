@@ -63,9 +63,13 @@ public class VXMusicUpdate
 
     public static async Task LaunchVXMusicUpdater()
     {
-        string currentDirectory = Directory.GetCurrentDirectory();
-        string executableName = "VXAutoUpdater.exe"; // Replace with your executable's name
-        string executablePath = Path.Combine(currentDirectory, "VXAutoUpdater", executableName);
+        // Prepare AppData folder for temporary copy of VXAutoUpdater
+        string autoUpdaterPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86), "VXMusic", "VXAutoUpdater");
+        string temporaryFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "VXMusic", "AutoUpdaterTemp");
+        // TODO x86 AAAAAAAAAAAAA
+        CopyDirectory(autoUpdaterPath, temporaryFolder);
+        
+        string executablePath = Path.Combine(temporaryFolder, "VXAutoUpdater.exe");
                 
         try
         {
@@ -89,5 +93,23 @@ public class VXMusicUpdate
         }
                 
         Environment.Exit(0); // Exit the current application
+    }
+
+    private static void CopyDirectory(string sourceDir, string destDir)
+    {
+        if (!Directory.Exists(destDir))
+            Directory.CreateDirectory(destDir);
+
+        foreach (string filePath in Directory.GetFiles(sourceDir))
+        {
+            string destFilePath = Path.Combine(destDir, Path.GetFileName(filePath));
+            File.Copy(filePath, destFilePath, true);
+        }
+
+        foreach (string directoryPath in Directory.GetDirectories(sourceDir))
+        {
+            string destDirPath = Path.Combine(destDir, Path.GetFileName(directoryPath));
+            CopyDirectory(directoryPath, destDirPath);
+        }
     }
 }
