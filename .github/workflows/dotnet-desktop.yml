@@ -94,6 +94,9 @@ jobs:
         Compress-Archive -Path * -DestinationPath ../VXMusic_x86_v${{ env.new_version }}.zip
       shell: pwsh
 
+    - name: makensis
+      uses: joncloud/makensis-action@v4.1
+
     - name: Create release
       id: create_release
       uses: actions/create-release@v1
@@ -104,6 +107,16 @@ jobs:
         release_name: VXMusic Release v${{ env.new_version }}
         draft: true
         prerelease: false
+
+    - name: Upload Installer Asset
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ${{ github.workspace }}/VXMusicInstaller.exe
+        asset_name: VXMusicInstaller_${{ env.new_version }}.exe
+        asset_content_type: application/octet-stream
 
     - name: Upload x64 Release Asset
       uses: actions/upload-release-asset@v1
