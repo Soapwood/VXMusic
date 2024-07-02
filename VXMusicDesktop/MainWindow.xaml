@@ -33,6 +33,7 @@
         <SolidColorBrush x:Key="TextBasic" Color="{Binding Source={x:Static custom:ColourSchemeManager.TextBasic}, Path=Color}" />
 
         <custom:BooleanToColorConverter x:Key="BooleanToColorConverter"/>
+        <BooleanToVisibilityConverter x:Key="BoolToVis" />
         
     </Window.Resources>
 
@@ -100,9 +101,10 @@
             
             <StackPanel Grid.Row="1" 
                         Grid.Column="1"
-                        Orientation="Horizontal">
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Right">
                 <TextBlock x:Name="MessageTextBlock" 
-                           Margin="20,0,0,2"
+                           Margin="20,0,5,2"
                            Foreground="{StaticResource TextBasic}"
                            Width="Auto" Height="30" 
                            TextWrapping="Wrap"
@@ -113,7 +115,7 @@
                 <Button Name="LaunchUpdaterButton" 
                         Height="20" 
                         Width="20"
-                        Margin="5,0,0,14"
+                        Margin="0,0,14,14"
                         HorizontalAlignment="Right"
                         VerticalAlignment="Bottom"
                         Command="{Binding LaunchVXUpdater}"
