@@ -96,6 +96,8 @@ jobs:
 
     - name: makensis
       uses: joncloud/makensis-action@v4.1
+      with:
+        script-file: "${{ github.workspace }}/VXMusic.nsi"
 
     - name: Create release
       id: create_release
