@@ -97,7 +97,7 @@ jobs:
     - name: makensis
       uses: joncloud/makensis-action@v4.1
       with:
-        script-file: "${{ github.workspace }}/VXMusic.nsi"
+        script-file: "${{ github.workspace }}/Installer/VXMusic.nsi"
 
     - name: Create release
       id: create_release
@@ -116,7 +116,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ${{ github.workspace }}/VXMusicInstaller.exe
+        asset_path: ${{ github.workspace }}/Installer/VXMusicInstaller.exe
         asset_name: VXMusicInstaller_${{ env.new_version }}.exe
         asset_content_type: application/octet-stream
 
