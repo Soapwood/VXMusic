@@ -85,13 +85,13 @@ jobs:
     - name: Package x64
       run: |
         cd ${{ github.workspace }}/Publish/x64
-        Compress-Archive -Path * -DestinationPath ../VXMusic_x64_v${{ env.new_version }}.zip
+        Compress-Archive -Path * -DestinationPath ../../VXMusic_x64_v${{ env.new_version }}.zip
       shell: pwsh
 
     - name: Package x86
       run: |
         cd ${{ github.workspace }}/Publish/x86
-        Compress-Archive -Path * -DestinationPath ../VXMusic_x86_v${{ env.new_version }}.zip
+        Compress-Archive -Path * -DestinationPath ../../VXMusic_x86_v${{ env.new_version }}.zip
       shell: pwsh
 
     - name: makensis
