@@ -13,12 +13,12 @@
       <Resource Include="Fonts\Brushstrike trial.ttf">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Resource>
-      <Content Include="Images\CloseIconWhite.png">
+      <Resource Include="Images\CloseIconWhite.png">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Content>
-      <Content Include="Images\MinimiseIconWhite.png">
+      </Resource>
+      <Resource Include="Images\MinimiseIconWhite.png">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Content>
+      </Resource>
     </ItemGroup>
 
     <ItemGroup>

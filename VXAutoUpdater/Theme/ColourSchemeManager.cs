@@ -71,8 +71,8 @@ namespace VXAutoUpdaterDesktop.Theme
             DisabledGrey = new SolidColorBrush(FromHex(DefaultDisableGrey)); // pack://application:,,,/
             Transparent = new SolidColorBrush(FromHex(TransparentColour));
             
-            CloseImage = new BitmapImage(new Uri($"pack://application:,,,/{ColourSchemeManager.DarkmodeCloseButton}"));
-            MinimiseImage = new BitmapImage(new Uri($"pack://application:,,,/{ColourSchemeManager.DarkmodeMinimiseButton}"));
+            CloseImage = new BitmapImage(new Uri($"pack://application:,,,/{ColourSchemeManager.DarkmodeCloseButton}", UriKind.Absolute));
+            MinimiseImage = new BitmapImage(new Uri($"pack://application:,,,/{ColourSchemeManager.DarkmodeMinimiseButton}", UriKind.Absolute));
         }
 
         private static Color FromHex(string hex)
