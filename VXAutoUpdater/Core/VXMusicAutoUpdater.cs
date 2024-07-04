@@ -83,7 +83,7 @@ public class VXMusicAutoUpdater
                 UpdateMessageInMainWindow("Update downloaded successfully.");
                 
                 // Call the method to extract and replace files
-                string extractPath = Path.Combine(_autoUpdater.AppDataPath, $"VXMusicUpdate-{_autoUpdater.UpdateZipName}");
+                string extractPath = Path.Combine(_autoUpdater.AppDataPath, $"{_autoUpdater.UpdateZipName.Split(".zip")[0]}");
                 string targetPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86), "VXMusic"); // TODO base or x86?
                 
                 _autoUpdater.ExtractAndReplace(_autoUpdater.UpdateZipPath, extractPath, targetPath);
@@ -192,7 +192,8 @@ public class VXMusicAutoUpdater
             if (release != null)
             {
                 // Download the release asset (usually a ZIP file)
-                var asset = release.Assets.FirstOrDefault();
+                // TODO Check for zip, either x86/x64
+                var asset = release.Assets.FirstOrDefault(release => release.Name.Contains(".zip"));
                 if (asset != null)
                 {
                     UpdateZipName = asset.Name;
@@ -268,10 +269,35 @@ public class VXMusicAutoUpdater
 
         // Extract the ZIP file
         UpdateMessageInMainWindow("Extracting Release Zip...");
-        ZipFile.ExtractToDirectory(zipPath, extractPath, true);
 
+        try
+        {
+            ZipFile.ExtractToDirectory(zipPath, extractPath, true);
+        }
+        catch (UnauthorizedAccessException uae)
+        {
+            Console.WriteLine("User does not have the required privileges, please run as Administrator");
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine($"An error occured: {e}");
+        }
+
+        UpdateMessageInMainWindow("Replacing current installation...");
         // Replace the contents of the target directory
-        ReplaceDirectoryContents(extractPath, targetPath);
+        
+        try
+        {
+            ReplaceDirectoryContents(extractPath, targetPath);
+        }
+        catch (UnauthorizedAccessException uae)
+        {
+            Console.WriteLine("User does not have the required privileges, please run as Administrator");
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine($"An error occured: {e}");
+        }
     }
 
     private void ReplaceDirectoryContents(string sourceDir, string targetDir)
