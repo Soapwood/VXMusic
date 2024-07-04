@@ -76,11 +76,11 @@ jobs:
     - name: Build solution
       run: dotnet build --configuration Release --no-restore
 
-    - name: Publish x64
-      run: dotnet publish -r win-x64 -c Release -o ${{ github.workspace }}/Publish/x64
+    - name: Publish VXMusicDesktop x64
+      run: dotnet publish ${{ github.workspace }}/VXMusicDesktop/VXMusicDesktop.csproj -r win-x64 -c Release -o ${{ github.workspace }}/Publish/x64
 
-    - name: Publish x86
-      run: dotnet publish -r win-x86 -c Release -o ${{ github.workspace }}/Publish/x86
+    - name: Publish VXMusicDesktop x86
+      run: dotnet publish ${{ github.workspace }}/VXMusicDesktop/VXMusicDesktop.csproj -r win-x86 -c Release -o ${{ github.workspace }}/Publish/x86
 
     - name: Package x64
       run: |

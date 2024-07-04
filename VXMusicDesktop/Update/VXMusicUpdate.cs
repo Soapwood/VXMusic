@@ -92,7 +92,7 @@ public class VXMusicUpdate
             MessageBox.Show($"Failed to start new application: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
         }
                 
-        Environment.Exit(0); // Exit the current application
+        //Environment.Exit(0); // Exit the current application
     }
 
     private static void CopyDirectory(string sourceDir, string destDir)
