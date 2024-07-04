@@ -126,7 +126,7 @@
 
     <StackPanel>
         <TextBlock Name="OverlayTextHeader"
-                   Text="Overlay Configuration"
+                   Text="Settings Configuration"
                    Foreground="{StaticResource TextBasic}"
                    FontSize="28"
                    HorizontalAlignment="Left"
@@ -226,7 +226,48 @@
                     </ToggleButton>
                 </StackPanel>
             </Border>
+            
+                        <Border Width="300"
+                    Height="60"
+                    CornerRadius="10"
+                    HorizontalAlignment="Left"
+                    Margin="20,10,0,0">
 
+                <Border.Background>
+                    <LinearGradientBrush x:Name="OverlayMenuOption3BoxBorderGradientBrush" StartPoint="0,0"
+                                         EndPoint="1,2">
+                        <GradientStop Offset="0.0">
+                            <GradientStop.Color>
+                                <Binding Source="{StaticResource SecondaryColor}"
+                                         Converter="{StaticResource SolidColorBrushToColorConverter}" />
+                            </GradientStop.Color>
+                        </GradientStop>
+
+                        <GradientStop Offset="0.7">
+                            <GradientStop.Color>
+                                <Binding Source="{StaticResource Accent1Colour}"
+                                         Converter="{StaticResource SolidColorBrushToColorConverter}" />
+                            </GradientStop.Color>
+                        </GradientStop>
+                    </LinearGradientBrush>
+                </Border.Background>
+
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock x:Name="AskForUpdatesOnStartupTextBlock"
+                               Text="Ask for updates on Startup"
+                               Foreground="{StaticResource TextBasic}"
+                               FontSize="12"
+                               Margin="20,0,16,0"
+                               VerticalAlignment="Center" />
+                    <ToggleButton x:Name="AskForUpdatesOnStartupToggleButton"
+                                  Style="{StaticResource SwitchButtonStyle}"
+                                  Margin="20,0,0,0"
+                                  IsChecked="{Binding AskForUpdatesOnStartup}"
+                                  Command="{Binding AskForUpdatesOnStartupToggleButton}">
+                    </ToggleButton>
+                </StackPanel>
+            </Border>
+            
         </StackPanel>
     </StackPanel>
 </UserControl>

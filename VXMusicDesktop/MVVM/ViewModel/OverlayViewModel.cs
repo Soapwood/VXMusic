@@ -12,6 +12,7 @@ namespace VXMusicDesktop.MVVM.ViewModel
         private RelayCommand launchOverlayOnStartupToggleButton;
         private RelayCommand enableOverlayOnLeftHand;
         private RelayCommand enableOverlayOnRightHand;
+        private RelayCommand askForUpdatesToggleButton;
 
         public ICommand LaunchOverlayOnStartupToggleButton =>
             launchOverlayOnStartupToggleButton ??= new RelayCommand(SetLaunchOverlayOnStartup);
@@ -21,16 +22,22 @@ namespace VXMusicDesktop.MVVM.ViewModel
 
         public ICommand EnableOverlayOnRightHand =>
             enableOverlayOnRightHand ??= new RelayCommand(SetEnableOverlayOnRightHand);
+        
+        public ICommand AskForUpdatesOnStartupToggleButton =>
+            askForUpdatesToggleButton ??= new RelayCommand(SetAskForUpdatesOnStartup);
 
         private bool _launchOverlayOnStartup;
         private bool _overlayEnabledOnLeftHand;
         private bool _overlayEnabledOnRightHand;
+        private bool _askForUpdatesOnStartup;
+
 
         public OverlayViewModel()
         {
             LaunchOverlayOnStartup = VXUserSettings.Overlay.GetCurrentOverlayLaunchOnStartup();
             OverlayEnabledOnLeftHand = VXUserSettings.Overlay.GetOverlayAnchor() == VXMusicOverlayAnchor.LeftHand;
             OverlayEnabledOnRightHand = VXUserSettings.Overlay.GetOverlayAnchor() == VXMusicOverlayAnchor.RightHand;
+            AskForUpdatesOnStartup = VXUserSettings.Settings.GetAskForUpdatesOnStartup();
         }
 
         protected virtual void OnPropertyChanged(string propertyName)
@@ -78,6 +85,19 @@ namespace VXMusicDesktop.MVVM.ViewModel
                 }
             }
         }
+        
+        public bool AskForUpdatesOnStartup
+        {
+            get { return _askForUpdatesOnStartup; }
+            set
+            {
+                if (_askForUpdatesOnStartup != value)
+                {
+                    _askForUpdatesOnStartup = value;
+                    OnPropertyChanged(nameof(AskForUpdatesOnStartup));
+                }
+            }
+        }
 
         public void SetLaunchOverlayOnStartup(object commandParameter)
         {
@@ -93,6 +113,11 @@ namespace VXMusicDesktop.MVVM.ViewModel
         public void SetEnableOverlayOnRightHand(object commandParameter)
         {
             VXMusicOverlayInterface.SendOverlayAnchorUpdateRequest(VXMMessage.ENABLE_OVERLAY_ANCHOR_RIGHTHAND_REQUEST);
+        }
+        
+        public void SetAskForUpdatesOnStartup(object commandParameter)
+        {
+            VXUserSettings.Settings.SetAskForUpdatesOnStartup(_askForUpdatesOnStartup);
         }
     }
 }

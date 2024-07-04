@@ -210,7 +210,7 @@
                              Style="{StaticResource MenuButtonTheme}"
                              Command="{Binding ConnectionsViewCommand}"/>
                 <RadioButton x:Name="MainWindowRadioButtonOverlay"  
-                             Content="Overlay"
+                             Content="Settings"
                              Height="80"
                              Foreground="{StaticResource TextBasic}"
                              FontSize="14"

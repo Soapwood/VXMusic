@@ -147,50 +147,6 @@
             <LineBreak /><LineBreak />
             BRUSHSTRIKE is a brush typeface designed by Francesco Canovaro
         </TextBlock>
-        
-        <Border Grid.Row="2" Width="300"
-                Height="60"
-                CornerRadius="10"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Bottom"
-                Margin="20,80,0,0">
-
-            <Border.Background>
-                <LinearGradientBrush x:Name="OverlayMenuOption2BoxBorderGradientBrush" StartPoint="0,0"
-                                     EndPoint="1,2">
-                    <GradientStop Offset="0.0">
-                        <GradientStop.Color>
-                            <Binding Source="{StaticResource SecondaryColor}"
-                                     Converter="{StaticResource SolidColorBrushToColorConverter}" />
-                        </GradientStop.Color>
-                    </GradientStop>
-
-                    <GradientStop Offset="0.7">
-                        <GradientStop.Color>
-                            <Binding Source="{StaticResource Accent1Colour}"
-                                     Converter="{StaticResource SolidColorBrushToColorConverter}" />
-                        </GradientStop.Color>
-                    </GradientStop>
-                </LinearGradientBrush>
-            </Border.Background>
-            
-            <StackPanel Orientation="Horizontal">
-                <TextBlock x:Name="AskForUpdatesOnStartupTextBlock"
-                           Text="Ask for Updates on Startup"
-                           Foreground="{StaticResource TextBasic}"
-                           FontSize="12"
-                           Margin="20,0,20,0"
-                           HorizontalAlignment="Left"
-                           VerticalAlignment="Center" />
-                <ToggleButton x:Name="AskForUpdatesOnStartupToggleButton"
-                              Style="{StaticResource AboutSwitchButtonStyle}"
-                              HorizontalAlignment="Right"
-                              Margin="20,0,0,0"
-                              IsChecked="{Binding AskForUpdatesOnStartup}"
-                              Command="{Binding AskForUpdatesOnStartupToggleButton}">
-                </ToggleButton>
-            </StackPanel>
-        </Border>
         </StackPanel>
     </Grid>
 </UserControl>
