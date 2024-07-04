@@ -16,6 +16,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using Microsoft.Win32;
 using Octokit;
+using VXAutoUpdaterDesktop.Core;
 
 namespace VXAutoUpdaterDesktop
 {
@@ -46,6 +47,8 @@ namespace VXAutoUpdaterDesktop
         
         private void UpdateButton_Click(object sender, RoutedEventArgs e)
         {
+            Utils.StopRunningVXMusicDesktopProcesses();
+            
             VXMusicAutoUpdater.UpdateApplicationBasedOnRequestedVersion(VXMusicAutoUpdater.ReleaseBranchOptions[BranchComboBox.SelectedIndex],
                 _availableReleases[VersionComboBox.SelectedIndex],
                 _autoUpdater);
