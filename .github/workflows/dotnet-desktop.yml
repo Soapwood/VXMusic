@@ -74,6 +74,7 @@ jobs:
       run: |
         $new_version = $env:new_version
         (Get-Content -path "${{ github.workspace }}/Installer/VXMusic.nsi") -replace '!define PRODUCT_VERSION .*', '!define PRODUCT_VERSION "$new_version"' | Set-Content -path "${{ github.workspace }}/Installer/VXMusic.nsi"
+        Get-Content -path "${{ github.workspace }}/Installer/VXMusic.nsi"
       shell: pwsh
 
     - name: Install dependencies
