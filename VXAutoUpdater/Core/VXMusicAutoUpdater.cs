@@ -84,7 +84,7 @@ public class VXMusicAutoUpdater
                 
                 // Call the method to extract and replace files
                 string extractPath = Path.Combine(_autoUpdater.AppDataPath, $"{_autoUpdater.UpdateZipName.Split(".zip")[0]}");
-                string targetPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86), "VXMusic"); // TODO base or x86?
+                string targetPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "VXMusic");
                 
                 _autoUpdater.ExtractAndReplace(_autoUpdater.UpdateZipPath, extractPath, targetPath);
                 

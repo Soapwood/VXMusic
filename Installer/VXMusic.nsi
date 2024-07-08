@@ -1,6 +1,6 @@
 # Installer and uninstaller configuration
 !define PRODUCT_NAME "VXMusic"
-!define PRODUCT_VERSION "0.6.0.0"
+!define PRODUCT_VERSION "1.0.0.0"
 !define PRODUCT_PUBLISHER "Virtual Xtensions"
 !define PRODUCT_WEB_SITE "https://github.com/Soapwood"
 
@@ -9,7 +9,7 @@
 
 # Define the name of the installer and the output file
 OutFile "VXMusicInstaller.exe"
-InstallDir $PROGRAMFILES\VXMusic
+InstallDir $PROGRAMFILES64\VXMusic
 
 # Installer sections
 Section "MainSection" SEC01
@@ -79,7 +79,7 @@ Caption "VXMusic Installer"
 !define MUI_INSTFILESPAGE_COLORS "FFFFFF E8E9EB"
 
 # Welcome page settings
-!define MUI_WELCOMEPAGE_TITLE "${PRODUCT_VERSION} ${PRODUCT_VERSION} Installation Wizard"
+!define MUI_WELCOMEPAGE_TITLE "${PRODUCT_NAME} ${PRODUCT_VERSION} Installation Wizard"
 !define MUI_WELCOMEPAGE_TEXT "Thank you for using VXMusic! This installer will guide you through the installation.$\r$\n$\r$\nVXMusic v${PRODUCT_VERSION}$\r$\n$\r$\nIf you need any assistance, please reach out on Discord.$\r$\n$\r$\nClick Next to continue."
 !define MUI_WELCOMEPAGE_LINK "Join the Discord!"
 !define MUI_WELCOMEPAGE_LINK_LOCATION "https://t.co/Z2eSKfYpfs"

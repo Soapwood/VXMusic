@@ -11,8 +11,8 @@ public class SteamVROverlayAppsInterface
     private readonly IServiceProvider _serviceProvider;
     private readonly ILogger<SteamVROverlayAppsInterface> _logger;
     
-    private static readonly string SteamAppConfigPath = "C:\\Program Files (x86)\\Steam\\config\\appconfig.json";
-    private static readonly string DefaultVxMusicManifestPath = "C:\\Program Files (x86)\\VXMusic\\manifest.vrmanifest";
+    private static readonly string SteamAppConfigPath = "C:\\Program Files\\Steam\\config\\appconfig.json";
+    private static readonly string DefaultVxMusicManifestPath = "C:\\Program Files\\VXMusic\\manifest.vrmanifest";
 
     public SteamVROverlayAppsInterface(IServiceProvider serviceProvider)
     {

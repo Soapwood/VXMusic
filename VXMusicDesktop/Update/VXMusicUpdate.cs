@@ -64,9 +64,9 @@ public class VXMusicUpdate
     public static async Task LaunchVXMusicUpdater()
     {
         // Prepare AppData folder for temporary copy of VXAutoUpdater
-        string autoUpdaterPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86), "VXMusic", "VXAutoUpdater");
+        string autoUpdaterPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "VXMusic", "VXAutoUpdater");
         string temporaryFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "VXMusic", "AutoUpdaterTemp");
-        // TODO x86 AAAAAAAAAAAAA
+        
         CopyDirectory(autoUpdaterPath, temporaryFolder);
         
         string executablePath = Path.Combine(temporaryFolder, "VXAutoUpdater.exe");

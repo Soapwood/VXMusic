@@ -88,6 +88,9 @@
     <Resource Include="Images\XSOverlayLogo.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
+    <Content Include="..\Installer\VXMusic.nsi">
+      <Link>VXMusic.nsi</Link>
+    </Content>
     <Content Include="Images\VXLogoIcon.ico" />
     <None Remove="Images\SaveIconBlack.png" />
     <None Remove="Images\SaveIconWhite.png" />
@@ -244,11 +247,4 @@
     <Exec Command="xcopy &quot;$(ProjectDir)\Overlay\bin&quot; &quot;$(PublishDir)\Overlay&quot; /E /H /Y" />
     <Exec Command="xcopy &quot;$(ProjectDir)..\VXAutoUpdater\bin\$(Configuration)\net7.0-windows\*&quot; &quot;$(PublishDir)VXAutoUpdater\&quot; /E /H /Y" />
   </Target>
-
-<!--  <ItemGroup>-->
-<!--    <PackageReference Update="Microsoft.Windows.Compatibility" ExcludeAssets="runtime" />-->
-<!--    <PackageReference Update="Microsoft.NETCore.App.Runtime.win-x64" ExcludeAssets="runtime" />-->
-<!--    <PackageReference Update="Microsoft.NETCore.App.Runtime.win-x86" ExcludeAssets="runtime" />-->
-<!--  </ItemGroup>-->
-
 </Project>
