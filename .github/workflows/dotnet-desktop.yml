@@ -114,7 +114,7 @@ jobs:
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
         asset_path: ${{ github.workspace }}/Installer/VXMusicInstaller.exe
-        asset_name: VXMusicInstaller_${{ steps.get-project-version.outputs.version }}.exe
+        asset_name: VXMusicInstaller_v${{ steps.get-project-version.outputs.version }}.exe
         asset_content_type: application/octet-stream
 
     - name: Upload Release Asset
@@ -124,5 +124,5 @@ jobs:
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
         asset_path: ${{ github.workspace }}/VXMusic_x64_v${{ steps.get-project-version.outputs.version }}.zip
-        asset_name: VXMusic_x64_v${{ steps.get-project-version.outputs.version }}.zip
+        asset_name: VXMusic_v${{ steps.get-project-version.outputs.version }}.zip
         asset_content_type: application/zip
