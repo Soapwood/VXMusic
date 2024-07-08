@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using Microsoft.Extensions.Logging;
+using Microsoft.VisualBasic.FileIO;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -11,8 +12,8 @@ public class SteamVROverlayAppsInterface
     private readonly IServiceProvider _serviceProvider;
     private readonly ILogger<SteamVROverlayAppsInterface> _logger;
     
-    private static readonly string SteamAppConfigPath = "C:\\Program Files\\Steam\\config\\appconfig.json";
-    private static readonly string DefaultVxMusicManifestPath = "C:\\Program Files\\VXMusic\\manifest.vrmanifest";
+    private static readonly string SteamAppConfigPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86), "Steam\\config\\appconfig.json");
+    private static readonly string DefaultVxMusicManifestPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "VXMusic\\manifest.vrmanifest");
 
     public SteamVROverlayAppsInterface(IServiceProvider serviceProvider)
     {
