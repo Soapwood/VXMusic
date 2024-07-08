@@ -70,28 +70,25 @@ jobs:
         (Get-Content $csproj_path) -replace '<Version>.*</Version>', "<Version>$new_version</Version>" | Set-Content $csproj_path
       shell: pwsh
 
+    - name: Replace version in NSIS script
+      run: |
+        $new_version = $env:new_version
+        (Get-Content -path "${{ github.workspace }}/Installer/VXMusic.nsi") -replace '!define PRODUCT_VERSION .*', "!define PRODUCT_VERSION `"$new_version`"" | Set-Content -path "${{ github.workspace }}/Installer/VXMusic.nsi"
+      shell: pwsh
+
     - name: Install dependencies
       run: dotnet restore
 
     - name: Build solution
       run: dotnet build --configuration Release --no-restore
 
-    - name: Publish VXMusicDesktop x64
+    - name: Publish VXMusic
       run: dotnet publish ${{ github.workspace }}/VXMusicDesktop/VXMusicDesktop.csproj -r win-x64 -c Release -o ${{ github.workspace }}/Publish/x64
 
-    - name: Publish VXMusicDesktop x86
-      run: dotnet publish ${{ github.workspace }}/VXMusicDesktop/VXMusicDesktop.csproj -r win-x86 -c Release -o ${{ github.workspace }}/Publish/x86
-
-    - name: Package x64
+    - name: Package VXMusic
       run: |
         cd ${{ github.workspace }}/Publish/x64
         Compress-Archive -Path * -DestinationPath ../../VXMusic_x64_v${{ env.new_version }}.zip
-      shell: pwsh
-
-    - name: Package x86
-      run: |
-        cd ${{ github.workspace }}/Publish/x86
-        Compress-Archive -Path * -DestinationPath ../../VXMusic_x86_v${{ env.new_version }}.zip
       shell: pwsh
 
     - name: makensis
@@ -120,7 +117,7 @@ jobs:
         asset_name: VXMusicInstaller_${{ env.new_version }}.exe
         asset_content_type: application/octet-stream
 
-    - name: Upload x64 Release Asset
+    - name: Upload Release Asset
       uses: actions/upload-release-asset@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -128,14 +125,4 @@ jobs:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
         asset_path: ${{ github.workspace }}/VXMusic_x64_v${{ env.new_version }}.zip
         asset_name: VXMusic_x64_v${{ env.new_version }}.zip
-        asset_content_type: application/zip
-
-    - name: Upload x86 Release Asset
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ${{ github.workspace }}/VXMusic_x86_v${{ env.new_version }}.zip
-        asset_name: VXMusic_x86_v${{ env.new_version }}.zip
         asset_content_type: application/zip
