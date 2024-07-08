@@ -58,7 +58,7 @@ jobs:
     - name: Set New Version
       id: set_project_version
       run: |
-        $new_version = ${{ steps.previoustag.outputs.tag }}
+        $new_version = ${{ steps.get-project-version.outputs.version }}
         echo "Dynamic Version: $new_version"
         echo "new_version=$new_version" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8
       shell: pwsh
