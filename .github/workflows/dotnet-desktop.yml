@@ -72,7 +72,7 @@ jobs:
 
     - name: Replace version in NSIS script
       run: |
-        (Get-Content -path "${{ github.workspace }}/Installer/VXMusic.nsi") -replace '(!define PRODUCT_VERSION ").*(")', '"${{ steps.get-project-version.outputs.version }}"' | Set-Content -path "${{ github.workspace }}/Installer/VXMusic.nsi"
+        (Get-Content -path "${{ github.workspace }}/Installer/VXMusic.nsi") -replace '(!define PRODUCT_VERSION ").*(")', '!define PRODUCT_VERSION "${{ steps.get-project-version.outputs.version }}"' | Set-Content -path "${{ github.workspace }}/Installer/VXMusic.nsi"
         Get-Content -path "${{ github.workspace }}/Installer/VXMusic.nsi"
       shell: pwsh
 
