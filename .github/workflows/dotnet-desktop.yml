@@ -55,13 +55,13 @@ jobs:
     #     echo "VERSION=$new_version" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8
     #   shell: pwsh
 
-    - name: Set New Version
-      id: set_project_version
-      run: |
-        $new_version = ${{ steps.get-project-version.outputs.version }}
-        echo "Dynamic Version: $new_version"
-        echo "new_version=$new_version" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8
-      shell: pwsh
+    # - name: Set New Version
+    #   id: set_project_version
+    #   run: |
+    #     $new_version = ${{ steps.get-project-version.outputs.version }}
+    #     echo "Dynamic Version: $new_version"
+    #     echo "new_version=$new_version" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8
+    #   shell: pwsh
 
     # - name: Update CSPROJ with dynamic version
     #   run: |
@@ -72,8 +72,7 @@ jobs:
 
     - name: Replace version in NSIS script
       run: |
-        $new_version = $env:new_version
-        (Get-Content -path "${{ github.workspace }}/Installer/VXMusic.nsi") -replace '(!define PRODUCT_VERSION ").*(")', "`$1$new_version`$2" | Set-Content -path "${{ github.workspace }}/Installer/VXMusic.nsi"
+        (Get-Content -path "${{ github.workspace }}/Installer/VXMusic.nsi") -replace '(!define PRODUCT_VERSION ").*(")', "`$1${{ steps.get-project-version.outputs.version }}`$2" | Set-Content -path "${{ github.workspace }}/Installer/VXMusic.nsi"
         Get-Content -path "${{ github.workspace }}/Installer/VXMusic.nsi"
       shell: pwsh
 
@@ -89,7 +88,7 @@ jobs:
     - name: Package VXMusic
       run: |
         cd ${{ github.workspace }}/Publish/x64
-        Compress-Archive -Path * -DestinationPath ../../VXMusic_x64_v${{ env.new_version }}.zip
+        Compress-Archive -Path * -DestinationPath ../../VXMusic_x64_v${{ steps.get-project-version.outputs.version }}.zip
       shell: pwsh
 
     - name: makensis
@@ -103,8 +102,8 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: v${{ env.new_version }}
-        release_name: VXMusic Release v${{ env.new_version }}
+        tag_name: v${{ steps.get-project-version.outputs.version }}
+        release_name: VXMusic Release v${{ steps.get-project-version.outputs.version }}
         draft: true
         prerelease: false
 
@@ -115,7 +114,7 @@ jobs:
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
         asset_path: ${{ github.workspace }}/Installer/VXMusicInstaller.exe
-        asset_name: VXMusicInstaller_${{ env.new_version }}.exe
+        asset_name: VXMusicInstaller_${{ steps.get-project-version.outputs.version }}.exe
         asset_content_type: application/octet-stream
 
     - name: Upload Release Asset
@@ -124,6 +123,6 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ${{ github.workspace }}/VXMusic_x64_v${{ env.new_version }}.zip
-        asset_name: VXMusic_x64_v${{ env.new_version }}.zip
+        asset_path: ${{ github.workspace }}/VXMusic_x64_v${{ steps.get-project-version.outputs.version }}.zip
+        asset_name: VXMusic_x64_v${{ steps.get-project-version.outputs.version }}.zip
         asset_content_type: application/zip
