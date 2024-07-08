@@ -99,42 +99,6 @@ public class VXMusicAutoUpdater
             }
         //}
     }
-    
-    // public static async Task UpdateAppIfNeeded()
-    // {
-    //     
-    //     //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
-    //     string personalAccesstoken =
-    //         "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";
-    //     var updater = new VXMusicAutoUpdater("Soapwood", "VXMusic", personalAccesstoken);
-    //     var currentVersion = "0.6.0"; // Replace with your application's current version
-    //
-    //     if (await updater.CheckForUpdates(currentVersion))
-    //     {
-    //         Console.WriteLine("Downloading update...");
-    //         if (await updater.DownloadUpdate())
-    //         {
-    //             Console.WriteLine("Update downloaded successfully.");
-    //             
-    //             // Call the method to extract and replace files
-    //             string extractPath = Path.Combine(updater.AppDataPath, $"VXMusicUpdate-{updater.UpdateZipName}");
-    //             string targetPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86), "VXMusic"); // TODO base or x86?
-    //             
-    //             updater.ExtractAndReplace(updater.UpdateZipPath, extractPath, targetPath);
-    //             
-    //             // TODO Cleanup zips after installation
-    //             // Handle extraction and installation of the update as per your application's needs
-    //         }
-    //         else
-    //         {
-    //             Console.WriteLine("Failed to download update.");
-    //         }
-    //     }
-    //     else
-    //     {
-    //         Console.WriteLine("No updates available.");
-    //     }
-    // }
 
     public async Task<bool> CheckForUpdates(string currentVersion)
     {
