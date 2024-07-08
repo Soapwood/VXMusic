@@ -29,46 +29,46 @@ jobs:
       with:
         proj-path: VXMusicDesktop/VXMusicDesktop.csproj
 
-    - name: Get Last Tag Version
-      id: previoustag
-      uses: 'WyriHaximus/github-action-get-previous-tag@v1'
-      with:
-        fallback: ${{ steps.get-project-version.outputs.version }}
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    # - name: Get Last Tag Version
+    #   id: previoustag
+    #   uses: 'WyriHaximus/github-action-get-previous-tag@v1'
+    #   with:
+    #     fallback: ${{ steps.get-project-version.outputs.version }}
+    #   env:
+    #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: Determine next version
-      id: nextversion
-      run: |
-        $current_version = '${{ steps.previoustag.outputs.tag }}'
-        $base_version = '${{ steps.get-project-version.outputs.version }}'
+    # - name: Determine next version
+    #   id: nextversion
+    #   run: |
+    #     $current_version = '${{ steps.previoustag.outputs.tag }}'
+    #     $base_version = '${{ steps.get-project-version.outputs.version }}'
 
-        if ($current_version -match '(\d+)\.(\d+)\.(\d+)') {
-          $major = [int]$matches[1]
-          $minor = [int]$matches[2]
-          $patch = [int]$matches[3] + 1
-          $new_version = "$major.$minor.$patch"
-        } else {
-          $new_version = "$base_version.0"
-        }
+    #     if ($current_version -match '(\d+)\.(\d+)\.(\d+)') {
+    #       $major = [int]$matches[1]
+    #       $minor = [int]$matches[2]
+    #       $patch = [int]$matches[3] + 1
+    #       $new_version = "$major.$minor.$patch"
+    #     } else {
+    #       $new_version = "$base_version.0"
+    #     }
 
-        echo "VERSION=$new_version" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8
-      shell: pwsh
+    #     echo "VERSION=$new_version" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8
+    #   shell: pwsh
 
     - name: Set New Version
-      id: set_dynamic_version
+      id: set_project_version
       run: |
-        $new_version = $env:VERSION
+        $new_version = ${{ steps.previoustag.outputs.tag }}
         echo "Dynamic Version: $new_version"
         echo "new_version=$new_version" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8
       shell: pwsh
 
-    - name: Update CSPROJ with dynamic version
-      run: |
-        $csproj_path = "VXMusicDesktop/VXMusicDesktop.csproj"
-        $new_version = $env:new_version
-        (Get-Content $csproj_path) -replace '<Version>.*</Version>', "<Version>$new_version</Version>" | Set-Content $csproj_path
-      shell: pwsh
+    # - name: Update CSPROJ with dynamic version
+    #   run: |
+    #     $csproj_path = "VXMusicDesktop/VXMusicDesktop.csproj"
+    #     $new_version = $env:new_version
+    #     (Get-Content $csproj_path) -replace '<Version>.*</Version>', "<Version>$new_version</Version>" | Set-Content $csproj_path
+    #   shell: pwsh
 
     - name: Replace version in NSIS script
       run: |
