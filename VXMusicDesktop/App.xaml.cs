@@ -21,6 +21,7 @@ using System.Diagnostics;
 using System.Reflection;
 using System.Threading;
 using VXMusic.VRChat;
+using VXMusicDesktop.Core;
 using VXMusicDesktop.Toast;
 using VXMusicDesktop.Update;
 using Application = System.Windows.Application;
@@ -154,6 +155,7 @@ namespace VXMusicDesktop
             services.AddSingleton<XsOverlayNotificationClient>();
             services.AddSingleton<SteamVRNotificationClient>();
             services.AddSingleton<VrChatOscNotificationClient>();
+            services.AddSingleton<SteamVROverlayAppsInterface>();
             
             // services.AddSingleton<INotificationClient>(provider =>
             // {

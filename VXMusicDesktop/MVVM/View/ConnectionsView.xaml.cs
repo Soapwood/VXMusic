@@ -141,10 +141,5 @@ namespace VXMusicDesktop.MVVM.View
         {
 
         }
-
-        private void SpotifyLoginButton_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
     }
 }

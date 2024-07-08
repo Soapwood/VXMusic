@@ -115,7 +115,7 @@
                                 Foreground="Black"
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center"
-                                Width="150" Height="40" Click="SpotifyLoginButton_Click">
+                                Width="150" Height="40">
                             <Button.Resources>
                                 <Style TargetType="Border">
                                     <Setter Property="CornerRadius" Value="5" />
@@ -322,16 +322,6 @@
             </Border>
 
 
-        </StackPanel>
-
-        <StackPanel>
-            <!--<Button 
-                Content="Link Spotify" 
-                Command="{Binding LinkSpotifyButtonClick}"
-                IsEnabled="True"
-                Padding="0"
-                Margin="40"
-                HorizontalAlignment="Center" Width="600" Height="100" Click="Button_Click"/>-->
         </StackPanel>
     </StackPanel>
 

@@ -12,6 +12,7 @@ using VXMusic.Recognition.AudD;
 using VXMusic.Recognition.Shazam;
 using VXMusic.Spotify.Authentication;
 using VXMusic.VRChat;
+using VXMusicDesktop.Core;
 using VXMusicDesktop.Theme;
 using VXMusicDesktop.Toast;
 
@@ -42,6 +43,7 @@ public class VXMusicSession
     public static LastfmScrobbler? LastfmScrobbler;
 
     public VRChatLogParser VRChatLogParser;
+    public SteamVROverlayAppsInterface SteamVrOverlayApps;
     
     public static event EventHandler LastFmLogin;
     //public static event EventHandler SpotifyLogin;
@@ -73,6 +75,8 @@ public class VXMusicSession
         LastfmScrobbler = App.ServiceProvider.GetRequiredService<LastfmScrobbler>();
         
         VRChatLogParser = App.ServiceProvider.GetRequiredService<VRChatLogParser>();
+        
+        SteamVrOverlayApps = App.ServiceProvider.GetRequiredService<SteamVROverlayAppsInterface>();
 
         ColourSchemeManager.SetTheme(VXUserSettings.Desktop.GetCurrentDesktopTheme());
 

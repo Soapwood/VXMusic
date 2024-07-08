@@ -35,7 +35,7 @@ namespace VXAutoUpdaterDesktop
             MouseDown += Window_MouseDown;
 
             string personalAccesstoken =
-                "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";
+                "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";
             _autoUpdater = new VXMusicAutoUpdater("Soapwood", "VXMusic", personalAccesstoken);
             GetLatestSupportedVersions();
             LoadComboBoxItems();

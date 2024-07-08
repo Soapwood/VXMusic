@@ -20,7 +20,7 @@ namespace VXMusicDesktop
             InitializeComponent();
             MouseDown += Window_MouseDown;
 
-            VersionTextBlock.Text = App.ApplicationVersion.ToString();
+            VersionTextBlock.Text = App.ApplicationVersion.ToString() + "-beta";
 
             ColourSchemeManager.ThemeChanged += OnThemeChanged;
             ColourSchemeManager.MenuOptionChanged += OnMainWindowMenuOptionChanged;
@@ -152,7 +152,7 @@ namespace VXMusicDesktop
         
         async void CheckForUpdates()
         {
-            var vxMusicUpdater = new VXMusicUpdate("Soapwood", "VXMusic", "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");
+            var vxMusicUpdater = new VXMusicUpdate("Soapwood", "VXMusic", "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");
             
             bool isUpdateAvailable = await vxMusicUpdater.CheckForUpdates(App.ApplicationVersion.ToString());
 
