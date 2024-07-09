@@ -94,11 +94,20 @@ public class VXMusicAutoUpdater
         }
     }
 
-    public async Task<IReadOnlyList<Release>> GetLatestVersionsForBranch(string branch)
+    public async Task<List<Release>> GetLatestVersionsForBranch(string branch)
     {
         try
         {
-            return await _gitHubClient.Repository.Release.GetAll(_repositoryOwner, _repositoryName);
+            var allReleases = await _gitHubClient.Repository.Release.GetAll(_repositoryOwner, _repositoryName);
+            IEnumerable <Release> releasesToDisplay = null;
+
+            if(string.Equals("Stable", branch))
+                releasesToDisplay = allReleases.Where(release => !release.Prerelease && !release.Draft);
+            else if(string.Equals("Nightly", branch))
+                releasesToDisplay = allReleases.Where(release => release.Prerelease && !release.Draft );
+
+
+            return releasesToDisplay.ToList();
         }
         catch (Exception ex)
         {

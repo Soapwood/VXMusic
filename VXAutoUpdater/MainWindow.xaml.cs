@@ -27,7 +27,7 @@ namespace VXAutoUpdaterDesktop
     {
         private VXMusicAutoUpdater _autoUpdater;
 
-        private IReadOnlyList<Release> _availableReleases;
+        private List<Release> _availableReleases;
 
         public MainWindow()
         {
@@ -37,8 +37,11 @@ namespace VXAutoUpdaterDesktop
             string personalAccesstoken =
                 "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";
             _autoUpdater = new VXMusicAutoUpdater("Soapwood", "VXMusic", personalAccesstoken);
-            GetLatestSupportedVersions();
+            
+            BranchComboBox.SelectionChanged += BranchComboBoxSelectionChanged;
+            
             LoadComboBoxItems();
+            GetLatestSupportedVersions();
 
             UpdateTextBlockMessage("");
 
@@ -86,10 +89,16 @@ namespace VXAutoUpdaterDesktop
             BranchComboBox.SelectedIndex = 0;
             BranchComboBox.SelectedItem = "Stable";
         }
+        
+        private async void BranchComboBoxSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            // Update the available versions based on the selected branch
+            await GetLatestSupportedVersions();
+        }
 
         private async Task GetLatestSupportedVersions()
         {
-            _availableReleases = await _autoUpdater.GetLatestVersionsForBranch("Stable");
+            _availableReleases = await _autoUpdater.GetLatestVersionsForBranch(BranchComboBox.SelectedItem.ToString());
             VersionComboBox.ItemsSource = _availableReleases.Select(e => e.TagName);
             VersionComboBox.SelectedIndex = 0;
         }
