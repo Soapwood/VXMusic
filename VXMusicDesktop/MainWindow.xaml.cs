@@ -29,11 +29,6 @@ namespace VXMusicDesktop
             App.VXMusicSession.ToastNotification = new ToastNotificationClient(this);
             
             CheckForUpdates();
-            
-
-            //this.StateChanged += MainWindow_StateChanged;
-            //this.Activated += MainWindow_Activated;
-            //this.Deactivated += MainWindow_Deactivated;
         }
         
         private void MainWindow_StateChanged(object? sender, EventArgs eventArgs)
@@ -152,9 +147,7 @@ namespace VXMusicDesktop
         
         async void CheckForUpdates()
         {
-            var vxMusicUpdater = new VXMusicUpdate("Soapwood", "VXMusic", "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");
-            
-            bool isUpdateAvailable = await vxMusicUpdater.CheckForUpdates(App.ApplicationVersion.ToString());
+            bool isUpdateAvailable = await App.VXMusicSession.VxMusicUpdate.IsVxMusicUpdateAvailable();
 
             if (isUpdateAvailable)
             {
@@ -165,13 +158,9 @@ namespace VXMusicDesktop
                     var updateRequested = MessageBox.Show($"An update for VXMusic is available!{Environment.NewLine}Would you like to update now?", "VXMusic Update Available", MessageBoxButton.YesNo, MessageBoxImage.Question);
             
                     if (updateRequested == MessageBoxResult.Yes)
-                    {
-                        VXMusicUpdate.LaunchVXMusicUpdater();
-                    }
+                        App.VXMusicSession.VxMusicUpdate.LaunchVxMusicUpdater();
                     else
-                    {
                         FocusMainWindow();
-                    }
                 }
             }
         }

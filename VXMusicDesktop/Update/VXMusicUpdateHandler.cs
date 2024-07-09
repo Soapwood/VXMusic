@@ -4,64 +4,77 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using Microsoft.Extensions.Logging;
 using Octokit;
 
 namespace VXMusicDesktop.Update;
 
-public class VXMusicUpdate
+public class VXMusicUpdateHandler
 {
-    private readonly string _repositoryOwner;
-    private readonly string _repositoryName;
-    private readonly string _personalAccessToken;
+    private readonly IServiceProvider _serviceProvider;
+    private readonly ILogger<VXMusicUpdateHandler> _logger;
+    
+    private readonly string _repositoryOwner = "Soapwood";
+    private readonly string _repositoryName = "VXMusic";
+    private readonly string _personalAccessToken = "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";
     private readonly GitHubClient _gitHubClient;
     
-    public VXMusicUpdate(string repositoryOwner, string repositoryName, string personalAccessToken = "")
+    public VXMusicUpdateHandler(IServiceProvider serviceProvider)
     {
-        _repositoryOwner = repositoryOwner;
-        _repositoryName = repositoryName;
-        _personalAccessToken = personalAccessToken;
-
+        _serviceProvider = serviceProvider;
+        _logger = serviceProvider.GetService(typeof(ILogger<VXMusicUpdateHandler>)) 
+            as ILogger<VXMusicUpdateHandler> ?? throw new ApplicationException("A logger must be created in service provider.");
+        
+        _logger.LogTrace("Creating VXMusicUpdate.");
+        
         if (!string.IsNullOrEmpty(_personalAccessToken))
         {
-            //Console.WriteLine("Authenticaing using Personal Access Token");
-            _gitHubClient = new GitHubClient(new ProductHeaderValue(repositoryName))
+            _logger.LogInformation("Authenticaing using Personal Access Token");
+            _gitHubClient = new GitHubClient(new ProductHeaderValue(_repositoryName))
             {
                 Credentials = new Credentials(_personalAccessToken)
             };
         }
         else
         {
-            //Console.WriteLine("No PAT specified. Will fetch from Public Endpoint");
-            _gitHubClient = new GitHubClient(new ProductHeaderValue(repositoryName));
+            _logger.LogInformation("No PAT specified. Will fetch from Public Endpoint");
+            _gitHubClient = new GitHubClient(new ProductHeaderValue(_repositoryName));
         }
     }
     
-    public async Task<bool> CheckForUpdates(string currentVersion)
+    public async Task<bool> IsVxMusicUpdateAvailable()
     {
         try
         {
             // Get the latest release from GitHub
             var releases = await _gitHubClient.Repository.Release.GetAll(_repositoryOwner, _repositoryName);
-            var latestRelease = releases.FirstOrDefault();
-            
-            // TODO Compare against current version
 
-            if (latestRelease != null && latestRelease.TagName != currentVersion)
+            var currentApplicationVersion = new Version($"{App.ApplicationVersion.ToString()}");
+            var latestRelease = releases.FirstOrDefault();
+            var latestReleaseVersion = new Version($"{latestRelease.TagName}");
+
+            _logger.LogTrace($"Current Version: {currentApplicationVersion}. Latest Release Version: {latestReleaseVersion}");
+
+            if (currentApplicationVersion == latestReleaseVersion)
             {
-                // New version available, return true to indicate update available
+                _logger.LogInformation("No new updates available.");
+                return false;
+            }
+
+            if (latestReleaseVersion > currentApplicationVersion)
+            {
+                _logger.LogInformation("A new update was found.");
                 return true;
             }
         }
         catch (Exception ex)
         {
-            //Console.WriteLine($"Error checking for updates: {ex.Message}");
+            _logger.LogError($"Error checking for updates: {ex.Message}");
         }
-
-        // No new update available or error occurred
         return false;
     }
 
-    public static async Task LaunchVXMusicUpdater()
+    public void LaunchVxMusicUpdater()
     {
         // Prepare AppData folder for temporary copy of VXAutoUpdater
         string autoUpdaterPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "VXMusic", "VXAutoUpdater");
@@ -77,22 +90,19 @@ public class VXMusicUpdate
             {
                 FileName = executablePath,
                 UseShellExecute = false
-                // Optionally, you can set other properties like Arguments, WorkingDirectory, etc.
             };
             
             Process process = Process.Start(startInfo);
             
             if (process != null)
             {
-                //Console.WriteLine($"Started process {process.ProcessName} with ID {process.Id}");
+                _logger.LogInformation($"Started process {process.ProcessName} with ID {process.Id}");
             }
         }
         catch (Exception ex)
         {
-            MessageBox.Show($"Failed to start new application: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            MessageBox.Show($"Failed to VXMusicUpdater: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
         }
-                
-        //Environment.Exit(0); // Exit the current application
     }
 
     private static void CopyDirectory(string sourceDir, string destDir)

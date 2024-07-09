@@ -40,9 +40,8 @@ namespace VXMusicDesktop
         public static Version ApplicationVersion;
         
         public static Process? VXMOverlayProcess;
-        //public static int VXMOverlayProcessId; 
         
-        // TODO https://blog.elmah.io/logging-and-global-error-handling-in-net-7-wpf-applications/
+        // TODO Have you bumped the version of VXMusicDesktop?
         public App() : base()
         {
 #if DEBUG
@@ -50,10 +49,6 @@ namespace VXMusicDesktop
 #endif
             this.Exit += new ExitEventHandler(VXMusicOverlay_Exit);
             
-            //ConfigureServices();
-            
-            //Logger.LogInformation(ConsoleOutputBranding.VxMusicLogo + Environment.NewLine + ConsoleOutputBranding.CreatorInfo);
-            //Logger.LogTrace($"Booting VXMusic Desktop Client...");
             var thingy = Assembly.GetExecutingAssembly().GetName().Version.ToString();
             ApplicationVersion = Assembly.GetExecutingAssembly().GetName().Version;
             
@@ -156,6 +151,8 @@ namespace VXMusicDesktop
             services.AddSingleton<SteamVRNotificationClient>();
             services.AddSingleton<VrChatOscNotificationClient>();
             services.AddSingleton<SteamVROverlayAppsInterface>();
+            
+            services.AddSingleton<VXMusicUpdateHandler>();
             
             // services.AddSingleton<INotificationClient>(provider =>
             // {

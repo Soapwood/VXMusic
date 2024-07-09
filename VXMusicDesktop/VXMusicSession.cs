@@ -15,6 +15,7 @@ using VXMusic.VRChat;
 using VXMusicDesktop.Core;
 using VXMusicDesktop.Theme;
 using VXMusicDesktop.Toast;
+using VXMusicDesktop.Update;
 
 //using System.Windows.Forms.PropertyGridInternal;
 
@@ -44,6 +45,7 @@ public class VXMusicSession
 
     public VRChatLogParser VRChatLogParser;
     public SteamVROverlayAppsInterface SteamVrOverlayApps;
+    public VXMusicUpdateHandler VxMusicUpdate;
     
     public static event EventHandler LastFmLogin;
     //public static event EventHandler SpotifyLogin;
@@ -77,6 +79,8 @@ public class VXMusicSession
         VRChatLogParser = App.ServiceProvider.GetRequiredService<VRChatLogParser>();
         
         SteamVrOverlayApps = App.ServiceProvider.GetRequiredService<SteamVROverlayAppsInterface>();
+        
+        VxMusicUpdate = App.ServiceProvider.GetRequiredService<VXMusicUpdateHandler>();
 
         ColourSchemeManager.SetTheme(VXUserSettings.Desktop.GetCurrentDesktopTheme());
 

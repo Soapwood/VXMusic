@@ -106,7 +106,7 @@ namespace VXMusicDesktop.MVVM.ViewModel
             
             LaunchVXUpdater = new RelayCommand(o =>
             {
-                VXMusicUpdate.LaunchVXMusicUpdater();
+                App.VXMusicSession.VxMusicUpdate.LaunchVxMusicUpdater();
             });
         }
     }

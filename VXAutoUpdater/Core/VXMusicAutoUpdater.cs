@@ -75,66 +75,33 @@ public class VXMusicAutoUpdater
 
     public static async Task UpdateApplicationBasedOnRequestedVersion(string branch, Release release, VXMusicAutoUpdater _autoUpdater)
     {
-        //if (await _autoUpdater.CheckForUpdates(currentVersion))
-        //{
-            UpdateMessageInMainWindow("Downloading update...");
-            if (await _autoUpdater.DownloadUpdate(release))
-            {
-                UpdateMessageInMainWindow("Update downloaded successfully.");
-                
-                // Call the method to extract and replace files
-                string extractPath = Path.Combine(_autoUpdater.AppDataPath, $"{_autoUpdater.UpdateZipName.Split(".zip")[0]}");
-                string targetPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "VXMusic");
-                
-                _autoUpdater.ExtractAndReplace(_autoUpdater.UpdateZipPath, extractPath, targetPath);
-                
-                // TODO Cleanup zips after installation
-                // Handle extraction and installation of the update as per your application's needs
-                
-                UpdateMessageInMainWindow($"Installation of [{branch}] ({release.Name}) was Successful!");
-            }
-            else
-            {
-                Console.WriteLine("Failed to download update.");
-            }
-        //}
+        UpdateMessageInMainWindow("Downloading update...");
+        if (await _autoUpdater.DownloadUpdate(release))
+        {
+            UpdateMessageInMainWindow("Update downloaded successfully.");
+            
+            // Call the method to extract and replace files
+            string extractPath = Path.Combine(_autoUpdater.AppDataPath, $"{_autoUpdater.UpdateZipName.Split(".zip")[0]}");
+            string targetPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "VXMusic");
+            
+            _autoUpdater.ExtractAndReplace(_autoUpdater.UpdateZipPath, extractPath, targetPath);
+            
+            // TODO Cleanup zips after installation
+            // Handle extraction and installation of the update as per your application's needs
+            
+            UpdateMessageInMainWindow($"Installation of [{branch}] ({release.Name}) was Successful!");
+        }
+        else
+        {
+            Console.WriteLine("Failed to download update.");
+        }
     }
 
-    public async Task<bool> CheckForUpdates(string currentVersion)
-    {
-        try
-        {
-            // Get the latest release from GitHub
-            var releases = await _gitHubClient.Repository.Release.GetAll(_repositoryOwner, _repositoryName);
-            var latestRelease = releases.FirstOrDefault();
-
-            if (latestRelease != null && latestRelease.TagName != currentVersion)
-            {
-                // New version available, return true to indicate update available
-                return true;
-            }
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Error checking for updates: {ex.Message}");
-        }
-
-        // No new update available or error occurred
-        return false;
-    }
-    
     public async Task<IReadOnlyList<Release>> GetLatestVersionsForBranch(string branch)
     {
         try
         {
-            // Get the latest release from GitHub
             return await _gitHubClient.Repository.Release.GetAll(_repositoryOwner, _repositoryName);
-            
-            // if (latestRelease != null && latestRelease.TagName != branch)
-            // {
-            //     // New version available, return true to indicate update available
-            //     return true;
-            // }
         }
         catch (Exception ex)
         {
@@ -149,68 +116,55 @@ public class VXMusicAutoUpdater
     {
         try
         {
-            // Get the latest release from GitHub
-            var releases = await _gitHubClient.Repository.Release.GetAll(_repositoryOwner, _repositoryName);
-            //var latestRelease = releases.FirstOrDefault();
-
-            if (release != null)
+            var asset = release.Assets.FirstOrDefault(asset => string.Equals(asset.Name, $"VXMusic_{release.TagName}.zip"));
+            if (asset != null)
             {
-                // Download the release asset (usually a ZIP file)
-                // TODO Check for zip, either x86/x64
-                var asset = release.Assets.FirstOrDefault(release => release.Name.Contains(".zip"));
-                if (asset != null)
+                UpdateZipName = asset.Name;
+                UpdateZipPath = Path.Combine(AppDataPath, UpdateZipName);
+                
+                using (var httpClient = new HttpClient())
                 {
-                    UpdateZipName = asset.Name;
-                    UpdateZipPath = Path.Combine(AppDataPath, UpdateZipName);
+                    httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _personalAccessToken);
+                    httpClient.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue("VXMusic", "1.0"));
+                    httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/octet-stream"));
                     
-                    using (var httpClient = new HttpClient())
+                    var response = await httpClient.GetAsync(asset.Url, HttpCompletionOption.ResponseHeadersRead);
+                    
+                    if (response.IsSuccessStatusCode)
                     {
-                        httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _personalAccessToken);
-                        httpClient.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue("VXMusic", "1.0"));
-                        httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/octet-stream"));
-                        
-                        var response = await httpClient.GetAsync(asset.Url, HttpCompletionOption.ResponseHeadersRead);
-                        
-                        if (response.IsSuccessStatusCode)
-                        {
-                            var totalBytes = response.Content.Headers.ContentLength ?? -1L;
-                            var canReportProgress = totalBytes != -1;
+                        var totalBytes = response.Content.Headers.ContentLength ?? -1L;
+                        var canReportProgress = totalBytes != -1;
 
-                            using (Stream contentStream = await response.Content.ReadAsStreamAsync(),
-                                   fileStream = new FileStream(UpdateZipPath, FileMode.Create, FileAccess.Write, FileShare.None, 8192, true))
+                        using (Stream contentStream = await response.Content.ReadAsStreamAsync(),
+                               fileStream = new FileStream(UpdateZipPath, FileMode.Create, FileAccess.Write, FileShare.None, 8192, true))
+                        {
+                            var buffer = new byte[8192];
+                            int bytesRead;
+                            long totalRead = 0;
+                            while ((bytesRead = await contentStream.ReadAsync(buffer, 0, buffer.Length)) > 0)
                             {
-                                var buffer = new byte[8192];
-                                int bytesRead;
-                                long totalRead = 0;
-                                while ((bytesRead = await contentStream.ReadAsync(buffer, 0, buffer.Length)) > 0)
+                                await fileStream.WriteAsync(buffer, 0, bytesRead);
+                                totalRead += bytesRead;
+                                if (canReportProgress)
                                 {
-                                    await fileStream.WriteAsync(buffer, 0, bytesRead);
-                                    totalRead += bytesRead;
-                                    if (canReportProgress)
-                                    {
-                                        UpdateMessageInMainWindow($"Download progress: {totalRead * 100 / totalBytes}%");
-                                        UpdateProgressBarInMainWindow(totalRead * 100 / totalBytes);
-                                    }
+                                    UpdateMessageInMainWindow($"Download progress: {totalRead * 100 / totalBytes}%");
+                                    UpdateProgressBarInMainWindow(totalRead * 100 / totalBytes);
                                 }
                             }
-                            UpdateMessageInMainWindow("Asset downloaded successfully.");
+                        }
+                        UpdateMessageInMainWindow("Asset downloaded successfully.");
 
-                            return true;
-                        }
-                        else
-                        {
-                            UpdateMessageInMainWindow($"Failed to download asset. Status code: {response.StatusCode}");
-                        }
+                        return true;
                     }
-                }
-                else
-                {
-                    UpdateMessageInMainWindow("No assets found in the latest release.");
+                    else
+                    {
+                        UpdateMessageInMainWindow($"Failed to download asset. Status code: {response.StatusCode}");
+                    }
                 }
             }
             else
             {
-                UpdateMessageInMainWindow("No releases found in the repository.");
+                UpdateMessageInMainWindow("No assets found in the latest release.");
             }
         }
         catch (Exception ex)
@@ -229,6 +183,7 @@ public class VXMusicAutoUpdater
         {
             Directory.Delete(extractPath, true);
         }
+        
         Directory.CreateDirectory(extractPath);
 
         // Extract the ZIP file
@@ -266,9 +221,6 @@ public class VXMusicAutoUpdater
 
     private void ReplaceDirectoryContents(string sourceDir, string targetDir)
     {
-        // Ensure the target directory exists
-        //Directory.CreateDirectory(targetDir);
-
         // Delete existing files and directories in the target directory
         UpdateMessageInMainWindow($"Deleting contents of current installation...");
         
