@@ -9,7 +9,7 @@
     <PackageIcon>VXLogo.png</PackageIcon>
     <ApplicationIcon>Images\VXLogoIcon.ico</ApplicationIcon>
     <RunPostBuildEvent>Always</RunPostBuildEvent>
-    <Version>0.6.3.2</Version>
+    <Version>0.6.3.3</Version>
     <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
   </PropertyGroup>
 
