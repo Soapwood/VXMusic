@@ -88,7 +88,7 @@ jobs:
     - name: Package VXMusic
       run: |
         cd ${{ github.workspace }}/Publish/x64
-        Compress-Archive -Path * -DestinationPath ../../VXMusic_x64_v${{ steps.get-project-version.outputs.version }}.zip
+        Compress-Archive -Path * -DestinationPath ../../VXMusic_x64_${{ steps.get-project-version.outputs.version }}.zip
       shell: pwsh
 
     - name: makensis
@@ -102,8 +102,8 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: v${{ steps.get-project-version.outputs.version }}
-        release_name: VXMusic Release v${{ steps.get-project-version.outputs.version }}
+        tag_name: ${{ steps.get-project-version.outputs.version }}
+        release_name: VXMusic Release ${{ steps.get-project-version.outputs.version }}
         draft: true
         prerelease: false
 
@@ -114,7 +114,7 @@ jobs:
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
         asset_path: ${{ github.workspace }}/Installer/VXMusicInstaller.exe
-        asset_name: VXMusicInstaller_v${{ steps.get-project-version.outputs.version }}.exe
+        asset_name: VXMusicInstaller_${{ steps.get-project-version.outputs.version }}.exe
         asset_content_type: application/octet-stream
 
     - name: Upload Release Asset
@@ -123,6 +123,6 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ${{ github.workspace }}/VXMusic_x64_v${{ steps.get-project-version.outputs.version }}.zip
-        asset_name: VXMusic_v${{ steps.get-project-version.outputs.version }}.zip
+        asset_path: ${{ github.workspace }}/VXMusic_x64_${{ steps.get-project-version.outputs.version }}.zip
+        asset_name: VXMusic_${{ steps.get-project-version.outputs.version }}.zip
         asset_content_type: application/zip
