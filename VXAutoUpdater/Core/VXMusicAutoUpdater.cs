@@ -85,10 +85,7 @@ public class VXMusicAutoUpdater
             string targetPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "VXMusic");
             
             _autoUpdater.ExtractAndReplace(_autoUpdater.UpdateZipPath, extractPath, targetPath);
-            
-            // TODO Cleanup zips after installation
-            // Handle extraction and installation of the update as per your application's needs
-            
+
             UpdateMessageInMainWindow($"Installation of [{branch}] ({release.Name}) was Successful!");
         }
         else
@@ -208,6 +205,25 @@ public class VXMusicAutoUpdater
         try
         {
             ReplaceDirectoryContents(extractPath, targetPath);
+        }
+        catch (UnauthorizedAccessException uae)
+        {
+            Console.WriteLine("User does not have the required privileges, please run as Administrator");
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine($"An error occured: {e}");
+        }
+        
+        try
+        {
+            UpdateMessageInMainWindow("Deleting downloaded zip...");
+            if(File.Exists(zipPath))
+                File.Delete(zipPath);
+        
+            UpdateMessageInMainWindow("Deleting extracted zip folder...");
+            if (Directory.Exists(extractPath))
+                Directory.Delete(extractPath, true);
         }
         catch (UnauthorizedAccessException uae)
         {

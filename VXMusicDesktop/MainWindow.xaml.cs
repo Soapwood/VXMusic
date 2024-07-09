@@ -105,7 +105,7 @@ namespace VXMusicDesktop
 
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
-            this.Close(); // TODO Close down services gracfully
+            this.Close();
         }
 
         private void ThemeDropdownSelection(object sender, SelectionChangedEventArgs e)
