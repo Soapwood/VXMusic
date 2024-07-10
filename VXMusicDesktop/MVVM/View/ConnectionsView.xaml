@@ -133,58 +133,58 @@
             </Border>
             <StackPanel>
                 <Grid>
-                    <Border Width="300"
-                            Height="60"
-                            CornerRadius="10"
-                            HorizontalAlignment="Left"
-                            Margin="20,0,0,0">
-
-                        <Border.Background>
-                            <LinearGradientBrush x:Name="OverlayMenuOption2BoxBorderGradientBrush" StartPoint="0,0"
-                                                 EndPoint="1,2">
-                                <GradientStop Offset="0.0">
-                                    <GradientStop.Color>
-                                        <Binding Source="{StaticResource SecondaryColor}"
-                                                 Converter="{StaticResource SolidColorBrushToColorConverter}" />
-                                    </GradientStop.Color>
-                                </GradientStop>
-
-                                <GradientStop Offset="0.7">
-                                    <GradientStop.Color>
-                                        <Binding Source="{StaticResource Accent1Colour}"
-                                                 Converter="{StaticResource SolidColorBrushToColorConverter}" />
-                                    </GradientStop.Color>
-                                </GradientStop>
-                            </LinearGradientBrush>
-                        </Border.Background>
-
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock x:Name="LaunchOverlayOnStartupTextBlock"
-                                       Text="Playlist Tracking"
-                                       Foreground="{StaticResource TextBasic}"
-                                       FontSize="12"
-                                       Margin="20,0,20,0"
-                                       VerticalAlignment="Center" />
-                            <ComboBox x:Name="DesktopThemeComboBox" 
-                                      Style="{StaticResource RoundedComboBoxTheme}"
-                                      Width="140" 
-                                      Height="25"
-                                      Panel.ZIndex="3"
-                                      HorizontalAlignment="Right"
-                                      Margin="10,0,0,0"
-                                      ItemsSource="{x:Static custom:ColourSchemeManager.PlaylistSavingOptions}">
-                                      <!-- > -->
-                                      <!-- SelectionChanged="PerformSetSpotifyPlaylistSaveSetting"> -->
-                                      <!-- SelectionChanged="ThemeDropdownSelection"> -->
-                            </ComboBox>
-                            <!-- <ToggleButton x:Name="LaunchOverlayOnStartupToggleButton" -->
-                            <!--               Style="{StaticResource SwitchButtonStyle}" -->
-                            <!--               Margin="18,0,0,0" -->
-                            <!--               IsChecked="{Binding LaunchOverlayOnStartup}" -->
-                            <!--               Command="{Binding LaunchOverlayOnStartupToggleButton}"> -->
-                            <!-- </ToggleButton> -->
-                        </StackPanel>
-                    </Border>
+                    <!-- <Border Width="300" -->
+                    <!--         Height="60" -->
+                    <!--         CornerRadius="10" -->
+                    <!--         HorizontalAlignment="Left" -->
+                    <!--         Margin="20,0,0,0"> -->
+                    <!-- -->
+                    <!--     <Border.Background> -->
+                    <!--         <LinearGradientBrush x:Name="OverlayMenuOption2BoxBorderGradientBrush" StartPoint="0,0" -->
+                    <!--                              EndPoint="1,2"> -->
+                    <!--             <GradientStop Offset="0.0"> -->
+                    <!--                 <GradientStop.Color> -->
+                    <!--                     <Binding Source="{StaticResource SecondaryColor}" -->
+                    <!--                              Converter="{StaticResource SolidColorBrushToColorConverter}" /> -->
+                    <!--                 </GradientStop.Color> -->
+                    <!--             </GradientStop> -->
+                    <!-- -->
+                    <!--             <GradientStop Offset="0.7"> -->
+                    <!--                 <GradientStop.Color> -->
+                    <!--                     <Binding Source="{StaticResource Accent1Colour}" -->
+                    <!--                              Converter="{StaticResource SolidColorBrushToColorConverter}" /> -->
+                    <!--                 </GradientStop.Color> -->
+                    <!--             </GradientStop> -->
+                    <!--         </LinearGradientBrush> -->
+                    <!--     </Border.Background> -->
+                    <!-- -->
+                    <!--     <StackPanel Orientation="Horizontal"> -->
+                    <!--         <TextBlock x:Name="LaunchOverlayOnStartupTextBlock" -->
+                    <!--                    Text="Playlist Tracking" -->
+                    <!--                    Foreground="{StaticResource TextBasic}" -->
+                    <!--                    FontSize="12" -->
+                    <!--                    Margin="20,0,20,0" -->
+                    <!--                    VerticalAlignment="Center" /> -->
+                    <!--         <ComboBox x:Name="DesktopThemeComboBox"  -->
+                    <!--                   Style="{StaticResource RoundedComboBoxTheme}" -->
+                    <!--                   Width="140"  -->
+                    <!--                   Height="25" -->
+                    <!--                   Panel.ZIndex="3" -->
+                    <!--                   HorizontalAlignment="Right" -->
+                    <!--                   Margin="10,0,0,0" -->
+                    <!--                   ItemsSource="{x:Static custom:ColourSchemeManager.PlaylistSavingOptions}"> -->
+                    <!--                   ~1~ > @1@ -->
+                    <!--                   ~1~ SelectionChanged="PerformSetSpotifyPlaylistSaveSetting"> @1@ -->
+                    <!--                   ~1~ SelectionChanged="ThemeDropdownSelection"> @1@ -->
+                    <!--         </ComboBox> -->
+                    <!--         ~1~ <ToggleButton x:Name="LaunchOverlayOnStartupToggleButton" @1@ -->
+                    <!--         ~1~               Style="{StaticResource SwitchButtonStyle}" @1@ -->
+                    <!--         ~1~               Margin="18,0,0,0" @1@ -->
+                    <!--         ~1~               IsChecked="{Binding LaunchOverlayOnStartup}" @1@ -->
+                    <!--         ~1~               Command="{Binding LaunchOverlayOnStartupToggleButton}"> @1@ -->
+                    <!--         ~1~ </ToggleButton> @1@ -->
+                    <!--     </StackPanel> -->
+                    <!-- </Border> -->
                 </Grid>
             </StackPanel>
         </StackPanel>

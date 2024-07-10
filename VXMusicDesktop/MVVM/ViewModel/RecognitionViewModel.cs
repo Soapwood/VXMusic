@@ -203,8 +203,7 @@ namespace VXMusicDesktop.MVVM.ViewModel
                                             !String.IsNullOrEmpty(App.VXMusicSession.RecognitionSettings.ShazamSettings.ByoApiKey);
                     
                     IsAudDApiEnabled = false;
-                    IsAudDByoApiEnabled = false; //App.VXMusicSession.RecognitionSettings.AudDSettings.IsByoApiEnabled && 
-                                          //!String.IsNullOrEmpty(App.VXMusicSession.RecognitionSettings.AudDSettings.ByoApiKey);
+                    IsAudDByoApiEnabled = false;
                     break;
                 case RecognitionApi.AudD:
                     IsAudDApiEnabled = true;
@@ -212,8 +211,7 @@ namespace VXMusicDesktop.MVVM.ViewModel
                                           !String.IsNullOrEmpty(App.VXMusicSession.RecognitionSettings.AudDSettings.ByoApiKey);
 
                     IsShazamApiEnabled = false;
-                    IsShazamByoApiEnabled = false; //App.VXMusicSession.RecognitionSettings.ShazamSettings.IsByoApiEnabled && 
-                                            //!String.IsNullOrEmpty(App.VXMusicSession.RecognitionSettings.ShazamSettings.ByoApiKey);
+                    IsShazamByoApiEnabled = false;
                     break;
                 default:
                     IsShazamApiEnabled = false;
