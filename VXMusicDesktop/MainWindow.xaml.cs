@@ -29,6 +29,7 @@ namespace VXMusicDesktop
             App.VXMusicSession.ToastNotification = new ToastNotificationClient(this);
             
             CheckForUpdates();
+            FocusMainWindow();
         }
         
         private void MainWindow_StateChanged(object? sender, EventArgs eventArgs)
