@@ -16,7 +16,7 @@ public class VXMusicUpdateHandler
     
     private readonly string _repositoryOwner = "Soapwood";
     private readonly string _repositoryName = "VXMusic";
-    private readonly string _personalAccessToken = "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";
+    private readonly string _personalAccessToken = "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";
     private readonly GitHubClient _gitHubClient;
     
     public VXMusicUpdateHandler(IServiceProvider serviceProvider)

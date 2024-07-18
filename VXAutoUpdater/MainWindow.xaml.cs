@@ -35,7 +35,7 @@ namespace VXAutoUpdaterDesktop
             MouseDown += Window_MouseDown;
 
             string personalAccesstoken =
-                "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";
+                "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";
             _autoUpdater = new VXMusicAutoUpdater("Soapwood", "VXMusic", personalAccesstoken);
             
             BranchComboBox.SelectionChanged += BranchComboBoxSelectionChanged;
