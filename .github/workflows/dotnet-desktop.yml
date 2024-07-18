@@ -91,16 +91,21 @@ jobs:
         Compress-Archive -Path * -DestinationPath ../../VXMusic_x64_${{ steps.get-project-version.outputs.version }}.zip
       shell: pwsh
 
-    - name: makensis
+    - name: Make NSIS Installer
+      id: make_nsis_installer
       uses: joncloud/makensis-action@v4.1
       with:
         script-file: "${{ github.workspace }}/Installer/VXMusic.nsi"
 
     - name: Run VXMusicInstaller
+      id: run_vxmusicinstaller
+      if: steps.make_nsis_installer.conclusion == 'success'
       run: |
           ${{ github.workspace }}/Installer/VXMusicInstaller.exe /S /D=${{ github.workspace }}/InstallerOutput
 
     - name: Copy Uninstaller to Package Location
+      if: steps.run_vxmusicinstaller.conclusion == 'success'
+      id: copy_uninstaller_to_package_location
       run: |
           Copy-Item -Path ${{ github.workspace }}/InstallerOutput/UninstallVXMusic.exe -Destination ${{ github.workspace }}/Publish/x64
 
