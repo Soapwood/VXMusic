@@ -96,6 +96,14 @@ jobs:
       with:
         script-file: "${{ github.workspace }}/Installer/VXMusic.nsi"
 
+    - name: Run VXMusicInstaller
+      run: |
+          ${{ github.workspace }}/Installer/VXMusicInstaller.exe /S /D=${{ github.workspace }}/InstallerOutput
+
+    - name: Copy Uninstaller to Package Location
+      run: |
+          Copy-Item -Path ${{ github.workspace }}/InstallerOutput/UninstallVXMusic.exe -Destination ${{ github.workspace }}/Publish/x64
+
     - name: Create release
       id: create_release
       uses: actions/create-release@v1
