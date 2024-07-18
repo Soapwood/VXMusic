@@ -101,23 +101,23 @@ jobs:
       id: run_vxmusicinstaller
       if: steps.make_nsis_installer.conclusion == 'success'
       run: |
-          ${{ github.workspace }}/Installer/VXMusicInstaller.exe /S /D=${{ github.workspace }}/InstallerOutput
+          ${{ github.workspace }}\Installer\VXMusicInstaller.exe /S /D=${{ github.workspace }}\InstallerOutput
 
     - name: List Installer Output Directory (Debug)
       if: steps.run_vxmusicinstaller.conclusion == 'success'
       run: |
-          dir ${{ github.workspace }}/InstallerOutput
+          dir ${{ github.workspace }}\InstallerOutput
 
     - name: Copy Uninstaller to Package Location
       if: steps.run_vxmusicinstaller.conclusion == 'success'
       id: copy_uninstaller_to_package_location
       run: |
-          Copy-Item -Path ${{ github.workspace }}/InstallerOutput/UninstallVXMusic.exe -Destination ${{ github.workspace }}/Publish/x64
+          Copy-Item -Path ${{ github.workspace }}\InstallerOutput\UninstallVXMusic.exe -Destination ${{ github.workspace }}\Publish\x64
 
     - name: List Package Output Directory (Debug)
       if: steps.copy_uninstaller_to_package_location.conclusion == 'success'
       run: |
-          dir ${{ github.workspace }}/Publish/x64
+          dir ${{ github.workspace }}\Publish\x64
 
     - name: Create release
       id: create_release
