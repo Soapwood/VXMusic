@@ -48,6 +48,7 @@ Section "MainSection" SEC01
    CreateDirectory "$LOCALAPPDATA\VirtualXtensions\VXMusic\Overlay"
    File /r "${SOURCE_PATH}\Publish\x64\Overlay\*.*"
    
+   SetOutPath $INSTDIR
 SectionEnd
 
 # Uninstaller section
