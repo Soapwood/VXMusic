@@ -9,7 +9,7 @@
     <PackageIcon>VXLogo.png</PackageIcon>
     <ApplicationIcon>Images\VXLogoIcon.ico</ApplicationIcon>
     <RunPostBuildEvent>Always</RunPostBuildEvent>
-    <Version>0.6.3.14</Version>
+    <Version>0.6.3.15</Version>
     <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
     <Title>VXMusicDesktop</Title>
     <Authors>VirtualXtensions</Authors>
@@ -259,14 +259,14 @@
   <Target Name="PostBuild" AfterTargets="Build;PostBuildEvent">
     <Message Text="Project Directory: $(ProjectDir)" Importance="high" />
     <Message Text="Publish Directory: $(OutDir)" Importance="high" />
-    <Exec Command="xcopy &quot;$(ProjectDir)\Overlay\bin&quot; &quot;$(OutDir)\Overlay&quot; /E /H /Y" />
+    <Exec Command="xcopy &quot;$(ProjectDir)Overlay\bin\*&quot; &quot;$(OutDir)\Overlay\&quot; /E /H /Y" />
     <Exec Command="xcopy &quot;$(ProjectDir)..\VXAutoUpdater\bin\$(Configuration)\net7.0-windows\*&quot; &quot;$(OutDir)VXAutoUpdater\&quot; /E /H /Y" />
   </Target>
 
   <Target Name="PostPublishStep" AfterTargets="Publish">
     <Message Text="Project Directory: $(ProjectDir)" Importance="high" />
     <Message Text="Publish Directory: $(PublishDir)" Importance="high" />
-    <Exec Command="xcopy &quot;$(ProjectDir)\Overlay\bin&quot; &quot;$(PublishDir)\Overlay&quot; /E /H /Y" />
+    <Exec Command="xcopy &quot;$(ProjectDir)Overlay\bin\*&quot; &quot;$(PublishDir)\Overlay\&quot; /E /H /Y" />
     <Exec Command="xcopy &quot;$(ProjectDir)..\VXAutoUpdater\bin\$(Configuration)\net7.0-windows\*&quot; &quot;$(PublishDir)VXAutoUpdater\&quot; /E /H /Y" />
   </Target>
 </Project>
