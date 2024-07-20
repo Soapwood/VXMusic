@@ -87,10 +87,7 @@ public class VXMusicAutoUpdater
             string extractPath = Path.Combine(_autoUpdater.AutoUpdaterAppDataPath, $"{_autoUpdater.UpdateZipName.Split(".zip")[0]}");
             string targetPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "VXMusic");
             
-            _autoUpdater.ExtractAndReplace(_autoUpdater.UpdateZipPath, extractPath, targetPath);
-            
-            // Copy Overlay to AppData
-            _autoUpdater.CopyLooseFolderToDestination(Path.Combine(targetPath, "Overlay"), OverlayAppDataPath);
+            _autoUpdater.ExtractAndReplaceVxInstallation(_autoUpdater.UpdateZipPath, extractPath, targetPath);
 
             UpdateMessageInMainWindow($"Installation of [{branch}] ({release.Name}) was Successful!");
         }
@@ -188,13 +185,7 @@ public class VXMusicAutoUpdater
         return false;
     }
 
-    public void CopyLooseFolderToDestination(string sourceDirName, string destDirName)
-    {
-        Directory.Delete(destDirName);
-        DirectoryCopy(sourceDirName, destDirName, true);
-    }
-    
-    public void ExtractAndReplace(string zipPath, string extractPath, string targetPath)
+    public void ExtractAndReplaceVxInstallation(string zipPath, string extractPath, string targetPath)
     {
         // Ensure the extract directory exists and is empty
         if (Directory.Exists(extractPath))
@@ -225,7 +216,23 @@ public class VXMusicAutoUpdater
         
         try
         {
+            UpdateMessageInMainWindow($"Installing new Release...");
             ReplaceDirectoryContents(extractPath, targetPath);
+        }
+        catch (UnauthorizedAccessException uae)
+        {
+            Console.WriteLine("User does not have the required privileges, please run as Administrator");
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine($"An error occured: {e}");
+        }
+        
+        // Copy Overlay to AppData
+        try
+        {
+            UpdateMessageInMainWindow($"Installing Overlay...");
+            ReplaceDirectoryContents(Path.Combine("..", extractPath, "Overlay"), OverlayAppDataPath);
         }
         catch (UnauthorizedAccessException uae)
         {
@@ -241,7 +248,7 @@ public class VXMusicAutoUpdater
             UpdateMessageInMainWindow("Deleting downloaded zip...");
             if(File.Exists(zipPath))
                 File.Delete(zipPath);
-        
+            
             UpdateMessageInMainWindow("Deleting extracted zip folder...");
             if (Directory.Exists(extractPath))
                 Directory.Delete(extractPath, true);
@@ -259,8 +266,6 @@ public class VXMusicAutoUpdater
     private void ReplaceDirectoryContents(string sourceDir, string targetDir)
     {
         // Delete existing files and directories in the target directory
-        UpdateMessageInMainWindow($"Deleting contents of current installation...");
-        
         foreach (var file in Directory.GetFiles(targetDir, "*", SearchOption.AllDirectories))
             File.Delete(file);
 
@@ -268,7 +273,6 @@ public class VXMusicAutoUpdater
             Directory.Delete(dir, true);
 
         // Copy new files and directories from the source directory to the target directory
-        UpdateMessageInMainWindow($"Installing new Release...");
         foreach (var file in Directory.GetFiles(sourceDir))
         {
             var destFileName = Path.Combine(targetDir, Path.GetFileName(file));
