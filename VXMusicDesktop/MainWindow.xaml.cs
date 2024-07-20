@@ -148,7 +148,7 @@ namespace VXMusicDesktop
         
         async void CheckForUpdates()
         {
-            bool isUpdateAvailable = await App.VXMusicSession.VxMusicUpdate.IsVxMusicUpdateAvailable();
+            bool isUpdateAvailable = await App.VXMusicSession.VxMusicUpdate.IsUpdateAvailableOnStableBranch();
 
             if (isUpdateAvailable)
             {

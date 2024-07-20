@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -42,17 +43,37 @@ public class VXMusicUpdateHandler
         }
     }
     
-    public async Task<bool> IsVxMusicUpdateAvailable()
+    public async Task<bool> IsUpdateAvailableOnStableBranch()
     {
+        List <Release> releasesToCheck = null;
+        
         try
         {
-            // Get the latest release from GitHub
-            var releases = await _gitHubClient.Repository.Release.GetAll(_repositoryOwner, _repositoryName);
+            // Check for new releases on GitHub
+            try
+            {
+                var allReleases = await _gitHubClient.Repository.Release.GetAll(_repositoryOwner, _repositoryName);
+                
+                // We only want to alert the user if there are new versions available on the Stable branch
+                // i.e. if Release is not Prerelease, and is not a draft
+                releasesToCheck = allReleases.Where(release => !release.Prerelease && !release.Draft).ToList();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Error checking for updates: {ex.Message}");
+            }
 
+            if (releasesToCheck == null || releasesToCheck.Count == 0)
+            {
+                _logger.LogError("Could not find any releases from GitHub.");
+                return false;
+            }
+            
+            var latestRelease = releasesToCheck.FirstOrDefault();
+            
             var currentApplicationVersion = new Version($"{App.ApplicationVersion.ToString()}");
-            var latestRelease = releases.FirstOrDefault();
             var latestReleaseVersion = new Version($"{latestRelease.TagName}");
-
+            
             _logger.LogTrace($"Current Version: {currentApplicationVersion}. Latest Release Version: {latestReleaseVersion}");
 
             if (currentApplicationVersion == latestReleaseVersion)
