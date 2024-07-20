@@ -39,7 +39,9 @@ public static class SpotifyConnectionStateExtensions
 
 public class SpotifyAuthentication
 {
-    private const string CredentialsPath = "credentials.json";
+    public static string CredentialsPath { get; set; }
+    public static string CredentialsFilePath { get; set; }
+
     public static string? ClientId { get; set; } 
 
     private static readonly EmbedIOAuthServer _server = new(new Uri("http://localhost:5543/callback"), 5543);
@@ -48,7 +50,7 @@ public class SpotifyAuthentication
 
     public static event EventHandler SpotifyLogin;
 
-    public static bool CredentialFileExists => File.Exists(CredentialsPath);
+    public static bool CredentialFileExists => File.Exists(CredentialsFilePath);
 
     public static SpotifyConnectionState CurrentConnectionState { get; set; }
 
@@ -73,14 +75,18 @@ public class SpotifyAuthentication
 
         CurrentConnectionState = SpotifyConnectionState.Connecting;
 
-
         if (string.IsNullOrEmpty(ClientId))
         {
             throw new AuthenticationException("Spotify ClientId has not been set." +
                                               "You can set it statically via SpotifyClientBuilder.ClientId");
         }
 
-        if (File.Exists(CredentialsPath))
+        if (!Directory.Exists(CredentialsPath))
+        {
+            Directory.CreateDirectory(CredentialsPath);
+        }
+
+        if (File.Exists(CredentialsFilePath))
         {
             await Start();
         }
@@ -116,12 +122,12 @@ public class SpotifyAuthentication
 
     private static async Task Start()
     {
-        var json = await File.ReadAllTextAsync(CredentialsPath);
+        var json = await File.ReadAllTextAsync(CredentialsFilePath);
         var token = JsonConvert.DeserializeObject<PKCETokenResponse>(json);
         
         var authenticator = new PKCEAuthenticator(SpotifyAuthentication.ClientId!, token!);
         authenticator.TokenRefreshed += (sender, token) =>
-            File.WriteAllText(CredentialsPath, JsonConvert.SerializeObject(token));
+            File.WriteAllText(CredentialsFilePath, JsonConvert.SerializeObject(token));
 
         var config = SpotifyClientConfig.CreateDefault()
             .WithAuthenticator(authenticator);
@@ -145,7 +151,7 @@ public class SpotifyAuthentication
                 new PKCETokenRequest(SpotifyAuthentication.ClientId!, response.Code, _server.BaseUri, verifier)
             );
 
-            await File.WriteAllTextAsync(CredentialsPath, JsonConvert.SerializeObject(token));
+            await File.WriteAllTextAsync(CredentialsFilePath, JsonConvert.SerializeObject(token));
             await Start();
         };
 

@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics;
+using System.IO;
 using Microsoft.Extensions.DependencyInjection;
 using VXMusic;
 using VXMusic.Audio;
@@ -84,6 +85,8 @@ public class VXMusicSession
 
         ColourSchemeManager.SetTheme(VXUserSettings.Desktop.GetCurrentDesktopTheme());
 
+        SpotifyAuthentication.CredentialsPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "VXMusic", "LocalAuth", "Spotify");
+        SpotifyAuthentication.CredentialsFilePath = Path.Combine(SpotifyAuthentication.CredentialsPath, "credentials.json");
         SpotifyAuthentication.ClientId = ConnectionsSettings.SpotifySettings.ClientId;
 
         if (OverlaySettings.LaunchOverlayOnStartup)

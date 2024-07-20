@@ -70,7 +70,7 @@ public class VXMusicActions
             VXMusicSession.NotificationClient.SendNotification(NotificationLevel.Warning,"Oops, couldn't get that.",
                 "Tech Tip: Have you tried turning up your World Volume?", 5);            
             App.VXMusicSession.ToastNotification.SendNotification(NotificationLevel.Warning,"Oops, couldn't get that.",
-                "Tech Tip: Have you tried turning up your World Volume?", 5);
+                "Tech Tip: Have you tried turning up your Media Volume?", 5);
             if(App.VXMusicSession.NotificationSettings.IsVRChatNotificationServiceEnabled)
                 App.VXMusicSession.VrChatNotification.SendNotificationAsync(NotificationLevel.Warning, $"Couldn't catch that!\n", "Try turning up World Volume.", 3000);
         }
