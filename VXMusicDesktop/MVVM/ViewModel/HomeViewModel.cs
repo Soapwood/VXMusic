@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using VXMusic.Connections.Http;
+using VXMusicDesktop.Theme;
 
 namespace VXMusicDesktop.MVVM.ViewModel
 {
@@ -18,6 +19,7 @@ namespace VXMusicDesktop.MVVM.ViewModel
         public HomeViewModel(SharedViewModel sharedViewModel)
         {
             SharedViewModel = sharedViewModel;
+            GetVxTipsText();
             FetchVxNewsText();
         }
         
@@ -29,6 +31,7 @@ namespace VXMusicDesktop.MVVM.ViewModel
         // Shared ViewModel for sharing concurrency values between certain Views.
         public SharedViewModel SharedViewModel { get; }
         private string _vxNewsGistText { get; set; }
+        private string _vxTipsText { get; set; }
         
         public string VxNewsGistText
         {
@@ -42,12 +45,30 @@ namespace VXMusicDesktop.MVVM.ViewModel
                 }
             }
         }
+        
+        public string VxTipsText
+        {
+            get { return _vxTipsText; }
+            set
+            {
+                if (_vxTipsText != value)
+                {
+                    _vxTipsText = value;
+                    OnPropertyChanged(nameof(VxTipsText));
+                }
+            }
+        }
 
         public async Task FetchVxNewsText()
         {
             Logger.LogDebug("Fetching VXNews from Github Gist");
             VxNewsGistText = await VxHttpClient.FetchVxNewsGistContent();
             Logger.LogDebug($"Received: {VxNewsGistText}");
+        }
+        
+        public async Task GetVxTipsText()
+        {
+            VxTipsText = StaticText.VxTipsText;
         }
     }
 }

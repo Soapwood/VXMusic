@@ -37,13 +37,13 @@ namespace VXMusicDesktop.MVVM.View
             MainBoxBorderGradientBrush.GradientStops[1].Color = ColourSchemeManager.Accent1Colour.Color;
 
             MainBoxBorderHeaderText.Foreground = ColourSchemeManager.TextBasic;
-            MainBoxBorderParagraphText.Foreground = ColourSchemeManager.TextBasic;
+            MainBoxNewsParagraphText.Foreground = ColourSchemeManager.TextBasic;
 
             ReleaseNotesBoxBorderGradientBrush.GradientStops[0].Color = ColourSchemeManager.SecondaryColour.Color;
             ReleaseNotesBoxBorderGradientBrush.GradientStops[1].Color = ColourSchemeManager.Accent1Colour.Color;
 
-            ReleaseNotesBoxBorderHeaderText.Foreground = ColourSchemeManager.TextBasic;
-            VxMusicNewsBoxParagraphText.Foreground = ColourSchemeManager.TextBasic;
+            VxMusicTipsBoxBorderHeaderText.Foreground = ColourSchemeManager.TextBasic;
+            VxMusicTipsBoxParagraphText.Foreground = ColourSchemeManager.TextBasic;
 
             IntegrationsHeaderText.Foreground = ColourSchemeManager.TextBasic;
 

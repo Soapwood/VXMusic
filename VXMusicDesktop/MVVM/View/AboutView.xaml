@@ -30,6 +30,24 @@
         <SolidColorBrush x:Key="DisabledGrey"
                          Color="{Binding Source={x:Static custom:ColourSchemeManager.DisabledGrey}, Path=Color}" />
 
+        <BitmapImage x:Key="DiscordLogo"
+                     UriSource="{Binding Source={x:Static custom:UIImageManager.DiscordLogo}, Path=UriSource}" />
+
+        <BitmapImage x:Key="GitHubLogo"
+                     UriSource="{Binding Source={x:Static custom:UIImageManager.GitHubLogo}, Path=UriSource}" />
+
+        <BitmapImage x:Key="XLogoBlack"
+                     UriSource="{Binding Source={x:Static custom:UIImageManager.XLogoBlack}, Path=UriSource}" />
+
+        <!-- Remove Hover animation from Hyperlinks -->
+        <Style TargetType="TextBlock">
+            <Setter Property="TextDecorations" Value="{x:Null}" />
+        </Style>
+        <Style TargetType="Hyperlink">
+            <Setter Property="TextDecorations" Value="None" />
+            <Setter Property="Foreground" Value="Black" />
+        </Style>
+
         <!-- Switch Style -->
         <Style x:Key="AboutSwitchButtonStyle" TargetType="ToggleButton">
             <Setter Property="Width" Value="80" />
@@ -101,16 +119,8 @@
         <custom:SolidColorBrushToColorConverter x:Key="SolidColorBrushToColorConverter" />
     </UserControl.Resources>
 
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <!-- First TextBlock -->
-            <RowDefinition Height="Auto" />
-            <!-- Second TextBlock -->
-            <RowDefinition Height="Auto" />
-            <!-- Options -->
-        </Grid.RowDefinitions>
-        <StackPanel>
+
+    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,40">
         <TextBlock
             Name="AboutTextHeader"
             Grid.Row="0"
@@ -122,31 +132,42 @@
             VXMusic
         </TextBlock>
 
-        <TextBlock
-            Name="AboutTextParagraph"
-            Grid.Row="1"
-            VerticalAlignment="Center"
-            TextAlignment="Center"
-            Foreground="{StaticResource TextBasic}"
-            FontSize="18">
-            <Hyperlink NavigateUri="https://github.com/Soapwood" Click="Url_Click" TargetName="_blank">
-                <Run Text="Github" />
-            </Hyperlink>
-            <LineBreak />
-            <Hyperlink NavigateUri="https://discord.gg/acfpfHB7tU" Click="Url_Click" TargetName="_blank">
-                <Run Text="Discord" />
-            </Hyperlink>
-            <LineBreak />
-            <Hyperlink NavigateUri="https://twitter.com/soapwood_" Click="Url_Click" TargetName="_blank">
-                <Run Text="Twitter / X" />
-            </Hyperlink>
-            <LineBreak /><LineBreak />
+        <StackPanel Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" Orientation="Horizontal">
+            <TextBlock Margin="0,0,10,0">
+                <Hyperlink NavigateUri="https://github.com/Soapwood" Click="Url_Click">
+                    <Image Source="{StaticResource GitHubLogo}" Width="32" Height="32"
+                           RenderOptions.BitmapScalingMode="HighQuality" />
+                </Hyperlink>
+            </TextBlock>
+            <TextBlock Margin="0,0,10,0">
+                <Hyperlink NavigateUri="https://discord.gg/acfpfHB7tU" Click="Url_Click">
+                    <Image Source="{StaticResource DiscordLogo}" Width="32" Height="32"
+                           RenderOptions.BitmapScalingMode="HighQuality" />
+                </Hyperlink>
+            </TextBlock>
+            <TextBlock Margin="0,0,10,0">
+                <Hyperlink NavigateUri="https://twitter.com/soapwood_" Click="Url_Click">
+                    <Image Source="{StaticResource XLogoBlack}" Width="32" Height="32"
+                           RenderOptions.BitmapScalingMode="HighQuality" />
+                </Hyperlink>
+            </TextBlock>
+        </StackPanel>
+
+        <TextBlock Grid.Row="2"
+                   Name="InfoTextParagraph"
+                   VerticalAlignment="Bottom"
+                   TextAlignment="Center"
+                   Margin="0,20,0,0"
+                   Foreground="{StaticResource TextBasic}"
+                   FontStyle="Italic"
+                   FontSize="12">
             VXMusicDesktop © Soapwood 2024
-            <LineBreak /><LineBreak />
-            VXMusic Open Source Library coming Soon™
-            <LineBreak /><LineBreak />
+            <LineBreak />
+            VXMusicDesktop is protected under the MPL 2.0 License
+            <LineBreak />
+            VXMusic Open Source Library available on GitHub
+            <LineBreak />
             BRUSHSTRIKE is a brush typeface designed by Francesco Canovaro
         </TextBlock>
-        </StackPanel>
-    </Grid>
+    </StackPanel>
 </UserControl>

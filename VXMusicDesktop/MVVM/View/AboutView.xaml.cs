@@ -34,7 +34,6 @@ namespace VXMusicDesktop.MVVM.View
         {
             // Handle the theme change here for Home View
             AboutTextHeader.Foreground = ColourSchemeManager.TextBasic;
-            AboutTextParagraph.Foreground = ColourSchemeManager.TextBasic;
         }
 
         private void Url_Click(object sender, RoutedEventArgs e)

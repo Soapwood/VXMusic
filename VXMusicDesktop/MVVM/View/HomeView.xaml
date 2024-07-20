@@ -69,37 +69,39 @@
                 <Grid>
                     <StackPanel>
                         <TextBlock x:Name="MainBoxBorderHeaderText"
-                                   Text="Virtual Xtensions Music"
+                                   Text="What's New?"
                                    Foreground="{StaticResource TextBasic}"
                                    FontSize="28"
                                    Margin="20,10,10,0" />
 
-                        <TextBlock x:Name="MainBoxBorderParagraphText"
-                                   Text="Music Companion for Social VR."
+                        <TextBlock x:Name="MainBoxNewsParagraphText"
+                                   Text="{Binding VxNewsGistText}"
+                                   TextWrapping="Wrap"
                                    Foreground="{StaticResource TextBasic}"
-                                   FontSize="18"
-                                   Margin="20,10,10,0" />
+                                   FontSize="12"
+                                   Margin="22,10,0,0"
+                                   HorizontalAlignment="Left" />
                     </StackPanel>
                 </Grid>
             </Border>
 
-            <Border Width="200"
+            <Border Width="230"
                     Height="200"
                     CornerRadius="10"
-                    Margin="45,0,0,0">
+                    Margin="15,0,0,0">
 
                 <Border.Background>
                     <LinearGradientBrush x:Name="ReleaseNotesBoxBorderGradientBrush" StartPoint="0,0" EndPoint="1,2">
                         <GradientStop Offset="0.0">
                             <GradientStop.Color>
-                                <Binding Source="{StaticResource SecondaryColor}"
+                                <Binding Source="{StaticResource Accent1Colour}"
                                          Converter="{StaticResource SolidColorBrushToColorConverter}" />
                             </GradientStop.Color>
                         </GradientStop>
 
-                        <GradientStop Offset="0.5">
+                        <GradientStop Offset="1.0">
                             <GradientStop.Color>
-                                <Binding Source="{StaticResource Accent1Colour}"
+                                <Binding Source="{StaticResource SecondaryColor}"
                                          Converter="{StaticResource SolidColorBrushToColorConverter}" />
                             </GradientStop.Color>
                         </GradientStop>
@@ -107,18 +109,18 @@
                 </Border.Background>
 
                 <StackPanel>
-                    <TextBlock x:Name="ReleaseNotesBoxBorderHeaderText"
-                               Text="VX News"
+                    <TextBlock x:Name="VxMusicTipsBoxBorderHeaderText"
+                               Text="Tips"
                                Foreground="{StaticResource TextBasic}"
                                FontSize="18"
                                Margin="20,10,10,0"
                                HorizontalAlignment="Center" />
-                    <TextBlock x:Name="VxMusicNewsBoxParagraphText"
-                               Text="{Binding VxNewsGistText}"
+                    <TextBlock x:Name="VxMusicTipsBoxParagraphText"
+                               Text="{Binding VxTipsText}"
                                TextWrapping="Wrap"
                                Foreground="{StaticResource TextBasic}"
                                FontSize="12"
-                               Margin="10,10,0,0"
+                               Margin="10,20,0,0"
                                HorizontalAlignment="Left" />
                 </StackPanel>
             </Border>

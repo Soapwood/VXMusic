@@ -37,6 +37,10 @@ namespace VXMusicDesktop.Theme
         public static readonly BitmapImage XSOverlayLogo = new BitmapImage(new Uri($"pack://application:,,,/Images/XSOverlayLogo.jpg", UriKind.Absolute));
         public static readonly BitmapImage SteamVRLogo = new BitmapImage(new Uri($"pack://application:,,,/Images/SteamVRLogo.png", UriKind.Absolute));
         public static readonly BitmapImage VRChatLogoBlack = new BitmapImage(new Uri($"pack://application:,,,/Images/VRChatLogoBlack.png", UriKind.Absolute));
+        
+        public static readonly BitmapImage GitHubLogo = new BitmapImage(new Uri($"pack://application:,,,/Images/GitHubLogoWhite.png", UriKind.Absolute));
+        public static readonly BitmapImage XLogoBlack = new BitmapImage(new Uri($"pack://application:,,,/Images/XLogoBlack.png", UriKind.Absolute));
+        public static readonly BitmapImage DiscordLogo = new BitmapImage(new Uri($"pack://application:,,,/Images/DiscordLogoBlue.png", UriKind.Absolute));
     }
 
     public class ColourSchemeManager

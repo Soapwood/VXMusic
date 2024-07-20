@@ -91,6 +91,9 @@
     <Content Include="..\Installer\VXMusic.nsi">
       <Link>VXMusic.nsi</Link>
     </Content>
+    <Resource Include="Images\DiscordLogoBlue.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
     <Content Include="Images\VXLogoIcon.ico" />
     <None Remove="Images\SaveIconBlack.png" />
     <None Remove="Images\SaveIconWhite.png" />
@@ -159,6 +162,18 @@
     </Resource>
     <None Remove="Images\DownloadWhite.png" />
     <Resource Include="Images\DownloadWhite.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <None Remove="Images\GitHubLogoWhite.png" />
+    <Resource Include="Images\GitHubLogoWhite.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <None Remove="Images\XLogoBlack.png" />
+    <Resource Include="Images\XLogoBlack.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <None Remove="Images\XLogoWhite.png" />
+    <Resource Include="Images\XLogoWhite.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
