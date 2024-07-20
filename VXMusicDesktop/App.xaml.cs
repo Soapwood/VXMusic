@@ -55,6 +55,8 @@ namespace VXMusicDesktop
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                 .Build();
+            
+            VXMusicSettingsSyncHandler.RunSettingsMigrationOnStartup();
 
             var overlaySettings = new OverlaySettings()
             {
@@ -136,6 +138,8 @@ namespace VXMusicDesktop
              */
             services.AddSingleton<App>();
             
+            services.AddSingleton<VXMusicSettingsSyncHandler>();
+            
             // Handle creating Recognition Clients based off of BYOAPI Configuration
             services.AddSingleton<ShazamClient>(serviceProvider => VXMusicSession.RecognitionSettings!.ShazamSettings.IsByoApiEnabled
                 ? new ShazamClient(serviceProvider, VXMusicSession.RecognitionSettings.ShazamSettings.ByoApiKey!)
@@ -151,9 +155,8 @@ namespace VXMusicDesktop
             services.AddSingleton<VrChatOscNotificationClient>();
             services.AddSingleton<SteamVROverlayAppsInterface>();
             
-            services.AddSingleton<VXMusicSettingsSyncHandler>();
             services.AddSingleton<VXMusicUpdateHandler>();
-            
+
             // services.AddSingleton<INotificationClient>(provider =>
             // {
             //     var selectedClient = new XsOverlayNotificationClient();

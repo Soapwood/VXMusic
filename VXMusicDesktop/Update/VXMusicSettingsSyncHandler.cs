@@ -9,59 +9,63 @@ namespace VXMusicDesktop.Update;
 
 public class VXMusicSettingsSyncHandler
 {
-    private readonly IServiceProvider _serviceProvider;
     private readonly ILogger<VXMusicSettingsSyncHandler> _logger;
+    private static List<string> _deferredLogMessages = new List<string>();
     
     private static readonly string UserSettingsFileName = "user.config";
     private static readonly string UrlFolderPattern = "VXMusicDesktop_Url_*";
 
-    public string CurrentUserSettingsFile;
-    public bool CurrentUserSettingsFileExists => File.Exists(CurrentUserSettingsFile);
+    public static string CurrentUserSettingsFile;
+    public static bool CurrentUserSettingsFileExists => File.Exists(CurrentUserSettingsFile);
 
     public VXMusicSettingsSyncHandler(IServiceProvider serviceProvider)
     {
-        _serviceProvider = serviceProvider;
         _logger = serviceProvider.GetService(typeof(ILogger<VXMusicSettingsSyncHandler>)) 
             as ILogger<VXMusicSettingsSyncHandler> ?? throw new ApplicationException("A logger must be created in service provider.");
         
         _logger.LogTrace("Creating VXMusicSettingsSyncHandler.");
-        
+
+        FlushDeferredLogMessages();
+    }
+
+    public static void RunSettingsMigrationOnStartup()
+    {
         CurrentUserSettingsFile = GetCurrentConfigPath();
         
         if (CurrentUserSettingsFileExists)
         {
-            _logger.LogInformation($"Current User Settings File: {CurrentUserSettingsFile}");
+            _deferredLogMessages.Add($"Current User Settings File: {CurrentUserSettingsFile}");
         }
         else
         {
-            _logger.LogTrace($"Current User Settings File: {CurrentUserSettingsFile} doesn't exist.");
+            _deferredLogMessages.Add($"Current User Settings File: {CurrentUserSettingsFile} doesn't exist.");
             MigrateSettings();
         }
     }
 
-    public void MigrateSettings()
+    private static void MigrateSettings()
     {
         string latestConfigPath = GetLatestConfigPath();
         if (latestConfigPath != null)
         {
-            _logger.LogInformation($"Found previous user settings: {latestConfigPath}. Migrating to: {CurrentUserSettingsFile}");
+            _deferredLogMessages.Add($"Found previous user settings: {latestConfigPath}. Migrating to: {CurrentUserSettingsFile}");
             EnsureAppDataUserSettingsFolderCreated();
             File.Copy(latestConfigPath, CurrentUserSettingsFile, true);
         }
         else
         {
-            _logger.LogInformation($"No Previous User Settings Found. Creating User Settings file in {CurrentUserSettingsFile}");
+            _deferredLogMessages.Add($"No Previous User Settings Found. Creating User Settings file in {CurrentUserSettingsFile}");
             EnsureAppDataUserSettingsFolderCreated();
             VXUserSettings.Settings.SetHasLaunched(true);
         }
     }
     
-    private string GetCurrentConfigPath()
+    private static string GetCurrentConfigPath()
     {
         return ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal).FilePath;
     }
     
-    private string GetLatestConfigPath()
+    private static string GetLatestConfigPath()
     {
         string localAppDataDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
             "VirtualXtensions");
@@ -104,7 +108,7 @@ public class VXMusicSettingsSyncHandler
         return null;
     }
     
-    private void EnsureAppDataUserSettingsFolderCreated()
+    private static void EnsureAppDataUserSettingsFolderCreated()
     {
         var currentSettingsDirectoryPath = Path.GetDirectoryName(CurrentUserSettingsFile);
         
@@ -116,5 +120,14 @@ public class VXMusicSettingsSyncHandler
     {
         Version version;
         return Version.TryParse(versionString, out version) ? version : null;
+    }
+    
+    private void FlushDeferredLogMessages()
+    {
+        foreach (var message in _deferredLogMessages)
+        {
+            _logger.LogInformation(message);
+        }
+        _deferredLogMessages.Clear();
     }
 }
