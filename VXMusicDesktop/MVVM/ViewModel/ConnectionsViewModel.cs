@@ -58,7 +58,7 @@ namespace VXMusicDesktop.MVVM.ViewModel
         public async Task IsLastFmConnected()
         {
             LastfmAuthentication.ClientId = App.VXMusicSession.ConnectionsSettings.LastfmSettings.ClientId;
-            LastfmAuthentication.ClientSecret = App.VXMusicSession.ConnectionsSettings.LastfmSettings.ClientSecret;
+            LastfmAuthentication.ClientToken = App.VXMusicSession.ConnectionsSettings.LastfmSettings.AppToken;
             
             // TODO Check login here?
             var isLastFmConnected = await LastfmAuthentication.Login(App.VXMusicSession.ConnectionsSettings.LastfmSettings.Username,
@@ -175,7 +175,7 @@ namespace VXMusicDesktop.MVVM.ViewModel
             VXUserSettings.Connections.SetLastfmPassword(LastFmPassword);
 
             LastfmAuthentication.ClientId = App.VXMusicSession.ConnectionsSettings.LastfmSettings.ClientId;
-            LastfmAuthentication.ClientSecret = App.VXMusicSession.ConnectionsSettings.LastfmSettings.ClientSecret;
+            LastfmAuthentication.ClientToken = App.VXMusicSession.ConnectionsSettings.LastfmSettings.AppToken;
             
             var response = await LastfmAuthentication.Login(LastFmUsername, LastFmPassword);
             
@@ -192,10 +192,6 @@ namespace VXMusicDesktop.MVVM.ViewModel
 
             if (String.IsNullOrEmpty(LastFmUsername) || String.IsNullOrEmpty(LastFmPassword))
                 return;
-
-            //VXUserSettings.Connections.SetSpotifyPlaylistSaveSetting(LastFmUsername);
-            //App.VXMusicSession.ConnectionsSettings.LastfmSettings.ClientSecret;
-            
         }
 
         private string DetermineLastFmLinkButtonStateContent()

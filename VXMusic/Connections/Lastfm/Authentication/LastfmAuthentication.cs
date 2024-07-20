@@ -9,7 +9,7 @@ namespace VXMusic.Lastfm.Authentication;
 public class LastfmAuthentication
 {
     public static string? ClientId { get; set; } 
-    public static string? ClientSecret { get; set; }
+    public static string? ClientToken { get; set; }
 
     public static async Task<bool> Login(string username, string password)
     {

@@ -12,7 +12,7 @@ namespace VXMusic.Lastfm
         public static Task<LastfmClient> Instance = _lastfmClient.Value;
         public async static Task<LastfmClient> CreateLastfmClient()
         {
-            return new LastfmClient(LastfmAuthentication.ClientId, LastfmAuthentication.ClientSecret);
+            return new LastfmClient(LastfmAuthentication.ClientId, LastfmAuthentication.ClientToken);
         }
     }
 }

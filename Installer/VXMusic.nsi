@@ -7,6 +7,8 @@
 # Set the relative path for the source files
 !define SOURCE_PATH ".."
 
+!define APPDATA_FOLDER "$LOCALAPPDATA\VirtualXtensions"
+
 # Define the name of the installer and the output file
 OutFile "VXMusicInstaller.exe"
 InstallDir $PROGRAMFILES64\VXMusic
@@ -53,6 +55,9 @@ Section "Uninstall"
   
   # Remove registry entries
   DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}"
+  
+  # Delete AppData
+  RMDir /r "${APPDATA_FOLDER}"
 SectionEnd
 
 # MUI (Modern User Interface) configuration

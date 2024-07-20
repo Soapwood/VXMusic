@@ -97,7 +97,7 @@ namespace VXMusicDesktop
                 LastfmSettings = new LastfmSettings()
                 {
                     ClientId = configuration["Connections:Lastfm:ClientId"],
-                    ClientSecret = configuration["Connections:Lastfm:ClientSecret"],
+                    AppToken = configuration["Connections:Lastfm:AppToken"],
                     Username = VXUserSettings.Connections.GetLastfmUsername(),
                     Password = VXUserSettings.Connections.GetLastfmPassword()
                 }
