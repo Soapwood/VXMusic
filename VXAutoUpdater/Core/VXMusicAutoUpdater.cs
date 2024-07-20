@@ -22,7 +22,8 @@ public class VXMusicAutoUpdater
     private readonly string _personalAccessToken;
     private readonly GitHubClient _gitHubClient;
 
-    public readonly string AppDataPath;
+    public readonly string AutoUpdaterAppDataPath;
+    public static string OverlayAppDataPath;
     public string UpdateZipName;
     public string UpdateZipPath;
 
@@ -38,9 +39,11 @@ public class VXMusicAutoUpdater
         _repositoryName = repositoryName;
         _personalAccessToken = personalAccessToken;
 
-        AppDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "VirtualXtensions", "VXMusic", "AutoUpdater");
-        if (!Path.Exists(AppDataPath))
-            Directory.CreateDirectory(AppDataPath);
+        AutoUpdaterAppDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "VirtualXtensions", "VXMusic", "AutoUpdater");
+        OverlayAppDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "VirtualXtensions", "VXMusic", "Overlay");
+        
+        if (!Path.Exists(AutoUpdaterAppDataPath))
+            Directory.CreateDirectory(AutoUpdaterAppDataPath);
 
         if (!string.IsNullOrEmpty(_personalAccessToken))
         {
@@ -81,10 +84,13 @@ public class VXMusicAutoUpdater
             UpdateMessageInMainWindow("Update downloaded successfully.");
             
             // Call the method to extract and replace files
-            string extractPath = Path.Combine(_autoUpdater.AppDataPath, $"{_autoUpdater.UpdateZipName.Split(".zip")[0]}");
+            string extractPath = Path.Combine(_autoUpdater.AutoUpdaterAppDataPath, $"{_autoUpdater.UpdateZipName.Split(".zip")[0]}");
             string targetPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "VXMusic");
             
             _autoUpdater.ExtractAndReplace(_autoUpdater.UpdateZipPath, extractPath, targetPath);
+            
+            // Copy Overlay to AppData
+            _autoUpdater.CopyLooseFolderToDestination(Path.Combine(targetPath, "Overlay"), OverlayAppDataPath);
 
             UpdateMessageInMainWindow($"Installation of [{branch}] ({release.Name}) was Successful!");
         }
@@ -126,7 +132,7 @@ public class VXMusicAutoUpdater
             if (asset != null)
             {
                 UpdateZipName = asset.Name;
-                UpdateZipPath = Path.Combine(AppDataPath, UpdateZipName);
+                UpdateZipPath = Path.Combine(AutoUpdaterAppDataPath, UpdateZipName);
                 
                 using (var httpClient = new HttpClient())
                 {
@@ -180,6 +186,12 @@ public class VXMusicAutoUpdater
 
         // Update download failed
         return false;
+    }
+
+    public void CopyLooseFolderToDestination(string sourceDirName, string destDirName)
+    {
+        Directory.Delete(destDirName);
+        DirectoryCopy(sourceDirName, destDirName, true);
     }
     
     public void ExtractAndReplace(string zipPath, string extractPath, string targetPath)

@@ -39,6 +39,9 @@ namespace VXMusicDesktop
         public static VXMusicSession VXMusicSession;
         public static Version ApplicationVersion;
         
+        public static readonly string VxMusicAppDataDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+            "VirtualXtensions");
+        
         public static Process? VXMOverlayProcess;
         
         // TODO Have you bumped the version of VXMusicDesktop?
@@ -60,7 +63,7 @@ namespace VXMusicDesktop
 
             var overlaySettings = new OverlaySettings()
             {
-                RuntimePath = configuration["Overlay:RuntimePath"],
+                RuntimePath = Path.Combine(VxMusicAppDataDir, configuration["Overlay:RuntimePath"]),
                 OverlayAnchor = VXUserSettings.Overlay.GetOverlayAnchor()
             };
             

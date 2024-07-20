@@ -57,7 +57,8 @@ public class VXMusicOverlayInterface
         {
             FileName = runtimePath,
             Arguments = "",
-            UseShellExecute = true,
+            UseShellExecute = false, // Set this to false to redirect output if needed
+            CreateNoWindow = true, 
             Verb = "runas",
             WindowStyle = ProcessWindowStyle.Minimized
         };

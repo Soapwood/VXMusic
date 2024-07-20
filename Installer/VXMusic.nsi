@@ -42,6 +42,12 @@ Section "MainSection" SEC01
    
    # Create an uninstaller
    WriteUninstaller "$INSTDIR\UninstallVXMusic.exe"
+   
+   # Copy Overlay Files to AppData for launch
+   SetOutPath "$LOCALAPPDATA\VirtualXtensions\VXMusic\Overlay"
+   CreateDirectory "$LOCALAPPDATA\VirtualXtensions\VXMusic\Overlay"
+   File /r "${SOURCE_PATH}\Publish\x64\Overlay\*.*"
+   
 SectionEnd
 
 # Uninstaller section
