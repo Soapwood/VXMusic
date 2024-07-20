@@ -38,7 +38,7 @@ public class VXMusicAutoUpdater
         _repositoryName = repositoryName;
         _personalAccessToken = personalAccessToken;
 
-        AppDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "VXMusic", "AutoUpdater");
+        AppDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "VirtualXtensions", "VXMusic", "AutoUpdater");
         if (!Path.Exists(AppDataPath))
             Directory.CreateDirectory(AppDataPath);
 

@@ -85,7 +85,7 @@ public class VXMusicSession
 
         ColourSchemeManager.SetTheme(VXUserSettings.Desktop.GetCurrentDesktopTheme());
 
-        SpotifyAuthentication.CredentialsPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "VXMusic", "LocalAuth", "Spotify");
+        SpotifyAuthentication.CredentialsPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "VirtualXtensions", "VXMusic", "LocalAuth", "Spotify");
         SpotifyAuthentication.CredentialsFilePath = Path.Combine(SpotifyAuthentication.CredentialsPath, "credentials.json");
         SpotifyAuthentication.ClientId = ConnectionsSettings.SpotifySettings.ClientId;
 

@@ -99,7 +99,7 @@ public class VXMusicUpdateHandler
     {
         // Prepare AppData folder for temporary copy of VXAutoUpdater
         string autoUpdaterPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "VXMusic", "VXAutoUpdater");
-        string temporaryFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "VXMusic", "AutoUpdaterTemp");
+        string temporaryFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "VirtualXtensions", "VXMusic", "AutoUpdaterTemp");
         
         CopyDirectory(autoUpdaterPath, temporaryFolder);
         

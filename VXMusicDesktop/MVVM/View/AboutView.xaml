@@ -36,8 +36,8 @@
         <BitmapImage x:Key="GitHubLogo"
                      UriSource="{Binding Source={x:Static custom:UIImageManager.GitHubLogo}, Path=UriSource}" />
 
-        <BitmapImage x:Key="XLogoBlack"
-                     UriSource="{Binding Source={x:Static custom:UIImageManager.XLogoBlack}, Path=UriSource}" />
+        <BitmapImage x:Key="XLogoWhite"
+                     UriSource="{Binding Source={x:Static custom:UIImageManager.XLogoWhite}, Path=UriSource}" />
 
         <!-- Remove Hover animation from Hyperlinks -->
         <Style TargetType="TextBlock">
@@ -147,7 +147,7 @@
             </TextBlock>
             <TextBlock Margin="0,0,10,0">
                 <Hyperlink NavigateUri="https://twitter.com/soapwood_" Click="Url_Click">
-                    <Image Source="{StaticResource XLogoBlack}" Width="32" Height="32"
+                    <Image Source="{StaticResource XLogoWhite}" Width="32" Height="32"
                            RenderOptions.BitmapScalingMode="HighQuality" />
                 </Hyperlink>
             </TextBlock>

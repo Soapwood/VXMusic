@@ -40,6 +40,7 @@ namespace VXMusicDesktop.Theme
         
         public static readonly BitmapImage GitHubLogo = new BitmapImage(new Uri($"pack://application:,,,/Images/GitHubLogoWhite.png", UriKind.Absolute));
         public static readonly BitmapImage XLogoBlack = new BitmapImage(new Uri($"pack://application:,,,/Images/XLogoBlack.png", UriKind.Absolute));
+        public static readonly BitmapImage XLogoWhite = new BitmapImage(new Uri($"pack://application:,,,/Images/XLogoWhite.png", UriKind.Absolute));
         public static readonly BitmapImage DiscordLogo = new BitmapImage(new Uri($"pack://application:,,,/Images/DiscordLogoBlue.png", UriKind.Absolute));
     }
 

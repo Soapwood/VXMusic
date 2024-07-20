@@ -9,8 +9,15 @@
     <PackageIcon>VXLogo.png</PackageIcon>
     <ApplicationIcon>Images\VXLogoIcon.ico</ApplicationIcon>
     <RunPostBuildEvent>Always</RunPostBuildEvent>
-    <Version>0.6.3.8</Version>
+    <Version>0.6.3.9</Version>
     <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
+    <Title>VXMusicDesktop</Title>
+    <Authors>VirtualXtensions</Authors>
+    <Description>Desktop Client for VXMusic</Description>
+    <Copyright>Soapwood 2023</Copyright>
+    <PackageProjectUrl>https://github.com/Soapwood/VXMusic</PackageProjectUrl>
+    <PackageLicenseUrl>https://github.com/Soapwood/VXMusic/blob/main/license.txt</PackageLicenseUrl>
+    <RepositoryUrl>https://github.com/Soapwood/VXMusic</RepositoryUrl>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
