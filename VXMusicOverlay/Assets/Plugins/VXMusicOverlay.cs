@@ -261,9 +261,9 @@ namespace Plugins
             
             if (openVrErrorContainer != EVRInitError.None)
             {
-                Debug.LogError("Open VR initialization failed." + openVrErrorContainer.ToString());
+                Debug.LogError("Open VR initialization failed. " + openVrErrorContainer.ToString());
                 ProcessError();
-                throw new ApplicationException("Open VR initialization failed." + openVrErrorContainer.ToString());
+                throw new ApplicationException("Open VR initialization failed. " + openVrErrorContainer.ToString());
             }
 
             // Initializing the overlay function
