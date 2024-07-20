@@ -202,8 +202,6 @@ public class VXUserSettings
         {
             VXMusicDesktop.Properties.Settings.Default.HasLaunched = hasLaunched;
             VXMusicDesktop.Properties.Settings.Default.Save();
-            
-            Logger.LogDebug($"User Setting HasLaunched set to {Properties.Settings.Default.HasLaunched}");
         }
     
         public static bool GetHasLaunched()
