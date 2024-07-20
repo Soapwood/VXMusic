@@ -110,6 +110,7 @@ namespace VXMusicDesktop
             Logger.LogTrace($"Booting VXMusic Desktop Client...");
             
             VXMusicSession.Initialise();
+            EnsureAppDataUserSettingsFolderCreated();
             
 #if DEBUG
             // var _cancellationTokenSource = new CancellationTokenSource();
@@ -166,6 +167,11 @@ namespace VXMusicDesktop
             ServiceProvider = services.BuildServiceProvider();
             
             Logger = ServiceProvider.GetRequiredService<ILogger<App>>();
+        }
+
+        private static void EnsureAppDataUserSettingsFolderCreated()
+        {
+            VXUserSettings.Settings.SetHasLaunched(true);
         }
 
         void VXMusicOverlay_Exit(object sender, ExitEventArgs e)

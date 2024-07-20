@@ -213,5 +213,17 @@ namespace VXMusicDesktop.Properties {
                 this["AskForUpdatesOnStartupEnabled"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool HasLaunched {
+            get {
+                return ((bool)(this["HasLaunched"]));
+            }
+            set {
+                this["HasLaunched"] = value;
+            }
+        }
     }
 }

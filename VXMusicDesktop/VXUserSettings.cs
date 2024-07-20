@@ -197,6 +197,19 @@ public class VXUserSettings
         {
             return VXMusicDesktop.Properties.Settings.Default.AskForUpdatesOnStartupEnabled;
         }
+        
+        public static void SetHasLaunched(bool hasLaunched)
+        {
+            VXMusicDesktop.Properties.Settings.Default.HasLaunched = hasLaunched;
+            VXMusicDesktop.Properties.Settings.Default.Save();
+            
+            Logger.LogDebug($"User Setting HasLaunched set to {Properties.Settings.Default.HasLaunched}");
+        }
+    
+        public static bool GetHasLaunched()
+        {
+            return VXMusicDesktop.Properties.Settings.Default.HasLaunched;
+        }
     }
 
     internal class Desktop
