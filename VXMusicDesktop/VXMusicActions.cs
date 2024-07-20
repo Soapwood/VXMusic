@@ -45,7 +45,7 @@ public class VXMusicActions
             VXMusicSession.RecordingClient.StopRecording();
         });
 
-        VXMusicSession.NotificationClient.SendNotification(NotificationLevel.Info, "Sounds great! Just a moment..", "", 2);
+        VXMusicSession.NotificationClient.SendNotification(NotificationLevel.Info, "Sounds great! Just a moment..", "", 1);
         App.VXMusicSession.ToastNotification.SendNotification(NotificationLevel.Info, "Sounds great! Just a moment..", "", 2);
 
         var result = await VXMusicSession.RecognitionClient.RunRecognition();
