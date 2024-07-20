@@ -49,7 +49,6 @@ namespace VXMusicDesktop
 #endif
             this.Exit += new ExitEventHandler(VXMusicOverlay_Exit);
             
-            var thingy = Assembly.GetExecutingAssembly().GetName().Version.ToString();
             ApplicationVersion = Assembly.GetExecutingAssembly().GetName().Version;
             
             IConfiguration configuration = new ConfigurationBuilder()
@@ -110,8 +109,7 @@ namespace VXMusicDesktop
             Logger.LogTrace($"Booting VXMusic Desktop Client...");
             
             VXMusicSession.Initialise();
-            EnsureAppDataUserSettingsFolderCreated();
-            
+
 #if DEBUG
             // var _cancellationTokenSource = new CancellationTokenSource();
             // VXMusicOverlayInterface.StartVXMusicDesktopHeartbeatListener(_cancellationTokenSource.Token);
@@ -153,6 +151,7 @@ namespace VXMusicDesktop
             services.AddSingleton<VrChatOscNotificationClient>();
             services.AddSingleton<SteamVROverlayAppsInterface>();
             
+            services.AddSingleton<VXMusicSettingsSyncHandler>();
             services.AddSingleton<VXMusicUpdateHandler>();
             
             // services.AddSingleton<INotificationClient>(provider =>
@@ -167,11 +166,6 @@ namespace VXMusicDesktop
             ServiceProvider = services.BuildServiceProvider();
             
             Logger = ServiceProvider.GetRequiredService<ILogger<App>>();
-        }
-
-        private static void EnsureAppDataUserSettingsFolderCreated()
-        {
-            VXUserSettings.Settings.SetHasLaunched(true);
         }
 
         void VXMusicOverlay_Exit(object sender, ExitEventArgs e)
