@@ -102,6 +102,7 @@
             <StackPanel Grid.Row="1" 
                         Grid.Column="1"
                         Orientation="Horizontal"
+                        Panel.ZIndex="7"
                         HorizontalAlignment="Right">
                 <TextBlock x:Name="MessageTextBlock" 
                            Margin="20,0,5,2"
