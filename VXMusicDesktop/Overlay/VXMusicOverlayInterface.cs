@@ -57,8 +57,7 @@ public class VXMusicOverlayInterface
         {
             FileName = runtimePath,
             Arguments = "",
-            UseShellExecute = false, // Set this to false to redirect output if needed
-            CreateNoWindow = true, // Set this to true to hide the Unity window
+            UseShellExecute = true,
             Verb = "runas",
             WindowStyle = ProcessWindowStyle.Minimized
         };
