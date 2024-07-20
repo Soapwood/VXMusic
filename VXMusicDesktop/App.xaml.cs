@@ -40,7 +40,7 @@ namespace VXMusicDesktop
         public static Version ApplicationVersion;
         
         public static readonly string VxMusicAppDataDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
-            "VirtualXtensions");
+            "VirtualXtensions", "VXMusic");
         
         public static Process? VXMOverlayProcess;
         
