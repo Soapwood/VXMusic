@@ -126,7 +126,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         tag_name: ${{ steps.get-project-version.outputs.version }}
-        release_name: VXMusic Release ${{ steps.get-project-version.outputs.version }}
+        release_name: VXMusic ${{ steps.get-project-version.outputs.version }}
         draft: true
         prerelease: false
 
