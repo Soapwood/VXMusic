@@ -46,7 +46,9 @@ public class AudioDataConverter
     {
         _logger.LogTrace("Converting WAV to Base64 encoded string.");
 
-        byte[] audioData = File.ReadAllBytes("output.wav"); // TODO Really need to fucking use just bytes.
+        var audioCacheFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "VirtualXtensions", "VXMusic", "Cache", "output.wav");
+        
+        byte[] audioData = File.ReadAllBytes(audioCacheFile);
         
         if(audioData == null)
         {

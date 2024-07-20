@@ -14,7 +14,7 @@ public class WindowsAudioDeviceListener : IAudioRecordingClient
     private WasapiLoopbackCapture? _capture;
     private WaveFileWriter? _writer;
     
-    private const string BufferFile = "output.wav";
+    static string BufferFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "VirtualXtensions", "VXMusic", "Cache", "output.wav");
 
     private int _recordingTimeSeconds;
 
@@ -30,6 +30,8 @@ public class WindowsAudioDeviceListener : IAudioRecordingClient
 
         CreateCaptureInstance();
         _recordingTimeSeconds = 5;
+
+        CreateCacheDirectoryIfDoesNotExist();
     }
     
     public int GetRecordingTimeSeconds()
@@ -93,6 +95,16 @@ public class WindowsAudioDeviceListener : IAudioRecordingClient
         }
         
         _logger.LogTrace("Recording stopped.");
+    }
+
+    private void CreateCacheDirectoryIfDoesNotExist()
+    {
+        var bufferFileRoot = Directory.GetParent(BufferFile).ToString();
+        
+        if(!Directory.Exists(bufferFileRoot))
+        {
+            Directory.CreateDirectory(bufferFileRoot);
+        }
     }
 
     private void OnDataAvailable(object sender, WaveInEventArgs e)
