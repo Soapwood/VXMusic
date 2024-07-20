@@ -113,14 +113,14 @@
                                Text="Tips"
                                Foreground="{StaticResource TextBasic}"
                                FontSize="18"
-                               Margin="20,10,10,0"
+                               Margin="0,10,10,0"
                                HorizontalAlignment="Center" />
                     <TextBlock x:Name="VxMusicTipsBoxParagraphText"
                                Text="{Binding VxTipsText}"
                                TextWrapping="Wrap"
                                Foreground="{StaticResource TextBasic}"
                                FontSize="12"
-                               Margin="10,20,0,0"
+                               Margin="14,20,0,0"
                                HorizontalAlignment="Left" />
                 </StackPanel>
             </Border>
