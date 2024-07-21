@@ -12,10 +12,10 @@
     <UserControl.Resources>
         <BitmapImage x:Key="SpotifyLogo"
                      UriSource="{Binding Source={x:Static custom:UIImageManager.SpotifyLogo}, Path=UriSource}" />
-        
+
         <BitmapImage x:Key="LastfmLogo"
                      UriSource="{Binding Source={x:Static custom:UIImageManager.LastfmLogo}, Path=UriSource}" />
-        
+
         <SolidColorBrush x:Key="PrimaryColor"
                          Color="{Binding Source={x:Static custom:ColourSchemeManager.PrimaryColour}, Path=Color}" />
         <SolidColorBrush x:Key="SecondaryColor"
@@ -131,67 +131,10 @@
                     </StackPanel>
                 </Grid>
             </Border>
-            <StackPanel>
-                <Grid>
-                    <!-- <Border Width="300" -->
-                    <!--         Height="60" -->
-                    <!--         CornerRadius="10" -->
-                    <!--         HorizontalAlignment="Left" -->
-                    <!--         Margin="20,0,0,0"> -->
-                    <!-- -->
-                    <!--     <Border.Background> -->
-                    <!--         <LinearGradientBrush x:Name="OverlayMenuOption2BoxBorderGradientBrush" StartPoint="0,0" -->
-                    <!--                              EndPoint="1,2"> -->
-                    <!--             <GradientStop Offset="0.0"> -->
-                    <!--                 <GradientStop.Color> -->
-                    <!--                     <Binding Source="{StaticResource SecondaryColor}" -->
-                    <!--                              Converter="{StaticResource SolidColorBrushToColorConverter}" /> -->
-                    <!--                 </GradientStop.Color> -->
-                    <!--             </GradientStop> -->
-                    <!-- -->
-                    <!--             <GradientStop Offset="0.7"> -->
-                    <!--                 <GradientStop.Color> -->
-                    <!--                     <Binding Source="{StaticResource Accent1Colour}" -->
-                    <!--                              Converter="{StaticResource SolidColorBrushToColorConverter}" /> -->
-                    <!--                 </GradientStop.Color> -->
-                    <!--             </GradientStop> -->
-                    <!--         </LinearGradientBrush> -->
-                    <!--     </Border.Background> -->
-                    <!-- -->
-                    <!--     <StackPanel Orientation="Horizontal"> -->
-                    <!--         <TextBlock x:Name="LaunchOverlayOnStartupTextBlock" -->
-                    <!--                    Text="Playlist Tracking" -->
-                    <!--                    Foreground="{StaticResource TextBasic}" -->
-                    <!--                    FontSize="12" -->
-                    <!--                    Margin="20,0,20,0" -->
-                    <!--                    VerticalAlignment="Center" /> -->
-                    <!--         <ComboBox x:Name="DesktopThemeComboBox"  -->
-                    <!--                   Style="{StaticResource RoundedComboBoxTheme}" -->
-                    <!--                   Width="140"  -->
-                    <!--                   Height="25" -->
-                    <!--                   Panel.ZIndex="3" -->
-                    <!--                   HorizontalAlignment="Right" -->
-                    <!--                   Margin="10,0,0,0" -->
-                    <!--                   ItemsSource="{x:Static custom:ColourSchemeManager.PlaylistSavingOptions}"> -->
-                    <!--                   ~1~ > @1@ -->
-                    <!--                   ~1~ SelectionChanged="PerformSetSpotifyPlaylistSaveSetting"> @1@ -->
-                    <!--                   ~1~ SelectionChanged="ThemeDropdownSelection"> @1@ -->
-                    <!--         </ComboBox> -->
-                    <!--         ~1~ <ToggleButton x:Name="LaunchOverlayOnStartupToggleButton" @1@ -->
-                    <!--         ~1~               Style="{StaticResource SwitchButtonStyle}" @1@ -->
-                    <!--         ~1~               Margin="18,0,0,0" @1@ -->
-                    <!--         ~1~               IsChecked="{Binding LaunchOverlayOnStartup}" @1@ -->
-                    <!--         ~1~               Command="{Binding LaunchOverlayOnStartupToggleButton}"> @1@ -->
-                    <!--         ~1~ </ToggleButton> @1@ -->
-                    <!--     </StackPanel> -->
-                    <!-- </Border> -->
-                </Grid>
-            </StackPanel>
         </StackPanel>
 
         <StackPanel Orientation="Horizontal"
                     Margin="0,0,0,10">
-
 
             <Border Width="300"
                     Height="200"
@@ -218,18 +161,22 @@
                 </Border.Background>
 
                 <Grid>
-                    <StackPanel>
-                        <Image Height="60"
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <StackPanel Grid.Row="0">
+                        <Image Height="40"
                                Source="{StaticResource LastfmLogo}"
                                RenderOptions.BitmapScalingMode="HighQuality"
                                RenderTransformOrigin="0,0"
-                               Margin="0,50,0,0"
+                               Margin="0,20,0,0"
                                HorizontalAlignment="Center" />
                         <TextBlock Name="ConnectionService2TextHeader"
                                    Text="Link VXMusic to Last.fm"
                                    Foreground="{StaticResource TextBasic}"
                                    FontSize="18"
-                                   Margin="0,0,0,0"
+                                   Margin="0,10,0,0"
                                    HorizontalAlignment="Center" />
 
                         <TextBlock Name="ConnectionService2TextParagraph"
@@ -240,88 +187,86 @@
                                    HorizontalAlignment="Center" />
                     </StackPanel>
 
+                    <!-- Username and Password section -->
+                    <StackPanel Grid.Row="1" HorizontalAlignment="Left" Width="300" Margin="0,0,10,0">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <TextBox Grid.Row="0" x:Name="LastFmUsernameTextBox"
+                                     Width="250"
+                                     VerticalContentAlignment="Center"
+                                     HorizontalAlignment="Left"
+                                     TextChanged="LastFmUsernameBox_TextChanged"
+                                     GotFocus="LastFmUsernameTextBox_GotFocus"
+                                     LostFocus="LastFmUsernameTextBox_LostFocus"
+                                     Text=""
+                                     Style="{StaticResource ModernTextBoxSmall}" Margin="0,10,0,0">
+                            </TextBox>
+
+                            <TextBlock Grid.Row="0" x:Name="LastFmUsernameBoxHintText"
+                                       Text="Username"
+                                       Foreground="{StaticResource TextBasic}"
+                                       Visibility="Visible"
+                                       HorizontalAlignment="Left"
+                                       VerticalAlignment="Center"
+                                       IsHitTestVisible="False"
+                                       Width="100"
+                                       Height="20"
+                                       Panel.ZIndex="6"
+                                       Margin="40,11,0,0" />
+
+                            <PasswordBox x:Name="LastFmPasswordBox" Width="250"
+                                         Grid.Row="1"
+                                         VerticalContentAlignment="Center"
+                                         HorizontalAlignment="Left"
+                                         IsEnabled="{Binding ShouldLastFmLinkButtonBeEnabled}"
+                                         PasswordChanged="LastFmPasswordBox_PasswordChanged"
+                                         GotFocus="LastFmPasswordTextBox_GotFocus"
+                                         LostFocus="LastFmPasswordTextBox_LostFocus"
+                                         Style="{StaticResource ModernPasswordBoxSmall}"
+                                         Margin="0,10,0,0" />
+
+                            <TextBlock x:Name="LastFmPasswordBoxHintText"
+                                       Text="Password"
+                                       Foreground="{StaticResource TextBasic}"
+                                       Visibility="Visible"
+                                       IsHitTestVisible="False"
+                                       HorizontalAlignment="Left"
+                                       VerticalAlignment="Center"
+                                       Width="100"
+                                       Height="20"
+                                       Panel.ZIndex="6"
+                                       Margin="40,11,0,0" Grid.Row="1" />
+
+                            <StackPanel Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left">
+                                <Button x:Name="LastFmLoginButton"
+                                        Content="{Binding LastFmLinkButtonText}"
+                                        Background="{StaticResource LastFmRed}"
+                                        Foreground="{StaticResource TextBasic}"
+                                        Command="{Binding LinkLastfmButtonClick}"
+                                        VerticalAlignment="Center"
+                                        HorizontalAlignment="Center"
+                                        IsEnabled="{Binding ShouldLastFmLinkButtonBeEnabled}"
+                                        Margin="0,10,10,0"
+                                        Width="70" Height="28" Click="Button_Click">
+                                    <Button.Resources>
+                                        <Style TargetType="Border">
+                                            <Setter Property="CornerRadius" Value="4" />
+                                        </Style>
+                                    </Button.Resources>
+                                </Button>
+                            </StackPanel>
+                        </Grid>
+                    </StackPanel>
                 </Grid>
             </Border>
-
-            <Border Height="120">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="80" />
-                        <RowDefinition />
-                    </Grid.RowDefinitions>
-
-                    <TextBlock x:Name="LastFmUsernameBoxHintText"
-                               Text="Username"
-                               Foreground="{StaticResource TextBasic}"
-                               Visibility="Visible"
-                               HorizontalAlignment="Left"
-                               VerticalAlignment="Center"
-                               IsHitTestVisible="False"
-                               Width="100"
-                               Height="20"
-                               Panel.ZIndex="6"
-                               Margin="50,4,0,0" />
-
-                    <TextBox x:Name="LastFmUsernameTextBox"
-                             Width="250"
-                             Height="40"
-                             VerticalContentAlignment="Center"
-                             HorizontalAlignment="Center"
-                             TextChanged="LastFmUsernameBox_TextChanged"
-                             GotFocus="LastFmUsernameTextBox_GotFocus"
-                             LostFocus="LastFmUsernameTextBox_LostFocus"
-                             Text=""
-                             Style="{StaticResource ModernTextBox}" Margin="10,0,0,0">
-                        <TextBox.Tag>Username</TextBox.Tag>
-                    </TextBox>
-
-
-                    <PasswordBox x:Name="LastFmPasswordBox" Width="250"
-                                 Grid.Row="1"
-                                 Height="40"
-                                 VerticalContentAlignment="Center"
-                                 HorizontalAlignment="Center"
-                                 IsEnabled="{Binding ShouldLastFmLinkButtonBeEnabled}"
-                                 PasswordChanged="LastFmPasswordBox_PasswordChanged"
-                                 GotFocus="LastFmPasswordTextBox_GotFocus"
-                                 LostFocus="LastFmPasswordTextBox_LostFocus"
-                                 Style="{StaticResource ModernPasswordBox}"
-                                 Margin="10,0,0,0" />
-
-                    <TextBlock x:Name="LastFmPasswordBoxHintText"
-                               Text="Password"
-                               Foreground="{StaticResource TextBasic}"
-                               Visibility="Visible"
-                               IsHitTestVisible="False"
-                               HorizontalAlignment="Left"
-                               VerticalAlignment="Center"
-                               Width="100"
-                               Height="20"
-                               Panel.ZIndex="6"
-                               Margin="50,2,0,0" Grid.Row="1" />
-
-                </Grid>
-            </Border>
-
-            <Border>
-                <Button x:Name="LastFmLoginButton"
-                        Content="{Binding LastFmLinkButtonText}"
-                        Background="{StaticResource LastFmRed}"
-                        Foreground="{StaticResource TextBasic}"
-                        Command="{Binding LinkLastfmButtonClick}"
-                        IsEnabled="{Binding ShouldLastFmLinkButtonBeEnabled}"
-                        Padding="0"
-                        Margin="0,20,0,0"
-                        HorizontalAlignment="Left" Width="100" Height="60" Click="Button_Click">
-                    <Button.Resources>
-                        <Style TargetType="Border">
-                            <Setter Property="CornerRadius" Value="20" />
-                        </Style>
-                    </Button.Resources>
-                </Button>
-            </Border>
-
-
         </StackPanel>
     </StackPanel>
 
