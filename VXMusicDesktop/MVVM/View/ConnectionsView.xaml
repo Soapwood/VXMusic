@@ -131,10 +131,6 @@
                     </StackPanel>
                 </Grid>
             </Border>
-        </StackPanel>
-
-        <StackPanel Orientation="Horizontal"
-                    Margin="0,0,0,10">
 
             <Border Width="300"
                     Height="200"
@@ -267,6 +263,11 @@
                     </StackPanel>
                 </Grid>
             </Border>
+
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal"
+                    Margin="0,0,0,10">
         </StackPanel>
     </StackPanel>
 
