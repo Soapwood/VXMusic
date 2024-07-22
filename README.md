@@ -1,5 +1,5 @@
 <div align="center">
-<img src=".github/branding/VXMusicGitBannerNoLogoTransparent.png" alt="Alt Text" style="max-width: 100%">
+<img src=".github/branding/VXMusicGitBannerNoLogoTransparentWhite.png" alt="Alt Text" style="max-width: 100%">
 
 [![Discord](https://img.icons8.com/?size=100&id=M725CLW4L7wE&format=png&color=000000)](https://t.co/Z2eSKfYpfs)
 [![X](https://img.icons8.com/?size=100&id=fJp7hepMryiw&format=png&color=000000)](https://twitter.com/Soapwood_)
