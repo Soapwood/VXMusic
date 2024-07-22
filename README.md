@@ -11,6 +11,9 @@
 
 <div align="center">
 
+## Music Recognition Overlay for Social VR
+### Also suitable for Desktop use!
+
 # Get VXMusic
 [![Discord](https://img.icons8.com/?size=100&id=103169&format=png&color=000000)](https://github.com/Soapwood/VXMusic/latest)
 
@@ -18,17 +21,38 @@ Download Installer
 
 <div align="left">
 
-## Installation
+# Installation
 An Installer is available from the Releases page. 
 Using the Installer will allow you to stay updated with latest versions of VXMusic.
 
 A loose build is also available for evaluation. This is designed to be used by the Auto Updater to get new versions and is not recommended for long term use.
 
-## Updates
+# Updates
 
-## How to Use
+# Usage
 
-##
+## VXMusic Overlay
+### 🎵 Recognise tracks at live events
+
+<img src=".github/readme/OverlayDemo.gif" alt="VXMusic Desktop" style="max-width: 80%">
+
+
+## VXMusic Desktop
+<img src=".github/readme/VXMusicDesktopHome.png" alt="VXMusic Desktop" style="max-width: 100%">
+
+### Recognition
+
+
+### Notifications
+
+
+### Connections
+#### ⚠️ Note: Spotify Integration
+The Spotify Integration App is currently undergoing review by Spotify.
+
+Until this is complete, it is currently required to manually add Users to the App configuration for the Playlists feature to work.
+
+Please reach out on [Discord](https://t.co/Z2eSKfYpfs) to have your Spotify account added!
 
 
 ## License
