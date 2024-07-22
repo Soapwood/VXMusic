@@ -12,14 +12,21 @@
 <div align="center">
 
 # Get VXMusic
+[![Discord](https://img.icons8.com/?size=100&id=103169&format=png&color=000000)](https://github.com/Soapwood/VXMusic/latest)
 
-[Download the Installer!](https://github.com/Soapwood/VXMusic/latest)
-
-VXMusic will check for new releases via the auto updater.
-
-Use the auto updater to check out Nightly builds!
+Download Installer
 
 <div align="left">
+
+## Installation
+An Installer is available from the Releases page. 
+Using the Installer will allow you to stay updated with latest versions of VXMusic.
+
+A loose build is also available for evaluation. This is designed to be used by the Auto Updater to get new versions and is not recommended for long term use.
+
+## Updates
+
+## How to Use
 
 ##
 
