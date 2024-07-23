@@ -4,18 +4,17 @@
 [![Discord](https://img.icons8.com/?size=100&id=M725CLW4L7wE&format=png&color=000000)](https://t.co/Z2eSKfYpfs)
 [![X](https://img.icons8.com/?size=100&id=fJp7hepMryiw&format=png&color=FFFFFF)](https://twitter.com/Soapwood_)
 
-[![Latest Stable Release](https://img.shields.io/github/v/release/Soapwood/VXMusic)](https://github.com/Soapwood/VXMusic/releases/latest)
-[![Latest Nightly Release](https://img.shields.io/github/v/release/Soapwood/VXMusic?include_prereleases&display_name=release)](https://github.com/Soapwood/VXMusic/releases/latest)
+[![Latest Stable Release](https://img.shields.io/github/v/release/Soapwood/VXMusic?style=for-the-badge&color=dda0dd)](https://github.com/Soapwood/VXMusic/releases/latest)
 
-![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/Soapwood/VXMusic/vxmusic-publish-release.yml%20?branch=main)
+![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/Soapwood/VXMusic/.github%2Fworkflows%2Fvxmusic-publish-release.yml?branch=main&style=flat-square)
 
 <div align="center">
 
-## Music Recognition Overlay for Social VR
-### Also suitable for Desktop use!
+### Music Recognition Overlay for Social VR
+#### Also suitable for Desktop use!
 
 # Get VXMusic
-[![Discord](https://img.icons8.com/?size=100&id=103169&format=png&color=000000)](https://github.com/Soapwood/VXMusic/latest)
+[![Download](https://img.icons8.com/?size=100&id=103169&format=png&color=000000)](https://github.com/Soapwood/VXMusic/latest)
 
 Download Installer
 
