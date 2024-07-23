@@ -15,7 +15,7 @@
 ### Also suitable for Desktop use!
 
 # Get VXMusic
-[![Discord](https://img.icons8.com/?size=100&id=103169&format=png&color=000000)](https://github.com/Soapwood/VXMusic/latest)
+[![Discord](https://img.icons8.com/?size=100&id=103169&format=png&color=FFFFFF)](https://github.com/Soapwood/VXMusic/latest)
 
 Download Installer
 
