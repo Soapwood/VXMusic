@@ -66,9 +66,12 @@ However, the MPL 2.0 license does not grant you any rights to use the Virtual Xt
 
 If you distribute your changes, you must share your modified source code. This ensures that others can benefit from your improvements.
 
+### Font
+BRUSHSTRIKE is a brush typeface designed by Francesco Canovaro. Free for non-commercial use.
 
 ## Special Thanks
 
 Special thanks to the testing team and early adopters. Your feedback has been immeasurable. <3
+
 
 # Made in 🇮🇪
