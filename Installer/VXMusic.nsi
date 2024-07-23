@@ -40,6 +40,17 @@ Section "MainSection" SEC01
    WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}" "NoModify" 1
    WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}" "NoRepair" 1
    
+   # Create shortcuts
+   # Copy .ico to output folder for shortcuts
+   File "${SOURCE_PATH}\VXMusicDesktop\Images\VXLogoIcon.ico"
+   
+   # Start Menu shortcut
+   CreateDirectory "$SMPROGRAMS\VXMusic"
+   CreateShortcut "$SMPROGRAMS\VXMusic\VXMusic.lnk" "$INSTDIR\VXMusicDesktop.exe" "" "$INSTDIR\VXLogoIcon.ico"
+   
+   # Desktop shortcut
+   CreateShortcut "$DESKTOP\VXMusic.lnk" "$INSTDIR\VXMusicDesktop.exe" "" "$INSTDIR\VXLogoIcon.ico"
+   
    # Create an uninstaller
    WriteUninstaller "$INSTDIR\UninstallVXMusic.exe"
    
@@ -65,6 +76,10 @@ Section "Uninstall"
   
   # Delete AppData
   RMDir /r "${APPDATA_FOLDER}"
+  
+  # Remove shortcuts
+  Delete "$SMPROGRAMS\VXMusic\VXMusic.lnk"
+  Delete "$DESKTOP\VXMusic.lnk"
 SectionEnd
 
 # MUI (Modern User Interface) configuration
