@@ -2,7 +2,7 @@
 <img src=".github/branding/VXMusicGitBannerNoLogoTransparentWhite.png" alt="Alt Text" style="max-width: 100%">
 
 [![Discord](https://img.icons8.com/?size=100&id=M725CLW4L7wE&format=png&color=000000)](https://t.co/Z2eSKfYpfs)
-[![X](https://img.icons8.com/?size=100&id=fJp7hepMryiw&format=png&color=000000)](https://twitter.com/Soapwood_)
+[![X](https://img.icons8.com/?size=100&id=fJp7hepMryiw&format=png&color=FFFFFF)](https://twitter.com/Soapwood_)
 
 [![Latest Stable Release](https://img.shields.io/github/v/release/Soapwood/VXMusic)](https://github.com/Soapwood/VXMusic/releases/latest)
 [![Latest Nightly Release](https://img.shields.io/github/v/release/Soapwood/VXMusic?include_prereleases&display_name=release)](https://github.com/Soapwood/VXMusic/releases/latest)
@@ -15,7 +15,7 @@
 ### Also suitable for Desktop use!
 
 # Get VXMusic
-[![Discord](https://img.icons8.com/?size=100&id=103169&format=png&color=FFFFFF)](https://github.com/Soapwood/VXMusic/latest)
+[![Discord](https://img.icons8.com/?size=100&id=103169&format=png&color=000000)](https://github.com/Soapwood/VXMusic/latest)
 
 Download Installer
 
