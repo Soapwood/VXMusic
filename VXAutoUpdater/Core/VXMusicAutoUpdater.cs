@@ -133,7 +133,8 @@ public class VXMusicAutoUpdater
                 
                 using (var httpClient = new HttpClient())
                 {
-                    httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _personalAccessToken);
+                    if(!string.IsNullOrEmpty(_personalAccessToken))
+                        httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _personalAccessToken);
                     httpClient.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue("VXMusic", "1.0"));
                     httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/octet-stream"));
                     
