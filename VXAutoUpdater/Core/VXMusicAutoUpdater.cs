@@ -108,9 +108,15 @@ public class VXMusicAutoUpdater
                 releasesToDisplay = allReleases.Where(release => !release.Prerelease && !release.Draft);
             else if(string.Equals("Nightly", branch))
                 releasesToDisplay = allReleases.Where(release => release.Prerelease && !release.Draft );
+            
+            var orderedReleases = releasesToDisplay
+                .Select(release => new { Release = release, Version = ParseVersion(release.TagName) })
+                .Where(x => x.Version != null)
+                .OrderByDescending(x => x.Version)
+                .Select(x => x.Release)
+                .ToList();
 
-
-            return releasesToDisplay.ToList();
+            return orderedReleases;
         }
         catch (Exception ex)
         {
@@ -119,6 +125,12 @@ public class VXMusicAutoUpdater
 
         // No new update available or error occurred
         return null;
+    }
+    
+    private static Version ParseVersion(string versionString)
+    {
+        Version version;
+        return Version.TryParse(versionString, out version) ? version : null;
     }
 
     public async Task<bool> DownloadUpdate(Release release)
