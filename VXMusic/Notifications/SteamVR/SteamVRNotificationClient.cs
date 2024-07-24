@@ -68,35 +68,6 @@ namespace VXMusic.Overlay
                       throw new ApplicationException("A logger must be created in service provider.");
         }
 
-        public static bool IsSteamVRRunningInternal()
-        {
-
-            //OpenVR.Applications.RemoveApplicationManifest("C:\\Program Files\\VXMusic\\manifest.vrmanifest");
-            //var inittoken = OpenVR.IsHmdPresent();
-            //var response = OpenVR.Applications.GetSceneApplicationState();
-            //var response2 = OpenVR.Applications.GetCurrentSceneProcessId();
-            //var response3 = OpenVR.Applications.GetSceneApplicationStateNameFromEnum(EVRSceneApplicationState.Running);
-            // Check if the VR runtime is installed
-            bool isRuntimeInstalled = OpenVR.IsRuntimeInstalled();
-            if (!isRuntimeInstalled)
-            {
-                Console.WriteLine("VR runtime is not installed.");
-                return false;
-            }
-
-            OpenVR.GetInitToken();
-            
-            // Check if an HMD is present
-            bool isHmdPresent = OpenVR.IsHmdPresent();
-            if (!isHmdPresent)
-            {
-                Console.WriteLine("No HMD detected.");
-                return false;
-            }
-
-            return true;
-        }
-
         public void SendNotificationInternal(string title, string content, int timeout, string image)
         {
             _logger.LogTrace("Sending notification request to SteamVR.");

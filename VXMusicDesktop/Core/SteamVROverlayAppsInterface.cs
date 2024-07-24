@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using Microsoft.Extensions.Logging;
 using Microsoft.VisualBasic.FileIO;
+using Microsoft.Win32;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -12,9 +13,14 @@ public class SteamVROverlayAppsInterface
     private readonly IServiceProvider _serviceProvider;
     private readonly ILogger<SteamVROverlayAppsInterface> _logger;
     
-    // TODO Will this fail without admin privilages?
-    private static readonly string SteamAppConfigPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86), "Steam\\config\\appconfig.json");
     private static readonly string DefaultVxMusicManifestPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "VXMusic\\manifest.vrmanifest");
+    private static readonly string DefaultSteamAppConfigPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86), "Steam\\config\\appconfig.json");
+    
+    private string SteamAppConfigPath;
+    private string SteamInstallPath;
+    
+    private static readonly string SteamRegistryValue = "SteamPath";
+    private static readonly string SteamRegistryKey = @"HKEY_CURRENT_USER\Software\Valve\Steam";
 
     public SteamVROverlayAppsInterface(IServiceProvider serviceProvider)
     {
@@ -23,6 +29,10 @@ public class SteamVROverlayAppsInterface
             as ILogger<SteamVROverlayAppsInterface> ?? throw new ApplicationException("A logger must be created in service provider.");
         
         _logger.LogTrace("Creating SteamVROverlayAppsInterface.");
+
+        SteamInstallPath = GetSteamInstallationPath();
+
+        SteamAppConfigPath = Path.GetFullPath(Path.Combine(SteamInstallPath, "config", "appconfig.json"));
     }
     
     public bool InstallVxMusicAsSteamVrOverlay()
@@ -30,12 +40,29 @@ public class SteamVROverlayAppsInterface
         _logger.LogInformation("Installing VXMusic as a SteamVR Overlay.");
         return AddManifestEntryToAppConfig(DefaultVxMusicManifestPath);
     }
-    
+
     public bool IsManifestEntryInAppConfig()
     {
         _logger.LogDebug("Checking if VXMusic is already added as a SteamVR Overlay..");
         var (manifestPaths, _) = ReadContentsOfAppConfig();
         return SteamVrManifestPathExistsInAppConfig(manifestPaths, SteamAppConfigPath);
+    }
+
+    private string GetSteamInstallationPath()
+    {
+        try
+        {
+            // Try to read the Steam installation path from the registry
+            object value = Registry.GetValue(SteamRegistryKey, SteamRegistryValue, null);
+            if (value != null) return value.ToString();
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError($"Error accessing registry entry {SteamRegistryKey}.");
+            _logger.LogError(ex.Message);
+        }
+
+        return DefaultSteamAppConfigPath;
     }
 
     private bool AddManifestEntryToAppConfig(string vxMusicManifestFile)
