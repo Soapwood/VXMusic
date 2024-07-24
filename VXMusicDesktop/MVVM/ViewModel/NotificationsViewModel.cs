@@ -5,10 +5,12 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using VXMusic;
+using VXMusic.Overlay;
 using VXMusicDesktop.Core;
 
 namespace VXMusicDesktop.MVVM.ViewModel
@@ -79,6 +81,13 @@ namespace VXMusicDesktop.MVVM.ViewModel
 
         private void PerformSteamVREnableButtonClick(object commandParameter)
         {
+            if (!SteamVRNotificationClient.IsSteamVrRunning())
+            {
+                Logger.LogWarning($"SteamVR is not running. Will not enable to SteamVR Notifications.");
+                MessageBox.Show("SteamVR is not running!", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
             App.VXMusicSession.SetNotificationService(NotificationService.SteamVR);
             VXUserSettings.Notifications.SetNotificationServiceInSettings(NotificationService.SteamVR);
             ProcessNotificationServiceState();

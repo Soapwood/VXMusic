@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using OVRSharp;
@@ -45,6 +46,12 @@ namespace VXMusic.Overlay
         {
             _steamVrNotificationClient.SendNotificationInternal(title, content, timeout, image);
         }
+
+        public static bool IsSteamVrRunning()
+        {
+            return Process.GetProcesses()
+                .Any(p => string.Equals(p.ProcessName, "vrserver", StringComparison.OrdinalIgnoreCase));
+        }
     }
 
     class SteamVRNotificationOverlay : OVRSharp.Overlay
@@ -59,6 +66,35 @@ namespace VXMusic.Overlay
             _logger = _serviceProvider.GetService(typeof(ILogger<SteamVRNotificationOverlay>))
                           as ILogger<SteamVRNotificationOverlay> ??
                       throw new ApplicationException("A logger must be created in service provider.");
+        }
+
+        public static bool IsSteamVRRunningInternal()
+        {
+
+            //OpenVR.Applications.RemoveApplicationManifest("C:\\Program Files\\VXMusic\\manifest.vrmanifest");
+            //var inittoken = OpenVR.IsHmdPresent();
+            //var response = OpenVR.Applications.GetSceneApplicationState();
+            //var response2 = OpenVR.Applications.GetCurrentSceneProcessId();
+            //var response3 = OpenVR.Applications.GetSceneApplicationStateNameFromEnum(EVRSceneApplicationState.Running);
+            // Check if the VR runtime is installed
+            bool isRuntimeInstalled = OpenVR.IsRuntimeInstalled();
+            if (!isRuntimeInstalled)
+            {
+                Console.WriteLine("VR runtime is not installed.");
+                return false;
+            }
+
+            OpenVR.GetInitToken();
+            
+            // Check if an HMD is present
+            bool isHmdPresent = OpenVR.IsHmdPresent();
+            if (!isHmdPresent)
+            {
+                Console.WriteLine("No HMD detected.");
+                return false;
+            }
+
+            return true;
         }
 
         public void SendNotificationInternal(string title, string content, int timeout, string image)
