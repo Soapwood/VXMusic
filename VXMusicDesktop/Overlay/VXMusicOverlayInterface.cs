@@ -437,6 +437,8 @@ public class VXMusicOverlayInterface
             //App.ToastNotification.Error($"{currentRecognitionApi} is not connected! Check your Recognition settings.");
             VXMusicSession.NotificationClient.SendNotification(NotificationLevel.Error, "Recognition Failed", $"{currentRecognitionApi} is not connected! Check your Recognition settings.", 8);
             App.VXMusicSession.ToastNotification.SendNotification(NotificationLevel.Error, "Recognition Failed", $"{currentRecognitionApi} is not connected! Check your Recognition settings.", 8);
+            // Finish, or effectively cancel recognition if fails.
+            SendMessageToVxMusicOverlayOverTcp(VXMMessage.RECOGNITION_FINISH);
             return false;
         }
         
