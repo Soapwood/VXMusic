@@ -20,6 +20,9 @@ public class VXMusicOverlayInterface
 {
     public static ILogger Logger = App.ServiceProvider.GetRequiredService<ILogger<VXMusicOverlayInterface>>();
     
+    private static readonly string OverlayLogOutputPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+        "VirtualXtensions", "VXMusic", "Logs", "VXMOverlay");
+    
     public static NamedPipeServerStream ServerStream;
     public static StreamReader ServerReader;
     public static StreamWriter ServerWriter;
@@ -53,10 +56,15 @@ public class VXMusicOverlayInterface
         if(App.VXMusicSession.ToastNotification != null)
             App.VXMusicSession.ToastNotification.SendNotification(NotificationLevel.Info, "", "Launching Overlay", 3);
         
+        if (!Directory.Exists(OverlayLogOutputPath))
+            Directory.CreateDirectory(OverlayLogOutputPath);
+        
+        string overlayLogFileName = $"VXMOverlayLog-{DateTime.Now.ToString("yyyy-MM-dd_HH_mm_ss")}.log";
+
         ProcessStartInfo overlayProcessStartInfo = new ProcessStartInfo
         {
             FileName = runtimePath,
-            Arguments = "",
+            Arguments = $"-logFile {Path.Combine(OverlayLogOutputPath, overlayLogFileName)}",
             UseShellExecute = false, // Set this to false to redirect output if needed
             CreateNoWindow = true, 
             Verb = "runas",
