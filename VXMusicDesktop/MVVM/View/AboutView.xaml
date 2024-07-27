@@ -168,6 +168,23 @@
             VXMusic Open Source Library available on GitHub
             <LineBreak />
             BRUSHSTRIKE is a brush typeface designed by Francesco Canovaro
+            <LineBreak />
+        </TextBlock>
+        
+        <TextBlock Text="Reporting a Bug?"
+                   Foreground="{StaticResource SecondaryColor}"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center">
+        </TextBlock>
+        <TextBlock Text="Open Logs Directory"
+                   Foreground="{StaticResource SecondaryColor}"
+                   TextDecorations="Underline"
+                   Cursor="Hand"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center">
+            <TextBlock.InputBindings>
+                <MouseBinding Gesture="LeftClick" Command="{Binding OpenFolderCommand}"/>
+            </TextBlock.InputBindings>
         </TextBlock>
     </StackPanel>
 </UserControl>
