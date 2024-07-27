@@ -154,23 +154,24 @@
 
                 <!-- BYOAPI -->
                 <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
-                    <CheckBox x:Name="ShazamByoApiCheckBox"
-                              Content="Enable BYOAPI"
-                              Cursor="Hand"
-                              IsChecked="{Binding IsShazamByoApiEnabled}"
-                              IsEnabled="{Binding IsShazamApiEnabled}"
-                              VerticalAlignment="Center" HorizontalAlignment="Left"
-                              Margin="20,0,0,0"
-                              Height="30"
-                              Style="{StaticResource CustomCheckBoxStyle}"
-                              Checked="ShazamByoApiCheckButtonChecked" Unchecked="ShazamByoApiCheckButtonUnchecked" />
+                    <!-- <CheckBox x:Name="ShazamByoApiCheckBox" -->
+                    <!--           Content="Enable BYOAPI" -->
+                    <!--           Cursor="Hand" -->
+                    <!--           IsChecked="{Binding IsShazamByoApiEnabled}" -->
+                    <!--           IsEnabled="{Binding IsShazamApiEnabled}" -->
+                    <!--           VerticalAlignment="Center" HorizontalAlignment="Left" -->
+                    <!--           Margin="20,0,0,0" -->
+                    <!--           Height="30" -->
+                    <!--           Style="{StaticResource CustomCheckBoxStyle}" -->
+                    <!--           Checked="ShazamByoApiCheckButtonChecked" Unchecked="ShazamByoApiCheckButtonUnchecked" /> -->
                     <StackPanel Orientation="Horizontal">
                         <Grid>
                             <PasswordBox x:Name="ShazamByoApiPasswordBox"
-                                         Visibility="{Binding IsShazamByoApiEnabled, Converter={StaticResource BoolToVis}}"
+                                         Visibility="{Binding IsShazamApiEnabled, Converter={StaticResource BoolToVis}}"
                                          Style="{StaticResource ModernApiBox}"
-                                         IsEnabled="{Binding IsShazamByoApiEnabled}"
-                                         Margin="10,0,0,0"
+                                         
+                                         IsEnabled="{Binding IsShazamApiEnabled}"
+                                         Margin="20,0,0,0"
                                          PasswordChanged="ShazamByoApiPasswordBoxChanged"
                                          GotFocus="ShazamByoApiPasswordBoxGotFocus"
                                          LostFocus="ShazamByoApiPasswordBoxLostFocus" />
@@ -186,7 +187,7 @@
                                            Width="260"
                                            Height="30"
                                            Panel.ZIndex="6"
-                                           Margin="17,0,0,0" />
+                                           Margin="27,0,0,0" />
                             </Canvas>
                         </Grid>
                     </StackPanel>
@@ -288,22 +289,22 @@
 
                 <!-- BYOAPI -->
                 <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
-                    <CheckBox x:Name="AudDByoApiCheckBox"
-                              Content="Enable BYOAPI"
-                              Cursor="Hand"
-                              IsChecked="{Binding IsAudDByoApiEnabled, Mode=TwoWay}"
-                              IsEnabled="{Binding IsAudDApiEnabled, Mode=TwoWay}"
-                              Margin="20,0,0,0"
-                              Height="30"
-                              VerticalAlignment="Center" HorizontalAlignment="Left"
-                              Style="{StaticResource CustomCheckBoxStyle}"
-                              Checked="AudDByoApiCheckButtonChecked" Unchecked="AudDByoApiCheckButtonUnchecked" />
+                    <!-- <CheckBox x:Name="AudDByoApiCheckBox" -->
+                    <!--           Content="Enable BYOAPI" -->
+                    <!--           Cursor="Hand" -->
+                    <!--           IsChecked="{Binding IsAudDByoApiEnabled, Mode=TwoWay}" -->
+                    <!--           IsEnabled="{Binding IsAudDApiEnabled, Mode=TwoWay}" -->
+                    <!--           Margin="20,0,0,0" -->
+                    <!--           Height="30" -->
+                    <!--           VerticalAlignment="Center" HorizontalAlignment="Left" -->
+                    <!--           Style="{StaticResource CustomCheckBoxStyle}" -->
+                    <!--           Checked="AudDByoApiCheckButtonChecked" Unchecked="AudDByoApiCheckButtonUnchecked" /> -->
                     <StackPanel Orientation="Horizontal">
                         <Grid>
                             <PasswordBox x:Name="AudDByoApiPasswordBox"
-                                         Visibility="{Binding IsAudDByoApiEnabled, Converter={StaticResource BoolToVis}}"
-                                         IsEnabled="{Binding IsAudDByoApiEnabled}"
-                                         Margin="10,0,0,0"
+                                         Visibility="{Binding IsAudDApiEnabled, Converter={StaticResource BoolToVis}}"
+                                         IsEnabled="{Binding IsAudDApiEnabled}"
+                                         Margin="20,0,0,0"
                                          Style="{StaticResource ModernApiBox}"
                                          VerticalAlignment="Center" HorizontalAlignment="Center"
                                          GotFocus="AudDByoApiPasswordBoxGotFocus"
@@ -321,7 +322,7 @@
                                            Width="260"
                                            Height="30"
                                            Panel.ZIndex="6"
-                                           Margin="17,0,0,0" />
+                                           Margin="27,0,0,0" />
                             </Canvas>
                         </Grid>
                     </StackPanel>

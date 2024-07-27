@@ -51,12 +51,12 @@ namespace VXMusicDesktop.MVVM.View
             RunRecognitionButton.Background = ColourSchemeManager.SecondaryColour;
             RunRecognitionButton.Foreground = ColourSchemeManager.TextBasic;
 
-            ShazamByoApiCheckBox.Background = ColourSchemeManager.Accent1Colour;
-            ShazamByoApiCheckBox.Foreground = ColourSchemeManager.TextBasic;
+            //ShazamByoApiCheckBox.Background = ColourSchemeManager.Accent1Colour;
+            //ShazamByoApiCheckBox.Foreground = ColourSchemeManager.TextBasic;
             ShazamByoApiPasswordBox.Background = ColourSchemeManager.SecondaryColour;
             
-            AudDByoApiCheckBox.Background = ColourSchemeManager.Accent1Colour;
-            AudDByoApiCheckBox.Foreground = ColourSchemeManager.TextBasic;
+            //AudDByoApiCheckBox.Background = ColourSchemeManager.Accent1Colour;
+            //AudDByoApiCheckBox.Foreground = ColourSchemeManager.TextBasic;
             AudDByoApiPasswordBox.Background = ColourSchemeManager.SecondaryColour;
 
             // if (RecognitionIntegrationEnableShazamApiButton.DataContext as RecognitionViewModel)
@@ -82,7 +82,7 @@ namespace VXMusicDesktop.MVVM.View
                 recognitionViewModel.IsShazamByoApiEnabled = true;
 
                 //ShazamByoApiCheckBox.Content = "Disable BYOAPI";
-                ShazamByoApiCheckBox.Content = "";
+                //ShazamByoApiCheckBox.Content = "";
                 if(!string.IsNullOrEmpty(recognitionViewModel.ShazamByoApiToken))
                     ShazamByoApiPasswordBoxHintText.Text = ShazamApiKeyPlaceholder;
 
@@ -98,7 +98,7 @@ namespace VXMusicDesktop.MVVM.View
                 recognitionViewModel.SharedViewModel.IsShazamApiConnected = false;
                 recognitionViewModel.IsShazamByoApiEnabled = false;
                 
-                ShazamByoApiCheckBox.Content = "Enable BYOAPI";
+                //ShazamByoApiCheckBox.Content = "Enable BYOAPI";
                 ShazamByoApiPasswordBoxHintText.Text = "";
     
                 if(recognitionViewModel.IsShazamApiEnabled)
@@ -180,7 +180,7 @@ namespace VXMusicDesktop.MVVM.View
                 recognitionViewModel.IsAudDByoApiEnabled = true;
 
                 //AudDByoApiCheckBox.Content = "Disable BYOAPI";
-                AudDByoApiCheckBox.Content = "";
+                //AudDByoApiCheckBox.Content = "";
 
                 recognitionViewModel.PerformSaveAndTestAudDByoApi();
             }
@@ -195,7 +195,7 @@ namespace VXMusicDesktop.MVVM.View
                 recognitionViewModel.SharedViewModel.IsAudDApiConnected = false;
                 recognitionViewModel.IsAudDByoApiEnabled = false;
                 
-                AudDByoApiCheckBox.Content = "Enable BYOAPI";
+                //AudDByoApiCheckBox.Content = "Enable BYOAPI";
 
                 if(recognitionViewModel.IsAudDApiEnabled)
                     recognitionViewModel.SetAudDApiKeyToDefaultAndTest();

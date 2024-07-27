@@ -199,19 +199,19 @@ namespace VXMusicDesktop.MVVM.ViewModel
             {
                 case RecognitionApi.Shazam:
                     IsShazamApiEnabled = true;
-                    IsShazamByoApiEnabled = App.VXMusicSession.RecognitionSettings.ShazamSettings.IsByoApiEnabled && 
-                                            !String.IsNullOrEmpty(App.VXMusicSession.RecognitionSettings.ShazamSettings.ByoApiKey);
+                    IsShazamByoApiEnabled = App.VXMusicSession.RecognitionSettings.ShazamSettings.IsByoApiEnabled;
+                                            //&& !String.IsNullOrEmpty(App.VXMusicSession.RecognitionSettings.ShazamSettings.ByoApiKey);
                     
                     IsAudDApiEnabled = false;
-                    IsAudDByoApiEnabled = false;
+                    //IsAudDByoApiEnabled = false;
                     break;
                 case RecognitionApi.AudD:
                     IsAudDApiEnabled = true;
-                    IsAudDByoApiEnabled = App.VXMusicSession.RecognitionSettings.AudDSettings.IsByoApiEnabled && 
-                                          !String.IsNullOrEmpty(App.VXMusicSession.RecognitionSettings.AudDSettings.ByoApiKey);
+                    IsAudDByoApiEnabled = App.VXMusicSession.RecognitionSettings.AudDSettings.IsByoApiEnabled; 
+                                          //&& !String.IsNullOrEmpty(App.VXMusicSession.RecognitionSettings.AudDSettings.ByoApiKey);
 
                     IsShazamApiEnabled = false;
-                    IsShazamByoApiEnabled = false;
+                    //IsShazamByoApiEnabled = false;
                     break;
                 default:
                     IsShazamApiEnabled = false;
@@ -315,7 +315,7 @@ namespace VXMusicDesktop.MVVM.ViewModel
             
             SharedViewModel.IsAudDApiConnected = false;
             IsAudDApiEnabled = false;
-            IsAudDByoApiEnabled = false;
+            //IsAudDByoApiEnabled = false;
             
             ProcessRecognitionApiState();
         }
@@ -327,7 +327,7 @@ namespace VXMusicDesktop.MVVM.ViewModel
             
             SharedViewModel.IsShazamApiConnected = false;
             IsShazamApiEnabled = false;
-            IsShazamByoApiEnabled = false;
+            //IsShazamByoApiEnabled = false;
             
             ProcessRecognitionApiState();
         }

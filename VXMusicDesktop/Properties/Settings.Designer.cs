@@ -120,7 +120,7 @@ namespace VXMusicDesktop.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool IsShazamByoApiEnabled {
             get {
                 return ((bool)(this["IsShazamByoApiEnabled"]));
@@ -132,7 +132,7 @@ namespace VXMusicDesktop.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool IsAudDByoApiEnabled {
             get {
                 return ((bool)(this["IsAudDByoApiEnabled"]));

@@ -75,7 +75,7 @@ namespace VXMusicDesktop
                     ClientSecret = configuration["Recognition:Shazam:ClientSecret"],
                     X_RapidAPI_Key = configuration["Recognition:Shazam:X-RapidAPI-Key"],
                     X_RapidAPI_Host = configuration["Recognition:Shazam:X-RapidAPI-Host"],
-                    IsByoApiEnabled = VXUserSettings.Recognition.GetIsShazamByoApiEnabled(),
+                    IsByoApiEnabled = true, //VXUserSettings.Recognition.GetIsShazamByoApiEnabled(),
                     ByoApiKey = VXUserSettings.Recognition.GetIsShazamByoApiEnabled() ? 
                         VXUserSettings.Recognition.GetShazamByoApiKey() : null
                 },
@@ -83,7 +83,7 @@ namespace VXMusicDesktop
                 AudDSettings = new AudDSettings()
                 {
                     ClientId = configuration["Recognition:Shazam:ClientId"],
-                    IsByoApiEnabled = VXUserSettings.Recognition.GetIsAudDByoApiEnabled(),
+                    IsByoApiEnabled = true, //VXUserSettings.Recognition.GetIsAudDByoApiEnabled(),
                     ByoApiKey = VXUserSettings.Recognition.GetIsAudDByoApiEnabled() ? 
                         VXUserSettings.Recognition.GetAudDByoApiKey() : null
                 }
