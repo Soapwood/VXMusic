@@ -54,6 +54,7 @@
             <StackPanel Orientation="Vertical" Margin="0,0,0,10">
                 <Button x:Name="NotificationService1Button"
                         Command="{Binding SteamVREnableButtonClick}"
+                        Cursor="Hand"
                         Width="340" Height="150"
                         Margin="0,0,0,0"
                         IsEnabled="true">
@@ -132,6 +133,7 @@
                 <!-- Button with custom content and appearance for XSOverlay Notification -->
                 <Button x:Name="NotificationService2Button"
                         Command="{Binding XSOverlayEnableButtonClick}"
+                        Cursor="Hand"
                         Width="340" Height="150"
                         Margin="0,0,0,0"
                         IsEnabled="true">
@@ -220,6 +222,7 @@
             <StackPanel Orientation="Vertical" Margin="0,0,0,10">
                 <Button x:Name="NotificationService3Button"
                         Command="{Binding VRChatEnableButtonClick}"
+                        Cursor="Hand"
                         Width="340" Height="150"
                         Margin="0,0,0,0"
                         IsEnabled="true">

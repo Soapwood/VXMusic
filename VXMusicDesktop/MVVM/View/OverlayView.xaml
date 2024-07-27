@@ -175,6 +175,7 @@
                     <ToggleButton x:Name="EnableOverlayOnLeftHand"
                                   Width="40" Height="40"
                                   Margin="80,0,0,0"
+                                  Cursor="Hand"
                                   HorizontalAlignment="Right"
                                   Style="{StaticResource ImageToggleLeftHandButtonStyle}"
                                   IsChecked="{Binding OverlayEnabledOnLeftHand}"
@@ -183,6 +184,7 @@
                     <ToggleButton x:Name="EnableOverlayOnRightHand"
                                   Width="40" Height="40"
                                   Margin="10,0,0,0"
+                                  Cursor="Hand"
                                   HorizontalAlignment="Right"
                                   Style="{StaticResource ImageToggleRightHandButtonStyle}"
                                   IsChecked="{Binding OverlayEnabledOnRightHand}"
@@ -225,6 +227,7 @@
                                VerticalAlignment="Center" />
                     <ToggleButton x:Name="LaunchOverlayOnStartupToggleButton"
                                   Style="{StaticResource SwitchButtonStyle}"
+                                  Cursor="Hand"
                                   Margin="18,0,0,0"
                                   IsChecked="{Binding LaunchOverlayOnStartup}"
                                   Command="{Binding LaunchOverlayOnStartupToggleButton}">
@@ -266,6 +269,7 @@
                                VerticalAlignment="Center" />
                     <ToggleButton x:Name="AskForUpdatesOnStartupToggleButton"
                                   Style="{StaticResource SwitchButtonStyle}"
+                                  Cursor="Hand"
                                   Margin="20,0,0,0"
                                   IsChecked="{Binding AskForUpdatesOnStartup}"
                                   Command="{Binding AskForUpdatesOnStartupToggleButton}">
@@ -317,6 +321,7 @@
                             Command="{Binding InstallVxMusicAsSteamVrOverlayButton}"
                             Padding="0"
                             Margin="20,0,0,0"
+                            Cursor="Hand"
                             Background="{StaticResource SecondaryColor}"
                             Foreground="{StaticResource TextBasic}"
                             HorizontalAlignment="Center"
