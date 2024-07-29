@@ -60,13 +60,13 @@
             
         <StackPanel Orientation="Horizontal">
             <StackPanel Orientation="Vertical"
-                        Margin="0,0,0,0">
+                        Margin="10,0,0,0">
 
                 <Button x:Name="RecognitionIntegrationEnableShazamApiButton"
                         Command="{Binding ShazamButtonClick}"
                         Width="300" Height="100"
                         Cursor="Hand"
-                        Margin="20,0,10,0"
+                        Margin="0,0,10,0"
                         IsEnabled="true">
 
                     <Button.Resources>
@@ -152,56 +152,57 @@
                     </Button.Background>
                 </Button>
 
-                <!-- BYOAPI -->
-                <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
-                    <!-- <CheckBox x:Name="ShazamByoApiCheckBox" -->
-                    <!--           Content="Enable BYOAPI" -->
-                    <!--           Cursor="Hand" -->
-                    <!--           IsChecked="{Binding IsShazamByoApiEnabled}" -->
-                    <!--           IsEnabled="{Binding IsShazamApiEnabled}" -->
-                    <!--           VerticalAlignment="Center" HorizontalAlignment="Left" -->
-                    <!--           Margin="20,0,0,0" -->
-                    <!--           Height="30" -->
-                    <!--           Style="{StaticResource CustomCheckBoxStyle}" -->
-                    <!--           Checked="ShazamByoApiCheckButtonChecked" Unchecked="ShazamByoApiCheckButtonUnchecked" /> -->
-                    <StackPanel Orientation="Horizontal">
-                        <Grid>
-                            <PasswordBox x:Name="ShazamByoApiPasswordBox"
+                <!-- Shazam BYOAPI -->
+                <StackPanel Orientation="Horizontal" Margin="4,10,0,0">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" x:Name="ShazamByoApiKeyHintText"
+                                   Text="API Key:"
+                                   Foreground="{StaticResource TextBasic}"
+                                   Visibility="{Binding IsShazamApiEnabled, Converter={StaticResource BoolToVis}}"
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Center"
+                                   FontSize="16"
+                                   Width="Auto"
+                                   Height="30"
+                                   Margin="0,0,0,0" />
+                            <PasswordBox Grid.Column="1" x:Name="ShazamByoApiPasswordBox"
                                          Visibility="{Binding IsShazamApiEnabled, Converter={StaticResource BoolToVis}}"
                                          Style="{StaticResource ModernApiBox}"
-                                         
                                          IsEnabled="{Binding IsShazamApiEnabled}"
-                                         Margin="20,0,0,0"
+                                         Margin="5,0,0,0"
                                          PasswordChanged="ShazamByoApiPasswordBoxChanged"
                                          GotFocus="ShazamByoApiPasswordBoxGotFocus"
                                          LostFocus="ShazamByoApiPasswordBoxLostFocus" />
-                            <Canvas>
+                            <Canvas Grid.Column="1">
                                 <TextBlock x:Name="ShazamByoApiPasswordBoxHintText"
                                            Text="•••••••••••••••••••••••••••••••••••"
                                            Foreground="{StaticResource TextBasic}"
                                            Visibility="{Binding ShouldShazamByoApiPlaceholderBeShown, Converter={StaticResource BoolToVis}}"
                                            IsHitTestVisible="False"
-                                           HorizontalAlignment="Center"
+                                           HorizontalAlignment="Left"
                                            VerticalAlignment="Center"
                                            FontSize="20"
-                                           Width="260"
+                                           Width="230"
                                            Height="30"
                                            Panel.ZIndex="6"
-                                           Margin="27,0,0,0" />
+                                           Margin="10,0,0,0" />
                             </Canvas>
                         </Grid>
-                    </StackPanel>
                 </StackPanel>
             </StackPanel>
 
             <StackPanel Orientation="Vertical"
-                        Margin="0,0,0,0">
+                        Margin="10,0,0,0">
 
                 <Button x:Name="RecognitionIntegrationEnableAudDApiButton"
                         Command="{Binding AudDButtonClick}"
                         Width="300" Height="100"
                         Cursor="Hand"
-                        Margin="20,0,10,0"
+                        Margin="00,0,00,0"
                         IsEnabled="true">
 
                     <Button.Resources>
@@ -287,31 +288,34 @@
                     </Button.Background>
                 </Button>
 
-                <!-- BYOAPI -->
-                <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
-                    <!-- <CheckBox x:Name="AudDByoApiCheckBox" -->
-                    <!--           Content="Enable BYOAPI" -->
-                    <!--           Cursor="Hand" -->
-                    <!--           IsChecked="{Binding IsAudDByoApiEnabled, Mode=TwoWay}" -->
-                    <!--           IsEnabled="{Binding IsAudDApiEnabled, Mode=TwoWay}" -->
-                    <!--           Margin="20,0,0,0" -->
-                    <!--           Height="30" -->
-                    <!--           VerticalAlignment="Center" HorizontalAlignment="Left" -->
-                    <!--           Style="{StaticResource CustomCheckBoxStyle}" -->
-                    <!--           Checked="AudDByoApiCheckButtonChecked" Unchecked="AudDByoApiCheckButtonUnchecked" /> -->
-                    <StackPanel Orientation="Horizontal">
-                        <Grid>
-                            <PasswordBox x:Name="AudDByoApiPasswordBox"
+                <!-- AudD BYOAPI -->
+                <StackPanel Orientation="Horizontal" Margin="4,10,0,0">
+                    <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" x:Name="AudDByoApiKeyHintText"
+                                       Text="API Key:"
+                                       Foreground="{StaticResource TextBasic}"
+                                       Visibility="{Binding IsAudDApiEnabled, Converter={StaticResource BoolToVis}}"
+                                       HorizontalAlignment="Left"
+                                       VerticalAlignment="Center"
+                                       FontSize="16"
+                                       Width="Auto"
+                                       Height="30"
+                                       Margin="0,0,0,0" />
+                            <PasswordBox Grid.Column="1" x:Name="AudDByoApiPasswordBox"
                                          Visibility="{Binding IsAudDApiEnabled, Converter={StaticResource BoolToVis}}"
                                          IsEnabled="{Binding IsAudDApiEnabled}"
-                                         Margin="20,0,0,0"
+                                         Margin="5,0,0,0"
                                          Style="{StaticResource ModernApiBox}"
                                          VerticalAlignment="Center" HorizontalAlignment="Center"
                                          GotFocus="AudDByoApiPasswordBoxGotFocus"
                                          LostFocus="AudDByoApiPasswordBoxLostFocus"
                                          PasswordChanged="AudDByoApiPasswordBoxChanged" />
-                            <Canvas>
-                                <TextBlock x:Name="AudDByoApiPasswordBoxHintText"
+                            <Canvas Grid.Column="1">
+                                <TextBlock Grid.Column="1" x:Name="AudDByoApiPasswordBoxHintText"
                                            Text="••••••••••••••••••••••••••••••••••"
                                            Foreground="{StaticResource TextBasic}"
                                            Visibility="{Binding ShouldAudDByoApiPlaceholderBeShown, Converter={StaticResource BoolToVis}}"
@@ -319,13 +323,12 @@
                                            HorizontalAlignment="Center"
                                            VerticalAlignment="Center"
                                            FontSize="20"
-                                           Width="260"
+                                           Width="230"
                                            Height="30"
                                            Panel.ZIndex="6"
-                                           Margin="27,0,0,0" />
+                                           Margin="10,0,0,0" />
                             </Canvas>
                         </Grid>
-                    </StackPanel>
                 </StackPanel>
             </StackPanel>
         </StackPanel>

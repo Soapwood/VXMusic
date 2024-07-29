@@ -20,7 +20,7 @@ public class AudioDataConverter
     {
         _logger.LogTrace("Converting WAV to MP3.");
 
-        byte[] audioData = File.ReadAllBytes("output.wav"); // TODO Really need to fucking use just bytes.
+        byte[] audioData = File.ReadAllBytes(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "VirtualXtensions", "VXMusic", "Cache", "output.wav")); 
 
         if (audioData == null)
         {

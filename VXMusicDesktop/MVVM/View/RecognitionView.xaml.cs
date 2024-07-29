@@ -150,7 +150,7 @@ namespace VXMusicDesktop.MVVM.View
                 recognitionViewModel.SharedViewModel.IsAudDApiConnected = false;
                 recognitionViewModel.AudDByoApiToken = ((PasswordBox)e.OriginalSource).Password;
                 
-                recognitionViewModel.PerformSaveAndTestShazamByoApi();
+                recognitionViewModel.PerformSaveAndTestAudDByoApi();
             }
         }
 
