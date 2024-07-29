@@ -27,6 +27,15 @@ Using the Installer will allow you to stay updated with latest versions of VXMus
 A loose build is also available for evaluation. This is designed to be used by the Auto Updater to get new versions and is not recommended for long term use.
 
 # Updates
+Updates are handled by the auto updater.
+
+By default, you will be prompted when new versions are available.
+
+<img src=".github/readme/AutoUpdater.png" alt="VXMusic Desktop" style="max-width: 80%">
+
+You can also choose if you want to be prompted when new versions are available, or manually update on the bottom right.
+
+<img src=".github/readme/UpdateOptions.png" alt="VXMusic Desktop" style="max-width: 80%">
 
 # Usage
 
