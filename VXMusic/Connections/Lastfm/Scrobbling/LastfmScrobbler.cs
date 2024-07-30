@@ -11,13 +11,20 @@ public class LastfmScrobbler
     private readonly IServiceProvider _serviceProvider;
     private readonly ILogger<LastfmScrobbler> _logger;
     
-    private static readonly string _databasePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "vxscrobbles.db");
+    public static bool DbFileFileExists => File.Exists(_databasePath);
+
+    private static readonly string _databasePath =
+        Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "VirtualXtensions",
+            "VXMusic", "Cache", "vxscrobbles.db");
 
     public LastfmScrobbler(IServiceProvider serviceProvider)
     {
         _serviceProvider = serviceProvider;
         _logger = _serviceProvider.GetService(typeof(ILogger<LastfmScrobbler>)) 
             as ILogger<LastfmScrobbler> ?? throw new ApplicationException("A logger must be created in service provider.");
+
+        if (!DbFileFileExists)
+            File.Create(_databasePath);
     }
     
     public async Task<ScrobbleResponse> Scrobble(string artist, string album, string trackName)
