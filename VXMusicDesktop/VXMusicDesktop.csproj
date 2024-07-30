@@ -9,7 +9,7 @@
     <PackageIcon>VXLogo.png</PackageIcon>
     <ApplicationIcon>Images\VXLogoIcon.ico</ApplicationIcon>
     <RunPostBuildEvent>Always</RunPostBuildEvent>
-    <Version>0.6.4.20</Version>
+    <Version>0.6.4.21</Version>
     <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
     <Title>VXMusicDesktop</Title>
     <Authors>VirtualXtensions</Authors>
@@ -269,6 +269,6 @@
     <Message Text="Publish Directory: $(PublishDir)" Importance="high" />
     <Exec Command="xcopy &quot;$(ProjectDir)Overlay\bin\*&quot; &quot;$(PublishDir)\Overlay\&quot; /E /H /Y" />
     <Exec Command="xcopy &quot;$(ProjectDir)..\VXAutoUpdater\bin\$(Configuration)\net7.0-windows\*&quot; &quot;$(PublishDir)VXAutoUpdater\&quot; /E /H /Y" />
-    <Exec Command="xcopy &quot;$(OutDir)x64\e_sqlite3.dll&quot; &quot;$(OutDir)&quot; /E /H /Y" />
+    <Exec Command="xcopy &quot;$(PublishDir)x64\e_sqlite3.dll&quot; &quot;$(PublishDir)&quot; /E /H /Y" />
   </Target>
 </Project>
