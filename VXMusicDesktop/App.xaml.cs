@@ -54,6 +54,10 @@ namespace VXMusicDesktop
             
             ApplicationVersion = Assembly.GetExecutingAssembly().GetName().Version;
             
+            // Subscribe to global exception handlers
+            AppDomain.CurrentDomain.UnhandledException += UnhandledExceptionHandler;
+            this.DispatcherUnhandledException += DispatcherUnhandledExceptionHandler;
+            
             IConfiguration configuration = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
@@ -174,6 +178,39 @@ namespace VXMusicDesktop
             Logger = ServiceProvider.GetRequiredService<ILogger<App>>();
         }
 
+        private static void UnhandledExceptionHandler(object sender, UnhandledExceptionEventArgs e)
+        {
+            if (e.ExceptionObject is Exception ex)
+            {
+                LogException(ex, "UNHANDLED EXCEPTION OCCURRED!");
+            }
+            else
+            {
+                Logger.LogError("UNHANDLED EXCEPTION OCCURRED!");
+            }
+
+            // Optionally flush the logs before exit
+            if (Logger is IDisposable disposableLogger)
+            {
+                disposableLogger.Dispose();
+            }
+        }
+
+        private void DispatcherUnhandledExceptionHandler(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
+        {
+            LogException(e.Exception, "DISPATCHER UNHANDLED EXCEPTION OCCURRED!");
+            e.Handled = true;
+        }
+        
+        private static void LogException(Exception ex, string message)
+        {
+            Logger.LogError(ex, message);
+            if (ex.InnerException != null)
+            {
+                LogException(ex.InnerException, "INNER EXCEPTION:");
+            }
+        }
+
         void VXMusicOverlay_Exit(object sender, ExitEventArgs e)
         {
             try
@@ -198,6 +235,7 @@ namespace VXMusicDesktop
         }
         protected override void OnExit(ExitEventArgs e)
         {
+            NLog.LogManager.Shutdown();
             base.OnExit(e);
         }
     }
