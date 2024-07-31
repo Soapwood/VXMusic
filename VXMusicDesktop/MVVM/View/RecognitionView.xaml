@@ -341,7 +341,7 @@
                 IsEnabled="{Binding IsRecognitionReady}"
                 Cursor="Hand"
                 Padding="0"
-                Margin="0,100,0,0"
+                Margin="0,80,0,0"
                 FontSize="30"
                 Foreground="{StaticResource TextBasic}"
                 BorderThickness="0"
@@ -398,6 +398,29 @@
                 <Button.Background>
                     <StaticResource ResourceKey="ButtonNormalGradientBrush" />
                 </Button.Background>
+            </Button>
+            
+            <Button x:Name="OpenTrackLibraryButton"
+                    Content="Open Track Library"
+                    Command="{Binding OpenFolderCommand}"
+                    Padding="0"
+                    Margin="0,40,0,0"
+                    Cursor="Hand"
+                    Background="{StaticResource SecondaryColor}"
+                    Foreground="{StaticResource TextBasic}"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Width="120" Height="40">
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="5" />
+                        <Style.Triggers>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Background" Value="{StaticResource SecondaryColor}" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Resources>
             </Button>
         </StackPanel>
         </Grid>

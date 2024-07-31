@@ -1,6 +1,9 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Diagnostics;
+using System.IO;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -13,6 +16,8 @@ namespace VXMusicDesktop.MVVM.ViewModel
     {
         public static ILogger Logger = App.ServiceProvider.GetRequiredService<ILogger<RecognitionViewModel>>();
 
+        private static readonly string LogsOutputPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "VXMusic");
+        
         // Shared ViewModel for sharing concurrency values between certain Views.
         public SharedViewModel SharedViewModel { get; }
 
@@ -27,6 +32,8 @@ namespace VXMusicDesktop.MVVM.ViewModel
         private RelayCommand listenButtonClick;
 
         private RelayCommand recognitionViewLoaded;
+        
+        private RelayCommand openFolderClick;
 
         private string _shazamByoApiToken = "";
         private string _audDByoApiToken = "";
@@ -42,6 +49,9 @@ namespace VXMusicDesktop.MVVM.ViewModel
          public ICommand ListenButtonClick => listenButtonClick ??= new RelayCommand(PerformListenButtonClick);
          public ICommand RecognitionViewLoaded => recognitionViewLoaded ??= new RelayCommand(OnRecognitionViewLoaded);
          public ICommand PasswordHintTextVisibilityToggle => recognitionViewLoaded ??= new RelayCommand(OnRecognitionOptionChanged);
+         
+         public ICommand OpenFolderCommand => openFolderClick ??= new RelayCommand(OpenFolder);
+
 
         // // //
         public event PropertyChangedEventHandler? PropertyChanged;
@@ -396,6 +406,23 @@ namespace VXMusicDesktop.MVVM.ViewModel
             //App.VXMusicSession.SetRecognitionClient(RecognitionApi.AudD);
             //RecognitionSettings.SetRecognitionApiInSettings(RecognitionApi.AudD);
             //ProcessRecognitionApiState();
+        }
+        
+        private void OpenFolder(object commandParameter)
+        {
+            try
+            {
+                Process.Start(new ProcessStartInfo
+                {
+                    FileName = LogsOutputPath,
+                    UseShellExecute = true,
+                    Verb = "open"
+                });
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Failed to open Track Library: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
     }
 }
