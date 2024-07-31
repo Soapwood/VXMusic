@@ -18,41 +18,11 @@
 
 Download Installer
 
-[//]: # (# 🎵 Recognise music at live events!)
-
-[//]: # ()
-[//]: # (<img src=".github/readme/OverlayDemo.gif" alt="VXMusic Desktop" style="max-width: 80%">)
-
-<style>
-    .button {
-        display: inline-block;
-        padding: 10px 20px;
-        font-size: 16px;
-        cursor: pointer;
-        text-align: center;
-        text-decoration: none;
-        outline: none;
-        color: #fff;
-        background-color: #6a0dad;
-        border: none;
-        border-radius: 15px;
-        box-shadow: 0 5px #555;
-    }
-
-    .button:hover {background-color: #5a0c9d}
-
-    .button:active {
-        background-color: #5a0c9d;
-        box-shadow: 0 3px #444;
-        transform: translateY(2px);
-    }
-</style>
-
 ## Quick Start Menu
 
 <div>
-    <a href="#how-to-use" class="button">How to Use</a>
-    <a href="#byo-api-keys" class="button">API Key Setup</a>
+    <a href="#how-to-use" class="button">How to Use</a> |
+    <a href="#byo-api-keys" class="button">API Key Setup</a> |
     <a href="#steamvr" class="button">Add to SteamVR</a>
 </div>
 
@@ -66,17 +36,13 @@ The install wizard will take care of the rest.
 [VXMusic can also be easily installed as a SteamVR Plugin with one click!](#steamvr)
 
 # Updates
-Updates are handled by the auto updater.
-
-By default, you will be prompted when new versions are available.
+You will be automatically notified when updates are available.
 
 <img src=".github/readme/AutoUpdater.png" alt="VXMusic Desktop" style="max-width: 80%">
 
 You can also choose if you want to be prompted when new versions are available, or manually update on the bottom right of the Desktop Client.
 
 <img src=".github/readme/UpdateOptions.png" alt="VXMusic Desktop" style="max-width: 80%">
-
-<img src=".github/readme/AnUpdateIsAvailable.png" alt="VXMusic Desktop" style="max-width: 80%">
 
 # How to Use
 [//]: # (### 🎵 Recognise music at live events!)
@@ -102,7 +68,7 @@ VXMusic currently supports two Music Recognition services, **Shazam**, and **Aud
 ### BYO API Keys
 VXMusic allows you to "bring-your-own" API Key for Music Recognition Services.
 
-This is super easy to set up, and more importantly, FREE!
+This is super easy to set up, and more importantly, **FREE!**
 
 See the instructions below on how to get your own API keys.
 
