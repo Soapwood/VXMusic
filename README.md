@@ -65,6 +65,19 @@ VXMusic currently supports two Music Recognition services, **Shazam**, and **Aud
 
 - AudD.io doesn't have the same rich data experience, but it runs a lot faster than Shazam. The speed is negligible in the grand scheme of things.
 
+Recognised tracks are stored in your `My Documents/VXMusic` folder.
+
+For easy access, you can click the `Open Track Library` button on the Recognition tab.
+
+<img src=".github/readme/OpenTrackLibrary.png" alt="VXMusic Desktop" style="max-width: 80%">
+
+### If you are playing VRChat, VXMusic will name the trackfile after the World you are currently in for later inspection.
+
+<img src=".github/readme/IfYouAreRunningVRChat.png" alt="VXMusic Desktop" style="max-width: 80%">
+
+### Tip: You can also add recognised tracks to <a href="#spotify" class="button">Spotify Playlists</a> and scrobble on <a href="#connections" class="button">Last.fm</a>!
+
+
 ### BYO API Keys
 VXMusic allows you to "bring-your-own" API Key for Music Recognition Services.
 
@@ -105,16 +118,71 @@ See the instructions below on how to get your own API keys.
 #### AudD.io
 // TODO
 
+Use Shazam, it's better anyway..
+
 ## Notifications
-// TODO
+VXMusic supports two VR notification services that allow you to receive HUD toast notifications while in VR - **SteamVR** and **XSOverlay**.
+
+To choose which service you would like to use, simply click on your desired service from the Notifications tab.
+
+<img src=".github/readme/NotificationServices.png" alt="VXMusic Desktop" width="60%">
+
+### SteamVR
+SteamVR has a built-in Notifications service that VXMusic can use to send you HUD toast notifications.
+
+This is plug and play and doesn't need any additional configuration.
+
+### XSOverlay
+<img src=".github/readme/XSOverlayLogo.jpg" alt="VXMusic Desktop" width="30%">
+
+VXMusic also interfaces with XSOverlay for HUD toast notifications.
+
+XSOverlay is the recommended Notification service for how responsive and reactive it is. Ultimately it is purely aesthetical, but you will benefit from the bespoke configuration offered by XSOverlay if you are already a user. 
+
+XSOverlay is a paid Overlay available on [Steam](https://store.steampowered.com/app/1173510/XSOverlay/), and is purely optional when using VXMusic.
+
+## Optional Notifications - VRChat ChatBox
+
+VXMusic can send ChatBox notifications to VRChat to share Recognition results with your friends!
+
+<img src=".github/readme/ChatBoxNotifications.gif" alt="VXMusic Desktop" width="60%">
+
+You can also enable/disable this from the Notifications tab.
+
+<img src=".github/readme/EnableVRChatNotifications.png" alt="VXMusic Desktop" width="60%">
 
 ## Connections
+Instead of just tracking recognised songs in a text file, VXMusic also supports external Music tracking services, **Spotify** and **Last.fm**!
+
+### Spotify
 #### ⚠️ Note: Spotify Integration
+```
 The Spotify Integration App is currently undergoing review by Spotify.
 
 Until this is complete, it is currently required to manually add Users to the App configuration for the Playlists feature to work.
 
-Please reach out on [Discord](https://t.co/Z2eSKfYpfs) to have your Spotify account added!
+Please reach out on Discord to have your Spotify account added!
+```
+
+To connect VXMusic to your Spotify account, simply click `Connect` on the Connections tab and follow the login instructions on your browser.
+
+<img src=".github/readme/ConnectSpotify.png" alt="VXMusic Desktop" width="30%">
+
+Tracks will be added to automatically created Playlists. 
+
+_If you are playing in VRChat, the current World will also be used to name the playlists for later inspection._
+
+<img src=".github/readme/SpotifyPlaylists.png" alt="VXMusic Desktop" width="30%">
+
+### Last.fm
+To connect VXMusic to your Last.fm account, navigate to the Connections tab and enter your Login details.
+
+<img src=".github/readme/LastFmLogin.png" alt="VXMusic Desktop" width="30%">
+
+Recognised tracks will be automatically scrobbled to your Last.fm account while using VXMusic!
+
+<img src=".github/readme/LastFmPage.png" alt="VXMusic Desktop" width="60%">
+
 
 ## SteamVR
 VXMusic can be installed as a SteamVR Plugin.
@@ -126,6 +194,19 @@ With this, you can automatically launch VXMusic when you launch SteamVR.
 - It is recommended that you enable "Launch Overlay on Startup" for quicker startup!
 
 <img src=".github/readme/InstallAsSteamVRPlugin.png" alt="VXMusic Desktop" width="60%">
+
+## Reporting Bugs
+
+Please direct all bug reports to the `bug_reports` channel on the VX [Discord](https://t.co/Z2eSKfYpfs)!
+
+Each Bug report requires logs to be posted as part of the report. 
+
+For quick access to your logs, click `Open Logs Directory` in the About tab.
+
+Your feedback is greatly appreciated.
+
+<img src=".github/readme/OpenLogs.png" alt="VXMusic Desktop" width="60%">
+
 
 ## License
 **VXMusic** is protected under the **Mozilla Public License Version 2.0**.
