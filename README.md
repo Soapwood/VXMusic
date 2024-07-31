@@ -75,36 +75,32 @@ See the instructions below on how to get your own API keys.
 #### Shazam
 1. Navigate to: https://rapidapi.com/apidojo/api/shazam
 2. Sign in with Google, or an alternative login method.
-
-<img src=".github/readme/SignInWithGoogle.png" alt="VXMusic Desktop" style="max-width: 30%">
-<img src=".github/readme/OrSignUpUsingAnAlternativeMethod.png" alt="VXMusic Desktop" style="max-width: 100%">
-
 3. Navigate back to: https://rapidapi.com/apidojo/api/shazam
 4. On the top right, hit Subscribe to Test
 
-<img src=".github/readme/OnTheTopRightHitSubscribeToTest.png" alt="VXMusic Desktop" style="max-width: 100%">
+<img src=".github/readme/OnTheTopRightHitSubscribeToTest.png" alt="VXMusic Desktop" width="50%">
 
 5. Hit "Start Free Plan"
 
-<img src=".github/readme/HitStartFreePlan.png" alt="VXMusic Desktop" style="max-width: 60%">
+<img src=".github/readme/HitStartFreePlan.png" alt="VXMusic Desktop" width="50%">
 
 6. Hit "Subscribe"
 
-<img src=".github/readme/HitSubscribe.png" alt="VXMusic Desktop" style="max-width: 60%">
+<img src=".github/readme/HitSubscribe.png" alt="VXMusic Desktop" width="50%">
 
 7. From the Shazam API page, click one of the Endpoints on the left
 
-<img src=".github/readme/ClockOneOfTheEndpointsOnTheLeft.png" alt="VXMusic Desktop" style="max-width: 60%">
+<img src=".github/readme/ClockOneOfTheEndpointsOnTheLeft.png" alt="VXMusic Desktop" width="40%">
 
 8. Under "Code Snippets" on the right, copy the API Key under "x-rapidapi-key"
 
-<img src=".github/readme/GrabTheApiKeyOnTheRight.png" alt="VXMusic Desktop" style="max-width: 60%">
+<img src=".github/readme/GrabTheApiKeyOnTheRight.png" alt="VXMusic Desktop" width="60%">
 
 8. In VXMusic, on the Recognition tab, paste this key into the Api Key box.
 
-<img src=".github/readme/PasteThisIntoTheApiKeyBox.png" alt="VXMusic Desktop" style="max-width: 60%">
+<img src=".github/readme/PasteThisIntoTheApiKeyBox.png" alt="VXMusic Desktop" width="60%">
 
-9. If the light next to Shazam turns green, you have successfully set up your API Key!
+9. If the light next to Shazam turns green, you have successfully set up your API Key! ✔️
 
 #### AudD.io
 // TODO
@@ -129,8 +125,7 @@ With this, you can automatically launch VXMusic when you launch SteamVR.
 - Click "Install" under Install as SteamVR Overlay. You will be prompted when the installation is complete.
 - It is recommended that you enable "Launch Overlay on Startup" for quicker startup!
 
-<img src=".github/readme/InstallAsSteamVRPlugin.png" alt="VXMusic Desktop" style="max-width: 60%">
-
+<img src=".github/readme/InstallAsSteamVRPlugin.png" alt="VXMusic Desktop" width="60%">
 
 ## License
 **VXMusic** is protected under the **Mozilla Public License Version 2.0**.
