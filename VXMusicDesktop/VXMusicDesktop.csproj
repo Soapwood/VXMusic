@@ -9,7 +9,7 @@
     <PackageIcon>VXLogo.png</PackageIcon>
     <ApplicationIcon>Images\VXLogoIcon.ico</ApplicationIcon>
     <RunPostBuildEvent>Always</RunPostBuildEvent>
-    <Version>0.6.4.23</Version>
+    <Version>0.6.4.24</Version>
     <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
     <Title>VXMusicDesktop</Title>
     <Authors>VirtualXtensions</Authors>
@@ -101,7 +101,9 @@
     <Resource Include="Images\DiscordLogoBlue.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <Content Include="Images\VXLogoIcon.ico" />
+    <Content Include="Images\VXLogoIcon.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Remove="Images\SaveIconBlack.png" />
     <None Remove="Images\SaveIconWhite.png" />
     <None Remove="Images\VXLogoTinyButton.png" />

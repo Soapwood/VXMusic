@@ -19,9 +19,19 @@ Section "MainSection" SEC01
   SetOutPath $INSTDIR
   # Include your files
   File /r "${SOURCE_PATH}\Publish\x64\*.*"
-  # Create a shortcut on the Desktop
-  CreateShortcut "$DESKTOP\VXMusic.lnk" "$INSTDIR\VXMusicDesktop.exe"
-
+  
+  # Create shortcuts
+  # Copy .ico to output folder for shortcuts
+  
+  File "${SOURCE_PATH}\VXMusicDesktop\Images\VXLogoIcon.ico"
+ 
+  # Start Menu shortcut
+  CreateDirectory "$SMPROGRAMS\VXMusic"
+  CreateShortcut "$SMPROGRAMS\VXMusic\VXMusic.lnk" "$INSTDIR\VXMusicDesktop.exe" "" "$INSTDIR\VXLogoIcon.ico" 0 
+ 
+  # Desktop shortcut
+  CreateShortcut "$DESKTOP\VXMusic.lnk" "$INSTDIR\VXMusicDesktop.exe" "" "$INSTDIR\VXLogoIcon.ico" 0 
+  
   # Write registry entries for Launching and Branding
   WriteRegStr HKLM "Software\VirtualXtensions\VXMusic" "InstallPath" "$INSTDIR"
   WriteRegStr HKLM "Software\VirtualXtensions\VXMusic" "Executable" "$INSTDIR\VXMusicDesktop.exe"
@@ -39,17 +49,7 @@ Section "MainSection" SEC01
    WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}" "URLInfoAbout" "${PRODUCT_WEB_SITE}"
    WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}" "NoModify" 1
    WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}" "NoRepair" 1
-   
-   # Create shortcuts
-   # Copy .ico to output folder for shortcuts
-   File "${SOURCE_PATH}\VXMusicDesktop\Images\VXLogoIcon.ico"
-   
-   # Start Menu shortcut
-   CreateDirectory "$SMPROGRAMS\VXMusic"
-   CreateShortcut "$SMPROGRAMS\VXMusic\VXMusic.lnk" "$INSTDIR\VXMusicDesktop.exe" "" "$INSTDIR\VXLogoIcon.ico"
-   
-   # Desktop shortcut
-   CreateShortcut "$DESKTOP\VXMusic.lnk" "$INSTDIR\VXMusicDesktop.exe" "" "$INSTDIR\VXLogoIcon.ico"
+  
    
    # Create an uninstaller
    WriteUninstaller "$INSTDIR\UninstallVXMusic.exe"
