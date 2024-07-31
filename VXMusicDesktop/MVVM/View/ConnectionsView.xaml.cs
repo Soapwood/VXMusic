@@ -45,7 +45,7 @@ namespace VXMusicDesktop.MVVM.View
         private void CheckLastFmConnection()
         {
             LastFmLoginButton.Content = App.VXMusicSession.ConnectionsSettings.IsLastfmConnected ? "Connected!" : "Login";
-            LastFmUsernameBoxHintText.Text = App.VXMusicSession.ConnectionsSettings.IsLastfmConnected ? App.VXMusicSession.ConnectionsSettings.LastfmSettings.Username : UsernameBoxHintText;
+            LastFmUsernameBoxHintText.Text = App.VXMusicSession.ConnectionsSettings.IsLastfmConnected ? VXUserSettings.Connections.GetLastfmUsername() : UsernameBoxHintText;
             LastFmPasswordBoxHintText.Text = App.VXMusicSession.ConnectionsSettings.IsLastfmConnected ? "•••••••••••••••••••" : PasswordBoxHintText;
         }
 
