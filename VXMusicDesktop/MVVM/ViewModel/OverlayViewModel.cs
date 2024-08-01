@@ -144,6 +144,12 @@ namespace VXMusicDesktop.MVVM.ViewModel
         {
             if (!IsManifestEntryAlreadyInAppConfig)
             {
+                if (!App.VXMusicSession.SteamVrOverlayApps.SteamInstallPathExists)
+                {
+                    MessageBox.Show("Steam is not installed!", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+                
                 if (App.VXMusicSession.SteamVrOverlayApps.InstallVxMusicAsSteamVrOverlay())
                 {
                     IsManifestEntryAlreadyInAppConfig = true;
