@@ -85,7 +85,8 @@ This is super easy to set up, and more importantly, **FREE!**
 
 See the instructions below on how to get your own API keys.
 
-#### Shazam
+### Shazam
+#### ⚠️ Note: With the Shazam Free Test Account, you are limited to 500 Requests per Month.
 1. Navigate to: https://rapidapi.com/apidojo/api/shazam
 2. Sign in with Google, or an alternative login method.
 3. Navigate back to: https://rapidapi.com/apidojo/api/shazam
@@ -115,10 +116,21 @@ See the instructions below on how to get your own API keys.
 
 9. If the light next to Shazam turns green, you have successfully set up your API Key! ✔️
 
-#### AudD.io
-// TODO
+### AudD.io
+#### ⚠️ Note: With the AudD.io Free Trial Account, you are limited to two weeks of usage per account email address.
 
-Use Shazam, it's better anyway..
+1. Navigate to: https://audd.io/
+2. Click on `Dashboard` on the top right
+3. Sign in with Google, or an alternative login method.
+4. From the Dashboard page, hit `Copy` next to `Your api_token`
+
+<img src=".github/readme/AudDDashboard.png" alt="VXMusic Desktop" width="60%">
+
+6. In VXMusic, on the Recognition tab, paste this key into the Api Key box.
+
+<img src=".github/readme/AudDApiKeyBox.png" alt="VXMusic Desktop" width="60%">
+
+7. If the light next to AudD.io turns green, you have successfully set up your API Key! ✔️
 
 ## Notifications
 VXMusic supports two VR notification services that allow you to receive HUD toast notifications while in VR - **SteamVR** and **XSOverlay**.
