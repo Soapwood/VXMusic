@@ -31,6 +31,8 @@ namespace VXMusic.LogParser.VRChat
         
         static volatile bool IsExiting = false;
 
+        private static bool VrChatRuntimeLogDirExists => Directory.Exists(Configuration.OutputLogRoot);
+
         static Task DispatchTask;
 
         static int DispatchResolutionMilliseconds = 50;
@@ -84,7 +86,16 @@ namespace VXMusic.LogParser.VRChat
 
             _logger.LogTrace("Creating VRChatLogParser.");
 
-            Run();
+            Configuration = ConfigurationModel.Load();
+            
+            if (VrChatRuntimeLogDirExists)
+            {
+                Run();
+            }
+            else
+            {
+                _logger.LogWarning("VRChat Log directory not found. Will not Run VRChatLogParser.");
+            }
         }
 
         public enum LogEventType
@@ -133,8 +144,6 @@ namespace VXMusic.LogParser.VRChat
 
             try
             {
-                Configuration = ConfigurationModel.Load();
-
                 // Rewrite configuration to update it with any new fields not in existing configuration. Useful during update process and making sure the config always has updated annotations.
                 // Users shouldn't need to re-configure every time they update the software.
                 ConfigurationModel.Save(VRChatLogParser.Configuration);
