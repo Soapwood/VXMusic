@@ -13,8 +13,7 @@ namespace VXMusic.LogParser.VRChat
 {
     public class ConfigurationModel
     {
-        public const string UserFolderPath = @"%AppData%\..\Local\VirtualXtensions\VXMusic";
-        public static string ExpandedUserFolderPath = Environment.ExpandEnvironmentVariables(UserFolderPath);
+        public static string ExpandedUserFolderPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "VirtualXtensions", "VXMusic");
         private static object ConfigMutex = new object();
 
         [Annotation("Polling frequency for individual log file updates.", true, "GENERAL CONFIGURATION")]
