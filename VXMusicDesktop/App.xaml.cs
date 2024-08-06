@@ -19,13 +19,10 @@ using VXMusic.Overlay;
 using VXMusic;
 using System.Diagnostics;
 using System.Reflection;
-using System.Threading;
 using VXMusic.VRChat;
 using VXMusicDesktop.Core;
-using VXMusicDesktop.Toast;
 using VXMusicDesktop.Update;
 using Application = System.Windows.Application;
-using MessageBox = System.Windows.MessageBox;
 
 namespace VXMusicDesktop
 {
@@ -38,10 +35,7 @@ namespace VXMusicDesktop
         public static ServiceProvider ServiceProvider;
         public static VXMusicSession VXMusicSession;
         public static Version ApplicationVersion;
-        
-        public static readonly string VxMusicAppDataDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
-            "VirtualXtensions", "VXMusic");
-        
+
         public static Process? VXMOverlayProcess;
         
         // TODO Have you bumped the version of VXMusicDesktop?
@@ -63,11 +57,12 @@ namespace VXMusicDesktop
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                 .Build();
             
+            RegistryInterface.RunRegistryCheckOnStartup();
             VXMusicSettingsSyncHandler.RunSettingsMigrationOnStartup();
 
             var overlaySettings = new OverlaySettings()
             {
-                RuntimePath = Path.Combine(VxMusicAppDataDir, configuration["Overlay:RuntimePath"]),
+                RuntimePath = Path.Combine(RegistryInterface.VxMusicAppDataDir, configuration["Overlay:RuntimePath"]),
                 OverlayAnchor = VXUserSettings.Overlay.GetOverlayAnchor()
             };
             
@@ -145,6 +140,7 @@ namespace VXMusicDesktop
              */
             services.AddSingleton<App>();
             
+            services.AddSingleton<RegistryInterface>();
             services.AddSingleton<VXMusicSettingsSyncHandler>();
             
             // Handle creating Recognition Clients based off of BYOAPI Configuration

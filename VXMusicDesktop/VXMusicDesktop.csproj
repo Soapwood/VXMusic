@@ -9,7 +9,7 @@
     <PackageIcon>VXLogo.png</PackageIcon>
     <ApplicationIcon>Images\VXLogoIcon.ico</ApplicationIcon>
     <RunPostBuildEvent>Always</RunPostBuildEvent>
-    <Version>0.6.5.3</Version>
+    <Version>0.6.5.4</Version>
     <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
     <Title>VXMusicDesktop</Title>
     <Authors>VirtualXtensions</Authors>
@@ -57,9 +57,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Overlay\Images\LastFmIconBase64.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="manifest.vrmanifest">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

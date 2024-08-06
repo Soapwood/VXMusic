@@ -1,8 +1,6 @@
 using System;
 using System.IO;
 using Microsoft.Extensions.Logging;
-using Microsoft.VisualBasic.FileIO;
-using Microsoft.Win32;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -12,18 +10,27 @@ public class SteamVROverlayAppsInterface
 {
     private readonly IServiceProvider _serviceProvider;
     private readonly ILogger<SteamVROverlayAppsInterface> _logger;
-    
-    private static readonly string DefaultVxMusicManifestPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "VXMusic\\manifest.vrmanifest");
-    private static readonly string DefaultSteamAppConfigPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86), "Steam\\config\\appconfig.json");
-    
-    private string SteamAppConfigPath;
-    private string SteamInstallPath;
 
-    public bool SteamAppConfigPathExists => Directory.Exists(SteamAppConfigPath);
-    public bool SteamInstallPathExists => Directory.Exists(SteamInstallPath);
+    public bool SteamAppConfigPathExists => Directory.Exists(RegistryInterface.SteamVrAppConfigPath);
+    public bool SteamInstallPathExists => Directory.Exists(RegistryInterface.SteamInstallPath);
     
-    private static readonly string SteamRegistryValue = "SteamPath";
-    private static readonly string SteamRegistryKey = @"HKEY_CURRENT_USER\Software\Valve\Steam";
+    public static readonly string VrManifestFileTemplate = @"
+{
+	""source"" : ""builtin"",
+	""applications"": [{
+	""app_key"": ""virtualxtensions.VXMusic"",
+	""launch_type"": ""binary"",
+	""binary_path_windows"": ""{{VXMUSIC_INSTALL_PATH_ROOT}}"",
+	""is_dashboard_overlay"": true,
+
+	""strings"": {
+	    ""en_us"": {
+			""name"": ""VXMusic"",
+			""description"": ""VXMusic""
+		}
+	}
+	}]
+}";
 
     public SteamVROverlayAppsInterface(IServiceProvider serviceProvider)
     {
@@ -32,17 +39,12 @@ public class SteamVROverlayAppsInterface
             as ILogger<SteamVROverlayAppsInterface> ?? throw new ApplicationException("A logger must be created in service provider.");
         
         _logger.LogTrace("Creating SteamVROverlayAppsInterface.");
-
-        SteamInstallPath = GetSteamInstallationPath();
-        
-        if(!string.IsNullOrEmpty(SteamInstallPath))
-            SteamAppConfigPath = Path.GetFullPath(Path.Combine(SteamInstallPath, "config", "appconfig.json"));
     }
     
     public bool InstallVxMusicAsSteamVrOverlay()
     {
         _logger.LogInformation("Installing VXMusic as a SteamVR Overlay.");
-        return AddManifestEntryToAppConfig(DefaultVxMusicManifestPath);
+        return AddManifestEntryToAppConfig();
     }
 
     public bool IsManifestEntryInAppConfig()
@@ -53,54 +55,37 @@ public class SteamVROverlayAppsInterface
             return false;
         
         var (manifestPaths, _) = ReadContentsOfAppConfig();
-        return SteamVrManifestPathExistsInAppConfig(manifestPaths, SteamAppConfigPath);
+        return SteamVrManifestPathExistsInAppConfig(manifestPaths, RegistryInterface.SteamVrAppConfigPath);
     }
 
-    private string GetSteamInstallationPath()
-    {
-        try
-        {
-            // Try to read the Steam installation path from the registry
-            object value = Registry.GetValue(SteamRegistryKey, SteamRegistryValue, null);
-            if (value != null) return value.ToString();
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError($"Error accessing registry entry {SteamRegistryKey}.");
-            _logger.LogError(ex.Message);
-        }
-
-        return "";
-    }
-
-    private bool AddManifestEntryToAppConfig(string vxMusicManifestFile)
+    private bool AddManifestEntryToAppConfig()
     {
         try
         {
             var (manifestPaths, jsonObj) = ReadContentsOfAppConfig();
             
             // Check if the entry already exists
-            if (SteamVrManifestPathExistsInAppConfig(manifestPaths, vxMusicManifestFile))
+            if (SteamVrManifestPathExistsInAppConfig(manifestPaths, RegistryInterface.SteamVrAppConfigPath))
             {
                 _logger.LogDebug("Manifest path already exists in config file. Exiting.");
                 return true;
             }
 
             // Add a new string to the manifest_paths array
-            manifestPaths.Add(vxMusicManifestFile);
+            manifestPaths.Add(RegistryInterface.VxMusicVrManifestConfigPath);
 
             // Convert the updated JSON object back to a string
             string updatedJsonContent = JsonConvert.SerializeObject(jsonObj, Formatting.Indented);
 
             // Write the updated JSON content back to the file
-            File.WriteAllText(SteamAppConfigPath, updatedJsonContent);
-            _logger.LogTrace($"New path {SteamAppConfigPath} added successfully.");
+            File.WriteAllText(RegistryInterface.SteamVrAppConfigPath, updatedJsonContent);
+            _logger.LogTrace($"New path {RegistryInterface.SteamVrAppConfigPath} added successfully.");
             
             return true;
         }
         catch (FileNotFoundException)
         {
-            _logger.LogError($"Error: The file '{SteamAppConfigPath}' was not found.");
+            _logger.LogError($"Error: The file '{RegistryInterface.SteamVrAppConfigPath}' was not found.");
         }
         catch (JsonException jsonEx)
         {
@@ -124,7 +109,7 @@ public class SteamVROverlayAppsInterface
 
     private (JArray, JObject) ReadContentsOfAppConfig()
     {
-        string jsonContent = File.ReadAllText(SteamAppConfigPath);
+        string jsonContent = File.ReadAllText(RegistryInterface.SteamVrAppConfigPath);
 
         var jsonObj = JsonConvert.DeserializeObject<JObject>(jsonContent);
 
@@ -132,7 +117,7 @@ public class SteamVROverlayAppsInterface
 
         if (manifestPaths == null)
         {
-            throw new Exception($"manifest_paths array not found in {SteamAppConfigPath}.");
+            throw new Exception($"manifest_paths array not found in {RegistryInterface.SteamVrAppConfigPath}.");
         }
         
         return (manifestPaths, jsonObj);
@@ -142,7 +127,7 @@ public class SteamVROverlayAppsInterface
     {
         foreach (var path in manifestPaths)
         {
-            if (path.ToString().Equals(DefaultVxMusicManifestPath, StringComparison.OrdinalIgnoreCase))
+            if (path.ToString().Equals(RegistryInterface.VxMusicVrManifestConfigPath, StringComparison.OrdinalIgnoreCase))
             {
                 _logger.LogInformation("VXMusic is already added as a SteamVR Overlay.");
                 return true;

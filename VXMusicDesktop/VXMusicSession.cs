@@ -48,6 +48,7 @@ public class VXMusicSession
     public SteamVROverlayAppsInterface SteamVrOverlayApps;
     public VXMusicUpdateHandler VxMusicUpdate;
     public VXMusicSettingsSyncHandler VXMusicSettingsSync;
+    public RegistryInterface RegistryInterface;
     
     public static event EventHandler LastFmLogin;
     //public static event EventHandler SpotifyLogin;
@@ -84,6 +85,7 @@ public class VXMusicSession
         
         VxMusicUpdate = App.ServiceProvider.GetRequiredService<VXMusicUpdateHandler>();
         VXMusicSettingsSync = App.ServiceProvider.GetRequiredService<VXMusicSettingsSyncHandler>();
+        RegistryInterface = App.ServiceProvider.GetRequiredService<RegistryInterface>();
 
         ColourSchemeManager.SetTheme(VXUserSettings.Desktop.GetCurrentDesktopTheme());
 
