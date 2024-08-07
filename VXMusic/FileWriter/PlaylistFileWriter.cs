@@ -33,7 +33,7 @@ public class PlaylistFileWriter
                Environment.NewLine + Environment.NewLine;
     }
 
-    public void AddLineToFileIfDateMatches(string currentWorldName, string textToAdd)
+    public void AddTrackEntryToPlaylistFile(string currentWorldName, string textToAdd)
     {
         string fileName = GetCurrentFileName(currentWorldName);
 
@@ -45,6 +45,12 @@ public class PlaylistFileWriter
         {
             _logger.LogTrace($"Playlist file already exists. Will add to discovered file: {filePath}");
 
+            if (IsTrackAlreadyInPlaylist(filePath, textToAdd))
+            {
+                _logger.LogTrace($"Track was already found in Playlist file. Will skip add.");
+                return;
+            }
+
             // Append the text to the existing file
             File.AppendAllText(filePath, textToAdd + Environment.NewLine);
         }
@@ -55,6 +61,20 @@ public class PlaylistFileWriter
             // Create a new file with the current date as the name
             File.WriteAllText(filePath, GetPlaylistFileHeader());
             File.AppendAllText(filePath, textToAdd + Environment.NewLine);
+        }
+    }
+
+    private bool IsTrackAlreadyInPlaylist(string filePath, string trackLine)
+    {
+        try
+        {
+            string[] lines = File.ReadAllLines(filePath);
+            return Array.Exists(lines, line => line == trackLine);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogWarning($"Could not read Playlist track file: {ex.Message}");
+            return false;
         }
     }
 

@@ -110,7 +110,7 @@ public class VXMusicActions
 
         if (result.Result != null)
         {
-            VXMusicSession.PlaylistFileWriter.AddLineToFileIfDateMatches(App.VXMusicSession.VRChatLogParser
+            VXMusicSession.PlaylistFileWriter.AddTrackEntryToPlaylistFile(App.VXMusicSession.VRChatLogParser
                 .CurrentVrChatWorld,
                 $"{result.Result.Artist} - {result.Result.Title} {result.Result.Album} ({result.Result.ReleaseDate})");
 
