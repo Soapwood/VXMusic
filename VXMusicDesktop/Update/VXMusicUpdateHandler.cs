@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using Microsoft.Extensions.Logging;
 using Octokit;
+using VXMusicDesktop.Core;
 
 namespace VXMusicDesktop.Update;
 
@@ -98,7 +99,7 @@ public class VXMusicUpdateHandler
     public void LaunchVxMusicUpdater()
     {
         // Prepare AppData folder for temporary copy of VXAutoUpdater
-        string autoUpdaterPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "VXMusic", "VXAutoUpdater");
+        string autoUpdaterPath = Path.Combine(RegistryInterface.VxMusicInstallPath, "VXAutoUpdater");
         string temporaryFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "VirtualXtensions", "VXMusic", "AutoUpdaterTemp");
         
         CopyDirectory(autoUpdaterPath, temporaryFolder);

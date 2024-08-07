@@ -11,6 +11,7 @@ using System.Windows.Controls;
 using Octokit;
 using VXAutoUpdaterDesktop;
 using System.Windows;
+using VXMusicDesktop.Core;
 using Application = System.Windows.Application;
 using FileMode = System.IO.FileMode;
 using ProductHeaderValue = Octokit.ProductHeaderValue;
@@ -41,6 +42,11 @@ public class VXMusicAutoUpdater
 
         AutoUpdaterAppDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "VirtualXtensions", "VXMusic", "AutoUpdater");
         OverlayAppDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "VirtualXtensions", "VXMusic", "Overlay");
+        
+        RegistryInterface.GetExistingVXMusicInstallationPath();
+
+        if (!Path.Exists(RegistryInterface.VxMusicInstallPath))
+            UpdateMessageInMainWindow("WARNING: Current VXMusic installation not found. Please try re-installing.");
         
         if (!Path.Exists(AutoUpdaterAppDataPath))
             Directory.CreateDirectory(AutoUpdaterAppDataPath);
@@ -85,7 +91,7 @@ public class VXMusicAutoUpdater
             
             // Call the method to extract and replace files
             string extractPath = Path.Combine(_autoUpdater.AutoUpdaterAppDataPath, $"{_autoUpdater.UpdateZipName.Split(".zip")[0]}");
-            string targetPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "VXMusic");
+            string targetPath = Path.Combine(RegistryInterface.VxMusicInstallPath);
             
             _autoUpdater.ExtractAndReplaceVxInstallation(_autoUpdater.UpdateZipPath, extractPath, targetPath);
 
