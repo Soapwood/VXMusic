@@ -11,7 +11,7 @@ public class SteamVROverlayAppsInterface
     private readonly IServiceProvider _serviceProvider;
     private readonly ILogger<SteamVROverlayAppsInterface> _logger;
 
-    public bool SteamAppConfigPathExists => Directory.Exists(RegistryInterface.SteamVrAppConfigPath);
+    public bool SteamAppConfigFileExists => File.Exists(RegistryInterface.SteamVrAppConfigPath);
     public bool SteamInstallPathExists => Directory.Exists(RegistryInterface.SteamInstallPath);
     
     public static readonly string VrManifestFileTemplate = @"
@@ -51,7 +51,7 @@ public class SteamVROverlayAppsInterface
     {
         _logger.LogDebug("Checking if VXMusic is already added as a SteamVR Overlay..");
 
-        if (!SteamAppConfigPathExists)
+        if (!SteamAppConfigFileExists)
             return false;
         
         var (manifestPaths, _) = ReadContentsOfAppConfig();
@@ -65,7 +65,7 @@ public class SteamVROverlayAppsInterface
             var (manifestPaths, jsonObj) = ReadContentsOfAppConfig();
             
             // Check if the entry already exists
-            if (SteamVrManifestPathExistsInAppConfig(manifestPaths, RegistryInterface.SteamVrAppConfigPath))
+            if (SteamVrManifestPathExistsInAppConfig(manifestPaths, RegistryInterface.VxMusicVrManiFestAppDataDestinationPath))
             {
                 _logger.LogDebug("Manifest path already exists in config file. Exiting.");
                 return true;
