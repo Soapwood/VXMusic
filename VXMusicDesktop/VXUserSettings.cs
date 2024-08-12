@@ -114,6 +114,19 @@ public class VXUserSettings
         {
             return Properties.Settings.Default.AudDByoApiKey;
         }
+        
+        public static void SetSelectedAudioDevice(string audioDevice)
+        {
+            Properties.Settings.Default.SelectedAudioDevice = audioDevice;
+            Properties.Settings.Default.Save();
+            
+            Logger.LogDebug($"User Setting SelectedAudioDevice set to {Properties.Settings.Default.SelectedAudioDevice}");
+        }
+
+        public static string GetSelectedAudioDevice()
+        {
+            return Properties.Settings.Default.SelectedAudioDevice;
+        }
     }
     
     internal class Connections

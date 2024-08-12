@@ -225,5 +225,17 @@ namespace VXMusicDesktop.Properties {
                 this["HasLaunched"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string SelectedAudioDevice {
+            get {
+                return ((string)(this["SelectedAudioDevice"]));
+            }
+            set {
+                this["SelectedAudioDevice"] = value;
+            }
+        }
     }
 }

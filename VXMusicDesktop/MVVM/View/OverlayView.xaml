@@ -235,11 +235,11 @@
                 </StackPanel>
             </Border>
             
-                        <Border Width="300"
-                    Height="60"
-                    CornerRadius="10"
-                    HorizontalAlignment="Left"
-                    Margin="20,10,0,0">
+                <Border Width="300"
+                        Height="60"
+                        CornerRadius="10"
+                        HorizontalAlignment="Left"
+                        Margin="20,10,0,0">
 
                 <Border.Background>
                     <LinearGradientBrush x:Name="OverlayMenuOption3BoxBorderGradientBrush" StartPoint="0,0"

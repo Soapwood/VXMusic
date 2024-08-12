@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
@@ -7,7 +8,10 @@ using System.Windows;
 using System.Windows.Input;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.VisualBasic.Devices;
 using VXMusic;
+using VXMusic.Audio.Device;
+using VXMusic.Audio.Recording;
 using VXMusicDesktop.Core;
 
 namespace VXMusicDesktop.MVVM.ViewModel
@@ -16,114 +20,99 @@ namespace VXMusicDesktop.MVVM.ViewModel
     {
         public static ILogger Logger = App.ServiceProvider.GetRequiredService<ILogger<RecognitionViewModel>>();
 
-        private static readonly string LogsOutputPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "VXMusic");
+        private static readonly string LogsOutputPath =
+            Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "VXMusic");
+
+        #region Private Properties
+        
+        public event PropertyChangedEventHandler? PropertyChanged;
+        public bool HasBeenInitialised;
+
+        private List<AudioDevice> _availableAudioDevices;
+        private AudioDevice _selectedAudioDevice;
+        
+        private string _shazamByoApiToken = "";
+        private string _audDByoApiToken = "";
+        private bool _isShazamApiEnabled;
+        private bool _isShazamByoApiEnabled;
+        private bool _isAudDApiEnabled;
+        private bool _isAudDByoApiEnabled;
+        private bool _shouldShazamByoApiPlaceholderBeShown;
+        private bool _shouldAudDByoApiPlaceholderBeShown;
+        private bool _isRecognitionReady = true;
+        
+        #endregion
         
         // Shared ViewModel for sharing concurrency values between certain Views.
         public SharedViewModel SharedViewModel { get; }
 
+        #region Commands
+
+        public ICommand ShazamButtonClick => shazamButtonClick ??= new RelayCommand(PerformShazamButtonClick);
+        public ICommand AudDButtonClick => audDButtonClick ??= new RelayCommand(PerformAudDButtonClick);
+
+        public ICommand ShazamByoApiCheckButtonChecked =>
+            shazamByoApiRadioButtonChecked ??= new RelayCommand(PerformEnableShazamByoApiChecked);
+
+        public ICommand ShazamByoApiCheckButtonUnchecked => shazamByoApiRadioButtonUnchecked ??=
+            new RelayCommand(PerformEnableShazamByoApiUnchecked);
+
+        public ICommand AudDByoApiCheckButtonChecked =>
+            audDByoApiRadioButtonChecked ??= new RelayCommand(PerformEnableAudDByoApiChecked);
+
+        public ICommand AudDByoApiCheckButtonUnchecked =>
+            audDByoApiRadioButtonUnchecked ??= new RelayCommand(PerformEnableAudDByoApiUnchecked);
+
+        public ICommand ListenButtonClick => listenButtonClick ??= new RelayCommand(PerformListenButtonClick);
+        public ICommand RecognitionViewLoaded => recognitionViewLoaded ??= new RelayCommand(OnRecognitionViewLoaded);
+
+        public ICommand PasswordHintTextVisibilityToggle =>
+            recognitionViewLoaded ??= new RelayCommand(OnRecognitionOptionChanged);
+
+        public ICommand OpenFolderCommand => openFolderClick ??= new RelayCommand(OpenFolder);
+
         private RelayCommand shazamButtonClick;
         private RelayCommand audDButtonClick;
-        
         private RelayCommand shazamByoApiRadioButtonChecked;
         private RelayCommand shazamByoApiRadioButtonUnchecked;
         private RelayCommand audDByoApiRadioButtonChecked;
         private RelayCommand audDByoApiRadioButtonUnchecked;
-
         private RelayCommand listenButtonClick;
-
         private RelayCommand recognitionViewLoaded;
-        
         private RelayCommand openFolderClick;
+        private RelayCommand selectAudioDeviceClick;
 
-        private string _shazamByoApiToken = "";
-        private string _audDByoApiToken = "";
+        #endregion
 
-        // Bindings for mapping interaction commands to Bindings to be used in Views
-        // i.e. RecognitionView will reference the Binding ShazamButtonClick to run PerformShazamButtonClick
-        public ICommand ShazamButtonClick => shazamButtonClick ??= new RelayCommand(PerformShazamButtonClick);
-         public ICommand AudDButtonClick => audDButtonClick ??= new RelayCommand(PerformAudDButtonClick);
-         public ICommand ShazamByoApiCheckButtonChecked => shazamByoApiRadioButtonChecked ??= new RelayCommand(PerformEnableShazamByoApiChecked);
-         public ICommand ShazamByoApiCheckButtonUnchecked => shazamByoApiRadioButtonUnchecked ??= new RelayCommand(PerformEnableShazamByoApiUnchecked);
-         public ICommand AudDByoApiCheckButtonChecked => audDByoApiRadioButtonChecked ??= new RelayCommand(PerformEnableAudDByoApiChecked);
-         public ICommand AudDByoApiCheckButtonUnchecked => audDByoApiRadioButtonUnchecked ??= new RelayCommand(PerformEnableAudDByoApiUnchecked);
-         public ICommand ListenButtonClick => listenButtonClick ??= new RelayCommand(PerformListenButtonClick);
-         public ICommand RecognitionViewLoaded => recognitionViewLoaded ??= new RelayCommand(OnRecognitionViewLoaded);
-         public ICommand PasswordHintTextVisibilityToggle => recognitionViewLoaded ??= new RelayCommand(OnRecognitionOptionChanged);
-         
-         public ICommand OpenFolderCommand => openFolderClick ??= new RelayCommand(OpenFolder);
+        #region State Properties
 
-
-        // // //
-        public event PropertyChangedEventHandler? PropertyChanged;
-        public bool HasBeenInitialised;
-        
-        private bool _isShazamApiEnabled;
-        private bool _isShazamByoApiEnabled;
-        //private bool _isShazamApiConnected;
-        private bool _isAudDApiEnabled;
-        private bool _isAudDByoApiEnabled;
-        
-        private bool _shouldShazamByoApiPlaceholderBeShown;
-        private bool _shouldAudDByoApiPlaceholderBeShown;
-
-        private bool _isRecognitionReady = true;
-
-        public RecognitionViewModel()
+        public List<AudioDevice> AvailableAudioDevices
         {
-            // Get default state of RecognitionViewModel on UI Startup
-            Logger.LogDebug("Creating RecognitionViewModel");
-
-            if (!HasBeenInitialised)
-                Initialise();
+            get => _availableAudioDevices;
+            set
+            {
+                _availableAudioDevices = value;
+                OnPropertyChanged(nameof(AvailableAudioDevices));
+            }
         }
 
-        public RecognitionViewModel(SharedViewModel sharedViewModel)
+        public AudioDevice SelectedAudioDevice
         {
-            SharedViewModel = sharedViewModel;
-            Initialise();
+            get => _selectedAudioDevice;
+            set
+            {
+                if (_selectedAudioDevice != value)
+                {
+                    _selectedAudioDevice = value;
+                    OnPropertyChanged(nameof(SelectedAudioDevice));
+                    OnSelectedDeviceChanged();
+                }
+            }
         }
 
-        public void Initialise()
-        {
-            _isShazamApiEnabled = App.VXMusicSession.RecognitionSettings.CurrentRecognitionApi == RecognitionApi.Shazam;
-            _isShazamByoApiEnabled = App.VXMusicSession.RecognitionSettings.ShazamSettings.IsByoApiEnabled;
-            _shazamByoApiToken = App.VXMusicSession.RecognitionSettings.ShazamSettings.ByoApiKey;
-
-            _isAudDApiEnabled = App.VXMusicSession.RecognitionSettings.CurrentRecognitionApi == RecognitionApi.AudD;         
-            _isAudDByoApiEnabled = App.VXMusicSession.RecognitionSettings.AudDSettings.IsByoApiEnabled;
-            _audDByoApiToken = App.VXMusicSession.RecognitionSettings.AudDSettings.ByoApiKey;
-            ProcessRecognitionApiState();
-
-            _shouldShazamByoApiPlaceholderBeShown = _isShazamApiEnabled && !string.IsNullOrEmpty(_shazamByoApiToken);
-            _shouldAudDByoApiPlaceholderBeShown = _isAudDApiEnabled && !string.IsNullOrEmpty(_audDByoApiToken);
-            
-            HasBeenInitialised = true;
-            // TODO Do we actually want to do this here? It may be better to trigger this in the HomeView
-            CheckIfCurrentApiIsConnected();
-        }
-        
-        private void OnRecognitionViewLoaded(object commandParameter)
-        {
-            ProcessRecognitionApiState();
-            //CheckIfCurrentApiIsConnected();
-        }
-        
-        private void OnRecognitionOptionChanged(object commandParameter)
-        {
-            ShouldShazamByoApiPlaceholderBeShown = !ShouldShazamByoApiPlaceholderBeShown;
-            ShouldAudDByoApiPlaceholderBeShown = !ShouldAudDByoApiPlaceholderBeShown;
-
-            CheckIfCurrentApiIsConnected();
-        }
-
-        protected virtual void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-        
         public string ShazamByoApiToken
         {
-            get { return _shazamByoApiToken; }
+            get => _shazamByoApiToken;
             set
             {
                 if (_shazamByoApiToken != value)
@@ -133,10 +122,10 @@ namespace VXMusicDesktop.MVVM.ViewModel
                 }
             }
         }
-        
+
         public string AudDByoApiToken
         {
-            get { return _audDByoApiToken; }
+            get => _audDByoApiToken;
             set
             {
                 if (_audDByoApiToken != value)
@@ -149,7 +138,7 @@ namespace VXMusicDesktop.MVVM.ViewModel
 
         public bool IsShazamApiEnabled
         {
-            get { return _isShazamApiEnabled; }
+            get => _isShazamApiEnabled;
             set
             {
                 _isShazamApiEnabled = value;
@@ -160,29 +149,45 @@ namespace VXMusicDesktop.MVVM.ViewModel
 
         public bool IsShazamByoApiEnabled
         {
-            get { return _isShazamByoApiEnabled; }
+            get => _isShazamByoApiEnabled;
             set
             {
                 _isShazamByoApiEnabled = value;
                 OnPropertyChanged(nameof(IsShazamByoApiEnabled));
             }
         }
-        
-        public bool IsShazamByoApiKeySet
-        {
-            get { return !string.IsNullOrEmpty(ShazamByoApiToken); }
-        }
-        
+
         public bool ShouldShazamByoApiPlaceholderBeShown
         {
-            get { return _isShazamApiEnabled && !string.IsNullOrEmpty(_shazamByoApiToken); }
+            get => _isShazamApiEnabled && !string.IsNullOrEmpty(_shazamByoApiToken);
             set
             {
                 _shouldShazamByoApiPlaceholderBeShown = value;
                 OnPropertyChanged(nameof(ShouldShazamByoApiPlaceholderBeShown));
             }
         }
-        
+
+        public bool IsAudDApiEnabled
+        {
+            get => _isAudDApiEnabled;
+            set
+            {
+                _isAudDApiEnabled = value;
+                ShouldShazamByoApiPlaceholderBeShown = false;
+                OnPropertyChanged(nameof(IsAudDApiEnabled));
+            }
+        }
+
+        public bool IsRecognitionReady
+        {
+            get => _isRecognitionReady;
+            set
+            {
+                _isRecognitionReady = value;
+                OnPropertyChanged(nameof(IsRecognitionReady));
+            }
+        }
+
         public bool ShouldAudDByoApiPlaceholderBeShown
         {
             get { return _isAudDApiEnabled && !string.IsNullOrEmpty(_audDByoApiToken); }
@@ -193,23 +198,6 @@ namespace VXMusicDesktop.MVVM.ViewModel
             }
         }
 
-
-        public bool IsAudDApiEnabled
-        {
-            get { return _isAudDApiEnabled; }
-            set
-            {
-                _isAudDApiEnabled = value;
-                ShouldShazamByoApiPlaceholderBeShown = false;
-                OnPropertyChanged(nameof(IsAudDApiEnabled)); 
-            }
-        }
-        
-        public bool IsAudDApiKeySet
-        {
-            get { return !string.IsNullOrEmpty(AudDByoApiToken); }
-        }
-        
         public bool IsAudDByoApiEnabled
         {
             get { return _isAudDByoApiEnabled; }
@@ -220,15 +208,70 @@ namespace VXMusicDesktop.MVVM.ViewModel
             }
         }
 
-        public bool IsRecognitionReady
+        #endregion
+
+        public RecognitionViewModel(SharedViewModel sharedViewModel)
         {
-            get { return _isRecognitionReady; }
-            set
-            {
-                _isRecognitionReady = value;
-                OnPropertyChanged(nameof(IsRecognitionReady)); 
-            }
+            SharedViewModel = sharedViewModel;
+            // Get default state of RecognitionViewModel on UI Startup
+            Logger.LogDebug("Creating RecognitionViewModel");
+
+            if (!HasBeenInitialised)
+                Initialise();
         }
+
+        public void Initialise()
+        {
+            _isShazamApiEnabled = App.VXMusicSession.RecognitionSettings.CurrentRecognitionApi == RecognitionApi.Shazam;
+            _isShazamByoApiEnabled = App.VXMusicSession.RecognitionSettings.ShazamSettings.IsByoApiEnabled;
+            _shazamByoApiToken = App.VXMusicSession.RecognitionSettings.ShazamSettings.ByoApiKey;
+
+            _isAudDApiEnabled = App.VXMusicSession.RecognitionSettings.CurrentRecognitionApi == RecognitionApi.AudD;
+            _isAudDByoApiEnabled = App.VXMusicSession.RecognitionSettings.AudDSettings.IsByoApiEnabled;
+            _audDByoApiToken = App.VXMusicSession.RecognitionSettings.AudDSettings.ByoApiKey;
+            ProcessRecognitionApiState();
+
+            _shouldShazamByoApiPlaceholderBeShown = _isShazamApiEnabled && !string.IsNullOrEmpty(_shazamByoApiToken);
+            _shouldAudDByoApiPlaceholderBeShown = _isAudDApiEnabled && !string.IsNullOrEmpty(_audDByoApiToken);
+
+            HasBeenInitialised = true;
+            // TODO Do we actually want to do this here? It may be better to trigger this in the HomeView
+            CheckIfCurrentApiIsConnected();
+
+            AvailableAudioDevices = WindowsAudioDeviceListener.AvailableAudioDevices;
+
+            SelectedAudioDevice = DetermineSelectedAudioDeviceFromUserSettings(); 
+        }
+        
+        #region Events
+        
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        private void OnRecognitionViewLoaded(object commandParameter)
+        {
+            ProcessRecognitionApiState();
+        }
+
+        private void OnRecognitionOptionChanged(object commandParameter)
+        {
+            ShouldShazamByoApiPlaceholderBeShown = !ShouldShazamByoApiPlaceholderBeShown;
+            ShouldAudDByoApiPlaceholderBeShown = !ShouldAudDByoApiPlaceholderBeShown;
+
+            CheckIfCurrentApiIsConnected();
+        }
+        
+        private void OnSelectedDeviceChanged()
+        {
+            Logger.LogInformation($"Listening Audio Device changed to {SelectedAudioDevice}");
+            
+            WindowsAudioDeviceListener.SelectedAudioDevice = SelectedAudioDevice;
+            VXUserSettings.Recognition.SetSelectedAudioDevice(SelectedAudioDevice.DeviceFriendlyName);
+        }
+        
+        #endregion
 
         private void ProcessRecognitionApiState()
         {
@@ -237,15 +280,15 @@ namespace VXMusicDesktop.MVVM.ViewModel
                 case RecognitionApi.Shazam:
                     IsShazamApiEnabled = true;
                     IsShazamByoApiEnabled = App.VXMusicSession.RecognitionSettings.ShazamSettings.IsByoApiEnabled;
-                                            //&& !String.IsNullOrEmpty(App.VXMusicSession.RecognitionSettings.ShazamSettings.ByoApiKey);
-                    
+                    //&& !String.IsNullOrEmpty(App.VXMusicSession.RecognitionSettings.ShazamSettings.ByoApiKey);
+
                     IsAudDApiEnabled = false;
                     //IsAudDByoApiEnabled = false;
                     break;
                 case RecognitionApi.AudD:
                     IsAudDApiEnabled = true;
-                    IsAudDByoApiEnabled = App.VXMusicSession.RecognitionSettings.AudDSettings.IsByoApiEnabled; 
-                                          //&& !String.IsNullOrEmpty(App.VXMusicSession.RecognitionSettings.AudDSettings.ByoApiKey);
+                    IsAudDByoApiEnabled = App.VXMusicSession.RecognitionSettings.AudDSettings.IsByoApiEnabled;
+                    //&& !String.IsNullOrEmpty(App.VXMusicSession.RecognitionSettings.AudDSettings.ByoApiKey);
 
                     IsShazamApiEnabled = false;
                     //IsShazamByoApiEnabled = false;
@@ -253,17 +296,18 @@ namespace VXMusicDesktop.MVVM.ViewModel
                 default:
                     IsShazamApiEnabled = false;
                     IsAudDApiEnabled = false;
-                    
+
                     IsShazamByoApiEnabled = App.VXMusicSession.RecognitionSettings.ShazamSettings.IsByoApiEnabled;
                     IsAudDByoApiEnabled = App.VXMusicSession.RecognitionSettings.AudDSettings.IsByoApiEnabled;
                     break;
             }
 
             _isRecognitionReady = IsShazamApiEnabled || IsAudDApiEnabled;
-            
-            Logger.LogInformation($"Recognition API set to {App.VXMusicSession.RecognitionSettings.CurrentRecognitionApi}");
+
+            Logger.LogInformation(
+                $"Recognition API set to {App.VXMusicSession.RecognitionSettings.CurrentRecognitionApi}");
         }
-        
+
         public async Task CheckIfCurrentApiIsConnected()
         {
             switch (App.VXMusicSession.RecognitionSettings?.CurrentRecognitionApi)
@@ -281,10 +325,30 @@ namespace VXMusicDesktop.MVVM.ViewModel
             }
 
             _isRecognitionReady = IsShazamApiEnabled || IsAudDApiEnabled;
-            
-            Logger.LogDebug($"Current Recognition API is {App.VXMusicSession.RecognitionSettings?.CurrentRecognitionApi}");
+
+            Logger.LogDebug(
+                $"Current Recognition API is {App.VXMusicSession.RecognitionSettings?.CurrentRecognitionApi}");
         }
-        
+
+        private AudioDevice DetermineSelectedAudioDeviceFromUserSettings()
+        {
+            var userSelectedAudioDevice = VXUserSettings.Recognition.GetSelectedAudioDevice();
+            
+            Logger.LogTrace($"Found User Set AudioDevice: {userSelectedAudioDevice}");
+
+            if (userSelectedAudioDevice == AudioDevice.Default.DeviceFriendlyName)
+                return AudioDevice.Default;
+
+            if (string.IsNullOrEmpty(userSelectedAudioDevice))
+            {
+                Logger.LogWarning("Audio Device was not set in user settings. Using Default.");
+                return AudioDevice.Default;
+            }
+                
+            Logger.LogInformation($"Setting Audio Device found in User Settings: {userSelectedAudioDevice}");
+            return new AudioDevice(){DeviceFriendlyName = userSelectedAudioDevice, IsDefaultAudioDevice = false};
+        }
+
         /// ////////////////////////////////////
         /// UI Interactive Update Functions
         /// ////////////////////////////////////
@@ -305,30 +369,32 @@ namespace VXMusicDesktop.MVVM.ViewModel
             Logger.LogDebug("Saving and Testing Shazam BYOAPI Key");
             if (String.IsNullOrEmpty(_shazamByoApiToken))
                 return false;
-            
+
             VXUserSettings.Recognition.SetShazamByoApiKey(_shazamByoApiToken);
             VXUserSettings.Recognition.SetIsShazamByoApiEnabled(true);
-            
-            SharedViewModel.IsShazamApiConnected = await VXMusicSession.RecognitionClient.SetByoApiKeyAndTest(_shazamByoApiToken);
+
+            SharedViewModel.IsShazamApiConnected =
+                await VXMusicSession.RecognitionClient.SetByoApiKeyAndTest(_shazamByoApiToken);
 
             return SharedViewModel.IsShazamApiConnected;
         }
-        
+
         public async Task<bool> PerformSaveAndTestAudDByoApi()
         {
             if (String.IsNullOrEmpty(_audDByoApiToken))
                 return false;
-            
+
             Logger.LogDebug("Saving and Testing AudD BYOAPI Key");
 
             VXUserSettings.Recognition.SetAudDByoApiKey(_audDByoApiToken);
             VXUserSettings.Recognition.SetIsAudDByoApiEnabled(true);
-            
-            SharedViewModel.IsAudDApiConnected = await VXMusicSession.RecognitionClient.SetByoApiKeyAndTest(_audDByoApiToken);
+
+            SharedViewModel.IsAudDApiConnected =
+                await VXMusicSession.RecognitionClient.SetByoApiKeyAndTest(_audDByoApiToken);
 
             return SharedViewModel.IsAudDApiConnected;
         }
-        
+
         public async Task<bool> SetShazamApiKeyToDefaultAndTest()
         {
             VXMusicSession.RecognitionClient.SetDefaultApiKey();
@@ -336,7 +402,7 @@ namespace VXMusicDesktop.MVVM.ViewModel
 
             return SharedViewModel.IsShazamApiConnected;
         }
-        
+
         public async Task<bool> SetAudDApiKeyToDefaultAndTest()
         {
             VXMusicSession.RecognitionClient.SetDefaultApiKey();
@@ -349,11 +415,11 @@ namespace VXMusicDesktop.MVVM.ViewModel
         {
             App.VXMusicSession.SetRecognitionClient(RecognitionApi.Shazam);
             VXUserSettings.Recognition.SetRecognitionApi(RecognitionApi.Shazam);
-            
+
             SharedViewModel.IsAudDApiConnected = false;
             IsAudDApiEnabled = false;
             //IsAudDByoApiEnabled = false;
-            
+
             ProcessRecognitionApiState();
             CheckIfCurrentApiIsConnected();
         }
@@ -362,11 +428,11 @@ namespace VXMusicDesktop.MVVM.ViewModel
         {
             App.VXMusicSession.SetRecognitionClient(RecognitionApi.AudD);
             VXUserSettings.Recognition.SetRecognitionApi(RecognitionApi.AudD);
-            
+
             SharedViewModel.IsShazamApiConnected = false;
             IsShazamApiEnabled = false;
             //IsShazamByoApiEnabled = false;
-            
+
             ProcessRecognitionApiState();
             CheckIfCurrentApiIsConnected();
         }
@@ -378,7 +444,7 @@ namespace VXMusicDesktop.MVVM.ViewModel
 
             PerformSaveAndTestShazamByoApi();
         }
-        
+
         private void PerformEnableShazamByoApiUnchecked(object commandParameter)
         {
             IsShazamByoApiEnabled = false;
@@ -390,24 +456,24 @@ namespace VXMusicDesktop.MVVM.ViewModel
             IsAudDByoApiEnabled = true;
             VXUserSettings.Recognition.SetIsAudDByoApiEnabled(IsAudDByoApiEnabled);
         }
-        
+
         private void PerformEnableAudDByoApiUnchecked(object commandParameter)
         {
             IsAudDByoApiEnabled = false;
             VXUserSettings.Recognition.SetIsAudDByoApiEnabled(IsAudDByoApiEnabled);
         }
-        
+
         private void PerformSaveAndTestAudDByoApiUnchecked(object commandParameter)
         {
             if (String.IsNullOrEmpty(_audDByoApiToken))
                 return;
 
-            
+
             //App.VXMusicSession.SetRecognitionClient(RecognitionApi.AudD);
             //RecognitionSettings.SetRecognitionApiInSettings(RecognitionApi.AudD);
             //ProcessRecognitionApiState();
         }
-        
+
         private void OpenFolder(object commandParameter)
         {
             try
@@ -421,7 +487,8 @@ namespace VXMusicDesktop.MVVM.ViewModel
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Failed to open Track Library: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show($"Failed to open Track Library: {ex.Message}", "Error", MessageBoxButton.OK,
+                    MessageBoxImage.Error);
             }
         }
     }

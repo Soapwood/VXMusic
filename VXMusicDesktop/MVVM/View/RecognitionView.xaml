@@ -14,10 +14,10 @@
     <UserControl.Resources>
         <BitmapImage x:Key="ShazamLogo"
                      UriSource="{Binding Source={x:Static custom:UIImageManager.ShazamLogo}, Path=UriSource}" />
-        
+
         <BitmapImage x:Key="AudDLogo"
                      UriSource="{Binding Source={x:Static custom:UIImageManager.AudDLogo}, Path=UriSource}" />
-        
+
         <BitmapImage x:Key="RecordIcon"
                      UriSource="{Binding Source={x:Static custom:UIImageManager.RecordIcon}, Path=UriSource}" />
 
@@ -55,120 +55,121 @@
                 <RowDefinition Height="Auto" />
                 <!-- First row definition: "Auto" adjusts height to content -->
                 <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
                 <!-- Second row definition: "*" takes up remaining space -->
             </Grid.RowDefinitions>
-            
-        <StackPanel Orientation="Horizontal">
-            <StackPanel Orientation="Vertical"
-                        Margin="10,0,0,0">
 
-                <Button x:Name="RecognitionIntegrationEnableShazamApiButton"
-                        Command="{Binding ShazamButtonClick}"
-                        Width="300" Height="100"
-                        Cursor="Hand"
-                        Margin="0,0,10,0"
-                        IsEnabled="true">
+            <StackPanel Orientation="Horizontal">
+                <StackPanel Orientation="Vertical"
+                            Margin="10,0,0,0">
 
-                    <Button.Resources>
-                        <LinearGradientBrush x:Key="ButtonNormalGradientBrush" StartPoint="0,0" EndPoint="1,2">
-                            <GradientStop Offset="0.0"
-                                          Color="{Binding Source={StaticResource SecondaryColor}, Converter={StaticResource SolidColorBrushToColorConverter}}" />
-                            <GradientStop Offset="0.7"
-                                          Color="{Binding Source={StaticResource Accent1Colour}, Converter={StaticResource SolidColorBrushToColorConverter}}" />
-                        </LinearGradientBrush>
-                        <LinearGradientBrush x:Key="ButtonHoverGradientBrush" StartPoint="0,0" EndPoint="1,2">
-                            <!-- Modify these colors for the hover effect -->
-                            <GradientStop Offset="0.0"
-                                          Color="{Binding Source={StaticResource SecondaryColor}, Converter={StaticResource SolidColorBrushToColorConverter}}" />
-                            <GradientStop Offset="1.0"
-                                          Color="{Binding Source={StaticResource Accent2Colour}, Converter={StaticResource SolidColorBrushToColorConverter}}" />
-                        </LinearGradientBrush>
-                    </Button.Resources>
+                    <Button x:Name="RecognitionIntegrationEnableShazamApiButton"
+                            Command="{Binding ShazamButtonClick}"
+                            Width="300" Height="100"
+                            Cursor="Hand"
+                            Margin="0,0,10,0"
+                            IsEnabled="true">
 
-                    <Button.Template>
-                        <ControlTemplate TargetType="Button">
-                            <Border Width="300" Height="100" CornerRadius="10"
-                                    Background="{TemplateBinding Background}">
-                                <VisualStateManager.VisualStateGroups>
-                                    <VisualStateGroup x:Name="CommonStates">
-                                        <VisualState x:Name="Normal" />
-                                        <VisualState x:Name="MouseOver">
-                                            <Storyboard>
-                                                <ObjectAnimationUsingKeyFrames
-                                                    Storyboard.TargetProperty="(Border.Background)">
-                                                    <DiscreteObjectKeyFrame KeyTime="0"
-                                                                            Value="{StaticResource ButtonHoverGradientBrush}" />
-                                                </ObjectAnimationUsingKeyFrames>
-                                            </Storyboard>
-                                        </VisualState>
-                                    </VisualStateGroup>
-                                </VisualStateManager.VisualStateGroups>
+                        <Button.Resources>
+                            <LinearGradientBrush x:Key="ButtonNormalGradientBrush" StartPoint="0,0" EndPoint="1,2">
+                                <GradientStop Offset="0.0"
+                                              Color="{Binding Source={StaticResource SecondaryColor}, Converter={StaticResource SolidColorBrushToColorConverter}}" />
+                                <GradientStop Offset="0.7"
+                                              Color="{Binding Source={StaticResource Accent1Colour}, Converter={StaticResource SolidColorBrushToColorConverter}}" />
+                            </LinearGradientBrush>
+                            <LinearGradientBrush x:Key="ButtonHoverGradientBrush" StartPoint="0,0" EndPoint="1,2">
+                                <!-- Modify these colors for the hover effect -->
+                                <GradientStop Offset="0.0"
+                                              Color="{Binding Source={StaticResource SecondaryColor}, Converter={StaticResource SolidColorBrushToColorConverter}}" />
+                                <GradientStop Offset="1.0"
+                                              Color="{Binding Source={StaticResource Accent2Colour}, Converter={StaticResource SolidColorBrushToColorConverter}}" />
+                            </LinearGradientBrush>
+                        </Button.Resources>
 
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto" />
-                                        <!-- Column for the icon -->
-                                        <ColumnDefinition Width="*" />
-                                        <!-- Column for the text -->
-                                        <ColumnDefinition Width="Auto" />
-                                        <!-- Column for the button -->
-                                    </Grid.ColumnDefinitions>
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <Border Width="300" Height="100" CornerRadius="10"
+                                        Background="{TemplateBinding Background}">
+                                    <VisualStateManager.VisualStateGroups>
+                                        <VisualStateGroup x:Name="CommonStates">
+                                            <VisualState x:Name="Normal" />
+                                            <VisualState x:Name="MouseOver">
+                                                <Storyboard>
+                                                    <ObjectAnimationUsingKeyFrames
+                                                        Storyboard.TargetProperty="(Border.Background)">
+                                                        <DiscreteObjectKeyFrame KeyTime="0"
+                                                            Value="{StaticResource ButtonHoverGradientBrush}" />
+                                                    </ObjectAnimationUsingKeyFrames>
+                                                </Storyboard>
+                                            </VisualState>
+                                        </VisualStateGroup>
+                                    </VisualStateManager.VisualStateGroups>
 
-                                    <Image Grid.Column="0"
-                                           Width="80"
-                                           Height="80"
-                                           Source="{StaticResource ShazamLogo}"
-                                           RenderOptions.BitmapScalingMode="HighQuality"
-                                           RenderTransformOrigin="0.5,0.5"
-                                           Margin="15,0,0,0" />
-                                    <StackPanel Grid.Column="1"
-                                                VerticalAlignment="Center"
-                                                HorizontalAlignment="Left"
-                                                Orientation="Horizontal">
-                                        <TextBlock x:Name="RecognitionIntegration1HeaderText"
-                                                   Text="Shazam"
-                                                   Foreground="{StaticResource TextBasic}"
-                                                   FontSize="18"
-                                                   Margin="20,0,0,0"
-                                                   VerticalAlignment="Center" />
-                                        <Ellipse Width="10"
-                                                 Height="10"
-                                                 Margin="10,5,0,0"
-                                                 HorizontalAlignment="Center"
-                                                 VerticalAlignment="Center">
-                                            <Ellipse.Fill>
-                                                <SolidColorBrush
-                                                    Color="{Binding SharedViewModel.IsShazamApiConnected, Converter={StaticResource BooleanToColorConverter}}" />
-                                            </Ellipse.Fill>
-                                        </Ellipse>
-                                    </StackPanel>
-                                </Grid>
-                            </Border>
-                        </ControlTemplate>
-                    </Button.Template>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <!-- Column for the icon -->
+                                            <ColumnDefinition Width="*" />
+                                            <!-- Column for the text -->
+                                            <ColumnDefinition Width="Auto" />
+                                            <!-- Column for the button -->
+                                        </Grid.ColumnDefinitions>
 
-                    <Button.Background>
-                        <StaticResource ResourceKey="ButtonNormalGradientBrush" />
-                    </Button.Background>
-                </Button>
+                                        <Image Grid.Column="0"
+                                               Width="80"
+                                               Height="80"
+                                               Source="{StaticResource ShazamLogo}"
+                                               RenderOptions.BitmapScalingMode="HighQuality"
+                                               RenderTransformOrigin="0.5,0.5"
+                                               Margin="15,0,0,0" />
+                                        <StackPanel Grid.Column="1"
+                                                    VerticalAlignment="Center"
+                                                    HorizontalAlignment="Left"
+                                                    Orientation="Horizontal">
+                                            <TextBlock x:Name="RecognitionIntegration1HeaderText"
+                                                       Text="Shazam"
+                                                       Foreground="{StaticResource TextBasic}"
+                                                       FontSize="18"
+                                                       Margin="20,0,0,0"
+                                                       VerticalAlignment="Center" />
+                                            <Ellipse Width="10"
+                                                     Height="10"
+                                                     Margin="10,5,0,0"
+                                                     HorizontalAlignment="Center"
+                                                     VerticalAlignment="Center">
+                                                <Ellipse.Fill>
+                                                    <SolidColorBrush
+                                                        Color="{Binding SharedViewModel.IsShazamApiConnected, Converter={StaticResource BooleanToColorConverter}}" />
+                                                </Ellipse.Fill>
+                                            </Ellipse>
+                                        </StackPanel>
+                                    </Grid>
+                                </Border>
+                            </ControlTemplate>
+                        </Button.Template>
 
-                <!-- Shazam BYOAPI -->
-                <StackPanel Orientation="Horizontal" Margin="4,10,0,0">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Column="0" x:Name="ShazamByoApiKeyHintText"
-                                   Text="API Key:"
-                                   Foreground="{StaticResource TextBasic}"
-                                   Visibility="{Binding IsShazamApiEnabled, Converter={StaticResource BoolToVis}}"
-                                   HorizontalAlignment="Left"
-                                   VerticalAlignment="Center"
-                                   FontSize="16"
-                                   Width="Auto"
-                                   Height="30"
-                                   Margin="0,0,0,0" />
+                        <Button.Background>
+                            <StaticResource ResourceKey="ButtonNormalGradientBrush" />
+                        </Button.Background>
+                    </Button>
+
+                    <!-- Shazam BYOAPI -->
+                    <StackPanel Orientation="Horizontal" Margin="4,10,0,0">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" x:Name="ShazamByoApiKeyHintText"
+                                       Text="API Key:"
+                                       Foreground="{StaticResource TextBasic}"
+                                       Visibility="{Binding IsShazamApiEnabled, Converter={StaticResource BoolToVis}}"
+                                       HorizontalAlignment="Left"
+                                       VerticalAlignment="Center"
+                                       FontSize="16"
+                                       Width="Auto"
+                                       Height="30"
+                                       Margin="0,0,0,0" />
                             <PasswordBox Grid.Column="1" x:Name="ShazamByoApiPasswordBox"
                                          Visibility="{Binding IsShazamApiEnabled, Converter={StaticResource BoolToVis}}"
                                          Style="{StaticResource ModernApiBox}"
@@ -192,105 +193,105 @@
                                            Margin="10,0,0,0" />
                             </Canvas>
                         </Grid>
+                    </StackPanel>
                 </StackPanel>
-            </StackPanel>
 
-            <StackPanel Orientation="Vertical"
-                        Margin="10,0,0,0">
+                <StackPanel Orientation="Vertical"
+                            Margin="10,0,0,0">
 
-                <Button x:Name="RecognitionIntegrationEnableAudDApiButton"
-                        Command="{Binding AudDButtonClick}"
-                        Width="300" Height="100"
-                        Cursor="Hand"
-                        Margin="00,0,00,0"
-                        IsEnabled="true">
+                    <Button x:Name="RecognitionIntegrationEnableAudDApiButton"
+                            Command="{Binding AudDButtonClick}"
+                            Width="300" Height="100"
+                            Cursor="Hand"
+                            Margin="00,0,00,0"
+                            IsEnabled="true">
 
-                    <Button.Resources>
-                        <LinearGradientBrush x:Key="ButtonNormalGradientBrush" StartPoint="0,0" EndPoint="1,2">
-                            <GradientStop Offset="0.0"
-                                          Color="{Binding Source={StaticResource SecondaryColor}, Converter={StaticResource SolidColorBrushToColorConverter}}" />
-                            <GradientStop Offset="0.5"
-                                          Color="{Binding Source={StaticResource Accent1Colour}, Converter={StaticResource SolidColorBrushToColorConverter}}" />
-                        </LinearGradientBrush>
-                        <LinearGradientBrush x:Key="ButtonHoverGradientBrush" StartPoint="0,0" EndPoint="1,2">
-                            <!-- Modify these colors for the hover effect -->
-                            <GradientStop Offset="0.0"
-                                          Color="{Binding Source={StaticResource SecondaryColor}, Converter={StaticResource SolidColorBrushToColorConverter}}" />
-                            <GradientStop Offset="1.0"
-                                          Color="{Binding Source={StaticResource Accent2Colour}, Converter={StaticResource SolidColorBrushToColorConverter}}" />
-                        </LinearGradientBrush>
-                    </Button.Resources>
+                        <Button.Resources>
+                            <LinearGradientBrush x:Key="ButtonNormalGradientBrush" StartPoint="0,0" EndPoint="1,2">
+                                <GradientStop Offset="0.0"
+                                              Color="{Binding Source={StaticResource SecondaryColor}, Converter={StaticResource SolidColorBrushToColorConverter}}" />
+                                <GradientStop Offset="0.5"
+                                              Color="{Binding Source={StaticResource Accent1Colour}, Converter={StaticResource SolidColorBrushToColorConverter}}" />
+                            </LinearGradientBrush>
+                            <LinearGradientBrush x:Key="ButtonHoverGradientBrush" StartPoint="0,0" EndPoint="1,2">
+                                <!-- Modify these colors for the hover effect -->
+                                <GradientStop Offset="0.0"
+                                              Color="{Binding Source={StaticResource SecondaryColor}, Converter={StaticResource SolidColorBrushToColorConverter}}" />
+                                <GradientStop Offset="1.0"
+                                              Color="{Binding Source={StaticResource Accent2Colour}, Converter={StaticResource SolidColorBrushToColorConverter}}" />
+                            </LinearGradientBrush>
+                        </Button.Resources>
 
-                    <Button.Template>
-                        <ControlTemplate TargetType="Button">
-                            <Border Width="300" Height="100" CornerRadius="10"
-                                    Background="{TemplateBinding Background}">
-                                <VisualStateManager.VisualStateGroups>
-                                    <VisualStateGroup x:Name="CommonStates">
-                                        <VisualState x:Name="Normal" />
-                                        <VisualState x:Name="MouseOver">
-                                            <Storyboard>
-                                                <ObjectAnimationUsingKeyFrames
-                                                    Storyboard.TargetProperty="(Border.Background)">
-                                                    <DiscreteObjectKeyFrame KeyTime="0"
-                                                                            Value="{StaticResource ButtonHoverGradientBrush}" />
-                                                </ObjectAnimationUsingKeyFrames>
-                                            </Storyboard>
-                                        </VisualState>
-                                    </VisualStateGroup>
-                                </VisualStateManager.VisualStateGroups>
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <Border Width="300" Height="100" CornerRadius="10"
+                                        Background="{TemplateBinding Background}">
+                                    <VisualStateManager.VisualStateGroups>
+                                        <VisualStateGroup x:Name="CommonStates">
+                                            <VisualState x:Name="Normal" />
+                                            <VisualState x:Name="MouseOver">
+                                                <Storyboard>
+                                                    <ObjectAnimationUsingKeyFrames
+                                                        Storyboard.TargetProperty="(Border.Background)">
+                                                        <DiscreteObjectKeyFrame KeyTime="0"
+                                                            Value="{StaticResource ButtonHoverGradientBrush}" />
+                                                    </ObjectAnimationUsingKeyFrames>
+                                                </Storyboard>
+                                            </VisualState>
+                                        </VisualStateGroup>
+                                    </VisualStateManager.VisualStateGroups>
 
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto" />
-                                        <!-- Column for the icon -->
-                                        <ColumnDefinition Width="*" />
-                                        <!-- Column for the text -->
-                                        <ColumnDefinition Width="Auto" />
-                                        <!-- Column for the button -->
-                                    </Grid.ColumnDefinitions>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <!-- Column for the icon -->
+                                            <ColumnDefinition Width="*" />
+                                            <!-- Column for the text -->
+                                            <ColumnDefinition Width="Auto" />
+                                            <!-- Column for the button -->
+                                        </Grid.ColumnDefinitions>
 
-                                    <Image Grid.Column="0"
-                                           Width="80"
-                                           Height="80"
-                                           Source="{StaticResource AudDLogo}"
-                                           RenderOptions.BitmapScalingMode="HighQuality"
-                                           RenderTransformOrigin="0.5,0.5"
-                                           Margin="15,0,0,0" />
-                                    <StackPanel Grid.Column="1"
-                                                VerticalAlignment="Center"
-                                                HorizontalAlignment="Left"
-                                                Orientation="Horizontal">
-                                        <TextBlock x:Name="RecognitionIntegration2HeaderText"
-                                                   Text="AudD.io"
-                                                   Foreground="{StaticResource TextBasic}"
-                                                   FontSize="18"
-                                                   Margin="20,0,0,0"
-                                                   VerticalAlignment="Center" />
-                                        <Ellipse Width="10"
-                                                 Height="10"
-                                                 Margin="10,5,0,0"
-                                                 HorizontalAlignment="Center"
-                                                 VerticalAlignment="Center">
-                                            <Ellipse.Fill>
-                                                <SolidColorBrush
-                                                    Color="{Binding SharedViewModel.IsAudDApiConnected, Converter={StaticResource BooleanToColorConverter}}" />
-                                            </Ellipse.Fill>
-                                        </Ellipse>
-                                    </StackPanel>
-                                </Grid>
-                            </Border>
-                        </ControlTemplate>
-                    </Button.Template>
+                                        <Image Grid.Column="0"
+                                               Width="80"
+                                               Height="80"
+                                               Source="{StaticResource AudDLogo}"
+                                               RenderOptions.BitmapScalingMode="HighQuality"
+                                               RenderTransformOrigin="0.5,0.5"
+                                               Margin="15,0,0,0" />
+                                        <StackPanel Grid.Column="1"
+                                                    VerticalAlignment="Center"
+                                                    HorizontalAlignment="Left"
+                                                    Orientation="Horizontal">
+                                            <TextBlock x:Name="RecognitionIntegration2HeaderText"
+                                                       Text="AudD.io"
+                                                       Foreground="{StaticResource TextBasic}"
+                                                       FontSize="18"
+                                                       Margin="20,0,0,0"
+                                                       VerticalAlignment="Center" />
+                                            <Ellipse Width="10"
+                                                     Height="10"
+                                                     Margin="10,5,0,0"
+                                                     HorizontalAlignment="Center"
+                                                     VerticalAlignment="Center">
+                                                <Ellipse.Fill>
+                                                    <SolidColorBrush
+                                                        Color="{Binding SharedViewModel.IsAudDApiConnected, Converter={StaticResource BooleanToColorConverter}}" />
+                                                </Ellipse.Fill>
+                                            </Ellipse>
+                                        </StackPanel>
+                                    </Grid>
+                                </Border>
+                            </ControlTemplate>
+                        </Button.Template>
 
-                    <Button.Background>
-                        <StaticResource ResourceKey="ButtonNormalGradientBrush" />
-                    </Button.Background>
-                </Button>
+                        <Button.Background>
+                            <StaticResource ResourceKey="ButtonNormalGradientBrush" />
+                        </Button.Background>
+                    </Button>
 
-                <!-- AudD BYOAPI -->
-                <StackPanel Orientation="Horizontal" Margin="4,10,0,0">
-                    <Grid>
+                    <!-- AudD BYOAPI -->
+                    <StackPanel Orientation="Horizontal" Margin="4,10,0,0">
+                        <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="Auto" />
@@ -329,100 +330,167 @@
                                            Margin="10,0,0,0" />
                             </Canvas>
                         </Grid>
+                    </StackPanel>
                 </StackPanel>
             </StackPanel>
-        </StackPanel>
 
-        <StackPanel Grid.Row="1">
-            <Button
-                x:Name="RunRecognitionButton"
-                Content="Run Recognition"
-                Command="{Binding ListenButtonClick}"
-                IsEnabled="{Binding IsRecognitionReady}"
-                Cursor="Hand"
-                Padding="0"
-                Margin="0,80,0,0"
-                FontSize="30"
-                Foreground="{StaticResource TextBasic}"
-                BorderThickness="0"
-                VerticalAlignment="Bottom"
-                HorizontalAlignment="Center">
-                <Button.Resources>
-                    <LinearGradientBrush x:Key="ButtonNormalGradientBrush" StartPoint="0,0" EndPoint="1,2">
-                        <GradientStop Offset="0.0"
-                                      Color="{Binding Source={StaticResource SecondaryColor}, Converter={StaticResource SolidColorBrushToColorConverter}}" />
-                        <GradientStop Offset="0.7"
-                                      Color="{Binding Source={StaticResource Accent1Colour}, Converter={StaticResource SolidColorBrushToColorConverter}}" />
-                    </LinearGradientBrush>
-                    <LinearGradientBrush x:Key="ButtonHoverGradientBrush" StartPoint="0,0" EndPoint="1,2">
-                        <!-- Modify these colors for the hover effect -->
-                        <GradientStop Offset="0.0"
-                                      Color="{Binding Source={StaticResource SecondaryColor}, Converter={StaticResource SolidColorBrushToColorConverter}}" />
-                        <GradientStop Offset="1.0"
-                                      Color="{Binding Source={StaticResource Accent2Colour}, Converter={StaticResource SolidColorBrushToColorConverter}}" />
-                    </LinearGradientBrush>
-                </Button.Resources>
-                <Button.Template>
-                    <ControlTemplate TargetType="Button">
-                        <Border Width="300" Height="120" CornerRadius="10"
-                                Background="{TemplateBinding Background}">
-                            <VisualStateManager.VisualStateGroups>
-                                <VisualStateGroup x:Name="CommonStates">
-                                    <VisualState x:Name="Normal" />
-                                    <VisualState x:Name="MouseOver">
-                                        <Storyboard>
-                                            <ObjectAnimationUsingKeyFrames
-                                                Storyboard.TargetProperty="(Border.Background)">
-                                                <DiscreteObjectKeyFrame KeyTime="0"
-                                                                        Value="{StaticResource ButtonHoverGradientBrush}" />
-                                            </ObjectAnimationUsingKeyFrames>
-                                        </Storyboard>
-                                    </VisualState>
-                                </VisualStateGroup>
-                            </VisualStateManager.VisualStateGroups>
-                            <Grid>
-                                <StackPanel>
-                                    <Image Height="80"
-                                           Source="{StaticResource RecordIcon}"
-                                           RenderOptions.BitmapScalingMode="HighQuality"
-                                           RenderTransformOrigin="0,0"
-                                           Margin="0,20,0,0"
-                                           HorizontalAlignment="Center"
-                                           VerticalAlignment="Center" />
-                                </StackPanel>
-                            </Grid>
-                        </Border>
-                    </ControlTemplate>
-                </Button.Template>
+            <StackPanel Grid.Row="1" Margin="0,0,0,0">
+                <TextBlock Name="AudioDeviceSettingsTextHeader"
+                           Text="Audio Device Settings"
+                           Foreground="{StaticResource TextBasic}"
+                           FontSize="22"
+                           HorizontalAlignment="Left"
+                           Margin="10,10,0,10" />
+            </StackPanel>
 
-                <Button.Background>
-                    <StaticResource ResourceKey="ButtonNormalGradientBrush" />
-                </Button.Background>
-            </Button>
-            
-            <Button x:Name="OpenTrackLibraryButton"
-                    Content="Open Track Library"
-                    Command="{Binding OpenFolderCommand}"
-                    Padding="0"
-                    Margin="0,40,0,0"
+            <StackPanel Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Center" Margin="0,40,0,0">
+                <Border Width="300"
+                        Height="60"
+                        CornerRadius="10"
+                        HorizontalAlignment="Left"
+                        Margin="10,10,0,0">
+
+                    <Border.Background>
+                        <LinearGradientBrush x:Name="OverlayMenuOption3BoxBorderGradientBrush" StartPoint="0,0"
+                                             EndPoint="1,2">
+                            <GradientStop Offset="0.0">
+                                <GradientStop.Color>
+                                    <Binding Source="{StaticResource SecondaryColor}"
+                                             Converter="{StaticResource SolidColorBrushToColorConverter}" />
+                                </GradientStop.Color>
+                            </GradientStop>
+
+                            <GradientStop Offset="0.7">
+                                <GradientStop.Color>
+                                    <Binding Source="{StaticResource Accent1Colour}"
+                                             Converter="{StaticResource SolidColorBrushToColorConverter}" />
+                                </GradientStop.Color>
+                            </GradientStop>
+                        </LinearGradientBrush>
+                    </Border.Background>
+
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock x:Name="CurrentAudioDeviceText"
+                                   Text="Listening to:"
+                                   Foreground="{StaticResource TextBasic}"
+                                   FontSize="14"
+                                   VerticalAlignment="Center"
+                                   Margin="15,6,0,8" />
+                        <Grid>
+                            <ComboBox x:Name="AudioDeviceDropdownBox"
+                                      Width="190"
+                                      Height="25"
+                                      Margin="10,6,0,5"
+                                      VerticalAlignment="Center"
+                                      HorizontalAlignment="Left"
+                                      Style="{StaticResource RoundedComboBoxTheme}"
+                                      SelectedItem="{Binding SelectedAudioDevice, Mode=TwoWay}"
+                                      ItemsSource="{Binding AvailableAudioDevices}"
+                                      DisplayMemberPath="DeviceFriendlyName">
+                            </ComboBox>
+                            <TextBlock Text="{Binding SelectedAudioDevice.DeviceFriendlyName}"
+                                       VerticalAlignment="Center"
+                                       HorizontalAlignment="Left"
+                                       Width="165"
+                                       IsHitTestVisible="False"
+                                       TextWrapping="NoWrap"
+                                       Margin="15,0,0,0"
+                                       Foreground="{StaticResource TextBasic}" />
+                        </Grid>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+
+            <StackPanel Grid.Row="2">
+                <Button
+                    x:Name="RunRecognitionButton"
+                    Content="Run Recognition"
+                    Command="{Binding ListenButtonClick}"
+                    IsEnabled="{Binding IsRecognitionReady}"
                     Cursor="Hand"
-                    Background="{StaticResource SecondaryColor}"
+                    Padding="0"
+                    Margin="0,20,0,0"
+                    FontSize="30"
                     Foreground="{StaticResource TextBasic}"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    Width="120" Height="40">
-                <Button.Resources>
-                    <Style TargetType="Border">
-                        <Setter Property="CornerRadius" Value="5" />
-                        <Style.Triggers>
-                            <Trigger Property="IsEnabled" Value="False">
-                                <Setter Property="Background" Value="{StaticResource SecondaryColor}" />
-                            </Trigger>
-                        </Style.Triggers>
-                    </Style>
-                </Button.Resources>
-            </Button>
-        </StackPanel>
+                    BorderThickness="0"
+                    VerticalAlignment="Bottom"
+                    HorizontalAlignment="Center">
+                    <Button.Resources>
+                        <LinearGradientBrush x:Key="ButtonNormalGradientBrush" StartPoint="0,0" EndPoint="1,2">
+                            <GradientStop Offset="0.0"
+                                          Color="{Binding Source={StaticResource SecondaryColor}, Converter={StaticResource SolidColorBrushToColorConverter}}" />
+                            <GradientStop Offset="0.7"
+                                          Color="{Binding Source={StaticResource Accent1Colour}, Converter={StaticResource SolidColorBrushToColorConverter}}" />
+                        </LinearGradientBrush>
+                        <LinearGradientBrush x:Key="ButtonHoverGradientBrush" StartPoint="0,0" EndPoint="1,2">
+                            <!-- Modify these colors for the hover effect -->
+                            <GradientStop Offset="0.0"
+                                          Color="{Binding Source={StaticResource SecondaryColor}, Converter={StaticResource SolidColorBrushToColorConverter}}" />
+                            <GradientStop Offset="1.0"
+                                          Color="{Binding Source={StaticResource Accent2Colour}, Converter={StaticResource SolidColorBrushToColorConverter}}" />
+                        </LinearGradientBrush>
+                    </Button.Resources>
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border Width="300" Height="120" CornerRadius="10"
+                                    Background="{TemplateBinding Background}">
+                                <VisualStateManager.VisualStateGroups>
+                                    <VisualStateGroup x:Name="CommonStates">
+                                        <VisualState x:Name="Normal" />
+                                        <VisualState x:Name="MouseOver">
+                                            <Storyboard>
+                                                <ObjectAnimationUsingKeyFrames
+                                                    Storyboard.TargetProperty="(Border.Background)">
+                                                    <DiscreteObjectKeyFrame KeyTime="0"
+                                                                            Value="{StaticResource ButtonHoverGradientBrush}" />
+                                                </ObjectAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </VisualState>
+                                    </VisualStateGroup>
+                                </VisualStateManager.VisualStateGroups>
+                                <Grid>
+                                    <StackPanel>
+                                        <Image Height="80"
+                                               Source="{StaticResource RecordIcon}"
+                                               RenderOptions.BitmapScalingMode="HighQuality"
+                                               RenderTransformOrigin="0,0"
+                                               Margin="0,20,0,0"
+                                               HorizontalAlignment="Center"
+                                               VerticalAlignment="Center" />
+                                    </StackPanel>
+                                </Grid>
+                            </Border>
+                        </ControlTemplate>
+                    </Button.Template>
+
+                    <Button.Background>
+                        <StaticResource ResourceKey="ButtonNormalGradientBrush" />
+                    </Button.Background>
+                </Button>
+
+                <Button x:Name="OpenTrackLibraryButton"
+                        Content="Open Track Library"
+                        Command="{Binding OpenFolderCommand}"
+                        Padding="0"
+                        Margin="0,15,0,0" 
+                        Cursor="Hand"
+                        Background="{StaticResource SecondaryColor}"
+                        Foreground="{StaticResource TextBasic}"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Width="120" Height="40">
+                    <Button.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="5" />
+                            <Style.Triggers>
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter Property="Background" Value="{StaticResource SecondaryColor}" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Resources>
+                </Button>
+            </StackPanel>
         </Grid>
     </StackPanel>
 </UserControl>
