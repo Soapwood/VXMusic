@@ -14,6 +14,8 @@ namespace VXMusic.LogParser.VRChat
     public class ConfigurationModel
     {
         public static string ExpandedUserFolderPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "VirtualXtensions", "VXMusic");
+        public static string VrChatRuntimeLogPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "AppData", "LocalLow", "VRChat", "VRChat"); 
+        
         private static object ConfigMutex = new object();
 
         [Annotation("Polling frequency for individual log file updates.", true, "GENERAL CONFIGURATION")]
@@ -92,7 +94,7 @@ namespace VXMusic.LogParser.VRChat
         {
             ParseFrequencyMilliseconds = 300;
             DirectoryPollFrequencyMilliseconds = 5000;
-            OutputLogRoot = @"%AppData%\..\LocalLow\VRChat\vrchat";
+            OutputLogRoot = VrChatRuntimeLogPath;
             LogNotificationEvents = true;
             Opacity = 0.75f;
 

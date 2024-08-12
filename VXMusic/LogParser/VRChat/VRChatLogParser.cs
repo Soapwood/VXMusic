@@ -31,7 +31,7 @@ namespace VXMusic.LogParser.VRChat
         
         static volatile bool IsExiting = false;
 
-        private static bool VrChatRuntimeLogDirExists => Directory.Exists(Configuration.OutputLogRoot);
+        private static bool VrChatRuntimeLogDirExists => Directory.Exists(ConfigurationModel.VrChatRuntimeLogPath);
 
         static Task DispatchTask;
 
