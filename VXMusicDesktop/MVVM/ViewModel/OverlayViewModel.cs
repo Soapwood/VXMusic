@@ -1,13 +1,18 @@
 ﻿using System.ComponentModel;
 using System.Windows;
 using System.Windows.Input;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using VXMusic.Overlay;
 using VXMusicDesktop.Core;
+using VXMusicDesktop.Theme;
 
 namespace VXMusicDesktop.MVVM.ViewModel
 {
     public class OverlayViewModel : INotifyPropertyChanged
     {
+        public static ILogger Logger = App.ServiceProvider.GetRequiredService<ILogger<OverlayViewModel>>();
+
         public event PropertyChangedEventHandler? PropertyChanged;
 
         private RelayCommand launchOverlayOnStartupToggleButton;
@@ -36,7 +41,7 @@ namespace VXMusicDesktop.MVVM.ViewModel
         private bool _overlayEnabledOnRightHand;
         private bool _askForUpdatesOnStartup;
         private bool _isManifestEntryAlreadyInAppConfig;
-
+        private PlaylistSaveSettings _playlistSaveSetting;
 
         public OverlayViewModel()
         {
@@ -44,6 +49,7 @@ namespace VXMusicDesktop.MVVM.ViewModel
             OverlayEnabledOnLeftHand = VXUserSettings.Overlay.GetOverlayAnchor() == VXMusicOverlayAnchor.LeftHand;
             OverlayEnabledOnRightHand = VXUserSettings.Overlay.GetOverlayAnchor() == VXMusicOverlayAnchor.RightHand;
             AskForUpdatesOnStartup = VXUserSettings.Settings.GetAskForUpdatesOnStartup();
+            PlaylistSaveSetting = VXUserSettings.Connections.GetPlaylistSaveSetting();
             IsManifestEntryAlreadyInAppConfig = App.VXMusicSession.SteamVrOverlayApps.IsManifestEntryInAppConfig();
         }
 
@@ -118,7 +124,28 @@ namespace VXMusicDesktop.MVVM.ViewModel
                 }
             }
         }
+        
+        public PlaylistSaveSettings PlaylistSaveSetting
+        {
+            get => _playlistSaveSetting;
+            set
+            {
+                if (_playlistSaveSetting != value)
+                {
+                    _playlistSaveSetting = value;
+                    OnPropertyChanged(nameof(PlaylistSaveSetting));
+                    OnSelectedDeviceChanged();
+                }
+            }
+        }
 
+        private void OnSelectedDeviceChanged()
+        {
+            Logger.LogInformation($"Listening Audio Device changed to {PlaylistSaveSetting}");
+            
+            VXUserSettings.Connections.SetPlaylistSaveSetting(PlaylistSaveSetting);
+        }
+        
         public void SetLaunchOverlayOnStartup(object commandParameter)
         {
             VXUserSettings.Overlay.SetLaunchOverlayOnStartup(LaunchOverlayOnStartup);

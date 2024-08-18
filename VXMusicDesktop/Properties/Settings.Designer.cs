@@ -192,13 +192,13 @@ namespace VXMusicDesktop.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Use_VRChat_World_Name")]
-        public string SpotifyPlaylistSaveSetting {
+        [global::System.Configuration.DefaultSettingValueAttribute("Date_and_World")]
+        public string PlaylistSaveSetting {
             get {
-                return ((string)(this["SpotifyPlaylistSaveSetting"]));
+                return ((string)(this["PlaylistSaveSetting"]));
             }
             set {
-                this["SpotifyPlaylistSaveSetting"] = value;
+                this["PlaylistSaveSetting"] = value;
             }
         }
         

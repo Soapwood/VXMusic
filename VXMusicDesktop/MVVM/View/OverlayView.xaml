@@ -47,6 +47,12 @@
         
         <custom:BoolToButtonContentConverter x:Key="BoolToButtonContentConverter"/>
         <custom:BoolToEnabledConverter x:Key="BoolToEnabledConverter"/>
+        
+        <custom:EnumToDisplayNameConverter x:Key="EnumToDisplayNameConverter" />
+        
+        <DataTemplate x:Key="EnumComboBoxItemTemplate">
+            <TextBlock Text="{Binding Converter={StaticResource EnumToDisplayNameConverter}}" />
+        </DataTemplate>
 
         <Style x:Key="ImageToggleLeftHandButtonStyle" TargetType="ToggleButton">
             <Setter Property="Width" Value="40" />
@@ -287,7 +293,7 @@
                     Height="60"
                     CornerRadius="10"
                     HorizontalAlignment="Left"
-                    Margin="20,10,10,0">
+                    Margin="10,10,10,0">
 
                 <Border.Background>
                     <LinearGradientBrush x:Name="OverlayMenuOptionInstallVXMusicAsSteamVrOverlayGradientBrush" StartPoint="0,0"
@@ -340,6 +346,63 @@
                     </Button>
                 </StackPanel>
             </Border>
+                
+            <Border Width="300"
+                        Height="60"
+                        CornerRadius="10"
+                        HorizontalAlignment="Left"
+                        Margin="10,10,0,0">
+
+                    <Border.Background>
+                        <LinearGradientBrush x:Name="OverlayMenuOption4BoxBorderGradientBrush" StartPoint="0,0"
+                                             EndPoint="1,2">
+                            <GradientStop Offset="0.0">
+                                <GradientStop.Color>
+                                    <Binding Source="{StaticResource SecondaryColor}"
+                                             Converter="{StaticResource SolidColorBrushToColorConverter}" />
+                                </GradientStop.Color>
+                            </GradientStop>
+
+                            <GradientStop Offset="0.7">
+                                <GradientStop.Color>
+                                    <Binding Source="{StaticResource Accent1Colour}"
+                                             Converter="{StaticResource SolidColorBrushToColorConverter}" />
+                                </GradientStop.Color>
+                            </GradientStop>
+                        </LinearGradientBrush>
+                    </Border.Background>
+
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock x:Name="CurrentAudioDeviceText"
+                                   Text="Save playlists as:"
+                                   Foreground="{StaticResource TextBasic}"
+                                   FontSize="12"
+                                   VerticalAlignment="Center"
+                                   Margin="20,6,0,8" />
+                        <Grid>
+                            <ComboBox x:Name="PlaylistSettingDropdownBox"
+                                      Width="160"
+                                      Height="25"
+                                      Margin="12,6,0,5"
+                                      VerticalAlignment="Center"
+                                      HorizontalAlignment="Left"
+                                      Style="{StaticResource RoundedComboBoxTheme}"
+                                      SelectedItem="{Binding PlaylistSaveSetting, Mode=TwoWay}"
+                                      ItemsSource="{x:Static custom:ColourSchemeManager.PlaylistSavingOptions}"
+                                      ItemTemplate="{StaticResource EnumComboBoxItemTemplate}">
+                                      <!-- DisplayMemberPath="PlaylistSaveSetting"> -->
+                            </ComboBox>
+                            <TextBlock Text="{Binding PlaylistSaveSetting, Converter={StaticResource EnumToDisplayNameConverter}}"
+                                       VerticalAlignment="Center"
+                                       HorizontalAlignment="Left"
+                                       IsHitTestVisible="False"
+                                       TextWrapping="NoWrap"
+                                       Margin="20,0,0,0"
+                                       Foreground="{StaticResource TextBasic}" />
+                        </Grid>
+                    </StackPanel>
+                </Border>
+                
             </StackPanel>
         </StackPanel>
     </StackPanel>

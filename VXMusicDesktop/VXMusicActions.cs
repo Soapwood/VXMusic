@@ -7,11 +7,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using SpotifyAPI.Web;
 using VXMusic;
-using VXMusic.Overlay;
 using VXMusic.Spotify;
 using VXMusic.Spotify.Authentication;
 using VXMusicDesktop.Images;
-using VXMusicDesktop.MVVM.ViewModel;
+using VXMusicDesktop.Theme;
 
 namespace VXMusicDesktop;
 
@@ -157,15 +156,32 @@ public class VXMusicActions
         IList<FullPlaylist> playlists = await spotify.PaginateAll(await spotify.Playlists.CurrentUsers().ConfigureAwait(false));
 
         Logger.LogTrace($"Total Playlists in Account: {playlists.Count}");
+        var playlistName = "";
 
-        // Prefix Playlist name with dd/MM date
-        var currentDate = DateTime.Now.ToString("dd/MM");
-        var playlistName = $"{currentDate}";
-        
-        var lastKnownLocationName = App.VXMusicSession.VRChatLogParser.CurrentVrChatWorld;
+        var playlistSaveSetting = VXUserSettings.Connections.GetPlaylistSaveSetting();
+        Logger.LogTrace($"Playlist Save Setting: {playlistSaveSetting}");
 
-        if (lastKnownLocationName != null)
-            playlistName += " - " + lastKnownLocationName;
+        if (playlistSaveSetting == PlaylistSaveSettings.Date)
+        {
+            // Prefix Playlist name with dd/MM date
+            var currentDate = DateTime.Now.ToString("dd/MM");
+            playlistName += $"{currentDate}";
+        }
+        else if (playlistSaveSetting == PlaylistSaveSettings.Date_and_World)
+        {
+            // Prefix Playlist name with dd/MM date
+            var currentDate = DateTime.Now.ToString("dd/MM");
+            playlistName += $"{currentDate}";
+            
+            var lastKnownLocationName = App.VXMusicSession.VRChatLogParser.CurrentVrChatWorld;
+
+            if (lastKnownLocationName != null)
+                playlistName += " - " + lastKnownLocationName;
+        }
+        else if(playlistSaveSetting == PlaylistSaveSettings.Single_Playlist)
+        {
+            playlistName += "VXMusic";
+        }
 
         var existingPlaylist = SpotifyPlaylistManager.GetPlaylistIdByNameIfExists(playlistName, playlists);
 

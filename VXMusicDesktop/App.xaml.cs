@@ -93,7 +93,7 @@ namespace VXMusicDesktop
                 SpotifySettings = new SpotifySettings()
                 {
                     ClientId = configuration["Connections:Spotify:ClientId"],
-                    PlaylistSavingSaveSetting = VXUserSettings.Connections.GetSpotifyPlaylistSaveSetting()
+                    PlaylistSavingSaveSetting = VXUserSettings.Connections.GetPlaylistSaveSetting()
                 },
 
                 LastfmSettings = new LastfmSettings()

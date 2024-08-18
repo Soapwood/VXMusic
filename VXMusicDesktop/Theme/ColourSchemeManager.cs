@@ -19,7 +19,8 @@ namespace VXMusicDesktop.Theme
     
     public enum PlaylistSaveSettings
     {
-        Use_VRChat_World_Name,
+        Date_and_World,
+        Date,
         Single_Playlist
     }
 
@@ -127,6 +128,17 @@ namespace VXMusicDesktop.Theme
             {
                 return Enum.GetValues(typeof(PlaylistSaveSettings))
                     .Cast<PlaylistSaveSettings>()
+                    .ToArray();
+            }
+        }
+        
+        public static String[] PlaylistSavingOptionsStrings
+        {
+            get
+            {
+                return Enum.GetValues(typeof(PlaylistSaveSettings))
+                    .Cast<PlaylistSaveSettings>()
+                    .Select(e => e.ToString().Replace("_", ""))
                     .ToArray();
             }
         }
@@ -312,6 +324,24 @@ namespace VXMusicDesktop.Theme
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
+            throw new NotImplementedException();
+        }
+    }
+    
+    public class EnumToDisplayNameConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value == null)
+                return string.Empty;
+
+            string enumString = value.ToString();
+            return enumString.Replace("_", " ");
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            // You don't need to implement ConvertBack unless you are converting back from the displayed value to the enum.
             throw new NotImplementedException();
         }
     }

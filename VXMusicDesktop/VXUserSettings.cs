@@ -153,15 +153,15 @@ public class VXUserSettings
             Properties.Settings.Default.Save();
         }
         
-        public static PlaylistSaveSettings GetSpotifyPlaylistSaveSetting()
+        public static PlaylistSaveSettings GetPlaylistSaveSetting()
         {
-            Enum.TryParse<PlaylistSaveSettings>(Properties.Settings.Default.SpotifyPlaylistSaveSetting, out var saveSetting);
+            Enum.TryParse<PlaylistSaveSettings>(Properties.Settings.Default.PlaylistSaveSetting, out var saveSetting);
             return saveSetting;
         }
         
-        public static void SetSpotifyPlaylistSaveSetting(PlaylistSaveSettings playlistSaveSetting)
+        public static void SetPlaylistSaveSetting(PlaylistSaveSettings playlistSaveSetting)
         {
-            VXMusicDesktop.Properties.Settings.Default.SpotifyPlaylistSaveSetting = playlistSaveSetting.ToString();
+            VXMusicDesktop.Properties.Settings.Default.PlaylistSaveSetting = playlistSaveSetting.ToString();
             Properties.Settings.Default.Save();
         }
     }
