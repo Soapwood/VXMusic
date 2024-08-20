@@ -99,6 +99,8 @@ public class VXMusicActions
         if(App.VXMusicSession.NotificationSettings.IsVRChatNotificationServiceEnabled)
             App.VXMusicSession.VrChatNotification.SendChatboxTypingIndicator(false);
 
+        
+        
         if (result.Result != null && SpotifyAuthentication.CurrentConnectionState == SpotifyConnectionState.Connected)
         {
             ReportTrackToSpotifyPlaylist(result);
@@ -109,9 +111,8 @@ public class VXMusicActions
 
         if (result.Result != null)
         {
-            VXMusicSession.PlaylistFileWriter.AddTrackEntryToPlaylistFile(App.VXMusicSession.VRChatLogParser
-                .CurrentVrChatWorld,
-                $"{result.Result.Artist} - {result.Result.Title} {result.Result.Album} ({result.Result.ReleaseDate})");
+            VXMusicSession.PlaylistFileWriter.AddTrackEntryToPlaylistFile( GetPlaylistName(),
+                $"{result.Result.Artist} - {result.Result.Title} - {result.Result.Album} ({result.Result.ReleaseDate})");
 
             if (App.VXMusicSession.ConnectionsSettings.IsLastfmConnected)
             {
@@ -156,33 +157,9 @@ public class VXMusicActions
         IList<FullPlaylist> playlists = await spotify.PaginateAll(await spotify.Playlists.CurrentUsers().ConfigureAwait(false));
 
         Logger.LogTrace($"Total Playlists in Account: {playlists.Count}");
-        var playlistName = "";
-
-        var playlistSaveSetting = VXUserSettings.Connections.GetPlaylistSaveSetting();
-        Logger.LogTrace($"Playlist Save Setting: {playlistSaveSetting}");
-
-        if (playlistSaveSetting == PlaylistSaveSettings.Date)
-        {
-            // Prefix Playlist name with dd/MM date
-            var currentDate = DateTime.Now.ToString("dd/MM");
-            playlistName += $"{currentDate}";
-        }
-        else if (playlistSaveSetting == PlaylistSaveSettings.Date_and_World)
-        {
-            // Prefix Playlist name with dd/MM date
-            var currentDate = DateTime.Now.ToString("dd/MM");
-            playlistName += $"{currentDate}";
-            
-            var lastKnownLocationName = App.VXMusicSession.VRChatLogParser.CurrentVrChatWorld;
-
-            if (lastKnownLocationName != null)
-                playlistName += " - " + lastKnownLocationName;
-        }
-        else if(playlistSaveSetting == PlaylistSaveSettings.Single_Playlist)
-        {
-            playlistName += "VXMusic";
-        }
-
+        
+        var playlistName = GetPlaylistName();
+        
         var existingPlaylist = SpotifyPlaylistManager.GetPlaylistIdByNameIfExists(playlistName, playlists);
 
         if (existingPlaylist == null)
@@ -198,4 +175,39 @@ public class VXMusicActions
             await SpotifyPlaylistManager.AddTrackToPlaylist(existingPlaylist, playlistAddItemsRequest);
         }
     }
+
+    private static string GetPlaylistName()
+    {
+        Logger.LogTrace($"Getting playlist name..");
+        
+        var playlistName = "";
+        
+        var playlistSaveSetting = VXUserSettings.Connections.GetPlaylistSaveSetting();
+        Logger.LogTrace($"Playlist Save Setting: {playlistSaveSetting}");
+
+        if (playlistSaveSetting == PlaylistSaveSettings.Date)
+        {
+            // Prefix Playlist name with dd-MM date
+            var currentDate = DateTime.Now.ToString("yy-MM-dd");
+            playlistName += $"{currentDate}";
+        }
+        else if (playlistSaveSetting == PlaylistSaveSettings.Date_and_World)
+        {
+            // Prefix Playlist name with dd-MM date
+            var currentDate = DateTime.Now.ToString("yy-MM-dd");
+            playlistName += $"{currentDate}";
+            
+            var lastKnownLocationName = App.VXMusicSession.VRChatLogParser.CurrentVrChatWorld;
+
+            if (lastKnownLocationName != null)
+                playlistName += " [" + lastKnownLocationName + "]";
+        }
+        else if(playlistSaveSetting == PlaylistSaveSettings.Single_Playlist)
+        {
+            playlistName += "VXMusic";
+        }
+
+        return playlistName;
+    }
+    
 }

@@ -33,12 +33,10 @@ public class PlaylistFileWriter
                Environment.NewLine + Environment.NewLine;
     }
 
-    public void AddTrackEntryToPlaylistFile(string currentWorldName, string textToAdd)
+    public void AddTrackEntryToPlaylistFile(string fileName, string textToAdd)
     {
-        string fileName = GetCurrentFileName(currentWorldName);
-
         // Combine the file name with the VXMusic folder path
-        string filePath = Path.Combine(_vxMusicFolder, fileName);
+        string filePath = Path.Combine(_vxMusicFolder, fileName + ".txt");
 
         // Check if the file exists and the date matches
         if (File.Exists(filePath))
@@ -76,24 +74,5 @@ public class PlaylistFileWriter
             _logger.LogWarning($"Could not read Playlist track file: {ex.Message}");
             return false;
         }
-    }
-
-    private string GetCurrentFileName(string currentWorldName)
-    {
-        string fileName = "";
-        // Get the current date in MM-dd format
-        string currentDate = DateTime.Now.ToString("dd-MM");
-        
-        // Generate the file name with MM-dd format and add location if exists
-        if (currentWorldName != null)
-        {
-            fileName = $"{currentDate} {currentWorldName}.txt";
-        }
-        else
-        {
-            fileName = $"{currentDate}.txt";
-        }
-
-        return fileName;
     }
 }
