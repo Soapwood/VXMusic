@@ -71,7 +71,7 @@ public class VXMusicActions
             App.VXMusicSession.ToastNotification.SendNotification(NotificationLevel.Warning,"Oops, couldn't get that.",
                 "Tech Tip: Have you tried turning up your Media Volume?", 5);
             if(App.VXMusicSession.NotificationSettings.IsVRChatNotificationServiceEnabled)
-                App.VXMusicSession.VrChatNotification.SendNotificationAsync(NotificationLevel.Warning, $"Couldn't catch that!\n", "Try turning up World Volume.", 3000);
+                App.VXMusicSession.VrChatNotification.SendNotificationAsync(NotificationLevel.Warning, $"Couldn't catch that! ", "Try turning up World Volume.", 3000);
         }
         else if (result.Status == Status.RecordingError)
         {
@@ -92,15 +92,13 @@ public class VXMusicActions
                 $"{result.Result.Album} ({result.Result.ReleaseDate})", 8, result.Result.AlbumArt);
             
             if(App.VXMusicSession.NotificationSettings.IsVRChatNotificationServiceEnabled)
-                App.VXMusicSession.VrChatNotification.SendNotificationAsync(NotificationLevel.Success,$"{result.Result.Artist} - {result.Result.Title}\n",
-                    $"{result.Result.Album} ({result.Result.ReleaseDate})", 5000);
+                App.VXMusicSession.VrChatNotification.SendNotificationAsync(NotificationLevel.Success,$"{result.Result.Artist} - {result.Result.Title} ",
+                    $"[{result.Result.Album}] ({result.Result.ReleaseDate})", 5000);
         }
         
         if(App.VXMusicSession.NotificationSettings.IsVRChatNotificationServiceEnabled)
             App.VXMusicSession.VrChatNotification.SendChatboxTypingIndicator(false);
 
-        
-        
         if (result.Result != null && SpotifyAuthentication.CurrentConnectionState == SpotifyConnectionState.Connected)
         {
             ReportTrackToSpotifyPlaylist(result);

@@ -54,7 +54,6 @@ public class VrChatOscNotificationClient : INotificationClient
 
     public void SendNotification(NotificationLevel level, string title, string content, int timeout)
     {
-        // TODO Use Timeout to start and end ChatBox message?
         if (IsConnectedToVrChatRuntime)
         {
             Instance.SendChatbox(title + content, true); // Bypass keyboard and sends string to Chatbox
@@ -63,7 +62,6 @@ public class VrChatOscNotificationClient : INotificationClient
     
     public async Task SendNotificationAsync(NotificationLevel level, string title, string content, int timeout)
     {
-        // TODO Use Timeout to start and end ChatBox message?
         if (IsConnectedToVrChatRuntime)
         {
             Instance.SendChatbox(title + content, true); // Bypass keyboard and sends string to Chatbox
