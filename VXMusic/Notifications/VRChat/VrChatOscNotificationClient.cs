@@ -48,23 +48,29 @@ public class VrChatOscNotificationClient : INotificationClient
     
     public void SendNotification(NotificationLevel level, string title, string content, int timeout, string image)
     {
+        var chatBoxTextFormatted = string.IsNullOrWhiteSpace(content) ? title : title + "\n" + content;
+        
         if(IsConnectedToVrChatRuntime)
-            Instance.SendChatbox(title + content, true); // Bypass keyboard and sends string to Chatbox
+            Instance.SendChatbox(chatBoxTextFormatted, true); // Bypass keyboard and sends string to Chatbox
     }
 
     public void SendNotification(NotificationLevel level, string title, string content, int timeout)
     {
+        var chatBoxTextFormatted = string.IsNullOrWhiteSpace(content) ? title : title + "\n" + content;
+        
         if (IsConnectedToVrChatRuntime)
         {
-            Instance.SendChatbox(title + content, true); // Bypass keyboard and sends string to Chatbox
+            Instance.SendChatbox(chatBoxTextFormatted, true); // Bypass keyboard and sends string to Chatbox
         }
     }
     
     public async Task SendNotificationAsync(NotificationLevel level, string title, string content, int timeout)
     {
+        var chatBoxTextFormatted = string.IsNullOrWhiteSpace(content) ? title : title + "\n" + content;
+        
         if (IsConnectedToVrChatRuntime)
         {
-            Instance.SendChatbox(title + content, true); // Bypass keyboard and sends string to Chatbox
+            Instance.SendChatbox(chatBoxTextFormatted, true); // Bypass keyboard and sends string to Chatbox
             await Task.Delay(timeout);
             Instance.SendChatbox("", true); // Bypass keyboard and sends string to Chatbox
         }
