@@ -29,6 +29,7 @@ namespace VXMusicDesktop.MVVM.View
 
             VXMusicSession.SteamVrNotificationEnabled += OnSteamVrNotificationEnabled;
             VXMusicSession.XsOverlayNotificationEnabled += OnXsOverlayNotificationEnabled;
+            VXMusicSession.OvrToolkitNotificationEnabled += OnOvrToolkitNotificationEnabled;
         }
 
         private void OnThemeChanged(object sender, EventArgs e)
@@ -92,6 +93,12 @@ namespace VXMusicDesktop.MVVM.View
         }
 
         protected virtual void OnXsOverlayNotificationEnabled(object sender, EventArgs e)
+        {
+            //EnableXsOverlayNotificationButton.Content = "Connected!";
+            //EnableSteamVRNotificationButton.Content = "Use";
+        }
+        
+        protected virtual void OnOvrToolkitNotificationEnabled(object sender, EventArgs e)
         {
             //EnableXsOverlayNotificationButton.Content = "Connected!";
             //EnableSteamVRNotificationButton.Content = "Use";

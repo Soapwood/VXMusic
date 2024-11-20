@@ -19,6 +19,7 @@ using VXMusic.Overlay;
 using VXMusic;
 using System.Diagnostics;
 using System.Reflection;
+using VXMusic.OVRToolkit;
 using VXMusic.VRChat;
 using VXMusicDesktop.Core;
 using VXMusicDesktop.Update;
@@ -122,6 +123,8 @@ namespace VXMusicDesktop
 #endif
 
             VXMusicSession.NotificationClient.SendNotification(NotificationLevel.Info, "Welcome to VXMusic!", "", 5);
+            
+            
         }
 
         public static void ConfigureServices()
@@ -156,6 +159,7 @@ namespace VXMusicDesktop
             services.AddSingleton<XsOverlayNotificationClient>();
             services.AddSingleton<SteamVRNotificationClient>();
             services.AddSingleton<VrChatOscNotificationClient>();
+            services.AddSingleton<OvrToolkitNotificationClient>();
             services.AddSingleton<SteamVROverlayAppsInterface>();
             
             services.AddSingleton<VXMusicUpdateHandler>();

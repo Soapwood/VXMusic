@@ -9,6 +9,7 @@ using VXMusic.FileWriter;
 using VXMusic.Lastfm.Scrobbling;
 using VXMusic.LogParser.VRChat;
 using VXMusic.Overlay;
+using VXMusic.OVRToolkit;
 using VXMusic.Recognition.AudD;
 using VXMusic.Recognition.Shazam;
 using VXMusic.Spotify.Authentication;
@@ -55,6 +56,7 @@ public class VXMusicSession
 
     public static event EventHandler SteamVrNotificationEnabled;
     public static event EventHandler XsOverlayNotificationEnabled;
+    public static event EventHandler OvrToolkitNotificationEnabled;
 
     public VXMusicSession(RecognitionSettings recognitionSettings, ConnectionsSettings connectionsSettings, OverlaySettings overlaySettings)
     {
@@ -127,6 +129,9 @@ public class VXMusicSession
             case NotificationService.XSOverlay:
                 NotificationClient = App.ServiceProvider.GetRequiredService<XsOverlayNotificationClient>();
                 return;
+            case NotificationService.OVRToolkit:
+                NotificationClient = App.ServiceProvider.GetRequiredService<OvrToolkitNotificationClient>();
+                return;
             default:
                 Trace.WriteLine("Notification service type not found!");
                 return;
@@ -151,6 +156,11 @@ public class VXMusicSession
     public static void RaiseXsOverlayNotificationEnabled()
     {
         XsOverlayNotificationEnabled?.Invoke(null, EventArgs.Empty);
+    }
+    
+    public static void RaiseOvrToolkitNotificationEnabled()
+    {
+        OvrToolkitNotificationEnabled?.Invoke(null, EventArgs.Empty);
     }
 }
 
@@ -239,6 +249,8 @@ public class NotificationSettings
                 return App.ServiceProvider.GetRequiredService<SteamVRNotificationClient>();
             case NotificationService.XSOverlay:
                 return App.ServiceProvider.GetRequiredService<XsOverlayNotificationClient>();
+            case NotificationService.OVRToolkit:
+                return App.ServiceProvider.GetRequiredService<OvrToolkitNotificationClient>();
             default:
                 return null;
         }

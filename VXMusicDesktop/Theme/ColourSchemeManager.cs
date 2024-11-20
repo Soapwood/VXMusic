@@ -34,8 +34,10 @@ namespace VXMusicDesktop.Theme
         
         public static readonly BitmapImage SpotifyLogo = new BitmapImage(new Uri($"pack://application:,,,/Images/SpotifyLogo.png", UriKind.Absolute));
         public static readonly BitmapImage LastfmLogo = new BitmapImage(new Uri($"pack://application:,,,/Images/LastfmLogo.png", UriKind.Absolute));
+        public static readonly BitmapImage TidalLogo = new BitmapImage(new Uri($"pack://application:,,,/Images/TidalLogo.png", UriKind.Absolute));
         
         public static readonly BitmapImage XSOverlayLogo = new BitmapImage(new Uri($"pack://application:,,,/Images/XSOverlayLogo.jpg", UriKind.Absolute));
+        public static readonly BitmapImage OVRToolkitLogo = new BitmapImage(new Uri($"pack://application:,,,/Images/OVRToolkitLogo.jpg", UriKind.Absolute));
         public static readonly BitmapImage SteamVRLogo = new BitmapImage(new Uri($"pack://application:,,,/Images/SteamVRLogo.png", UriKind.Absolute));
         public static readonly BitmapImage VRChatLogoBlack = new BitmapImage(new Uri($"pack://application:,,,/Images/VRChatLogoBlack.png", UriKind.Absolute));
         
@@ -73,6 +75,7 @@ namespace VXMusicDesktop.Theme
         public static readonly string DefaultDisableGrey = "#708090";
         
         public static readonly string SpotifyColour = "#1DB954";
+        public static readonly string TidalColour = "#000000";
         public static readonly string LastFmColour = "#C3000D";
 
         public static readonly string TransparentColour = "#000000";
@@ -100,6 +103,7 @@ namespace VXMusicDesktop.Theme
         public static SolidColorBrush DisabledRed { get; set; }
         public static SolidColorBrush DisabledGrey { get; set; }
         public static SolidColorBrush SpotifyGreen { get; set; } = new SolidColorBrush(FromHex(SpotifyColour));
+        public static SolidColorBrush TidalBlack { get; set; } = new SolidColorBrush(FromHex(TidalColour));
         public static SolidColorBrush LastFmRed { get; set; } = new SolidColorBrush(FromHex(LastFmColour));
         public static SolidColorBrush Transparent { get; set; }
         public static BitmapImage CloseImage { get; set; }

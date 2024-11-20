@@ -28,6 +28,7 @@ public class SharedViewModel : INotifyPropertyChanged
     // Notification Shared Fields
     private bool _isSteamVrNotificationServiceEnabled;
     private bool _isXsOverlayNotificationServiceEnabled;
+    private bool _isOvrToolkitNotificationServiceEnabled;
     private bool _isVRChatNotificationServiceEnabled;
 
     // Connection Shared Fields
@@ -81,6 +82,16 @@ public class SharedViewModel : INotifyPropertyChanged
         {
             _isXsOverlayNotificationServiceEnabled = value;
             OnPropertyChanged(nameof(IsXsOverlayNotificationServiceEnabled));
+        }
+    }
+    
+    public bool IsOvrToolkitNotificationServiceEnabled
+    {
+        get { return _isOvrToolkitNotificationServiceEnabled; }
+        set
+        {
+            _isOvrToolkitNotificationServiceEnabled = value;
+            OnPropertyChanged(nameof(IsOvrToolkitNotificationServiceEnabled));
         }
     }
     

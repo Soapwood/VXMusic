@@ -9,7 +9,7 @@
     <PackageIcon>VXLogo.png</PackageIcon>
     <ApplicationIcon>Images\VXLogoIcon.ico</ApplicationIcon>
     <RunPostBuildEvent>Always</RunPostBuildEvent>
-    <Version>0.6.6.3</Version>
+    <Version>0.6.6.4</Version>
     <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
     <Title>VXMusicDesktop</Title>
     <Authors>VirtualXtensions</Authors>
@@ -184,6 +184,14 @@
     </Resource>
     <None Remove="Images\XLogoWhite.png" />
     <Resource Include="Images\XLogoWhite.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <None Remove="Images\TidalLogo.png" />
+    <Resource Include="Images\TidalLogo.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <None Remove="Images\OVRToolkitLogo.jpg" />
+    <Resource Include="Images\OVRToolkitLogo.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
