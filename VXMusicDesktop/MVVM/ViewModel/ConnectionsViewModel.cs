@@ -1,12 +1,17 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Threading.Tasks;
+using System.Windows.Forms.Design;
 using System.Windows.Input;
 using SpotifyAPI.Web;
 using VXMusic.Lastfm.Authentication;
 using VXMusic.Spotify;
 using VXMusic.Spotify.Authentication;
+using VXMusic.Tidal;
+using VXMusic.Tidal.Authentication;
 using VXMusicDesktop.Core;
+using SpotifyConnectionState = VXMusic.Spotify.Authentication.SpotifyConnectionState;
+using SpotifyConnectionStateExtensions = VXMusic.Spotify.Authentication.SpotifyConnectionStateExtensions;
 
 namespace VXMusicDesktop.MVVM.ViewModel
 {
@@ -18,10 +23,13 @@ namespace VXMusicDesktop.MVVM.ViewModel
         public event PropertyChangedEventHandler PropertyChanged;
         
         private RelayCommand linkSpotifyButtonClick;
+        private RelayCommand linkTidalButtonClick;
         private RelayCommand linkLastfmButtonClick;
 
         private bool _shouldSpotifyLinkButtonBeShown;
         private string _spotifyLinkButtonText;
+        
+        private string _tidalLinkButtonText;
 
         private string _lastFmUsername = "Username";
         private string _lastFmPassword = "Password";
@@ -30,6 +38,7 @@ namespace VXMusicDesktop.MVVM.ViewModel
         private string _lastFmLinkButtonText;
 
         public ICommand LinkSpotifyButtonClick => linkSpotifyButtonClick ??= new RelayCommand(PerformLinkSpotifyButtonClick);
+        public ICommand LinkTidalButtonClick => linkTidalButtonClick ??= new RelayCommand(PerformLinkTidalButtonClick);
         public ICommand LinkLastfmButtonClick => linkLastfmButtonClick ??= new RelayCommand(PerformLastfmLogin);
         
         private bool _isLastFmConnected = false;
@@ -128,6 +137,19 @@ namespace VXMusicDesktop.MVVM.ViewModel
             }
         }
 
+        public string TidalLinkButtonText 
+        {
+            get { return TidalConnectionStateExtensions.ToDisplayString(TidalAuthentication.CurrentConnectionState); }
+            set
+            {
+                if (_tidalLinkButtonText != value)
+                {
+                    _tidalLinkButtonText = value;
+                    OnPropertyChanged(nameof(TidalLinkButtonText));
+                }
+            }
+        }
+
         public string LastFmLinkButtonText
         {
             get { return _lastFmLinkButtonText; }
@@ -154,11 +176,32 @@ namespace VXMusicDesktop.MVVM.ViewModel
                 SharedViewModel.IsSpotifyConnected = true;
             }
         }
-        
+
         public async static Task<PrivateUser> LinkSpotify()
         {
             var spotify = await SpotifyClientBuilder.CreateSpotifyClient();
             return await spotify.UserProfile.Current();
+        }
+        
+        private void PerformLinkTidalButtonClick(object commandParameter)
+        {
+            if (TidalAuthentication.CurrentConnectionState == TidalConnectionState.Connected)
+                return;
+
+            var response = LinkTidal();
+
+            if (response != null)
+            {
+                TidalAuthentication.RaiseTidalLoggingIn();
+                SharedViewModel.IsTidalConnected = true;
+            }
+        }
+        
+        public async static Task<PrivateUser> LinkTidal()
+        {
+            var tidal = await TidalClientBuilder.CreateTidalClient();
+            //return await tidal.UserProfile.Current();
+            return null;
         }
 
         private async void PerformLastfmLogin(object commandParameter)

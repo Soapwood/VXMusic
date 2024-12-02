@@ -96,6 +96,12 @@ namespace VXMusicDesktop
                     ClientId = configuration["Connections:Spotify:ClientId"],
                     PlaylistSavingSaveSetting = VXUserSettings.Connections.GetPlaylistSaveSetting()
                 },
+                
+                TidalSettings = new TidalSettings()
+                {
+                    ClientId = configuration["Connections:Tidal:ClientId"],
+                    PlaylistSavingSaveSetting = VXUserSettings.Connections.GetPlaylistSaveSetting()
+                },
 
                 LastfmSettings = new LastfmSettings()
                 {

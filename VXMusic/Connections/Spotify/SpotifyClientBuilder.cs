@@ -3,12 +3,12 @@ using SpotifyAPI.Web;
 using SpotifyAPI.Web.Auth;
 using VXMusic.Spotify.Authentication;
 using VXMusic.Spotify.Model;
-
-namespace VXMusic.Spotify;
-
 using System.Net;
 using System.Text;
 using Newtonsoft.Json;
+
+namespace VXMusic.Spotify;
+
 
 public class SpotifyClientBuilder
 {
@@ -16,9 +16,7 @@ public class SpotifyClientBuilder
         new Lazy<Task<SpotifyClient>>(() => CreateSpotifyClient());
 
     public static Task<SpotifyClient> Instance => _spotifyClient.Value;
-
-    private readonly string _spotifyAccountEndpoint = "https://accounts.spotify.com/api/token";
-
+    
     public static async Task<SpotifyClient> CreateSpotifyClient()
     {
         await SpotifyAuthentication.GetSpotifyUserAuthentication();

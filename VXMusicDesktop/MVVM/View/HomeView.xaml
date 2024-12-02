@@ -263,6 +263,8 @@
                                 <RowDefinition />
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition />
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto" />
@@ -275,13 +277,13 @@
                                        Text="SteamVR"
                                        Foreground="{StaticResource TextBasic}"
                                        FontSize="12"
-                                       Margin="10,20,0,0"
+                                       Margin="10,12,0,0"
                                        HorizontalAlignment="Left"
                                        VerticalAlignment="Center"/>
                                 <Ellipse Grid.Row="1" Grid.Column="1"
                                          Width="10"
                                          Height="10"
-                                         Margin="10,20,0,0"
+                                         Margin="10,12,0,0"
                                          HorizontalAlignment="Left"
                                          VerticalAlignment="Center">
                                     <Ellipse.Fill>
@@ -294,13 +296,13 @@
                                            Text="XSOverlay"
                                            Foreground="{StaticResource TextBasic}"
                                            FontSize="12"
-                                           Margin="10,20,0,0"
+                                           Margin="10,12,0,0"
                                            HorizontalAlignment="Left"
                                            VerticalAlignment="Center"/>
                                 <Ellipse Grid.Row="2" Grid.Column="1" 
                                          Width="10"
                                          Height="10"
-                                         Margin="10,20,0,0"
+                                         Margin="10,12,0,0"
                                          HorizontalAlignment="Left"
                                          VerticalAlignment="Center">
                                     <Ellipse.Fill>
@@ -308,27 +310,46 @@
                                             Color="{Binding SharedViewModel.IsXsOverlayNotificationServiceEnabled, Converter={StaticResource BooleanToColorConverter}}" />
                                     </Ellipse.Fill>
                                 </Ellipse>
+                            
+                            <TextBlock Grid.Row="3" Grid.Column="0" x:Name="Service4NotificationIntegrationsBoxHeaderText"
+                                       Text="OVR Toolkit"
+                                       Foreground="{StaticResource TextBasic}"
+                                       FontSize="12"
+                                       Margin="10,12,0,0"
+                                       HorizontalAlignment="Left"
+                                       VerticalAlignment="Center" />
+                            <Ellipse Grid.Row="3" Grid.Column="1" 
+                                     Width="10"
+                                     Height="10"
+                                     Margin="10,12,0,0"
+                                     HorizontalAlignment="Left"
+                                     VerticalAlignment="Center">
+                                <Ellipse.Fill>
+                                    <SolidColorBrush
+                                        Color="{Binding SharedViewModel.IsOvrToolkitNotificationServiceEnabled, Converter={StaticResource BooleanToColorConverter}}" />
+                                </Ellipse.Fill>
+                            </Ellipse>
 
-                                <TextBlock Grid.Row="3" Grid.Column="0" x:Name="Service3NotificationIntegrationsBoxHeaderText"
-                                           Text="VRChat"
-                                           Foreground="{StaticResource TextBasic}"
-                                           FontSize="12"
-                                           Margin="10,20,0,0"
-                                           HorizontalAlignment="Left"
-                                           VerticalAlignment="Center" />
-                                <Ellipse Grid.Row="3" Grid.Column="1" 
-                                         Width="10"
-                                         Height="10"
-                                         Margin="10,20,0,0"
-                                         HorizontalAlignment="Left"
-                                         VerticalAlignment="Center">
-                                    <Ellipse.Fill>
-                                        <SolidColorBrush
-                                            Color="{Binding SharedViewModel.IsVRChatNotificationServiceEnabled, Converter={StaticResource BooleanToColorConverter}}" />
-                                    </Ellipse.Fill>
-                                </Ellipse>
-                        </Grid>
-                    </StackPanel>
+                            <TextBlock Grid.Row="4" Grid.Column="0" x:Name="Service3NotificationIntegrationsBoxHeaderText"
+                                       Text="VRChat"
+                                       Foreground="{StaticResource TextBasic}"
+                                       FontSize="12"
+                                       Margin="10,12,0,0"
+                                       HorizontalAlignment="Left"
+                                       VerticalAlignment="Center" />
+                            <Ellipse Grid.Row="4" Grid.Column="1" 
+                                     Width="10"
+                                     Height="10"
+                                     Margin="10,12,0,0"
+                                     HorizontalAlignment="Left"
+                                     VerticalAlignment="Center">
+                                <Ellipse.Fill>
+                                    <SolidColorBrush
+                                        Color="{Binding SharedViewModel.IsVRChatNotificationServiceEnabled, Converter={StaticResource BooleanToColorConverter}}" />
+                                </Ellipse.Fill>
+                            </Ellipse>
+                    </Grid>
+                </StackPanel>
 
                 </Border>
 

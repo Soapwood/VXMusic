@@ -33,6 +33,7 @@ public class SharedViewModel : INotifyPropertyChanged
 
     // Connection Shared Fields
     private bool _isSpotifyConnected;
+    private bool _isTidalConnected;
     private bool _isLastFmConnected;
     
     // Game Client Shared Fields
@@ -112,6 +113,16 @@ public class SharedViewModel : INotifyPropertyChanged
         {
             _isSpotifyConnected = value;
             OnPropertyChanged(nameof(IsSpotifyConnected));
+        }
+    }
+    
+    public bool IsTidalConnected
+    {
+        get { return _isTidalConnected; }
+        set
+        {
+            _isTidalConnected = value;
+            OnPropertyChanged(nameof(IsTidalConnected));
         }
     }
     

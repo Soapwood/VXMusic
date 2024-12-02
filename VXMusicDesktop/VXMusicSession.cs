@@ -13,6 +13,7 @@ using VXMusic.OVRToolkit;
 using VXMusic.Recognition.AudD;
 using VXMusic.Recognition.Shazam;
 using VXMusic.Spotify.Authentication;
+using VXMusic.Tidal.Authentication;
 using VXMusic.VRChat;
 using VXMusicDesktop.Core;
 using VXMusicDesktop.Theme;
@@ -94,6 +95,10 @@ public class VXMusicSession
         SpotifyAuthentication.CredentialsPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "VirtualXtensions", "VXMusic", "LocalAuth", "Spotify");
         SpotifyAuthentication.CredentialsFilePath = Path.Combine(SpotifyAuthentication.CredentialsPath, "credentials.json");
         SpotifyAuthentication.ClientId = ConnectionsSettings.SpotifySettings.ClientId;
+        
+        TidalAuthentication.CredentialsPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "VirtualXtensions", "VXMusic", "LocalAuth", "Tidal");
+        TidalAuthentication.CredentialsFilePath = Path.Combine(TidalAuthentication.CredentialsPath, "credentials_t.json");
+        TidalAuthentication.ClientId = ConnectionsSettings.TidalSettings.ClientId;
 
         if (OverlaySettings.LaunchOverlayOnStartup)
             App.VXMOverlayProcess = VXMusicOverlayInterface.LaunchVXMOverlayRuntime(OverlaySettings.RuntimePath);
@@ -220,6 +225,7 @@ public class ConnectionsSettings
 {
     // App Settings
     public SpotifySettings SpotifySettings { get; set; }
+    public TidalSettings TidalSettings { get; set; }
     public LastfmSettings LastfmSettings { get; set; }
     public bool IsLastfmConnected { get; set; }
     public bool IsVrChatConnected { get; set; }
@@ -282,6 +288,12 @@ public class AudDSettings
 }
 
 public class SpotifySettings
+{
+    public required string ClientId { get; set; }
+    public PlaylistSaveSettings PlaylistSavingSaveSetting { get; set; }
+}
+
+public class TidalSettings
 {
     public required string ClientId { get; set; }
     public PlaylistSaveSettings PlaylistSavingSaveSetting { get; set; }
