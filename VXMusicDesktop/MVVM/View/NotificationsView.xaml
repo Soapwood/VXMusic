@@ -279,20 +279,21 @@
                                        Height="30"
                                                       Source="{StaticResource OVRToolkitLogo}"
                                                       RenderOptions.BitmapScalingMode="HighQuality"
+                                                      Margin="18,0,0,0"
                                                       VerticalAlignment="Center"
                                                       HorizontalAlignment="Center" />
                                     <TextBlock Grid.Column="1"
                                                x:Name="NotificationService1ButtonHeaderText"
-                                               Text="Enable OVR Toolkit"
+                                               Text="Enable OVRToolkit"
                                                VerticalAlignment="Center"
                                                Foreground="{StaticResource TextBasic}"
                                                FontSize="18"
                                                HorizontalAlignment="Center"
-                                               Margin="10,0,0,0" />
+                                               Margin="23,0,0,0" />
                                     <Ellipse Grid.Column="2"
                                              Width="10" 
                                              Height="10"
-                                             Margin="10,0,0,0"
+                                             Margin="0,0,3,0"
                                              HorizontalAlignment="Center"
                                              VerticalAlignment="Center">
                                         <Ellipse.Fill>
