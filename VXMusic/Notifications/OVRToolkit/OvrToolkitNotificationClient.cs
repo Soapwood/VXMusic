@@ -14,7 +14,7 @@ public class OvrToolkitNotificationClient : INotificationClient
 
     private static readonly Uri OvrToolkitServerUrl = new Uri("ws://127.0.0.1:11450/api");
 
-    private readonly ClientWebSocket _webSocket;
+    private ClientWebSocket _webSocket;
     
     public static bool IsInitialised;
 
