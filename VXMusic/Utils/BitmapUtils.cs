@@ -55,4 +55,29 @@ public class BitmapUtils
             notification_icon.m_nBytesPerPixel = 4;
             return notification_icon;
         }
+        
+        public static byte[] ConvertPngToByteArray(string filePath)
+        {
+            using (Bitmap bitmap = new Bitmap(filePath))
+            using (MemoryStream memoryStream = new MemoryStream())
+            {
+                bitmap.Save(memoryStream, ImageFormat.Png);
+                return memoryStream.ToArray();
+            }
+        }
+        
+        public static byte[] ConvertBase64ToBitmapByteArray(string base64String)
+        {
+            // Convert Base64 to byte array
+            return Convert.FromBase64String(base64String);
+        }
+
+        static byte[] ConvertBitmapToByteArray(Bitmap bitmap, ImageFormat format)
+        {
+            using (MemoryStream ms = new MemoryStream())
+            {
+                bitmap.Save(ms, format);
+                return ms.ToArray();
+            }
+        }
 }

@@ -9,7 +9,7 @@
     <PackageIcon>VXLogo.png</PackageIcon>
     <ApplicationIcon>Images\VXLogoIcon.ico</ApplicationIcon>
     <RunPostBuildEvent>Always</RunPostBuildEvent>
-    <Version>0.6.6.4</Version>
+    <Version>0.6.7.0</Version>
     <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
     <Title>VXMusicDesktop</Title>
     <Authors>VirtualXtensions</Authors>
@@ -194,6 +194,9 @@
     <Resource Include="Images\OVRToolkitLogo.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
+    <Content Include="Overlay\Images\VXLogo.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>

@@ -56,9 +56,9 @@ public class SpotifyPlaylistManager
         if (SpotifyClientBuilder.Instance == null)
             throw new Exception("Not authenticated with Spotify API."); // TODO Handle this, and output to UI
 
-        foreach(var playlist in playlists)
+        foreach(var playlist in playlists.Where(pl => pl != null))
         {
-            if(playlist.Name == playlistName)
+            if (playlist.Name == playlistName)
             {
                 return playlist.Id.ToString();
             }

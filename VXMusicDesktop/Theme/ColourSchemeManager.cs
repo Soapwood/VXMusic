@@ -27,6 +27,7 @@ namespace VXMusicDesktop.Theme
     public class UIImageManager
     {
         public static readonly BitmapImage VXLogoTinyButton = new BitmapImage(new Uri($"pack://application:,,,/Images/VXLogoTinyButton.png", UriKind.Absolute));
+        public static readonly BitmapImage VXLogo = new BitmapImage(new Uri($"pack://application:,,,/Images/VXLogo.png", UriKind.Absolute));
 
         public static readonly BitmapImage ShazamLogo = new BitmapImage(new Uri($"pack://application:,,,/Images/ShazamLogo.png", UriKind.Absolute));
         public static readonly BitmapImage AudDLogo = new BitmapImage(new Uri($"pack://application:,,,/Images/AudDLogo.jpg", UriKind.Absolute));

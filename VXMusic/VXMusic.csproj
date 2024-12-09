@@ -56,5 +56,11 @@
     <ItemGroup>
       <Folder Include="Games\VRChat\VRChatOSCLib\" />
     </ItemGroup>
+
+    <ItemGroup>
+      <Resource Include="Images\VXLogo.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Resource>
+    </ItemGroup>
     
 </Project>

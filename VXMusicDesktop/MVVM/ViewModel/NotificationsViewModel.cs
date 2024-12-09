@@ -41,7 +41,9 @@ namespace VXMusicDesktop.MVVM.ViewModel
         private bool _isVRChatNotificationServiceEnabled;
 
         public ICommand NotificationViewLoaded => notificationViewLoaded ??= new RelayCommand(OnNotificationViewLoaded);
-
+        
+        private RelayCommand _testNotificationClick;
+        public ICommand TestNotificationCommand => _testNotificationClick ??= new RelayCommand(FireTestNotification);
 
         private bool _isNotificationServiceReady = true;
 
@@ -61,6 +63,11 @@ namespace VXMusicDesktop.MVVM.ViewModel
             SharedViewModel.IsVRChatNotificationServiceEnabled = App.VXMusicSession.NotificationSettings.IsVRChatNotificationServiceEnabled;
 
             ProcessNotificationServiceState();
+        }
+        
+        private void FireTestNotification(object commandParameter)
+        {
+            VXMusicSession.NotificationClient.SendNotification(NotificationLevel.Success, "VXMusic", "Howdy! Test Notification.", 5);
         }
 
         public bool IsNotificationServiceReady
