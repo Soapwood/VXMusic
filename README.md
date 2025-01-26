@@ -2,7 +2,7 @@
 <img src=".github/branding/VXMusicGitBannerNoLogoTransparentWhite.png" alt="Alt Text" style="max-width: 100%">
 
 [![Discord](https://img.icons8.com/?size=100&id=M725CLW4L7wE&format=png&color=000000)](https://t.co/Z2eSKfYpfs)
-[![BlueSky](https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/bluesky-icon.png)](https://bsky.app/profile/soapwood.net)
+[![BlueSky](https://img.icons8.com/?size=100&id=3ovMFy5JDSWq&format=png&color=000000)](https://bsky.app/profile/soapwood.net)
 
 [![Latest Stable Release](https://img.shields.io/github/v/release/Soapwood/VXMusic?style=for-the-badge&color=dda0dd)](https://github.com/Soapwood/VXMusic/releases/latest)
 
