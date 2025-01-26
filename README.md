@@ -134,7 +134,7 @@ See the instructions below on how to get your own API keys.
 7. If the light next to AudD.io turns green, you have successfully set up your API Key! ✔️
 
 ## Notifications
-VXMusic supports two VR notification services that allow you to receive HUD toast notifications while in VR - **SteamVR** and **XSOverlay**.
+VXMusic supports two VR notification services that allow you to receive HUD toast notifications while in VR - **SteamVR**, **XSOverlay** and **OVR Toolkit**.
 
 To choose which service you would like to use, simply click on your desired service from the Notifications tab.
 
