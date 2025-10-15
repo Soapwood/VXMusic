@@ -16,7 +16,7 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
 
     - name: Set up .NET
       uses: actions/setup-dotnet@v3
@@ -85,9 +85,14 @@ jobs:
     - name: Publish VXMusic
       run: dotnet publish ${{ github.workspace }}/VXMusicDesktop/VXMusicDesktop.csproj -r win-x64 -c Release -o ${{ github.workspace }}/Publish/x64
 
+    - name: Install NSIS
+      uses: negrutiu/nsis-install@v1
+      with:
+        nsis_branch: official
+
     - name: Make NSIS Installer
       id: make_nsis_installer
-      uses: joncloud/makensis-action@v4.1
+      uses: joncloud/makensis-action@v5.0
       with:
         script-file: "${{ github.workspace }}/Installer/VXMusic.nsi"
 
