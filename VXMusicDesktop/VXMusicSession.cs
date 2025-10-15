@@ -270,10 +270,11 @@ public class NotificationSettings
 
 public class ShazamSettings
 {
-    public required string ClientId { get; set; }
-    public required string ClientSecret { get; set; }
-    public required string X_RapidAPI_Key { get; set; }
-    public required string X_RapidAPI_Host { get; set; }
+    // Legacy API fields - kept for backward compatibility but not used in keyless mode
+    public string? ClientId { get; set; }
+    public string? ClientSecret { get; set; }
+    public string? X_RapidAPI_Key { get; set; }
+    public string? X_RapidAPI_Host { get; set; }
 
     public bool IsByoApiEnabled;
     public string? ByoApiKey;

@@ -61,13 +61,9 @@ namespace VXMusicDesktop
             MainWindowRadioButtonOverlay.Foreground = ColourSchemeManager.TextBasic;
             MainWindowRadioButtonAbout.Foreground = ColourSchemeManager.TextBasic;
 
-            MainWindowRadioButtonHome.Background = (bool)MainWindowRadioButtonHome.IsChecked ? ColourSchemeManager.SecondaryColour : ColourSchemeManager.PrimaryColour;
-            MainWindowRadioButtonRecognition.Background = (bool)MainWindowRadioButtonRecognition.IsChecked ? ColourSchemeManager.SecondaryColour : ColourSchemeManager.PrimaryColour;
-            MainWindowRadioButtonNotifications.Background = (bool)MainWindowRadioButtonNotifications.IsChecked ? ColourSchemeManager.SecondaryColour : ColourSchemeManager.PrimaryColour;
-            MainWindowRadioButtonConnections.Background = (bool)MainWindowRadioButtonConnections.IsChecked ? ColourSchemeManager.SecondaryColour : ColourSchemeManager.PrimaryColour;
-            MainWindowRadioButtonOverlay.Background = (bool)MainWindowRadioButtonOverlay.IsChecked ? ColourSchemeManager.SecondaryColour : ColourSchemeManager.PrimaryColour;
-            MainWindowRadioButtonAbout.Background = (bool)MainWindowRadioButtonAbout.IsChecked ? ColourSchemeManager.SecondaryColour : ColourSchemeManager.PrimaryColour;
-
+            // Let the template handle background styling through triggers instead of setting directly
+            // This allows hover effects to work properly
+            
             DesktopThemeComboBoxHintText.Foreground = ColourSchemeManager.TextBasic;
             DesktopThemeComboBoxHintText.Visibility = Visibility.Visible;
             DesktopThemeComboBox.Foreground = ColourSchemeManager.TextBasic;
@@ -80,12 +76,8 @@ namespace VXMusicDesktop
 
         private void OnMainWindowMenuOptionChanged(object sender, EventArgs e)
         {
-            MainWindowRadioButtonHome.Background = (bool)MainWindowRadioButtonHome.IsChecked ? ColourSchemeManager.SecondaryColour : ColourSchemeManager.PrimaryColour;
-            MainWindowRadioButtonRecognition.Background = (bool)MainWindowRadioButtonRecognition.IsChecked ? ColourSchemeManager.SecondaryColour : ColourSchemeManager.PrimaryColour;
-            MainWindowRadioButtonNotifications.Background = (bool)MainWindowRadioButtonNotifications.IsChecked ? ColourSchemeManager.SecondaryColour : ColourSchemeManager.PrimaryColour;
-            MainWindowRadioButtonConnections.Background = (bool)MainWindowRadioButtonConnections.IsChecked ? ColourSchemeManager.SecondaryColour : ColourSchemeManager.PrimaryColour;
-            MainWindowRadioButtonOverlay.Background = (bool)MainWindowRadioButtonOverlay.IsChecked ? ColourSchemeManager.SecondaryColour : ColourSchemeManager.PrimaryColour;
-            MainWindowRadioButtonAbout.Background = (bool)MainWindowRadioButtonAbout.IsChecked ? ColourSchemeManager.SecondaryColour : ColourSchemeManager.PrimaryColour;
+            // Let the template handle background styling through triggers instead of setting directly
+            // This allows hover effects to work properly after tab changes
         }
         
         public void FocusMainWindow()

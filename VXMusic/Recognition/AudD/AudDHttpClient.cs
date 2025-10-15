@@ -109,7 +109,7 @@ public class AudDHttpClient : IHttpClient
         }
     }
 
-    public async Task<AudDResponse> GetArtist(string audioFilePath)
+    public async Task<IRecognitionApiClientResponse> GetArtist(string audioFilePath)
     {
         FileInfo audioFile = new FileInfo(audioFilePath);
 
