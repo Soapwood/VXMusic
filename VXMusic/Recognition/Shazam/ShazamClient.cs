@@ -1,5 +1,6 @@
 using VXMusic.Conversion;
 using Microsoft.Extensions.Logging;
+using VXMusic.Recognition.Shazam.Keyless;
 
 namespace VXMusic.Recognition.Shazam;
 
@@ -8,22 +9,24 @@ public class ShazamClient : IRecognitionClient
     private readonly IServiceProvider _serviceProvider;
     private readonly ILogger<ShazamClient> _logger;
 
-    private readonly ShazamHttpClient _shazamHttpClient;
+    private readonly IHttpClient _httpClient;
+    private readonly bool _useKeylessMode;
 
-    public bool IsUsingInjectedApiKey;
+    public bool IsUsingInjectedApiKey { get; private set; }
+    public bool IsUsingKeylessMode => _useKeylessMode;
     
-    private readonly string DefaultShazamApiKey = "bb058b1a1cmsh9026752692f380bp1ffca1jsnc94e79c37484";
-
     public ShazamClient(IServiceProvider serviceProvider)
     {
         _serviceProvider = serviceProvider;
         _logger = _serviceProvider.GetService(typeof(ILogger<ShazamClient>)) 
             as ILogger<ShazamClient> ?? throw new ApplicationException("A logger must be created in service provider.");
         
-        _logger.LogInformation("Creating ShazamClient.");
-        _logger.LogDebug("ShazamClient is configured to use DefaultShazamApiKey");
+        _logger.LogInformation("Creating ShazamClient in keyless mode.");
+        _logger.LogDebug("ShazamClient is configured to use keyless Apple ShazamKit approach");
 
-        _shazamHttpClient = new ShazamHttpClient(DefaultShazamApiKey); 
+        _useKeylessMode = true;
+        IsUsingInjectedApiKey = false;
+        _httpClient = new ShazamKeylessHttpClient(_logger); 
     }
     
     public ShazamClient(IServiceProvider serviceProvider, string apiKey)
@@ -32,35 +35,18 @@ public class ShazamClient : IRecognitionClient
         _logger = _serviceProvider.GetService(typeof(ILogger<ShazamClient>)) 
             as ILogger<ShazamClient> ?? throw new ApplicationException("A logger must be created in service provider.");
         
-        _logger.LogInformation("Creating ShazamClient.");
+        _logger.LogInformation("Creating ShazamClient in legacy API key mode.");
         _logger.LogDebug("ShazamClient is configured to use an injected Api Key.");
 
+        _useKeylessMode = false;
         IsUsingInjectedApiKey = true;
-        _shazamHttpClient = new ShazamHttpClient(apiKey); // TODO Make factgory for ShazamAPI client
+        _httpClient = new ShazamHttpClient(apiKey); // TODO Make factory for ShazamAPI client
     }
 
-    public async Task<bool> SetByoApiKeyAndTest(string byoApikey)
-    {
-        _shazamHttpClient.SetApiKey(byoApikey);
-        return await _shazamHttpClient.TestConnection();
-    }
-
-    public void SetDefaultApiKey()
-    {
-        _shazamHttpClient.SetApiKey(DefaultShazamApiKey);
-    }
-
-    public async Task<bool> TestApiConnection()
-    {
-        _logger.LogTrace("Testing Shazam API Connection");
-        bool testConnectionResult = await _shazamHttpClient.TestConnection();
-        _logger.LogTrace(testConnectionResult ? "Connected!" : "Connection Failed.");
-        return testConnectionResult;
-    }
-    
     public async Task<IRecognitionApiClientResponse> RunRecognition()
     {
-        _logger.LogInformation("Running recognition using Shazam.");
+        var mode = _useKeylessMode ? "keyless" : "legacy API key";
+        _logger.LogInformation($"Running recognition using Shazam ({mode} mode).");
 
         var converter = new AudioDataConverter(_serviceProvider);
         var shazamAudioData = converter.ConvertWavToBase64EncodedString();
@@ -77,7 +63,13 @@ public class ShazamClient : IRecognitionClient
         else
         {
             _logger.LogInformation("Sending converted recorded data to shazam for Recognition.");
-            return await _shazamHttpClient.GetArtist(shazamAudioData);
+            return await _httpClient.GetArtist(shazamAudioData);
         }
+    }
+
+    public Task<bool> TestApiConnection()
+    {
+        // TODO Have meaningful test here
+        throw new NotImplementedException();
     }
 }

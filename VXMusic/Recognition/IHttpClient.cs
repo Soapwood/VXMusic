@@ -6,6 +6,7 @@ namespace VXMusic;
 public interface IHttpClient
 {
     public Task<IRecognitionApiClientResponse> GetArtist(byte[] audioBytes);
+    public Task<IRecognitionApiClientResponse> GetArtist(string audioDataBase64);
     public void SetApiKey(string apiKey);
     public Task<bool> TestConnection();
 }

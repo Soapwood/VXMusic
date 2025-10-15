@@ -69,24 +69,7 @@ namespace VXMusicDesktop
             
             var recognitionSettings = new RecognitionSettings()
             {
-                ShazamSettings = new ShazamSettings()
-                {
-                    ClientId = configuration["Recognition:Shazam:ClientId"],
-                    ClientSecret = configuration["Recognition:Shazam:ClientSecret"],
-                    X_RapidAPI_Key = configuration["Recognition:Shazam:X-RapidAPI-Key"],
-                    X_RapidAPI_Host = configuration["Recognition:Shazam:X-RapidAPI-Host"],
-                    IsByoApiEnabled = true, //VXUserSettings.Recognition.GetIsShazamByoApiEnabled(),
-                    ByoApiKey = VXUserSettings.Recognition.GetIsShazamByoApiEnabled() ? 
-                        VXUserSettings.Recognition.GetShazamByoApiKey() : null
-                },
-
-                AudDSettings = new AudDSettings()
-                {
-                    ClientId = configuration["Recognition:Shazam:ClientId"],
-                    IsByoApiEnabled = true, //VXUserSettings.Recognition.GetIsAudDByoApiEnabled(),
-                    ByoApiKey = VXUserSettings.Recognition.GetIsAudDByoApiEnabled() ? 
-                        VXUserSettings.Recognition.GetAudDByoApiKey() : null
-                }
+                // Removing BYOAPI Settings, moving to keyless recognition
             };
 
             var connectionsSettings = new ConnectionsSettings()
@@ -152,10 +135,11 @@ namespace VXMusicDesktop
             services.AddSingleton<RegistryInterface>();
             services.AddSingleton<VXMusicSettingsSyncHandler>();
             
-            // Handle creating Recognition Clients based off of BYOAPI Configuration
-            services.AddSingleton<ShazamClient>(serviceProvider => VXMusicSession.RecognitionSettings!.ShazamSettings.IsByoApiEnabled
-                ? new ShazamClient(serviceProvider, VXMusicSession.RecognitionSettings.ShazamSettings.ByoApiKey!)
-                : new ShazamClient(serviceProvider));
+            // Always use keyless Shazam mode - legacy API key mode has been phased out
+            services.AddSingleton<ShazamClient>(serviceProvider => 
+            {
+                return new ShazamClient(serviceProvider);
+            });
             
             services.AddSingleton<AudDClient>();
 

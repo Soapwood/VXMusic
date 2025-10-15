@@ -19,6 +19,7 @@
         <PackageReference Include="Microsoft.Extensions.Configuration" Version="9.0.0-preview.4.24266.19" />
         <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="9.0.0-preview.4.24266.19" />
         <PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.0-preview.4.24266.19" />
+        <PackageReference Include="MathNet.Numerics" Version="5.0.0" />
         <PackageReference Include="NAudio" Version="2.1.0" />
         <PackageReference Include="NAudio.Lame" Version="2.1.0" />
         <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
