@@ -13,6 +13,7 @@ using VXMusic;
 using VXMusic.Audio.Device;
 using VXMusic.Audio.Recording;
 using VXMusicDesktop.Core;
+using VXMusicDesktop.Theme;
 
 namespace VXMusicDesktop.MVVM.ViewModel
 {
@@ -33,6 +34,7 @@ namespace VXMusicDesktop.MVVM.ViewModel
         
         private bool _isShazamApiEnabled;
         private bool _isRecognitionReady = true;
+        private PlaylistSaveSettings _playlistSaveSetting;
         
         #endregion
         
@@ -82,8 +84,7 @@ namespace VXMusicDesktop.MVVM.ViewModel
                 }
             }
         }
-
-
+        
         public bool IsShazamApiEnabled
         {
             get => _isShazamApiEnabled;
@@ -94,8 +95,6 @@ namespace VXMusicDesktop.MVVM.ViewModel
             }
         }
 
-
-
         public bool IsRecognitionReady
         {
             get => _isRecognitionReady;
@@ -103,6 +102,20 @@ namespace VXMusicDesktop.MVVM.ViewModel
             {
                 _isRecognitionReady = value;
                 OnPropertyChanged(nameof(IsRecognitionReady));
+            }
+        }
+
+        public PlaylistSaveSettings PlaylistSaveSetting
+        {
+            get => _playlistSaveSetting;
+            set
+            {
+                if (_playlistSaveSetting != value)
+                {
+                    _playlistSaveSetting = value;
+                    OnPropertyChanged(nameof(PlaylistSaveSetting));
+                    OnPlaylistSaveSettingChanged();
+                }
             }
         }
 
@@ -121,7 +134,8 @@ namespace VXMusicDesktop.MVVM.ViewModel
 
         public void Initialise()
         {
-            _isShazamApiEnabled = App.VXMusicSession.RecognitionSettings.CurrentRecognitionApi == RecognitionApi.Shazam;
+            IsShazamApiEnabled = App.VXMusicSession.RecognitionSettings.CurrentRecognitionApi == RecognitionApi.Shazam;
+            _playlistSaveSetting = VXUserSettings.Connections.GetPlaylistSaveSetting();
 
             HasBeenInitialised = true;
 
@@ -152,6 +166,13 @@ namespace VXMusicDesktop.MVVM.ViewModel
             
             WindowsAudioDeviceListener.SelectedAudioDevice = SelectedAudioDevice;
             VXUserSettings.Recognition.SetSelectedAudioDevice(SelectedAudioDevice.DeviceFriendlyName);
+        }
+        
+        private void OnPlaylistSaveSettingChanged()
+        {
+            Logger.LogInformation($"Playlist Save Setting changed to {PlaylistSaveSetting}");
+            
+            VXUserSettings.Connections.SetPlaylistSaveSetting(PlaylistSaveSetting);
         }
         
         #endregion

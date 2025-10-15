@@ -77,7 +77,7 @@ public class SignatureGenerator
                 
                 var currentTime = _nextSignature.NumberSamples / (double)_nextSignature.SampleRateHz;
                 var totalPeaks = _nextSignature.FrequencyBandToSoundPeaks.Values.Sum(l => l.Count);
-                _logger?.LogDebug($"Processed chunk: {currentTime:F2}s, {totalPeaks} peaks so far");
+                // _logger?.LogDebug($"Processed chunk: {currentTime:F2}s, {totalPeaks} peaks so far");
             }
 
             var result = _nextSignature;
