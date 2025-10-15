@@ -32,9 +32,20 @@
         </Style.Setters>
 
         <Style.Triggers>
+            <!-- Base hover effect for unchecked items -->
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsChecked" Value="False"/>
+                    <Condition Property="IsMouseOver" Value="True"/>
+                </MultiTrigger.Conditions>
+                <Setter Property="Background" Value="{StaticResource Accent1Colour}"/>
+            </MultiTrigger>
+            
+            <!-- Checked state (selected tab) -->
             <Trigger Property="IsChecked" Value="True">
                 <Setter Property="Background" Value="{StaticResource SecondaryColor}"/>
             </Trigger>
+            
 
         </Style.Triggers>
     </Style>
