@@ -425,8 +425,6 @@ public class VXMusicOverlayInterface
         {
             case RecognitionApi.Shazam:
                 return SharedViewModel.IsShazamApiConnected;
-            case RecognitionApi.AudD:
-                return SharedViewModel.IsAudDApiConnected;
             case RecognitionApi.Unknown:
                 return false;
             default:
@@ -438,17 +436,18 @@ public class VXMusicOverlayInterface
     {
         RecognitionApi currentRecognitionApi = App.VXMusicSession.RecognitionSettings.CurrentRecognitionApi;
         
-        if (!IsCurrentRecognitionClientConnected(currentRecognitionApi))
-        {
-            Logger.LogError($"Recognition Failed. {currentRecognitionApi} is not connected.");
-            SharedViewModel.IsRecognitionRunning = false;
-            //App.ToastNotification.Error($"{currentRecognitionApi} is not connected! Check your Recognition settings.");
-            VXMusicSession.NotificationClient.SendNotification(NotificationLevel.Error, "Recognition Failed", $"{currentRecognitionApi} is not connected! Check your Recognition settings.", 8);
-            App.VXMusicSession.ToastNotification.SendNotification(NotificationLevel.Error, "Recognition Failed", $"{currentRecognitionApi} is not connected! Check your Recognition settings.", 8);
-            // Finish, or effectively cancel recognition if fails.
-            SendMessageToVxMusicOverlayOverTcp(VXMMessage.RECOGNITION_FINISH);
-            return false;
-        }
+        // This shouldn't be checked by the overlay anyway
+        // if (!IsCurrentRecognitionClientConnected(currentRecognitionApi))
+        // {
+        //     Logger.LogError($"Recognition Failed. {currentRecognitionApi} is not connected.");
+        //     SharedViewModel.IsRecognitionRunning = false;
+        //     //App.ToastNotification.Error($"{currentRecognitionApi} is not connected! Check your Recognition settings.");
+        //     VXMusicSession.NotificationClient.SendNotification(NotificationLevel.Error, "Recognition Failed", $"{currentRecognitionApi} is not connected! Check your Recognition settings.", 8);
+        //     App.VXMusicSession.ToastNotification.SendNotification(NotificationLevel.Error, "Recognition Failed", $"{currentRecognitionApi} is not connected! Check your Recognition settings.", 8);
+        //     // Finish, or effectively cancel recognition if fails.
+        //     SendMessageToVxMusicOverlayOverTcp(VXMMessage.RECOGNITION_FINISH);
+        //     return false;
+        // }
         
         if (!SharedViewModel.IsRecognitionRunning)
         {
