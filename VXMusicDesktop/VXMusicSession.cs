@@ -16,6 +16,7 @@ using VXMusic.Spotify.Authentication;
 using VXMusic.Tidal.Authentication;
 using VXMusic.VRChat;
 using VXMusicDesktop.Core;
+using VXMusicDesktop.MVVM.ViewModel;
 using VXMusicDesktop.Theme;
 using VXMusicDesktop.Toast;
 using VXMusicDesktop.Update;
@@ -52,6 +53,8 @@ public class VXMusicSession
     public VXMusicSettingsSyncHandler VXMusicSettingsSync;
     public RegistryInterface RegistryInterface;
     
+    public static SharedViewModel SharedViewModel { get; set; }
+    
     public static event EventHandler LastFmLogin;
     //public static event EventHandler SpotifyLogin;
 
@@ -75,8 +78,7 @@ public class VXMusicSession
         //NotificationClient = new XSOverlay(); //VXMusicAPI.SetNotificationClient(notificationSettings.CurrentNotificationService);
 
         NotificationClient = NotificationSettings.GetNotificationServiceFromSetConfiguration(); //VXMusicAPI.SetNotificationClient(notificationSettings.CurrentNotificationService);
-
-
+        
         VrChatNotification = NotificationSettings.GetVRChatNotificationClient();
         
         PlaylistFileWriter = App.ServiceProvider.GetRequiredService<PlaylistFileWriter>();

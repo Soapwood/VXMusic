@@ -59,6 +59,7 @@ namespace VXMusicDesktop.MVVM.ViewModel
             CurrentView = HomeVM;
 
             VXMusicOverlayInterface.SharedViewModel = SharedVM;
+            VXMusicSession.SharedViewModel = SharedVM;
 
             HomeViewCommand = new RelayCommand(o =>
             {

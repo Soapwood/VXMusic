@@ -21,6 +21,8 @@ namespace VXMusicDesktop.MVVM.ViewModel
             SharedViewModel = sharedViewModel;
             GetVxTipsText();
             FetchVxNewsText();
+
+            SharedViewModel.IsShazamApiConnected = true;
         }
         
         protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)

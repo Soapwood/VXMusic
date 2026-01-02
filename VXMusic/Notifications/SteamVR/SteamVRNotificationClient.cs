@@ -18,7 +18,7 @@ namespace VXMusic.Overlay
 
         private readonly SteamVRNotificationOverlay _steamVrNotificationClient;
         
-        private static string DefaultVxLogo;
+        public static string DefaultVxLogo;
 
         public SteamVRNotificationClient(IServiceProvider serviceProvider)
             : base(ApplicationType.Overlay)
@@ -72,7 +72,17 @@ namespace VXMusic.Overlay
         {
             _logger.LogTrace("Sending notification request to SteamVR.");
 
-            var imageBytes = Convert.FromBase64String(image);
+            byte[] imageBytes;
+            
+            try
+            {
+                imageBytes = Convert.FromBase64String(image);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogInformation("Image returned from Shazam could not be parsed by the SteamVRNotificationClient. Falling back to the Default.");
+                imageBytes = Convert.FromBase64String(SteamVRNotificationClient.DefaultVxLogo);
+            }
 
             Bitmap bitmap = new Bitmap(new MemoryStream(imageBytes));
 
