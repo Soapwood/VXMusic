@@ -23,7 +23,6 @@ Download Installer
 
 <div>
     <a href="#how-to-use" class="button">How to Use</a> |
-    <a href="#byo-api-keys" class="button">API Key Setup</a> |
     <a href="#steamvr" class="button">Add to SteamVR</a>
 </div>
 
@@ -60,11 +59,7 @@ You can also choose if you want to be prompted when new versions are available, 
 <img src=".github/readme/DesktopRecognition.gif" alt="VXMusic Desktop" style="max-width: 80%">
 
 ## Recognition
-VXMusic currently supports two Music Recognition services, **Shazam**, and **AudD.io**.
-
-- Shazam is the recommended API to use, as it has the most rich recognition database and metadata.
-
-- AudD.io doesn't have the same rich data experience, but it runs a lot faster than Shazam. The speed is negligible in the grand scheme of things.
+VXMusic uses **Shazam** for music recognition.
 
 Recognised tracks are stored in your `My Documents/VXMusic` folder.
 
@@ -77,61 +72,6 @@ For easy access, you can click the `Open Track Library` button on the Recognitio
 <img src=".github/readme/IfYouAreRunningVRChat.png" alt="VXMusic Desktop" style="max-width: 80%">
 
 ### Tip: You can also add recognised tracks to <a href="#spotify" class="button">Spotify Playlists</a> and scrobble on <a href="#connections" class="button">Last.fm</a>!
-
-
-### BYO API Keys
-VXMusic allows you to "bring-your-own" API Key for Music Recognition Services.
-
-This is super easy to set up, and more importantly, **FREE!**
-
-See the instructions below on how to get your own API keys.
-
-### Shazam
-#### ⚠️ Note: With the Shazam Free Test Account, you are limited to 500 Requests per Month.
-1. Navigate to: https://rapidapi.com/apidojo/api/shazam
-2. Sign in with Google, or an alternative login method.
-3. Navigate back to: https://rapidapi.com/apidojo/api/shazam
-4. On the top right, hit Subscribe to Test
-
-<img src=".github/readme/OnTheTopRightHitSubscribeToTest.png" alt="VXMusic Desktop" width="50%">
-
-5. Hit "Start Free Plan"
-
-<img src=".github/readme/HitStartFreePlan.png" alt="VXMusic Desktop" width="50%">
-
-6. Hit "Subscribe"
-
-<img src=".github/readme/HitSubscribe.png" alt="VXMusic Desktop" width="50%">
-
-7. From the Shazam API page, click one of the Endpoints on the left
-
-<img src=".github/readme/ClockOneOfTheEndpointsOnTheLeft.png" alt="VXMusic Desktop" width="40%">
-
-8. Under "Code Snippets" on the right, copy the API Key under "x-rapidapi-key"
-
-<img src=".github/readme/GrabTheApiKeyOnTheRight.png" alt="VXMusic Desktop" width="60%">
-
-8. In VXMusic, on the Recognition tab, paste this key into the Api Key box.
-
-<img src=".github/readme/PasteThisIntoTheApiKeyBox.png" alt="VXMusic Desktop" width="60%">
-
-9. If the light next to Shazam turns green, you have successfully set up your API Key! ✔️
-
-### AudD.io
-#### ⚠️ Note: With the AudD.io Free Trial Account, you are limited to two weeks of usage per account email address.
-
-1. Navigate to: https://audd.io/
-2. Click on `Dashboard` on the top right
-3. Sign in with Google, or an alternative login method.
-4. From the Dashboard page, hit `Copy` next to `Your api_token`
-
-<img src=".github/readme/AudDDashboard.png" alt="VXMusic Desktop" width="60%">
-
-6. In VXMusic, on the Recognition tab, paste this key into the Api Key box.
-
-<img src=".github/readme/AudDApiKeyBox.png" alt="VXMusic Desktop" width="60%">
-
-7. If the light next to AudD.io turns green, you have successfully set up your API Key! ✔️
 
 ## Notifications
 VXMusic supports two VR notification services that allow you to receive HUD toast notifications while in VR - **SteamVR**, **XSOverlay** and **OVR Toolkit**.
@@ -146,13 +86,22 @@ SteamVR has a built-in Notifications service that VXMusic can use to send you HU
 This is plug and play and doesn't need any additional configuration.
 
 ### XSOverlay
-<img src=".github/readme/XSOverlayLogo.jpg" alt="VXMusic Desktop" width="30%">
+<img src=".github/readme/XSOverlayLogo.jpg" alt="XSOverlayLogo.jpg" width="30%">
 
 VXMusic also interfaces with XSOverlay for HUD toast notifications.
 
 XSOverlay is the recommended Notification service for how responsive and reactive it is. Ultimately it is purely aesthetical, but you will benefit from the bespoke configuration offered by XSOverlay if you are already a user. 
 
 XSOverlay is a paid Overlay available on [Steam](https://store.steampowered.com/app/1173510/XSOverlay/), and is purely optional when using VXMusic.
+
+### OVR ToolKit
+<img src=".github/readme/OVRToolKit.jpg" alt="OVRToolKit.jpg" width="30%">
+
+OVR ToolKit is another fantastic option for notifications.
+
+This also has a lovely UI for notifications, and a more bespoke desktop application for settings.
+
+OVRToolkit is a paid Overlay available on [Steam](https://store.steampowered.com/app/1068820/OVR_Toolkit__Desktop_Overlay/), and is purely optional when using VXMusic.
 
 ## Optional Notifications - VRChat ChatBox
 
