@@ -285,7 +285,7 @@ public class ShazamKeylessHttpClient : IHttpClient
                 return new ShazamResponse() { Status = Status.NoMatches };
             }
 
-            string albumArtBase64 = ConvertShazamAlbumArtUrlToBase64(track.images?.coverart?.ToString());
+            string albumArtBase64 = await ConvertShazamAlbumArtUrlToBase64(track.images?.coverart?.ToString());
 
             // Parse track information
             var result = new Result

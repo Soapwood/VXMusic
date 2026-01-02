@@ -31,6 +31,7 @@
         <PackageReference Include="SpotifyAPI.Web.Auth" Version="7.1.1" />
         <PackageReference Include="ToastNotifications" Version="2.5.1" />
         <PackageReference Include="ToastNotifications.Messages" Version="2.5.1" />
+        <PackageReference Include="XSSocket" Version="1.0.0" />
     </ItemGroup>
 
     <ItemGroup>
