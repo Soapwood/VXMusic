@@ -6,6 +6,7 @@
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:local="clr-namespace:VXMusicDesktop.MVVM.View"
              xmlns:custom="clr-namespace:VXMusicDesktop.Theme"
+             xmlns:behaviors="clr-namespace:VXMusicDesktop.Behaviors"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800"
              Background="Transparent"
@@ -60,7 +61,9 @@
                         Cursor="Hand"
                         Width="340" Height="100"
                         Margin="0,0,0,0"
-                        IsEnabled="true">
+                        IsEnabled="true"
+                        behaviors:VRHapticBehavior.EnableHapticFeedback="True"
+                        behaviors:VRHapticBehavior.HapticDuration="700">
 
                     <Button.Resources>
                         <LinearGradientBrush x:Key="ButtonNormalGradientBrush" StartPoint="0,0" EndPoint="1,2">
@@ -145,7 +148,9 @@
                         Cursor="Hand"
                         Width="340" Height="100"
                         Margin="0,0,0,0"
-                        IsEnabled="true">
+                        IsEnabled="true"
+                        behaviors:VRHapticBehavior.EnableHapticFeedback="True"
+                        behaviors:VRHapticBehavior.HapticDuration="700">
 
                     <Button.Resources>
                         <!-- Normal state gradient brush -->
@@ -232,7 +237,9 @@
                     Width="340" Height="100"
                     HorizontalAlignment="Left"
                     Margin="0,0,0,0"
-                    IsEnabled="true">
+                    IsEnabled="true"
+                    behaviors:VRHapticBehavior.EnableHapticFeedback="True"
+                    behaviors:VRHapticBehavior.HapticDuration="700">
 
                 <Button.Resources>
                     <LinearGradientBrush x:Key="ButtonNormalGradientBrush" StartPoint="0,0" EndPoint="1,2">
@@ -325,7 +332,9 @@
                         Cursor="Hand"
                         Width="340" Height="100"
                         Margin="0,0,0,0"
-                        IsEnabled="true">
+                        IsEnabled="true"
+                        behaviors:VRHapticBehavior.EnableHapticFeedback="True"
+                        behaviors:VRHapticBehavior.HapticDuration="700">
 
                     <Button.Resources>
                         <LinearGradientBrush x:Key="ButtonNormalGradientBrush" StartPoint="0,0" EndPoint="1,2">
@@ -409,21 +418,13 @@
                 Padding="0"
                 Margin="0,15,0,0" 
                 Cursor="Hand"
-                Background="{StaticResource SecondaryColor}"
                 Foreground="{StaticResource TextBasic}"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
-                Width="120" Height="40">
-            <Button.Resources>
-                <Style TargetType="Border">
-                    <Setter Property="CornerRadius" Value="5" />
-                    <Style.Triggers>
-                        <Trigger Property="IsEnabled" Value="False">
-                            <Setter Property="Background" Value="{StaticResource SecondaryColor}" />
-                        </Trigger>
-                    </Style.Triggers>
-                </Style>
-            </Button.Resources>
+                Width="120" Height="40"
+                Style="{StaticResource SimpleButtonTheme}"
+                behaviors:VRHapticBehavior.EnableHapticFeedback="True"
+                behaviors:VRHapticBehavior.HapticDuration="500">
         </Button>
     </StackPanel>
 </UserControl>

@@ -20,7 +20,7 @@ namespace VXMusicDesktop
             InitializeComponent();
             MouseDown += Window_MouseDown;
 
-            VersionTextBlock.Text = App.ApplicationVersion.ToString() + "-beta";
+            VersionTextBlock.Text = App.ApplicationVersion.ToString();
 
             ColourSchemeManager.ThemeChanged += OnThemeChanged;
             ColourSchemeManager.MenuOptionChanged += OnMainWindowMenuOptionChanged;
@@ -70,8 +70,18 @@ namespace VXMusicDesktop
             DesktopThemeComboBox.Background = ColourSchemeManager.SecondaryColour;
             DesktopThemeComboBox.BorderBrush = ColourSchemeManager.TextBasic;
 
-            MainWindowMinimiseButtonImageBrush.ImageSource = ColourSchemeManager.MinimiseImage;
-            MainWindowCloseButtonImageBrush.ImageSource = ColourSchemeManager.CloseImage;
+            // Update image sources for button images
+            var minimizeImage = MainWindowMinimiseButton.Content as Image;
+            if (minimizeImage != null)
+                minimizeImage.Source = ColourSchemeManager.MinimiseImage;
+            
+            var closeImage = MainWindowCloseButton.Content as Image;
+            if (closeImage != null)
+                closeImage.Source = ColourSchemeManager.CloseImage;
+                
+            var overlayImage = VXOverlayLaunchButton.Content as Image;
+            if (overlayImage != null)
+                overlayImage.Source = ColourSchemeManager.VXMusicOverlayImage;
         }
 
         private void OnMainWindowMenuOptionChanged(object sender, EventArgs e)
@@ -137,6 +147,7 @@ namespace VXMusicDesktop
         {
             MessageTextBlock.Text = messageContent;
         }
+        
         
         async void CheckForUpdates()
         {

@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:VXMusicDesktop"
         xmlns:viewModel="clr-namespace:VXMusicDesktop.MVVM.ViewModel"
         xmlns:custom="clr-namespace:VXMusicDesktop.Theme"
+        xmlns:behaviors="clr-namespace:VXMusicDesktop.Behaviors"
         mc:Ignorable="d"
         Height="600" Width="920"
         WindowStyle="None"
@@ -19,12 +20,18 @@
     </Window.DataContext>
 
     <Window.Resources>
-        <FontFamily x:Key="BrushStrike">pack://application:,,,/Fonts/#Brushstrike trial.ttf</FontFamily>
-        
-        <BitmapImage x:Key="CloseButtonImage" UriSource="{Binding Source={x:Static custom:ColourSchemeManager.CloseImage}, Path=UriSource}"/>
-        <BitmapImage x:Key="MinimiseButtonImage" UriSource="{Binding Source={x:Static custom:ColourSchemeManager.MinimiseImage}, Path=UriSource}"/>
-        <BitmapImage x:Key="VXMusicOverlayImage" UriSource="{Binding Source={x:Static custom:ColourSchemeManager.VXMusicOverlayImage}, Path=UriSource}"/>
-        <BitmapImage x:Key="DownloadButtonImage" UriSource="{Binding Source={x:Static custom:ColourSchemeManager.DownloadButtonImage}, Path=UriSource}"/>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Theme/ImageButtonTheme.xaml"/>
+                <ResourceDictionary Source="Theme/RegularButtonTheme.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            
+            <FontFamily x:Key="BrushStrike">pack://application:,,,/Fonts/#Brushstrike trial.ttf</FontFamily>
+            
+            <BitmapImage x:Key="CloseButtonImage" UriSource="{Binding Source={x:Static custom:ColourSchemeManager.CloseImage}, Path=UriSource}"/>
+            <BitmapImage x:Key="MinimiseButtonImage" UriSource="{Binding Source={x:Static custom:ColourSchemeManager.MinimiseImage}, Path=UriSource}"/>
+            <BitmapImage x:Key="VXMusicOverlayImage" UriSource="{Binding Source={x:Static custom:ColourSchemeManager.VXMusicOverlayImage}, Path=UriSource}"/>
+            <BitmapImage x:Key="DownloadButtonImage" UriSource="{Binding Source={x:Static custom:ColourSchemeManager.DownloadButtonImage}, Path=UriSource}"/>
 
         <SolidColorBrush x:Key="PrimaryColor" Color="{Binding Source={x:Static custom:ColourSchemeManager.PrimaryColour}, Path=Color}" />
         <SolidColorBrush x:Key="SecondaryColor" Color="{Binding Source={x:Static custom:ColourSchemeManager.SecondaryColour}, Path=Color}" />
@@ -32,9 +39,9 @@
         <SolidColorBrush x:Key="Accent2Colour" Color="{Binding Source={x:Static custom:ColourSchemeManager.Accent2Colour}, Path=Color}" />
         <SolidColorBrush x:Key="TextBasic" Color="{Binding Source={x:Static custom:ColourSchemeManager.TextBasic}, Path=Color}" />
 
-        <custom:BooleanToColorConverter x:Key="BooleanToColorConverter"/>
-        <BooleanToVisibilityConverter x:Key="BoolToVis" />
-        
+            <custom:BooleanToColorConverter x:Key="BooleanToColorConverter"/>
+            <BooleanToVisibilityConverter x:Key="BoolToVis" />
+        </ResourceDictionary>
     </Window.Resources>
 
     <Border x:Name="MainWindowBorder"
@@ -60,10 +67,12 @@
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     Command="{Binding LaunchVXMusicOverlay}"
-                    BorderThickness="0">
-                <Button.Background>
-                    <ImageBrush x:Name="MainWindowVXMusicOverlayImageBrush" ImageSource="{StaticResource VXMusicOverlayImage}" Stretch="UniformToFill" RenderOptions.BitmapScalingMode="HighQuality"/>
-                </Button.Background>
+                    behaviors:VRHapticBehavior.EnableHapticFeedback="True"
+                    behaviors:VRHapticBehavior.HapticDuration="600"
+                    Style="{StaticResource ImageButtonTheme}">
+                <Image Source="{StaticResource VXMusicOverlayImage}" 
+                       Stretch="UniformToFill" 
+                       RenderOptions.BitmapScalingMode="HighQuality"/>
             </Button>
             <Ellipse Grid.Column="1"  Width="10" 
                      Height="10"
@@ -84,6 +93,8 @@
                       Panel.ZIndex="3"
                       Margin="5,480,0,0"
                       ItemsSource="{x:Static custom:ColourSchemeManager.DesktopThemeValues}"
+                      behaviors:VRHapticBehavior.EnableHapticFeedback="True"
+                      behaviors:VRHapticBehavior.HapticDuration="500"
                       SelectionChanged="ThemeDropdownSelection">
             </ComboBox>
 
@@ -123,11 +134,15 @@
                         HorizontalAlignment="Right"
                         VerticalAlignment="Bottom"
                         Command="{Binding LaunchVXUpdater}"
-                        BorderThickness="0">
-                    <Button.Background>
-                        <ImageBrush x:Name="LaunchUpdaterImage" ImageSource="{StaticResource DownloadButtonImage}" Stretch="UniformToFill" RenderOptions.BitmapScalingMode="HighQuality"/>
-                    </Button.Background>
+                        behaviors:VRHapticBehavior.EnableHapticFeedback="True"
+                        behaviors:VRHapticBehavior.HapticDuration="600"
+                        Style="{StaticResource ImageButtonTheme}">
+                    <Image Source="{StaticResource DownloadButtonImage}" 
+                           Stretch="UniformToFill" 
+                           RenderOptions.BitmapScalingMode="HighQuality"/>
                 </Button>
+                
+                
                 
             </StackPanel>
             
@@ -154,10 +169,12 @@
                     Margin="0,0,60,0"
                     HorizontalAlignment="Right"
                     Click="MinimizeButton_Click"
-                    BorderThickness="0">
-                <Button.Background>
-                    <ImageBrush x:Name="MainWindowMinimiseButtonImageBrush" ImageSource="{StaticResource MinimiseButtonImage}" Stretch="UniformToFill" RenderOptions.BitmapScalingMode="HighQuality"/>
-                </Button.Background>
+                    behaviors:VRHapticBehavior.EnableHapticFeedback="True"
+                    behaviors:VRHapticBehavior.HapticDuration="700"
+                    Style="{StaticResource ImageButtonTheme}">
+                <Image Source="{StaticResource MinimiseButtonImage}" 
+                       Stretch="UniformToFill" 
+                       RenderOptions.BitmapScalingMode="HighQuality"/>
             </Button>
 
             <Button Name="MainWindowCloseButton" 
@@ -168,10 +185,12 @@
                     Margin="0,0,20,0"
                     HorizontalAlignment="Right"
                     Click="CloseButton_Click"
-                    BorderThickness="0">
-                <Button.Background>
-                    <ImageBrush x:Name="MainWindowCloseButtonImageBrush" ImageSource="{StaticResource CloseButtonImage}" Stretch="UniformToFill" RenderOptions.BitmapScalingMode="HighQuality"/>
-                </Button.Background>
+                    behaviors:VRHapticBehavior.EnableHapticFeedback="True"
+                    behaviors:VRHapticBehavior.HapticDuration="800"
+                    Style="{StaticResource ImageButtonTheme}">
+                <Image Source="{StaticResource CloseButtonImage}" 
+                       Stretch="UniformToFill" 
+                       RenderOptions.BitmapScalingMode="HighQuality"/>
             </Button>
 
             <StackPanel>
@@ -194,6 +213,8 @@
                              FontSize="14"
                              Style="{StaticResource MenuButtonTheme}"
                              IsChecked="True"
+                             behaviors:VRHapticBehavior.EnableHapticFeedback="True"
+                             behaviors:VRHapticBehavior.HapticDuration="400"
                              Command="{Binding HomeViewCommand}"/>
                 <RadioButton x:Name="MainWindowRadioButtonRecognition" 
                              Content="Recognition"
@@ -202,6 +223,8 @@
                              Foreground="{StaticResource TextBasic}"
                              FontSize="14"
                              Style="{StaticResource MenuButtonTheme}"
+                             behaviors:VRHapticBehavior.EnableHapticFeedback="True"
+                             behaviors:VRHapticBehavior.HapticDuration="400"
                              Command="{Binding RecognitionViewCommand}"/>
                 <RadioButton x:Name="MainWindowRadioButtonNotifications"  
                              Content="Notifications"
@@ -210,6 +233,8 @@
                              Foreground="{StaticResource TextBasic}"
                              FontSize="14"
                              Style="{StaticResource MenuButtonTheme}"
+                             behaviors:VRHapticBehavior.EnableHapticFeedback="True"
+                             behaviors:VRHapticBehavior.HapticDuration="400"
                              Command="{Binding NotificationsViewCommand}"/>
                 <RadioButton x:Name="MainWindowRadioButtonConnections"  
                              Content="Connections"
@@ -218,6 +243,8 @@
                              Foreground="{StaticResource TextBasic}"
                              FontSize="14"
                              Style="{StaticResource MenuButtonTheme}"
+                             behaviors:VRHapticBehavior.EnableHapticFeedback="True"
+                             behaviors:VRHapticBehavior.HapticDuration="400"
                              Command="{Binding ConnectionsViewCommand}"/>
                 <RadioButton x:Name="MainWindowRadioButtonOverlay"  
                              Content="Settings"
@@ -226,6 +253,8 @@
                              Foreground="{StaticResource TextBasic}"
                              FontSize="14"
                              Style="{StaticResource MenuButtonTheme}"
+                             behaviors:VRHapticBehavior.EnableHapticFeedback="True"
+                             behaviors:VRHapticBehavior.HapticDuration="400"
                              Command="{Binding OverlayViewCommand}"/>
                 <RadioButton x:Name="MainWindowRadioButtonAbout"  
                              Content="About"
@@ -234,6 +263,8 @@
                              Foreground="{StaticResource TextBasic}"
                              FontSize="14"
                              Style="{StaticResource MenuButtonTheme}"
+                             behaviors:VRHapticBehavior.EnableHapticFeedback="True"
+                             behaviors:VRHapticBehavior.HapticDuration="400"
                              Command="{Binding AboutViewCommand}"/>
             </StackPanel>
 

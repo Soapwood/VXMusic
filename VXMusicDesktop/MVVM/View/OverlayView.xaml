@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:VXMusicDesktop.MVVM.View"
              xmlns:custom="clr-namespace:VXMusicDesktop.Theme"
+             xmlns:behaviors="clr-namespace:VXMusicDesktop.Behaviors"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800"
              Background="Transparent">
@@ -185,7 +186,9 @@
                                   HorizontalAlignment="Right"
                                   Style="{StaticResource ImageToggleLeftHandButtonStyle}"
                                   IsChecked="{Binding OverlayEnabledOnLeftHand}"
-                                  Command="{Binding EnableOverlayOnLeftHand}">
+                                  Command="{Binding EnableOverlayOnLeftHand}"
+                                  behaviors:VRHapticBehavior.EnableHapticFeedback="True"
+                                  behaviors:VRHapticBehavior.HapticDuration="400">
                     </ToggleButton>
                     <ToggleButton x:Name="EnableOverlayOnRightHand"
                                   Width="40" Height="40"
@@ -194,7 +197,9 @@
                                   HorizontalAlignment="Right"
                                   Style="{StaticResource ImageToggleRightHandButtonStyle}"
                                   IsChecked="{Binding OverlayEnabledOnRightHand}"
-                                  Command="{Binding EnableOverlayOnRightHand}">
+                                  Command="{Binding EnableOverlayOnRightHand}"
+                                  behaviors:VRHapticBehavior.EnableHapticFeedback="True"
+                                  behaviors:VRHapticBehavior.HapticDuration="400">
                     </ToggleButton>
                 </StackPanel>
             </Border>
@@ -236,7 +241,9 @@
                                   Cursor="Hand"
                                   Margin="18,0,0,0"
                                   IsChecked="{Binding LaunchOverlayOnStartup}"
-                                  Command="{Binding LaunchOverlayOnStartupToggleButton}">
+                                  Command="{Binding LaunchOverlayOnStartupToggleButton}"
+                                  behaviors:VRHapticBehavior.EnableHapticFeedback="True"
+                                  behaviors:VRHapticBehavior.HapticDuration="300">
                     </ToggleButton>
                 </StackPanel>
             </Border>
@@ -278,7 +285,9 @@
                                   Cursor="Hand"
                                   Margin="20,0,0,0"
                                   IsChecked="{Binding AskForUpdatesOnStartup}"
-                                  Command="{Binding AskForUpdatesOnStartupToggleButton}">
+                                  Command="{Binding AskForUpdatesOnStartupToggleButton}"
+                                  behaviors:VRHapticBehavior.EnableHapticFeedback="True"
+                                  behaviors:VRHapticBehavior.HapticDuration="300">
                     </ToggleButton>
                 </StackPanel>
             </Border>
@@ -328,21 +337,13 @@
                             Padding="0"
                             Margin="20,0,0,0"
                             Cursor="Hand"
-                            Background="{StaticResource SecondaryColor}"
                             Foreground="{StaticResource TextBasic}"
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center"
-                            Width="80" Height="40">
-                        <Button.Resources>
-                            <Style TargetType="Border">
-                                <Setter Property="CornerRadius" Value="5" />
-                                <Style.Triggers>
-                                    <Trigger Property="IsEnabled" Value="False">
-                                        <Setter Property="Background" Value="{StaticResource SecondaryColor}" />
-                                    </Trigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Button.Resources>
+                            Width="80" Height="40"
+                            Style="{StaticResource SimpleButtonTheme}"
+                            behaviors:VRHapticBehavior.EnableHapticFeedback="True"
+                            behaviors:VRHapticBehavior.HapticDuration="600">
                     </Button>
                 </StackPanel>
             </Border>

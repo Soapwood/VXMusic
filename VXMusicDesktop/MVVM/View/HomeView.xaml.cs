@@ -51,7 +51,7 @@ namespace VXMusicDesktop.MVVM.View
             RecognitionIntegrationsBoxBorderGradientBrush.GradientStops[1].Color = ColourSchemeManager.Accent1Colour.Color;
             RecognitionIntegrationsBoxHeaderText.Foreground = ColourSchemeManager.TextBasic;
             API1RecognitionIntegrationsBoxHeaderText.Foreground = ColourSchemeManager.TextBasic;
-            API2RecognitionIntegrationsBoxHeaderText.Foreground = ColourSchemeManager.TextBasic;
+            //API2RecognitionIntegrationsBoxHeaderText.Foreground = ColourSchemeManager.TextBasic;
 
             NotificationIntegrationsBoxBorderGradientBrush.GradientStops[0].Color = ColourSchemeManager.SecondaryColour.Color;
             NotificationIntegrationsBoxBorderGradientBrush.GradientStops[1].Color = ColourSchemeManager.Accent1Colour.Color;

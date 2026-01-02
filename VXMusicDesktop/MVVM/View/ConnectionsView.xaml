@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:VXMusicDesktop"
              xmlns:custom="clr-namespace:VXMusicDesktop.Theme"
+             xmlns:behaviors="clr-namespace:VXMusicDesktop.Behaviors"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800"
              Background="Transparent">
@@ -121,7 +122,9 @@
                                 Foreground="Black"
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center"
-                                Width="150" Height="40">
+                                Width="150" Height="40"
+                                behaviors:VRHapticBehavior.EnableHapticFeedback="True"
+                                behaviors:VRHapticBehavior.HapticDuration="500">
                             <Button.Resources>
                                 <Style TargetType="Border">
                                     <Setter Property="CornerRadius" Value="5" />
@@ -258,7 +261,9 @@
                                         HorizontalAlignment="Center"
                                         IsEnabled="{Binding ShouldLastFmLinkButtonBeEnabled}"
                                         Margin="0,10,10,0"
-                                        Width="70" Height="28" Click="Button_Click">
+                                        Width="70" Height="28" Click="Button_Click"
+                                        behaviors:VRHapticBehavior.EnableHapticFeedback="True"
+                                        behaviors:VRHapticBehavior.HapticDuration="500">
                                     <Button.Resources>
                                         <Style TargetType="Border">
                                             <Setter Property="CornerRadius" Value="4" />

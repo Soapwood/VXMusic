@@ -32,13 +32,17 @@
         </Style.Setters>
 
         <Style.Triggers>
-            <!-- Base hover effect for unchecked items -->
+            <!-- Base hover effect for unchecked items - using muted SecondaryColour -->
             <MultiTrigger>
                 <MultiTrigger.Conditions>
                     <Condition Property="IsChecked" Value="False"/>
                     <Condition Property="IsMouseOver" Value="True"/>
                 </MultiTrigger.Conditions>
-                <Setter Property="Background" Value="{StaticResource Accent1Colour}"/>
+                <Setter Property="Background">
+                    <Setter.Value>
+                        <SolidColorBrush Color="{Binding Source={x:Static custom:ColourSchemeManager.SecondaryColour}, Path=Color}" Opacity="0.3"/>
+                    </Setter.Value>
+                </Setter>
             </MultiTrigger>
             
             <!-- Checked state (selected tab) -->
