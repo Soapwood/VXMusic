@@ -448,21 +448,30 @@ public class VXMusicOverlayInterface
         //     SendMessageToVxMusicOverlayOverTcp(VXMMessage.RECOGNITION_FINISH);
         //     return false;
         // }
-        
-        if (!SharedViewModel.IsRecognitionRunning)
+        try
         {
-            Logger.LogTrace($"Sending event to VXMusicOverlay: {VXMMessage.RECOGNITION_ACKNOWLEDGE}");
-            SendMessageToVxMusicOverlayOverTcp(VXMMessage.RECOGNITION_ACKNOWLEDGE);
-            
-            Logger.LogInformation("Running Recognition Flow from VXMusic Overlay.");
-            SharedViewModel.IsRecognitionRunning = true;
-            bool isFinished = await VXMusicActions.PerformRecognitionFlow();
+            if (!SharedViewModel.IsRecognitionRunning)
+            {
+                Logger.LogTrace($"Sending event to VXMusicOverlay: {VXMMessage.RECOGNITION_ACKNOWLEDGE}");
+                SendMessageToVxMusicOverlayOverTcp(VXMMessage.RECOGNITION_ACKNOWLEDGE);
+
+                Logger.LogInformation("Running Recognition Flow from VXMusic Overlay.");
+                SharedViewModel.IsRecognitionRunning = true;
+                bool isFinished = await VXMusicActions.PerformRecognitionFlow();
+                SharedViewModel.IsRecognitionRunning = false;
+
+                Logger.LogTrace($"Sending event to VXMusicOverlay: {VXMMessage.RECOGNITION_FINISH}");
+                SendMessageToVxMusicOverlayOverTcp(VXMMessage.RECOGNITION_FINISH);
+
+                return true;
+            }
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError($"Recognition failed: Exception {ex}");
             SharedViewModel.IsRecognitionRunning = false;
-            
-            Logger.LogTrace($"Sending event to VXMusicOverlay: {VXMMessage.RECOGNITION_FINISH}");
             SendMessageToVxMusicOverlayOverTcp(VXMMessage.RECOGNITION_FINISH);
-            
-            return true;
+            return false;
         }
         
         return false;

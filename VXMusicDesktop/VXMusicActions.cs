@@ -57,11 +57,11 @@ public class VXMusicActions
         }
         else if (result.Status == Status.ApiError)
         {
-            Logger.LogWarning("API Error. API Key is likely expired.");
+            Logger.LogWarning("API Error. You are likely being rate limited!");
             VXMusicSession.NotificationClient.SendNotification(NotificationLevel.Warning,"API Error",
-                "API Requests have Expired.", 5); 
+                "You've hit the rate limit! Take is easy for a few minutes.", 5); 
             App.VXMusicSession.ToastNotification.SendNotification(NotificationLevel.Warning,"API Error: ",
-                "API Requests have Expired.", 5);
+                "Rate Limited.", 5);
         }
         else if (result.Status == Status.NoMatches || result.Result == null)
         {

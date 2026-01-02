@@ -285,6 +285,8 @@ public class ShazamKeylessHttpClient : IHttpClient
                 return new ShazamResponse() { Status = Status.NoMatches };
             }
 
+            string albumArtBase64 = ConvertShazamAlbumArtUrlToBase64(track.images?.coverart?.ToString());
+
             // Parse track information
             var result = new Result
             {
@@ -294,7 +296,7 @@ public class ShazamKeylessHttpClient : IHttpClient
                 ReleaseDate = GetMetadataValue(track, "Released"),
                 Label = GetMetadataValue(track, "Label"),
                 SongLink = track.url?.ToString(),
-                AlbumArt = track.images?.coverart?.ToString()
+                AlbumArt = albumArtBase64 ?? ""
             };
 
             return new ShazamResponse
@@ -312,6 +314,29 @@ public class ShazamKeylessHttpClient : IHttpClient
                 Result = null
             };
         }
+    }
+
+    private async Task<string> ConvertShazamAlbumArtUrlToBase64(string albumArtUrl)
+    {
+        string albumArtBase64 = null;
+        if (!string.IsNullOrEmpty(albumArtUrl))
+        {
+            try
+            {
+                using (var httpClient = new HttpClient())
+                {
+                    httpClient.Timeout = TimeSpan.FromSeconds(10);
+                    var imageBytes = await httpClient.GetByteArrayAsync(albumArtUrl);
+                    albumArtBase64 = Convert.ToBase64String(imageBytes);
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger?.LogWarning($"Failed to download album art from {albumArtUrl}: {ex.Message}");
+            }
+        }
+
+        return albumArtBase64;
     }
 
     private string? GetMetadataValue(dynamic track, string title)
