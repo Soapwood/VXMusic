@@ -56,8 +56,6 @@ You can also choose if you want to be prompted when new versions are available, 
 
 ### Recognition also works on Desktop! Enjoy recognising music on livestreams or videos.
 
-<img src=".github/readme/DesktopRecognition.gif" alt="VXMusic Desktop" style="max-width: 80%">
-
 ## Recognition
 VXMusic uses **Shazam** for music recognition.
 
