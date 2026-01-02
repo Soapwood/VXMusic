@@ -151,6 +151,7 @@ namespace VXMusicDesktop
             services.AddSingleton<VrChatOscNotificationClient>();
             services.AddSingleton<OvrToolkitNotificationClient>();
             services.AddSingleton<SteamVROverlayAppsInterface>();
+            services.AddSingleton<IVRHapticFeedbackService, VRHapticFeedbackService>();
             
             services.AddSingleton<VXMusicUpdateHandler>();
 

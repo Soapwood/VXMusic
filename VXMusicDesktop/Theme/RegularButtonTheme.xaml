@@ -38,4 +38,45 @@
         </Style.Triggers>
     </Style>
 
+    <!-- Simple Button Theme with muted hover effect -->
+    <Style x:Key="SimpleButtonTheme" TargetType="{x:Type Button}">
+        <Style.Setters>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="Border" 
+                                Background="{TemplateBinding Background}" 
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                CornerRadius="5">
+                            <ContentPresenter x:Name="ContentPresenter" 
+                                              HorizontalAlignment="Center" 
+                                              VerticalAlignment="Center"
+                                              Content="{TemplateBinding Content}"
+                                              Margin="{TemplateBinding Padding}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Border" Property="Background">
+                                    <Setter.Value>
+                                        <SolidColorBrush Color="{Binding Source={x:Static custom:ColourSchemeManager.SecondaryColour}, Path=Color}" Opacity="0.3"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="Border" Property="Background">
+                                    <Setter.Value>
+                                        <SolidColorBrush Color="{Binding Source={x:Static custom:ColourSchemeManager.SecondaryColour}, Path=Color}" Opacity="0.5"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Background" Value="{StaticResource SecondaryColor}"/>
+            <Setter Property="BorderThickness" Value="0"/>
+        </Style.Setters>
+    </Style>
+
 </ResourceDictionary>

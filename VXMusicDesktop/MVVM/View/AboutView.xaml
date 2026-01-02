@@ -161,7 +161,7 @@
                    Foreground="{StaticResource TextBasic}"
                    FontStyle="Italic"
                    FontSize="12">
-            VXMusicDesktop © Soapwood 2024
+            VXMusicDesktop © Soapwood 2026
             <LineBreak />
             VXMusicDesktop is protected under the MPL 2.0 License
             <LineBreak />
@@ -181,9 +181,26 @@
                    TextDecorations="Underline"
                    Cursor="Hand"
                    HorizontalAlignment="Center"
-                   VerticalAlignment="Center">
+                   VerticalAlignment="Center"
+                   Margin="0,0,0,10">
             <TextBlock.InputBindings>
                 <MouseBinding Gesture="LeftClick" Command="{Binding OpenFolderCommand}"/>
+            </TextBlock.InputBindings>
+        </TextBlock>
+        
+        <TextBlock Text="VR Haptic Test"
+                   Foreground="{StaticResource Accent1Colour}"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center">
+        </TextBlock>
+        <TextBlock Text="Test VR Controller Haptic Feedback"
+                   Foreground="{StaticResource Accent1Colour}"
+                   TextDecorations="Underline"
+                   Cursor="Hand"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center">
+            <TextBlock.InputBindings>
+                <MouseBinding Gesture="LeftClick" Command="{Binding TestHapticCommand}"/>
             </TextBlock.InputBindings>
         </TextBlock>
     </StackPanel>
