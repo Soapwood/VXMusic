@@ -34,7 +34,7 @@
                    Foreground="{StaticResource TextBasic}"
                    FontSize="28"
                    HorizontalAlignment="Left"
-                   Margin="0,0,0,20" />
+                   Margin="0,0,0,10" />
 
         <StackPanel Orientation="Horizontal"
                     Margin="0,0,0,10">
@@ -138,7 +138,7 @@
                        Foreground="{StaticResource TextBasic}"
                        FontSize="20"
                        HorizontalAlignment="Left"
-                       Margin="0,0,0,10" />
+                       Margin="0,5,0,15" />
 
             <StackPanel Orientation="Horizontal">
                 <Border Width="160"
